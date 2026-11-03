@@ -1,0 +1,22 @@
+{
+  "id": "last-arc-analogue",
+  "title": "Last Arc: Tactics Analogue (Fan System)",
+  "description": "Community-built Foundry VTT system framework for Last Arc: Tactics Analogue.",
+  "version": "0.1.0",
+  "compatibility": { "minimum": 12, "verified": 13 },
+  "authors": [{ "name": "Caio Santiago" }],
+  "esmodules": ["scripts/last-arc.mjs"],
+  "styles": ["styles/last-arc.css"],
+  "languages": [{ "lang": "pt-BR", "name": "Português (Brasil)", "path": "lang/pt-BR.json" }, { "lang": "en", "name": "English", "path": "lang/en.json" }],
+  "documentTypes": {
+    "Actor": { "character": {}, "npc": {} },
+    "Item": { "race": {}, "class": {}, "spell": {}, "talent": {}, "technick": {}, "weapon": {}, "armor": {}, "equipment": {}, "feature": {}, "other": {} }
+  },
+  "initiative": "1d20 + @system.initiative.total",
+  "grid": { "distance": 1, "units": "squares" },
+  "primaryTokenAttribute": "resources.hp",
+  "secondaryTokenAttribute": "resources.mp",
+  "url": "https://github.com/Caio-Santiago257/last-arc-Foundry-Fan",
+  "manifest": "https://raw.githubusercontent.com/Caio-Santiago257/last-arc-Foundry-Fan/main/system.json",
+  "download": "https://github.com/Caio-Santiago257/last-arc-Foundry-Fan/archive/refs/heads/main.zip"
+}

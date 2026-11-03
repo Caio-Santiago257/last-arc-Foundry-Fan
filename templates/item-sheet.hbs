@@ -1,0 +1,24 @@
+<form class="la-sheet la-item-sheet" autocomplete="off">
+  <header class="la-item-header"><img src="{{item.img}}" data-edit="img" alt=""><div><small>{{localize itemTypeLabel}}</small><input class="la-name" name="name" value="{{item.name}}"></div></header>
+  <nav class="sheet-tabs la-tabs" data-group="primary"><a class="item" data-tab="details">{{localize "LA.Details"}}</a><a class="item" data-tab="description">{{localize "LA.Description"}}</a></nav>
+  <section class="sheet-body la-body">
+    <div class="tab" data-group="primary" data-tab="details">
+      <section class="la-panel la-item-fields">
+        <label>{{localize "LA.ItemCategory"}}<input value="{{localize itemTypeLabel}}" disabled></label>
+        <label>{{localize "LA.Action"}}<input name="system.action" value="{{system.action}}" placeholder="Standard / minor / all-out"></label>
+        <label>{{localize "LA.Range"}}<input name="system.range" value="{{system.range}}"></label>
+        <label>{{localize "LA.Cost"}}<input name="system.cost" value="{{system.cost}}"></label>
+        <label>{{localize "LA.Duration"}}<input name="system.duration" value="{{system.duration}}"></label>
+        <label>{{localize "LA.Requirements"}}<input name="system.requirements" value="{{system.requirements}}"></label>
+        <label>{{localize "LA.Uses"}}<input name="system.uses.value" type="number" value="{{system.uses.value}}"></label>
+        <label>{{localize "LA.Uses"}} max<input name="system.uses.max" type="number" value="{{system.uses.max}}"></label>
+        <label>{{localize "LA.Bulk"}}<input name="system.bulk" type="number" step="0.1" value="{{system.bulk}}"></label>
+        <label>{{localize "LA.Quantity"}}<input name="system.quantity" type="number" min="0" value="{{system.quantity}}"></label>
+        <label>{{localize "LA.Damage"}} formula<input name="system.damage.formula" value="{{system.damage.formula}}" placeholder="e.g. 1d6 + 2"></label>
+        <label>{{localize "LA.Attack"}} bonus<input name="system.attack.bonus" type="number" value="{{system.attack.bonus}}"></label>
+      </section>
+    </div>
+    <div class="tab" data-group="primary" data-tab="description"><section class="la-panel"><h2>{{localize "LA.Description"}}</h2><textarea class="la-item-description" name="system.description">{{system.description}}</textarea></section></div>
+    <footer class="la-item-footer"><button type="button" class="item-roll la-primary-button">{{localize "LA.Roll"}}</button></footer>
+  </section>
+</form>

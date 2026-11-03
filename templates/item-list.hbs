@@ -1,0 +1,13 @@
+<div class="la-item-list">
+  {{#if items.length}}
+    {{#each items as |item|}}
+      <div class="item la-item-row" data-item-id="{{item.id}}">
+        <button type="button" class="item-roll la-die" title="{{localize 'LA.Roll'}}">▶</button>
+        <button type="button" class="item-edit la-link">{{item.name}}</button>
+        <span class="la-item-detail">{{item.system.action}} {{item.system.range}}</span>
+        <span class="la-item-detail">{{item.system.cost}}</span>
+        <button type="button" class="item-delete la-icon-button" title="{{localize 'LA.Delete'}}">×</button>
+      </div>
+    {{/each}}
+  {{else}}<p class="la-empty">{{localize "LA.NoItems"}}</p>{{/if}}
+</div>

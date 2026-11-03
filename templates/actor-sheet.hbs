@@ -1,0 +1,88 @@
+<form class="la-sheet {{#if isCharacter}}la-character{{else}}la-npc{{/if}}" autocomplete="off">
+  <header class="la-header">
+    <div class="la-portrait" title="{{localize 'LA.CharacterSheet'}}"><img src="{{actor.img}}" data-edit="img" alt=""></div>
+    <div class="la-identity">
+      <input class="la-name" name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'LA.Name'}}">
+      <div class="la-identity-grid">
+        <label>{{localize "LA.Race"}}<input name="system.details.race" value="{{system.details.race}}"></label>
+        <label>{{localize "LA.Class"}}<input name="system.details.className" value="{{system.details.className}}"></label>
+        <label>{{localize "LA.Gender"}}<input name="system.details.gender" value="{{system.details.gender}}"></label>
+        <label>{{localize "LA.Alignment"}}<input name="system.details.alignment" value="{{system.details.alignment}}"></label>
+        <label>{{localize "LA.AdvancedClass"}}<input name="system.details.advancedClass" value="{{system.details.advancedClass}}"></label>
+      </div>
+    </div>
+    <div class="la-level-card"><span>{{localize "LA.Level"}}</span><input type="number" name="system.details.level" value="{{system.details.level}}" min="1"><small>{{localize "LA.Experience"}}</small><div class="la-xp"><input type="number" name="system.details.xp" value="{{system.details.xp}}" min="0"><span>/</span><input type="number" name="system.details.nextLevel" value="{{system.details.nextLevel}}" min="0"></div></div>
+  </header>
+
+  <nav class="sheet-tabs la-tabs" data-group="primary">
+    <a class="item" data-tab="overview">{{localize "LA.Attributes"}}</a>
+    <a class="item" data-tab="combat">{{localize "LA.Combat"}}</a>
+    <a class="item" data-tab="skills">{{localize "LA.Skills"}}</a>
+    <a class="item" data-tab="features">{{localize "LA.Features"}}</a>
+    <a class="item" data-tab="spells">{{localize "LA.Spells"}} / {{localize "LA.Technicks"}}</a>
+    <a class="item" data-tab="inventory">{{localize "LA.Inventory"}}</a>
+    <a class="item" data-tab="biography">{{localize "LA.Biography"}}</a>
+  </nav>
+
+  <section class="sheet-body la-body">
+    <div class="tab" data-group="primary" data-tab="overview">
+      <div class="la-overview-grid">
+        <section class="la-panel">
+          <div class="la-section-heading"><h2>{{localize "LA.Attributes"}}</h2><button type="button" class="roll-attributes la-add">{{localize "LA.RollAttributes"}}</button></div>
+          {{#each attributeList as |attribute|}}
+          <div class="la-attribute-row"><button type="button" class="rollable la-die" data-roll="attribute" data-key="{{attribute.key}}" title="{{localize 'LA.RollAttribute'}}">d20</button><span>{{localize attribute.label}}</span><input type="number" name="system.attributes.{{attribute.key}}.score" value="{{attribute.score}}"><strong class="la-mod">{{numberFormat attribute.modifier sign=true}}</strong></div>
+          {{/each}}
+          <div class="la-defense-list">
+            {{#each defenceList as |defence|}}<label>{{localize defence.label}}<input type="number" name="system.defences.{{defence.key}}.classBonus" value="{{defence.classBonus}}" title="{{localize 'LA.ClassBonus'}}"><b>{{defence.total}}</b></label>{{/each}}
+          </div>
+        </section>
+        <section class="la-panel la-resource-panel">
+          <h2>{{localize "LA.Combat"}}</h2>
+          <div class="la-resource-card hp"><label>{{localize "LA.Health"}}</label><div><button type="button" class="resource-control" data-resource="resources.hp" data-delta="-1">−</button><input type="number" name="system.resources.hp.value" value="{{system.resources.hp.value}}"><span>/</span><input type="number" name="system.resources.hp.max" value="{{system.resources.hp.max}}"><button type="button" class="resource-control" data-resource="resources.hp" data-delta="1">+</button></div></div>
+          <div class="la-resource-card mp"><label>{{localize "LA.Mana"}}</label><div><button type="button" class="resource-control" data-resource="resources.mp" data-delta="-1">−</button><input type="number" name="system.resources.mp.value" value="{{system.resources.mp.value}}"><span>/</span><input type="number" name="system.resources.mp.max" value="{{system.resources.mp.max}}"><button type="button" class="resource-control" data-resource="resources.mp" data-delta="1">+</button></div></div>
+          <div class="la-stat-tiles"><label>{{localize "LA.Speed"}}<input type="number" name="system.combat.speed" value="{{system.combat.speed}}"></label><label>{{localize "LA.Initiative"}}<button class="rollable la-inline-roll" type="button" data-roll="initiative" data-bonus="{{system.initiative.total}}">{{numberFormat system.initiative.total sign=true}}</button></label><label>{{localize "LA.HeroPoints"}}<input type="number" name="system.resources.heroPoints.value" value="{{system.resources.heroPoints.value}}"></label></div>
+          <label class="la-wide-field">{{localize "LA.SpecialSenses"}}<input name="system.combat.specialSenses" value="{{system.combat.specialSenses}}"></label>
+        </section>
+      </div>
+      <section class="la-panel la-weapons">
+        <div class="la-section-heading"><h2>{{localize "LA.Attack"}}</h2><button type="button" class="item-create la-add" data-type="weapon">＋ {{localize "LA.AddItem"}}</button></div>
+        <div class="la-weapon-list">{{#each itemGroups as |group|}}{{#if (eq group.type "weapon")}}{{#each group.items as |item|}}<div class="item la-weapon-row" data-item-id="{{item.id}}"><button type="button" class="item-roll la-die" title="{{localize 'LA.Roll'}}">d20</button><button type="button" class="item-edit la-link">{{item.name}}</button><span>{{item.system.range}}</span><span>{{item.system.damage.formula}}</span><button type="button" class="item-delete la-icon-button">×</button></div>{{/each}}{{/if}}{{/each}}</div>
+      </section>
+    </div>
+
+    <div class="tab" data-group="primary" data-tab="combat">
+      <div class="la-overview-grid">
+        <section class="la-panel"><h2>{{localize "LA.Defenses"}}</h2>{{#each defenceList as |defence|}}<div class="la-defense-edit"><b>{{localize defence.label}}</b><span>{{defence.total}}</span><label>{{localize "LA.ClassBonus"}}<input type="number" name="system.defences.{{defence.key}}.classBonus" value="{{defence.classBonus}}"></label><label>{{localize "LA.Bonus"}}<input type="number" name="system.defences.{{defence.key}}.misc" value="{{defence.misc}}"></label></div>{{/each}}</section>
+        <section class="la-panel"><h2>{{localize "LA.Combat"}}</h2><div class="la-stat-tiles"><label>{{localize "LA.DamageReduction"}}<input type="number" name="system.combat.damageReduction" value="{{system.combat.damageReduction}}"></label><label>{{localize "LA.DamageThreshold"}}<input type="number" name="system.combat.damageThreshold" value="{{system.combat.damageThreshold}}"></label><label>{{localize "LA.Initiative"}}<input type="number" name="system.combat.initiativeMisc" value="{{system.combat.initiativeMisc}}"></label><label>{{localize "LA.Speed"}}<input type="number" name="system.combat.speed" value="{{system.combat.speed}}"></label></div><button type="button" class="apply-damage la-primary-button">{{localize "LA.ApplyDamage"}}</button></section>
+      </div>
+      <section class="la-panel"><h2>{{localize "LA.Combat"}} — {{localize "LA.Details"}}</h2><div class="la-three-columns"><label>{{localize "LA.Immunities"}}<textarea name="system.combat.immunities">{{system.combat.immunities}}</textarea></label><label>{{localize "LA.Resistances"}}<textarea name="system.combat.resistances">{{system.combat.resistances}}</textarea></label><label>{{localize "LA.Vulnerabilities"}}<textarea name="system.combat.vulnerabilities">{{system.combat.vulnerabilities}}</textarea></label></div></section>
+    </div>
+
+    <div class="tab" data-group="primary" data-tab="skills">
+      <section class="la-panel"><h2>{{localize "LA.Skills"}}</h2><div class="la-skill-table"><div class="la-skill-header"><span></span><span>{{localize "LA.Skill"}}</span><span>{{localize "LA.Trained"}}</span><span>{{localize "LA.ClassBonus"}}</span><span>{{localize "LA.Attribute"}}</span><span>{{localize "LA.HalfLevel"}}</span><span>{{localize "LA.Bonus"}}</span><span>CD</span></div>
+      {{#each skills as |skill|}}<div class="la-skill-row"><button type="button" class="rollable la-die" data-roll="skill" data-key="{{skill.key}}" title="{{localize 'LA.RollSkill'}}">d20</button><span>{{localize skill.label}}</span><input type="checkbox" name="system.skills.{{skill.key}}.trained" {{checked skill.trained}}><input type="number" name="system.skills.{{skill.key}}.classBonus" value="{{skill.classBonus}}"><span class="la-muted">{{localize skill.attributeLabel}}</span><span>{{skill.halfLevel}}</span><input type="number" name="system.skills.{{skill.key}}.misc" value="{{skill.misc}}"><input name="dc" type="number" placeholder="—"></div>{{/each}}</div>
+      <label class="la-passive">{{localize "LA.PassivePerception"}} <input type="number" value="{{system.combat.passivePerception}}" disabled></label></section>
+    </div>
+
+    <div class="tab" data-group="primary" data-tab="features">
+      {{#each itemGroups as |group|}}{{#if (or (eq group.type "race") (eq group.type "class") (eq group.type "feature") (eq group.type "talent"))}}
+      <section class="la-panel la-item-section"><div class="la-section-heading"><h2>{{group.label}}</h2><button type="button" class="item-create la-add" data-type="{{group.type}}">＋ {{localize "LA.AddItem"}}</button></div>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}</section>{{/if}}{{/each}}
+    </div>
+
+    <div class="tab" data-group="primary" data-tab="spells">
+      {{#each itemGroups as |group|}}{{#if (or (eq group.type "spell") (eq group.type "technick"))}}
+      <section class="la-panel la-item-section"><div class="la-section-heading"><h2>{{group.label}}</h2><button type="button" class="item-create la-add" data-type="{{group.type}}">＋ {{localize "LA.AddItem"}}</button></div>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}</section>{{/if}}{{/each}}
+    </div>
+
+    <div class="tab" data-group="primary" data-tab="inventory">
+      <section class="la-panel"><div class="la-section-heading"><h2>{{localize "LA.Inventory"}}</h2><button type="button" class="item-create la-add" data-type="equipment">＋ {{localize "LA.AddItem"}}</button></div><div class="la-inventory-meta"><label>{{localize "LA.Gold"}}<input type="number" name="system.inventory.gold" value="{{system.inventory.gold}}"></label><span>{{localize "LA.Bulk"}}: <b>{{system.inventoryBulk}}</b> / <input type="number" name="system.inventory.maxBulk" value="{{system.inventory.maxBulk}}"></span></div>
+      {{#each itemGroups as |group|}}{{#if (or (eq group.type "equipment") (eq group.type "armor") (eq group.type "other"))}}<h3 class="la-subheading">{{group.label}}</h3>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}{{/if}}{{/each}}
+      </section>
+    </div>
+
+    <div class="tab" data-group="primary" data-tab="biography">
+      <section class="la-panel"><h2>{{localize "LA.Biography"}}</h2><textarea class="la-bio" name="system.details.biography">{{system.details.biography}}</textarea></section>
+      <section class="la-panel"><h2>{{localize "LA.Journal"}}</h2><textarea class="la-bio" name="system.details.journal">{{system.details.journal}}</textarea></section>
+    </div>
+  </section>
+</form>
