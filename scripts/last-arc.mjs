@@ -54,8 +54,7 @@ class LastArcActor extends Actor {
     }
     const halfLevel = Math.floor(level / 2);
     system.halfLevel = halfLevel;
-    const init = system.attributes.agi.modifier + halfLevel + safeNumber(system.combat?.initiativeMisc);
-    system.initiative = { total: init };
+    system.initiative = { total: 0 };
     for (const [key, attribute] of Object.entries(SKILLS)) {
       const skill = system.skills?.[key] ?? {};
       system.skills ??= {};
@@ -75,7 +74,7 @@ class LastArcActor extends Actor {
         ...record,
         base: 10,
         attributeMod: system.attributes[attribute].modifier,
-        total: 10 + system.attributes[attribute].modifier + safeNumber(record.classBonus) + halfLevel + safeNumber(record.misc)
+        total: 10 + system.attributes[attribute].modifier + safeNumber(record.classBonus) + level + safeNumber(record.misc)
       };
     }
     const hp = system.resources?.hp ?? {};
@@ -83,7 +82,10 @@ class LastArcActor extends Actor {
     system.resources.hp = { value: safeNumber(hp.value), max: safeNumber(hp.max) };
     system.resources.mp = { value: safeNumber(mp.value), max: safeNumber(mp.max) };
     system.combat.passivePerception = 10 + safeNumber(system.skills.perception?.total);
+    system.inventory ??= {};
     system.inventoryBulk = this.items.reduce((sum, item) => sum + safeNumber(item.system.quantity, 1) * safeNumber(item.system.bulk), 0);
+    system.inventory.maxBulk = 5 + safeNumber(system.attributes.str.score);
+    system.inventory.overBulk = 10 + safeNumber(system.attributes.str.score);
   }
 
   async applyDamage(amount, { type = "unaspected", bypassDR = false } = {}) {
@@ -92,7 +94,7 @@ class LastArcActor extends Actor {
     const applied = Math.max(0, damage - dr);
     const hp = this.system.resources.hp;
     await this.update({ "system.resources.hp.value": Math.max(0, hp.value - applied) });
-    await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<p><strong>${game.i18n.localize("LA.ApplyDamage")}:</strong> ${applied} (${type}). ${game.i18n.localize("LA.Health")}: ${Math.max(0, hp.value - applied)}/${hp.max}.</p>` });
+    await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<p><strong>${game.i18n.localize("LA.ApplyDamage")}:</strong> ${applied} (${foundry.utils.escapeHTML(type)}). ${game.i18n.localize("LA.Health")}: ${Math.max(0, hp.value - applied)}/${hp.max}.</p>` });
     return applied;
   }
 }
@@ -162,7 +164,8 @@ class LastArcActorSheet extends ActorSheet {
     if (kind === "attribute") { label = game.i18n.localize(ATTRIBUTE_LABELS[key] ?? label); bonus = actor.system.attributes[key]?.modifier ?? bonus; }
     if (kind === "attack") label = game.i18n.localize("LA.AttackRoll");
     if (kind === "initiative") label = game.i18n.localize("LA.Initiative");
-    const roll = await (new Roll(`1d20 + (${bonus})`, actor.getRollData())).evaluate();
+    const formula = kind === "initiative" ? (actor.system.combat.initiativeDie || "1d20") : `1d20 + (${bonus})`;
+    const roll = await (new Roll(formula, actor.getRollData())).evaluate();
     const dcField = kind === "skill" ? target.closest(".skill-row")?.querySelector("[name='dc']") : null;
     const dc = dcField && dcField.value !== "" ? safeNumber(dcField.value) : null;
     const result = dc === null ? "" : `<p class="la-result ${roll.total >= dc ? "success" : "failure"}">${game.i18n.localize(roll.total >= dc ? "LA.Success" : "LA.Failure")} (CD ${dc})</p>`;
@@ -184,7 +187,7 @@ class LastArcActorSheet extends ActorSheet {
   _onItemRoll(event) { this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId)?.roll(); }
   async _onApplyDamage(event) {
     event.preventDefault();
-    const amount = await new Promise(resolve => new Dialog({ title: game.i18n.localize("LA.ApplyDamage"), content: `<form><label>${game.i18n.localize("LA.Damage")}<input type="number" name="damage" min="0" value="0"></label><label>${game.i18n.localize("LA.ItemType")}<input name="damageType" value="unaspected"></label></form>`, buttons: { apply: { label: game.i18n.localize("LA.ApplyDamage"), callback: html => resolve({ amount: html.find("[name=damage]").val(), type: html.find("[name=damageType]").val() }) }, cancel: { label: "×", callback: () => resolve(null) } }, default: "apply", close: () => resolve(null) }).render(true));
+    const amount = await new Promise(resolve => new Dialog({ title: game.i18n.localize("LA.ApplyDamage"), content: `<form><label>${game.i18n.localize("LA.Damage")}<input type="number" name="damage" min="0" value="0"></label><label>${game.i18n.localize("LA.DamageType")}<input name="damageType" value="unaspected"></label></form>`, buttons: { apply: { label: game.i18n.localize("LA.ApplyDamage"), callback: html => resolve({ amount: html.find("[name=damage]").val(), type: html.find("[name=damageType]").val() }) }, cancel: { label: "×", callback: () => resolve(null) } }, default: "apply", close: () => resolve(null) }).render(true));
     if (amount) await this.actor.applyDamage(amount.amount, { type: amount.type });
   }
   async _onResourceControl(event) {

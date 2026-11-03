@@ -8,12 +8,12 @@ In Foundry VTT, open **Game Settings → Manage Systems → Install System** and
 
 `https://raw.githubusercontent.com/Caio-Santiago257/last-arc-Foundry-Fan/main/system.json`
 
-Alternatively, download the repository ZIP, extract the `last-arc-Foundry-Fan` folder into Foundry's `Data/systems/`, then restart Foundry. Create a world and select **Last Arc: Tactics Analogue (Fan System)**.
+Alternatively, download the packaged ZIP, extract its `last-arc-analogue` folder into Foundry's `Data/systems/`, then restart Foundry. If you download GitHub's automatic source ZIP, rename its extracted `last-arc-Foundry-Fan-main` directory to `last-arc-analogue` before moving it into `Data/systems/`.
 
 ## What is implemented
 
 - Character and NPC actor types, with an editable sheet organized around the source sheet's sections: identity, six attributes, combat resources, defences, skills, weapons, features, spells/technicks, inventory, and biography.
-- Attribute modifiers from scores; half-level skill bonuses; editable class and miscellaneous bonuses; Fortitude, Reflex, Will, and initiative totals.
+- Attribute modifiers from scores; half-level skill bonuses; editable class and miscellaneous bonuses; Fortitude, Reflex, and Will totals using full character level; a configurable class initiative die.
 - Chat rolls for attributes, skills, initiative, weapon attacks, and item damage formulas.
 - HP/MP controls, damage application with damage reduction, inventory bulk totals, and editable race/class/feature/spell/talent/technick/weapon/armor/equipment items.
 - Portuguese (Brazil) and English labels.
