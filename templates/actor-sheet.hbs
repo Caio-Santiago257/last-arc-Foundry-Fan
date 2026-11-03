@@ -30,7 +30,7 @@
         <section class="la-panel">
           <div class="la-section-heading"><h2>{{localize "LA.Attributes"}}</h2><button type="button" class="roll-attributes la-add">{{localize "LA.RollAttributes"}}</button></div>
           {{#each attributeList as |attribute|}}
-          <div class="la-attribute-row"><button type="button" class="rollable la-die" data-roll="attribute" data-key="{{attribute.key}}" title="{{localize 'LA.RollAttribute'}}">d20</button><span>{{localize attribute.label}}</span><input type="number" name="system.attributes.{{attribute.key}}.score" value="{{attribute.score}}"><strong class="la-mod">{{numberFormat attribute.modifier sign=true}}</strong></div>
+          <div class="la-attribute-row"><button type="button" class="rollable la-die" data-roll="attribute" data-key="{{attribute.key}}" title="{{localize 'LA.RollAttribute'}}"><i class="fas fa-dice-d20" aria-hidden="true"></i></button><span>{{localize attribute.label}}</span><input type="number" name="system.attributes.{{attribute.key}}.score" value="{{attribute.score}}"><strong class="la-mod">{{numberFormat attribute.modifier sign=true}}</strong></div>
           {{/each}}
           <div class="la-defense-list">
             {{#each defenceList as |defence|}}<label>{{localize defence.label}}<input type="number" name="system.defences.{{defence.key}}.classBonus" value="{{defence.classBonus}}" title="{{localize 'LA.ClassBonus'}}"><b>{{defence.total}}</b></label>{{/each}}
@@ -46,7 +46,7 @@
       </div>
       <section class="la-panel la-weapons">
         <div class="la-section-heading"><h2>{{localize "LA.Attack"}}</h2><button type="button" class="item-create la-add" data-type="weapon">＋ {{localize "LA.AddItem"}}</button></div>
-        <div class="la-weapon-list">{{#each itemGroups as |group|}}{{#if (eq group.type "weapon")}}{{#each group.items as |item|}}<div class="item la-weapon-row" data-item-id="{{item.id}}"><button type="button" class="item-roll la-die" title="{{localize 'LA.Roll'}}">d20</button><button type="button" class="item-edit la-link">{{item.name}}</button><span>{{item.system.range}}</span><span>{{item.system.damage.formula}}</span><button type="button" class="item-delete la-icon-button">×</button></div>{{/each}}{{/if}}{{/each}}</div>
+        <div class="la-weapon-list">{{#each itemGroups as |group|}}{{#if (eq group.type "weapon")}}{{#each group.items as |item|}}<div class="item la-weapon-row" data-item-id="{{item.id}}"><button type="button" class="item-roll la-die" title="{{localize 'LA.Roll'}}"><i class="fas fa-dice-d20" aria-hidden="true"></i></button><button type="button" class="item-edit la-link"><i class="fas fa-crosshairs" aria-hidden="true"></i> {{item.name}}</button><span>{{item.system.range}}</span><span>{{item.system.damage.formula}}</span><button type="button" class="item-delete la-icon-button" title="{{localize 'LA.Delete'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button></div>{{/each}}{{/if}}{{/each}}</div>
       </section>
     </div>
 
@@ -60,12 +60,12 @@
 
     <div class="tab" data-group="primary" data-tab="skills">
       <section class="la-panel"><h2>{{localize "LA.Skills"}}</h2><div class="la-skill-table"><div class="la-skill-header"><span></span><span>{{localize "LA.Skill"}}</span><span>{{localize "LA.Trained"}}</span><span>{{localize "LA.ClassBonus"}}</span><span>{{localize "LA.Attribute"}}</span><span>{{localize "LA.HalfLevel"}}</span><span>{{localize "LA.Bonus"}}</span><span>CD</span></div>
-      {{#each skills as |skill|}}<div class="la-skill-row"><button type="button" class="rollable la-die" data-roll="skill" data-key="{{skill.key}}" title="{{localize 'LA.RollSkill'}}">d20</button><span>{{localize skill.label}}</span><input type="checkbox" name="system.skills.{{skill.key}}.trained" {{checked skill.trained}}><input type="number" name="system.skills.{{skill.key}}.classBonus" value="{{skill.classBonus}}"><span class="la-muted">{{localize skill.attributeLabel}}</span><span>{{skill.halfLevel}}</span><input type="number" name="system.skills.{{skill.key}}.misc" value="{{skill.misc}}"><input name="dc" type="number" placeholder="—"></div>{{/each}}</div>
+      {{#each skills as |skill|}}<div class="la-skill-row"><button type="button" class="rollable la-die" data-roll="skill" data-key="{{skill.key}}" title="{{localize 'LA.RollSkill'}}"><i class="fas fa-dice-d20" aria-hidden="true"></i></button><span><i class="fas {{skill.icon}} la-skill-icon" aria-hidden="true"></i> {{localize skill.label}}</span><input type="checkbox" name="system.skills.{{skill.key}}.trained" {{checked skill.trained}}><input type="number" name="system.skills.{{skill.key}}.classBonus" value="{{skill.classBonus}}"><span class="la-muted">{{localize skill.attributeLabel}}</span><span>{{skill.halfLevel}}</span><input type="number" name="system.skills.{{skill.key}}.misc" value="{{skill.misc}}"><input name="dc" type="number" placeholder="—"></div>{{/each}}</div>
       <label class="la-passive">{{localize "LA.PassivePerception"}} <input type="number" value="{{system.combat.passivePerception}}" disabled></label></section>
     </div>
 
     <div class="tab" data-group="primary" data-tab="features">
-      {{#each itemGroups as |group|}}{{#if (or (eq group.type "race") (eq group.type "class") (eq group.type "feature") (eq group.type "talent"))}}
+      {{#each itemGroups as |group|}}{{#if (or (eq group.type "race") (eq group.type "class") (eq group.type "advanced-class") (eq group.type "feature") (eq group.type "talent"))}}
       <section class="la-panel la-item-section"><div class="la-section-heading"><h2>{{group.label}}</h2><button type="button" class="item-create la-add" data-type="{{group.type}}">＋ {{localize "LA.AddItem"}}</button></div>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}</section>{{/if}}{{/each}}
     </div>
 

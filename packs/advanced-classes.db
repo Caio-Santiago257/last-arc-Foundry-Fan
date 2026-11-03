@@ -1,0 +1,17 @@
+{"_id":"b98cc5d7427c6e97","name":"Archmage","type":"advanced-class","img":"icons/svg/item-bag.svg","system":{"description":""},"effects":[],"folder":null,"sort":0,"ownership":{"default":0},"flags":{}}
+{"_id":"eed42c8bc100aaa1","name":"Assassin","type":"advanced-class","img":"icons/svg/item-bag.svg","system":{"description":""},"effects":[],"folder":null,"sort":0,"ownership":{"default":0},"flags":{}}
+{"_id":"3d7ebc02c0f95cc2","name":"Battlemage","type":"advanced-class","img":"icons/svg/item-bag.svg","system":{"description":""},"effects":[],"folder":null,"sort":0,"ownership":{"default":0},"flags":{}}
+{"_id":"fae624b735e6b8ee","name":"Berserker","type":"advanced-class","img":"icons/svg/item-bag.svg","system":{"description":""},"effects":[],"folder":null,"sort":0,"ownership":{"default":0},"flags":{}}
+{"_id":"de2915a9ad5983b7","name":"Bishop","type":"advanced-class","img":"icons/svg/item-bag.svg","system":{"description":""},"effects":[],"folder":null,"sort":0,"ownership":{"default":0},"flags":{}}
+{"_id":"a0be18ba077aa87d","name":"Blade Dancer","type":"advanced-class","img":"icons/svg/item-bag.svg","system":{"description":""},"effects":[],"folder":null,"sort":0,"ownership":{"default":0},"flags":{}}
+{"_id":"3388debf8ff111c5","name":"Dragoon","type":"advanced-class","img":"icons/svg/item-bag.svg","system":{"description":""},"effects":[],"folder":null,"sort":0,"ownership":{"default":0},"flags":{}}
+{"_id":"cc9265be5f757728","name":"Druid","type":"advanced-class","img":"icons/svg/item-bag.svg","system":{"description":""},"effects":[],"folder":null,"sort":0,"ownership":{"default":0},"flags":{}}
+{"_id":"0401e3b06ea2b7eb","name":"Gladiator","type":"advanced-class","img":"icons/svg/item-bag.svg","system":{"description":""},"effects":[],"folder":null,"sort":0,"ownership":{"default":0},"flags":{}}
+{"_id":"3d47b2ffa75dd59b","name":"Necromancer","type":"advanced-class","img":"icons/svg/item-bag.svg","system":{"description":""},"effects":[],"folder":null,"sort":0,"ownership":{"default":0},"flags":{}}
+{"_id":"486f936abf29449e","name":"Paladin","type":"advanced-class","img":"icons/svg/item-bag.svg","system":{"description":""},"effects":[],"folder":null,"sort":0,"ownership":{"default":0},"flags":{}}
+{"_id":"51458a908f1ad639","name":"Purloiner","type":"advanced-class","img":"icons/svg/item-bag.svg","system":{"description":""},"effects":[],"folder":null,"sort":0,"ownership":{"default":0},"flags":{}}
+{"_id":"88ed3e91eed59a84","name":"Sabreur","type":"advanced-class","img":"icons/svg/item-bag.svg","system":{"description":""},"effects":[],"folder":null,"sort":0,"ownership":{"default":0},"flags":{}}
+{"_id":"ad5a28a5d5444f1c","name":"Shikari","type":"advanced-class","img":"icons/svg/item-bag.svg","system":{"description":""},"effects":[],"folder":null,"sort":0,"ownership":{"default":0},"flags":{}}
+{"_id":"14a84d33de73df54","name":"Summoner","type":"advanced-class","img":"icons/svg/item-bag.svg","system":{"description":""},"effects":[],"folder":null,"sort":0,"ownership":{"default":0},"flags":{}}
+{"_id":"9b62c9ee1a94a570","name":"Troubador","type":"advanced-class","img":"icons/svg/item-bag.svg","system":{"description":""},"effects":[],"folder":null,"sort":0,"ownership":{"default":0},"flags":{}}
+{"_id":"a12bcd5dd5123495","name":"Warlock","type":"advanced-class","img":"icons/svg/item-bag.svg","system":{"description":""},"effects":[],"folder":null,"sort":0,"ownership":{"default":0},"flags":{}}

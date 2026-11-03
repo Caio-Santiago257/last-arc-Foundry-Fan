@@ -2,15 +2,24 @@
   "id": "last-arc-analogue",
   "title": "Last Arc: Tactics Analogue (Fan System)",
   "description": "Community-built Foundry VTT system framework for Last Arc: Tactics Analogue.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "compatibility": { "minimum": 12, "verified": 13 },
   "authors": [{ "name": "Caio Santiago" }],
   "esmodules": ["scripts/last-arc.mjs"],
   "styles": ["styles/last-arc.css"],
   "languages": [{ "lang": "pt-BR", "name": "Português (Brasil)", "path": "lang/pt-BR.json" }, { "lang": "en", "name": "English", "path": "lang/en.json" }],
+  "packs": [
+    { "name": "races", "label": "Raças", "path": "packs/races.db", "type": "Item", "system": "last-arc-analogue" },
+    { "name": "classes", "label": "Classes Base", "path": "packs/classes.db", "type": "Item", "system": "last-arc-analogue" },
+    { "name": "advanced-classes", "label": "Classes Avançadas", "path": "packs/advanced-classes.db", "type": "Item", "system": "last-arc-analogue" },
+    { "name": "talents", "label": "Talentos", "path": "packs/talents.db", "type": "Item", "system": "last-arc-analogue" },
+    { "name": "technicks", "label": "Técnicas", "path": "packs/technicks.db", "type": "Item", "system": "last-arc-analogue" },
+    { "name": "spells", "label": "Magias", "path": "packs/spells.db", "type": "Item", "system": "last-arc-analogue" },
+    { "name": "equipment", "label": "Equipamento", "path": "packs/equipment.db", "type": "Item", "system": "last-arc-analogue" }
+  ],
   "documentTypes": {
     "Actor": { "character": {}, "npc": {} },
-    "Item": { "race": {}, "class": {}, "spell": {}, "talent": {}, "technick": {}, "weapon": {}, "armor": {}, "equipment": {}, "feature": {}, "other": {} }
+    "Item": { "race": {}, "class": {}, "advanced-class": {}, "spell": {}, "talent": {}, "technick": {}, "weapon": {}, "armor": {}, "equipment": {}, "feature": {}, "other": {} }
   },
   "initiative": "1d20 + @system.initiative.total",
   "grid": { "distance": 1, "units": "squares" },

@@ -17,6 +17,20 @@
         <label>{{localize "LA.Damage"}} formula<input name="system.damage.formula" value="{{system.damage.formula}}" placeholder="e.g. 1d6 + 2"></label>
         <label>{{localize "LA.Attack"}} bonus<input name="system.attack.bonus" type="number" value="{{system.attack.bonus}}"></label>
       </section>
+      {{#if isRace}}
+      <section class="la-panel"><h2>{{localize "LA.RacialData"}}</h2><div class="la-item-fields">
+        <label>{{localize "LA.Speed"}}<input name="system.speed" type="number" value="{{system.speed}}"></label>
+        <label>{{localize "LA.Size"}}<input name="system.size" value="{{system.size}}"></label>
+        <label>{{localize "LA.Languages"}}<input name="system.languages" value="{{system.languages}}"></label>
+        <label>{{localize "LA.SpecialSenses"}}<input name="system.specialSenses" value="{{system.specialSenses}}"></label>
+        <label>+/- {{localize "LA.Strength"}}<input name="system.attributeAdjustments.str" type="number" value="{{system.attributeAdjustments.str}}"></label>
+        <label>+/- {{localize "LA.Agility"}}<input name="system.attributeAdjustments.agi" type="number" value="{{system.attributeAdjustments.agi}}"></label>
+        <label>+/- {{localize "LA.Vitality"}}<input name="system.attributeAdjustments.vit" type="number" value="{{system.attributeAdjustments.vit}}"></label>
+        <label>+/- {{localize "LA.Intelligence"}}<input name="system.attributeAdjustments.int" type="number" value="{{system.attributeAdjustments.int}}"></label>
+        <label>+/- {{localize "LA.Mind"}}<input name="system.attributeAdjustments.mnd" type="number" value="{{system.attributeAdjustments.mnd}}"></label>
+        <label>+/- {{localize "LA.Charisma"}}<input name="system.attributeAdjustments.cha" type="number" value="{{system.attributeAdjustments.cha}}"></label>
+      </div><label>{{localize "LA.RacialTraits"}}<textarea name="system.traitsText">{{system.traitsText}}</textarea></label><label>{{localize "LA.ChoiceGroupsJSON"}}<textarea name="system.choiceGroupsText">{{system.choiceGroupsText}}</textarea></label></section>
+      {{/if}}
       {{#if isClass}}
       <section class="la-panel"><h2>{{localize "LA.ClassProgression"}}</h2><div class="la-item-fields">
         <label>{{localize "LA.ClassKind"}}<select name="system.classKind"><option value="base" {{#if (eq system.classKind "base")}}selected{{/if}}>{{localize "LA.BaseClass"}}</option><option value="advanced" {{#if (eq system.classKind "advanced")}}selected{{/if}}>{{localize "LA.AdvancedClass"}}</option></select></label>
@@ -25,6 +39,11 @@
         <label>{{localize "LA.Fortitude"}} {{localize "LA.ClassBonus"}}<input name="system.defenceBonuses.fort" type="number" value="{{system.defenceBonuses.fort}}"></label>
         <label>{{localize "LA.Reflex"}} {{localize "LA.ClassBonus"}}<input name="system.defenceBonuses.ref" type="number" value="{{system.defenceBonuses.ref}}"></label>
         <label>{{localize "LA.Will"}} {{localize "LA.ClassBonus"}}<input name="system.defenceBonuses.will" type="number" value="{{system.defenceBonuses.will}}"></label>
+        <label>{{localize "LA.HPAtFirstLevel"}}<input name="system.hpAtFirstLevel" type="number" value="{{system.hpAtFirstLevel}}"></label>
+        <label>{{localize "LA.HPPerLevel"}}<input name="system.hpPerLevel" type="number" value="{{system.hpPerLevel}}"></label>
+        <label>{{localize "LA.MPAtFirstLevel"}}<input name="system.mpAtFirstLevel" type="number" value="{{system.mpAtFirstLevel}}"></label>
+        <label>{{localize "LA.MPPerLevel"}}<input name="system.mpPerLevel" type="number" value="{{system.mpPerLevel}}"></label>
+        <label>{{localize "LA.TrainedSkillCount"}}<input name="system.trainedSkillCount" type="number" value="{{system.trainedSkillCount}}"></label>
       </div><h3 class="la-subheading">{{localize "LA.SkillBonuses"}}</h3><div class="la-item-fields">
         <label>{{localize "LA.Acrobatics"}}<input name="system.skillBonuses.acrobatics" type="number" value="{{system.skillBonuses.acrobatics}}"></label><label>{{localize "LA.Alchemy"}}<input name="system.skillBonuses.alchemy" type="number" value="{{system.skillBonuses.alchemy}}"></label>
         <label>{{localize "LA.Athletics"}}<input name="system.skillBonuses.athletics" type="number" value="{{system.skillBonuses.athletics}}"></label><label>{{localize "LA.Deception"}}<input name="system.skillBonuses.deception" type="number" value="{{system.skillBonuses.deception}}"></label>
@@ -36,6 +55,7 @@
         <label>{{localize "LA.Smithing"}}<input name="system.skillBonuses.smithing" type="number" value="{{system.skillBonuses.smithing}}"></label><label>{{localize "LA.Spellcraft"}}<input name="system.skillBonuses.spellcraft" type="number" value="{{system.skillBonuses.spellcraft}}"></label>
         <label>{{localize "LA.Stealth"}}<input name="system.skillBonuses.stealth" type="number" value="{{system.skillBonuses.stealth}}"></label><label>{{localize "LA.Survival"}}<input name="system.skillBonuses.survival" type="number" value="{{system.skillBonuses.survival}}"></label>
       </div><p class="la-hint">{{localize "LA.ClassProgressionHint"}}</p></section>
+      <section class="la-panel"><h2>{{localize "LA.ClassChoices"}}</h2><label>{{localize "LA.ClassSkillList"}}<textarea name="system.classSkillsText">{{system.classSkillsText}}</textarea></label><label>{{localize "LA.SpecializationOptionsJSON"}}<textarea name="system.choiceGroupsText" placeholder='[{"key":"specialization","label":"Choose a path","options":[{"name":"Option A"}]}]'>{{system.choiceGroupsText}}</textarea></label></section>
       {{/if}}
     </div>
     <div class="tab" data-group="primary" data-tab="description"><section class="la-panel"><h2>{{localize "LA.Description"}}</h2><textarea class="la-item-description" name="system.description">{{system.description}}</textarea></section></div>

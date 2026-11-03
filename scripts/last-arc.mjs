@@ -1,15 +1,20 @@
 const ATTRIBUTES = ["str", "vit", "agi", "int", "mnd", "cha"];
 const SKILLS = {
-  acrobatics: "agi", alchemy: "int", athletics: "str", deception: "cha", disable: "int",
+  acrobatics: "agi", alchemy: "int", athletics: "str", deception: "cha", disable: "agi",
   "lore-terrestrial": "int", "lore-mystic": "int", "lore-occult": "int", medicine: "int", perception: "mnd",
-  perform: "cha", persuasion: "cha", pilot: "int", ride: "agi", smithing: "int", spellcraft: "int", stealth: "agi", survival: "mnd"
+  perform: "cha", persuasion: "cha", pilot: "agi", ride: "agi", smithing: "int", spellcraft: "mnd", stealth: "agi", survival: "mnd"
 };
-const ITEM_TYPES = ["race", "class", "spell", "talent", "technick", "weapon", "armor", "equipment", "feature", "other"];
+const ITEM_TYPES = ["race", "class", "advanced-class", "spell", "talent", "technick", "weapon", "armor", "equipment", "feature", "other"];
 const ATTRIBUTE_LABELS = { str: "LA.Strength", vit: "LA.Vitality", agi: "LA.Agility", int: "LA.Intelligence", mnd: "LA.Mind", cha: "LA.Charisma" };
 const SKILL_LABELS = {
   acrobatics: "LA.Acrobatics", alchemy: "LA.Alchemy", athletics: "LA.Athletics", deception: "LA.Deception", disable: "LA.Disable",
   "lore-terrestrial": "LA.LoreTerrestrial", "lore-mystic": "LA.LoreMystic", "lore-occult": "LA.LoreOccult", medicine: "LA.Medicine", perception: "LA.Perception",
   perform: "LA.Perform", persuasion: "LA.Persuasion", pilot: "LA.Pilot", ride: "LA.Ride", smithing: "LA.Smithing", spellcraft: "LA.Spellcraft", stealth: "LA.Stealth", survival: "LA.Survival"
+};
+const SKILL_ICONS = {
+  acrobatics: "fa-running", alchemy: "fa-flask", athletics: "fa-dumbbell", deception: "fa-mask", disable: "fa-lock",
+  "lore-terrestrial": "fa-book-open", "lore-mystic": "fa-book-open", "lore-occult": "fa-book-open", medicine: "fa-medkit", perception: "fa-eye",
+  perform: "fa-theater-masks", persuasion: "fa-comments", pilot: "fa-compass", ride: "fa-horse", smithing: "fa-hammer", spellcraft: "fa-magic", stealth: "fa-user-secret", survival: "fa-tree"
 };
 
 function safeNumber(value, fallback = 0) {
@@ -22,6 +27,7 @@ function signed(value) { return `${value >= 0 ? "+" : ""}${value}`; }
 Hooks.once("init", () => {
   CONFIG.Actor.documentClass = LastArcActor;
   CONFIG.Item.documentClass = LastArcItem;
+  CONFIG.Combatant.documentClass = LastArcCombatant;
   CONFIG.Actor.trackableAttributes = {
     character: { bar: ["resources.hp", "resources.mp"], value: ["details.level"] },
     npc: { bar: ["resources.hp", "resources.mp"], value: ["details.level"] }
@@ -45,7 +51,8 @@ class LastArcActor extends Actor {
     system.details ??= {};
     system.combat ??= {};
     for (const key of ATTRIBUTES) system.attributes[key] ??= { score: 10 };
-    const classItems = this.items.filter(item => item.type === "class");
+    const classItems = this.items.filter(item => ["class", "advanced-class"].includes(item.type));
+    const raceItem = this.items.find(item => item.type === "race");
     const classLevels = classItems.reduce((sum, item) => sum + Math.max(0, safeNumber(item.system.classLevel)), 0);
     const level = Math.max(1, classLevels || safeNumber(system.details?.level, 1));
     system.details.level = level;
@@ -65,7 +72,8 @@ class LastArcActor extends Actor {
         attribute,
         halfLevel,
         attributeMod: system.attributes[attribute].modifier,
-        total: halfLevel + safeNumber(skill.classBonus) + classItems.reduce((sum, item) => sum + safeNumber(item.system.skillBonuses?.[key]), 0) + safeNumber(skill.misc) + system.attributes[attribute].modifier
+        classSkill: classItems.some(item => item.system.classSkills?.includes(key)) || raceItem?.system.classSkills?.includes(key) || false,
+        total: halfLevel + (skill.trained ? 5 : 0) + safeNumber(skill.classBonus) + classItems.reduce((sum, item) => sum + safeNumber(item.system.skillBonuses?.[key]) + safeNumber(item.system.selectedEffects?.skillBonuses?.[key]), 0) + safeNumber(system.details.racialEffects?.skillBonuses?.[key]) + safeNumber(skill.misc) + system.attributes[attribute].modifier
       };
     }
     for (const defence of ["fort", "ref", "will"]) {
@@ -76,7 +84,7 @@ class LastArcActor extends Actor {
         ...record,
         base: 10,
         attributeMod: system.attributes[attribute].modifier,
-        total: 10 + system.attributes[attribute].modifier + safeNumber(record.classBonus) + classItems.reduce((sum, item) => sum + safeNumber(item.system.defenceBonuses?.[defence]), 0) + level + safeNumber(record.misc)
+        total: 10 + system.attributes[attribute].modifier + Math.max(safeNumber(record.classBonus), ...classItems.map(item => safeNumber(item.system.defenceBonuses?.[defence]) + safeNumber(item.system.selectedEffects?.defenceBonuses?.[defence]))) + safeNumber(system.details.racialEffects?.defenceBonuses?.[defence]) + level + safeNumber(record.misc)
       };
     }
     const hp = system.resources?.hp ?? {};
@@ -84,7 +92,8 @@ class LastArcActor extends Actor {
     system.resources.hp = { value: safeNumber(hp.value), max: safeNumber(hp.max) };
     system.resources.mp = { value: safeNumber(mp.value), max: safeNumber(mp.max) };
     system.combat.passivePerception = 10 + safeNumber(system.skills.perception?.total);
-    system.combat.initiativeDie = system.combat.initiativeDie || classItems.find(item => item.system.initiativeDie)?.system.initiativeDie || "1d20";
+    const classInitiative = classItems.map(item => item.system.initiativeDie).filter(Boolean).sort((a, b) => Number((b.match(/d(\d+)/i) ?? [0, 0])[1]) - Number((a.match(/d(\d+)/i) ?? [0, 0])[1]))[0];
+    system.combat.initiativeDie = classInitiative || system.combat.initiativeDie || "1d20";
     system.inventory ??= {};
     system.inventoryBulk = this.items.reduce((sum, item) => sum + safeNumber(item.system.quantity, 1) * safeNumber(item.system.bulk), 0);
     system.inventory.maxBulk = 5 + safeNumber(system.attributes.str.score);
@@ -137,7 +146,7 @@ class LastArcActorSheet extends ActorSheet {
     context.system = this.actor.system;
     context.isCharacter = this.actor.type === "character";
     context.attributeList = ATTRIBUTES.map(key => ({ key, label: ATTRIBUTE_LABELS[key], ...this.actor.system.attributes[key] }));
-    context.skills = Object.entries(SKILLS).map(([key, attribute]) => ({ key, label: SKILL_LABELS[key], attribute, attributeLabel: ATTRIBUTE_LABELS[attribute], ...this.actor.system.skills[key] }));
+    context.skills = Object.entries(SKILLS).map(([key, attribute]) => ({ key, label: SKILL_LABELS[key], icon: SKILL_ICONS[key], attribute, attributeLabel: ATTRIBUTE_LABELS[attribute], ...this.actor.system.skills[key] }));
     context.defenceList = ["fort", "ref", "will"].map(key => ({ key, label: `LA.${key === "fort" ? "Fortitude" : key === "ref" ? "Reflex" : "Will"}`, ...this.actor.system.defences[key] }));
     context.itemGroups = ITEM_TYPES.map(type => ({ type, label: game.i18n.localize(`LA.ItemType.${type}`), items: this.actor.items.filter(item => item.type === type) }));
     return context;
@@ -153,6 +162,168 @@ class LastArcActorSheet extends ActorSheet {
     html.find(".apply-damage").on("click", this._onApplyDamage.bind(this));
     html.find(".resource-control").on("click", this._onResourceControl.bind(this));
     html.find(".roll-attributes").on("click", this._onRollAttributes.bind(this));
+  }
+
+  async _onDropItem(event, data) {
+    const dropped = await Item.implementation.fromDropData(data);
+    if (!["race", "class", "advanced-class"].includes(dropped.type)) return super._onDropItem(event, data);
+    const itemData = dropped.toObject();
+    if (dropped.type === "race") return this._applyRaceDrop(itemData);
+    return this._applyClassDrop(itemData);
+  }
+
+  async _applyRaceDrop(itemData) {
+    const currentRace = this.actor.items.find(item => item.type === "race");
+    const prior = this.actor.system.details.raceAdjustments ?? {};
+    if (currentRace && !(await Dialog.confirm({ title: game.i18n.localize("LA.ReplaceRace"), content: game.i18n.localize("LA.ReplaceRacePrompt") }))) return false;
+    const update = {};
+    const oldHP = safeNumber(this.actor.system.resources.hp.max);
+    const oldMP = safeNumber(this.actor.system.resources.mp.max);
+    const choices = await this._chooseItemOption(itemData, "race");
+    if (choices === null) return false;
+    const baseAdjustments = itemData.system.attributeAdjustments ?? {};
+    const choiceAdjustments = choices.effects?.attributeAdjustments ?? {};
+    const appliedAdjustments = {};
+    for (const key of ATTRIBUTES) {
+      const oldAdjustment = safeNumber(prior[key]);
+      const newAdjustment = safeNumber(baseAdjustments[key]) + safeNumber(choiceAdjustments[key]);
+      appliedAdjustments[key] = newAdjustment;
+      const score = safeNumber(this.actor.system.attributes[key].score, 10) - oldAdjustment + newAdjustment;
+      update[`system.attributes.${key}.score`] = score;
+    }
+    const racialEffects = foundry.utils.mergeObject(foundry.utils.deepClone(itemData.system.effects ?? {}), choices.effects ?? {}, { inplace: false });
+    update["system.details.race"] = itemData.name;
+    update["system.details.raceAdjustments"] = appliedAdjustments;
+    update["system.details.racialEffects"] = racialEffects;
+    update["system.details.attributeCaps"] = itemData.system.attributeCaps ?? {};
+    update["system.combat.speed"] = safeNumber(itemData.system.speed, this.actor.system.combat.speed);
+    update["system.combat.specialSenses"] = choices.effects.specialSenses ?? itemData.system.specialSenses ?? "";
+    update["system.details.languages"] = itemData.system.languages ?? "";
+    itemData.system.selectedChoices = choices.selectedChoices;
+    itemData.system.selectedEffects = choices.effects;
+    if (currentRace) await currentRace.delete();
+    await this.actor.update(update);
+    const created = await this.actor.createEmbeddedDocuments("Item", [itemData]);
+    await this._recalculateClassResources(oldHP, oldMP);
+    return created;
+  }
+
+  async _applyClassDrop(itemData) {
+    if (itemData.system.needsRuleData) {
+      ui.notifications.warn(`${itemData.name}: add its progression, defence, HP/MP, and skills to the compendium item before applying it.`);
+      return false;
+    }
+    const choices = await this._chooseItemOption(itemData, itemData.type);
+    if (choices === null) return false;
+    const selectedSubclass = choices.selectedChoices?.[0]?.value ?? itemData.system.selectedSubclass ?? "";
+    const existing = this.actor.items.find(item => item.type === itemData.type && item.name === itemData.name && (item.system.selectedSubclass ?? "") === selectedSubclass);
+    const oldMaxHP = safeNumber(this.actor.system.resources.hp.max);
+    const oldMaxMP = safeNumber(this.actor.system.resources.mp.max);
+    if (existing) {
+      await existing.update({ "system.classLevel": safeNumber(existing.system.classLevel, 1) + 1 });
+      await this._recalculateClassResources(oldMaxHP, oldMaxMP);
+      return existing;
+    }
+    itemData.system.classLevel = Math.max(1, safeNumber(itemData.system.classLevel, 1));
+    itemData.system.selectedSubclass = selectedSubclass ?? "";
+    itemData.system.selectedChoices = choices.selectedChoices;
+    itemData.system.selectedEffects = choices.effects;
+    const classes = this.actor.items.filter(item => ["class", "advanced-class"].includes(item.type));
+    itemData.system.isStartingClass = classes.length === 0;
+    if (!classes.length && itemData.system.trainedSkillCount && itemData.system.classSkills?.length) {
+      const count = Math.max(0, safeNumber(itemData.system.trainedSkillCount) + this.actor.system.attributes.int.modifier + safeNumber(this.actor.system.details.racialEffects?.bonusTrainedSkills));
+      const trainedSkills = await this._chooseClassSkills(itemData, count);
+      if (trainedSkills === null) return false;
+      itemData.system.trainedSkills = trainedSkills;
+      for (const key of trainedSkills) await this.actor.update({ [`system.skills.${key}.trained`]: true });
+    }
+    const created = await this.actor.createEmbeddedDocuments("Item", [itemData]);
+    await this._recalculateClassResources(oldMaxHP, oldMaxMP);
+    return created;
+  }
+
+  async _recalculateClassResources(oldMaxHP, oldMaxMP) {
+    const classes = this.actor.items.filter(item => ["class", "advanced-class"].includes(item.type));
+    const hpMax = classes.reduce((sum, item) => {
+      const levels = Math.max(0, safeNumber(item.system.classLevel));
+      if (!levels) return sum;
+      const initial = item.system.isStartingClass ? safeNumber(item.system.hpAtFirstLevel) : 0;
+      return sum + initial + Math.max(0, levels - (item.system.isStartingClass ? 1 : 0)) * Math.max(1, safeNumber(item.system.hpPerLevel) + this.actor.system.attributes.vit.modifier) + (item.system.isStartingClass ? this.actor.system.attributes.vit.modifier : 0);
+    }, 0);
+    const mpMax = classes.reduce((sum, item) => {
+      const levels = Math.max(0, safeNumber(item.system.classLevel));
+      if (!levels) return sum;
+      const initial = item.system.isStartingClass ? safeNumber(item.system.mpAtFirstLevel) : 0;
+      return sum + initial + Math.max(0, levels - (item.system.isStartingClass ? 1 : 0)) * Math.max(1, safeNumber(item.system.mpPerLevel) + this.actor.system.attributes.mnd.modifier) + (item.system.isStartingClass ? this.actor.system.attributes.mnd.modifier : 0);
+    }, 0);
+    if (!classes.length) return;
+    const hpGain = hpMax - oldMaxHP;
+    const mpGain = mpMax - oldMaxMP;
+    await this.actor.update({
+      "system.resources.hp.max": hpMax,
+      "system.resources.hp.value": Math.max(0, Math.min(hpMax, safeNumber(this.actor.system.resources.hp.value) + hpGain)),
+      "system.resources.mp.max": mpMax,
+      "system.resources.mp.value": Math.max(0, Math.min(mpMax, safeNumber(this.actor.system.resources.mp.value) + mpGain))
+    });
+  }
+
+  async _chooseClassSkills(itemData, count) {
+    const available = (itemData.system.classSkills ?? []).filter(key => SKILLS[key]);
+    if (!count || !available.length) return [];
+    const options = available.map(key => `<option value="${foundry.utils.escapeHTML(key)}">${game.i18n.localize(SKILL_LABELS[key])}</option>`).join("");
+    return new Promise(resolve => new Dialog({
+      title: game.i18n.localize("LA.SelectTrainedSkills"),
+      content: `<form><p>${game.i18n.format("LA.SelectTrainedSkillsHint", { count: Math.min(count, available.length) })}</p><select name="skills" multiple size="${Math.min(available.length, 10)}">${options}</select></form>`,
+      buttons: {
+        choose: { label: game.i18n.localize("LA.Choose"), callback: html => {
+          const values = html.find("[name=skills]").val() ?? [];
+          if (values.length !== Math.min(count, available.length)) {
+            ui.notifications.warn(game.i18n.format("LA.SelectTrainedSkillsHint", { count: Math.min(count, available.length) }));
+            resolve(null);
+          } else resolve(values);
+        } },
+        cancel: { label: game.i18n.localize("LA.Cancel"), callback: () => resolve(null) }
+      },
+      default: "choose", close: () => resolve(null)
+    }).render(true));
+  }
+
+  async _chooseItemOption(itemData, kind) {
+    let groups = itemData.system.choiceGroups ?? [];
+    if (typeof groups === "string") {
+      try { groups = JSON.parse(groups); } catch { groups = []; }
+    }
+    if (!groups.length) return { selectedChoices: [], effects: {} };
+    const selectedChoices = [];
+    const effects = {};
+    for (const group of groups) {
+      const answer = await new Promise(resolve => {
+        const options = (group.options ?? []).map((option, index) => `<option value="${index}">${foundry.utils.escapeHTML(option.name ?? option)}</option>`).join("");
+        new Dialog({
+          title: group.label ?? game.i18n.localize(kind === "race" ? "LA.ChooseTraitOption" : "LA.ChooseSubclass"),
+          content: `<form><label>${foundry.utils.escapeHTML(group.label ?? "") }<select name="choice">${options}</select></label></form>`,
+          buttons: {
+            choose: { label: game.i18n.localize("LA.Choose"), callback: html => resolve(group.options[Number(html.find("[name=choice]").val())]) },
+            cancel: { label: game.i18n.localize("LA.Cancel"), callback: () => resolve(null) }
+          },
+          default: "choose", close: () => resolve(null)
+        }).render(true);
+      });
+      if (!answer) return null;
+      selectedChoices.push({ group: group.key ?? group.label, value: answer.name ?? answer });
+      this._mergeEffects(effects, answer.effects ?? {});
+    }
+    return { selectedChoices, effects };
+  }
+
+  _mergeEffects(target, source) {
+    for (const [key, value] of Object.entries(source)) {
+      if (value && typeof value === "object" && !Array.isArray(value)) {
+        target[key] ??= {};
+        this._mergeEffects(target[key], value);
+      } else if (typeof value === "number") target[key] = safeNumber(target[key]) + value;
+      else target[key] = value;
+    }
   }
 
   async _onRoll(event) {
@@ -219,14 +390,46 @@ class LastArcActorSheet extends ActorSheet {
 
 class LastArcNPCSheet extends LastArcActorSheet {}
 
+// Use the actor's class-derived die in the combat tracker as well as on the sheet.
+class LastArcCombatant extends Combatant {
+  _getInitiativeFormula() {
+    return this.actor?.system?.combat?.initiativeDie || super._getInitiativeFormula();
+  }
+}
+
 class LastArcItemSheet extends ItemSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, { classes: ["last-arc", "sheet", "item"], template: "systems/last-arc-analogue/templates/item-sheet.hbs", width: 540, height: 610 });
   }
   get template() { return "systems/last-arc-analogue/templates/item-sheet.hbs"; }
-  getData(options) { const context = super.getData(options); context.system = this.item.system; context.itemTypeLabel = `LA.ItemType.${this.item.type}`; context.isClass = this.item.type === "class"; return context; }
+  getData(options) {
+    const context = super.getData(options);
+    context.system = foundry.utils.deepClone(this.item.system);
+    context.system.classSkillsText = Array.isArray(context.system.classSkills) ? context.system.classSkills.join("\n") : "";
+    context.system.traitsText = Array.isArray(context.system.traits) ? context.system.traits.join("\n") : "";
+    context.system.choiceGroupsText = JSON.stringify(context.system.choiceGroups ?? [], null, 2);
+    context.itemTypeLabel = `LA.ItemType.${this.item.type}`;
+    context.isClass = ["class", "advanced-class"].includes(this.item.type);
+    context.isRace = this.item.type === "race";
+    return context;
+  }
   activateListeners(html) {
     super.activateListeners(html);
     html.find(".item-roll").on("click", event => { event.preventDefault(); this.item.roll(); });
+  }
+  async _updateObject(event, formData) {
+    const data = foundry.utils.expandObject(formData);
+    const itemSystem = data.system ?? {};
+    const skillsText = itemSystem.classSkillsText ?? "";
+    const traitsText = itemSystem.traitsText ?? "";
+    const choicesText = itemSystem.choiceGroupsText ?? "[]";
+    delete itemSystem.classSkillsText;
+    delete itemSystem.traitsText;
+    delete itemSystem.choiceGroupsText;
+    if (skillsText) itemSystem.classSkills = skillsText.split(/[,\n]/).map(key => key.trim()).filter(key => SKILLS[key]);
+    itemSystem.traits = traitsText.split(/\n/).map(line => line.trim()).filter(Boolean);
+    try { itemSystem.choiceGroups = JSON.parse(choicesText || "[]"); }
+    catch { return ui.notifications.error(game.i18n.localize("LA.InvalidChoiceJSON")); }
+    return this.item.update(data);
   }
 }

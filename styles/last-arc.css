@@ -31,6 +31,8 @@
 .la-attribute-row input,.la-defense-edit input,.la-skill-row input[type=number],.la-passive input { height: 25px; text-align: center; }
 .la-mod { padding: 3px 5px; color: var(--la-accent); text-align: center; border: 1px solid #dfcbb7; background: #f4e5d7; }
 .la-die { min-width: 27px; height: 25px; padding: 1px 4px; border: 1px solid var(--la-gold); border-radius: 2px; background: #eee1c8; color: var(--la-accent); font: 700 10px Arial,sans-serif; cursor: pointer; }
+.la-die .fa-dice-d20 { font-size: 15px; vertical-align: middle; }
+.la-skill-icon { width: 15px; color: #8a6a44; text-align: center; }
 .la-defense-list { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; margin-top: 10px; }
 .la-defense-list label { display: grid; grid-template-columns: 1fr 40px; align-items: center; color: var(--la-muted); font: 700 9px Arial,sans-serif; }
 .la-defense-list input { grid-column: 1; grid-row: 2; width: 44px; }
