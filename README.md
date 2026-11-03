@@ -13,7 +13,7 @@ Alternatively, download the packaged ZIP, extract its `last-arc-analogue` folder
 ## What is implemented
 
 - Character and NPC actor types, with an editable sheet organized around the source sheet's sections: identity, six attributes, combat resources, defences, skills, weapons, features, spells/technicks, inventory, and biography.
-- Attribute modifiers from scores; half-level skill bonuses; editable class and miscellaneous bonuses; Fortitude, Reflex, and Will totals using full character level; a configurable class initiative die.
+- Attribute modifiers from scores; half-level skill bonuses; full-level Fortitude, Reflex, and Will totals; automatic character-level and defense-bonus aggregation from class items; a configurable class initiative die.
 - Chat rolls for attributes, skills, initiative, weapon attacks, and item damage formulas.
 - HP/MP controls, damage application with damage reduction, inventory bulk totals, and editable race/class/feature/spell/talent/technick/weapon/armor/equipment items.
 - Portuguese (Brazil) and English labels.

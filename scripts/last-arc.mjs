@@ -45,7 +45,9 @@ class LastArcActor extends Actor {
     system.details ??= {};
     system.combat ??= {};
     for (const key of ATTRIBUTES) system.attributes[key] ??= { score: 10 };
-    const level = Math.max(1, safeNumber(system.details?.level, 1));
+    const classItems = this.items.filter(item => item.type === "class");
+    const classLevels = classItems.reduce((sum, item) => sum + Math.max(0, safeNumber(item.system.classLevel)), 0);
+    const level = Math.max(1, classLevels || safeNumber(system.details?.level, 1));
     system.details.level = level;
     for (const key of ATTRIBUTES) {
       const score = safeNumber(system.attributes?.[key]?.score, 10);
@@ -63,7 +65,7 @@ class LastArcActor extends Actor {
         attribute,
         halfLevel,
         attributeMod: system.attributes[attribute].modifier,
-        total: halfLevel + safeNumber(skill.classBonus) + safeNumber(skill.misc) + system.attributes[attribute].modifier
+        total: halfLevel + safeNumber(skill.classBonus) + classItems.reduce((sum, item) => sum + safeNumber(item.system.skillBonuses?.[key]), 0) + safeNumber(skill.misc) + system.attributes[attribute].modifier
       };
     }
     for (const defence of ["fort", "ref", "will"]) {
@@ -74,7 +76,7 @@ class LastArcActor extends Actor {
         ...record,
         base: 10,
         attributeMod: system.attributes[attribute].modifier,
-        total: 10 + system.attributes[attribute].modifier + safeNumber(record.classBonus) + level + safeNumber(record.misc)
+        total: 10 + system.attributes[attribute].modifier + safeNumber(record.classBonus) + classItems.reduce((sum, item) => sum + safeNumber(item.system.defenceBonuses?.[defence]), 0) + level + safeNumber(record.misc)
       };
     }
     const hp = system.resources?.hp ?? {};
@@ -82,6 +84,7 @@ class LastArcActor extends Actor {
     system.resources.hp = { value: safeNumber(hp.value), max: safeNumber(hp.max) };
     system.resources.mp = { value: safeNumber(mp.value), max: safeNumber(mp.max) };
     system.combat.passivePerception = 10 + safeNumber(system.skills.perception?.total);
+    system.combat.initiativeDie = system.combat.initiativeDie || classItems.find(item => item.system.initiativeDie)?.system.initiativeDie || "1d20";
     system.inventory ??= {};
     system.inventoryBulk = this.items.reduce((sum, item) => sum + safeNumber(item.system.quantity, 1) * safeNumber(item.system.bulk), 0);
     system.inventory.maxBulk = 5 + safeNumber(system.attributes.str.score);
@@ -221,7 +224,7 @@ class LastArcItemSheet extends ItemSheet {
     return foundry.utils.mergeObject(super.defaultOptions, { classes: ["last-arc", "sheet", "item"], template: "systems/last-arc-analogue/templates/item-sheet.hbs", width: 540, height: 610 });
   }
   get template() { return "systems/last-arc-analogue/templates/item-sheet.hbs"; }
-  getData(options) { const context = super.getData(options); context.system = this.item.system; context.itemTypeLabel = `LA.ItemType.${this.item.type}`; return context; }
+  getData(options) { const context = super.getData(options); context.system = this.item.system; context.itemTypeLabel = `LA.ItemType.${this.item.type}`; context.isClass = this.item.type === "class"; return context; }
   activateListeners(html) {
     super.activateListeners(html);
     html.find(".item-roll").on("click", event => { event.preventDefault(); this.item.roll(); });
