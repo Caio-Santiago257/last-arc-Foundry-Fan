@@ -33,10 +33,6 @@
 .la-die { min-width: 27px; height: 25px; padding: 1px 4px; border: 1px solid var(--la-gold); border-radius: 2px; background: #eee1c8; color: var(--la-accent); font: 700 10px Arial,sans-serif; cursor: pointer; }
 .la-die .fa-dice-d20 { font-size: 15px; vertical-align: middle; }
 .la-skill-icon { width: 15px; color: #8a6a44; text-align: center; }
-.la-defense-list { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; margin-top: 10px; }
-.la-defense-list label { display: grid; grid-template-columns: 1fr 40px; align-items: center; color: var(--la-muted); font: 700 9px Arial,sans-serif; }
-.la-defense-list input { grid-column: 1; grid-row: 2; width: 44px; }
-.la-defense-list b { grid-column: 2; grid-row: 1/3; color: var(--la-accent); font: bold 23px Georgia,serif; text-align: right; }
 .la-resource-card { display: flex; align-items: center; justify-content: space-between; margin-bottom: 9px; padding: 9px 10px; border: 1px solid var(--la-line); background: #f6efe1; }
 .la-resource-card.hp { border-left: 4px solid #9a3a34; }.la-resource-card.mp { border-left: 4px solid #3c6787; }
 .la-resource-card>label { font: 700 11px Arial,sans-serif; text-transform: uppercase; color: var(--la-muted); }
@@ -63,13 +59,15 @@
 .la-three-columns label { display: grid; gap: 5px; color: var(--la-muted); font: 700 10px Arial,sans-serif; text-transform: uppercase; }
 .la-three-columns textarea { min-height: 64px; }
 .la-skill-table { display: grid; grid-template-columns: minmax(0,1fr); }
-.la-skill-header,.la-skill-row { display: grid; grid-template-columns: 28px minmax(100px,1fr) 50px 62px 54px 45px 55px 55px; gap: 6px; align-items: center; }
+.la-skill-header,.la-skill-row { display: grid; grid-template-columns: 28px minmax(100px,1fr) 50px minmax(105px,.75fr) 45px 55px 55px; gap: 6px; align-items: center; }
 .la-skill-header { padding: 5px 0; color: var(--la-muted); font: 700 8px Arial,sans-serif; text-transform: uppercase; }
 .la-skill-row { min-height: 33px; border-top: 1px solid #e7ddcd; }
 .la-skill-row>span:nth-child(2) { font-size: 12px; font-weight: 700; }
 .la-skill-row input[type=checkbox] { justify-self: center; }
 .la-skill-row input[type=number] { width: 100%; }
 .la-muted { color: var(--la-muted); font: 10px Arial,sans-serif; text-align: center; }
+.la-skill-attribute { white-space: nowrap; }
+.la-skill-attribute strong { margin-left: 3px; color: var(--la-accent); font-weight: 700; }
 .la-passive { display: flex; gap: 8px; align-items: center; margin-top: 10px; font: 700 11px Arial,sans-serif; }
 .la-passive input { width: 60px; }
 .la-empty { margin: 8px 0; color: var(--la-muted); font-style: italic; }

@@ -90,12 +90,14 @@ class LastArcActor extends Actor {
     for (const defence of ["fort", "ref", "will"]) {
       const attribute = { fort: "vit", ref: "agi", will: "mnd" }[defence];
       const record = system.defences?.[defence] ?? {};
+      const classBonus = Math.max(0, ...classItems.map(item => safeNumber(item.system.defenceBonuses?.[defence]) + safeNumber(item.system.selectedEffects?.defenceBonuses?.[defence])));
       system.defences ??= {};
       system.defences[defence] = {
         ...record,
         base: 10,
         attributeMod: system.attributes[attribute].modifier,
-        total: 10 + system.attributes[attribute].modifier + Math.max(safeNumber(record.classBonus), ...classItems.map(item => safeNumber(item.system.defenceBonuses?.[defence]) + safeNumber(item.system.selectedEffects?.defenceBonuses?.[defence]))) + safeNumber(system.details.racialEffects?.defenceBonuses?.[defence]) + level + safeNumber(record.misc)
+        classBonus,
+        total: 10 + system.attributes[attribute].modifier + classBonus + safeNumber(system.details.racialEffects?.defenceBonuses?.[defence]) + level + safeNumber(record.misc)
       };
     }
     const hp = system.resources?.hp ?? {};
