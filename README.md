@@ -30,6 +30,8 @@ The system package ID is `last-arc-analogue`. Edit `packs-source/*.json` and run
 
 Version 0.2.3 removes duplicate defences from the Attributes tab, displays the active class defence bonus as a derived read-only value in Combat, and shows each skill's governing attribute modifier while removing the unused Class column.
 
+Version 0.2.4 adds the book's XP thresholds through level 20 and a compact level-up button that appears when the character qualifies. It advances an active class, applies its HP/MP progression and talent choice, and prompts for the two attribute increases every four character levels. Technick selection is intentionally deferred.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork or copied rule text. The system code is provided without an added license until the repository owner chooses one.

@@ -16,7 +16,11 @@
 .la-level-card>input { font: bold 27px Georgia,serif; text-align: center; height: 34px; }
 .la-level-card small { margin-top: 5px; color: var(--la-muted); font: 700 9px Arial,sans-serif; letter-spacing: .08em; text-transform: uppercase; }
 .la-xp { display: flex; align-items: center; gap: 5px; }
-.la-xp input { min-width: 0; text-align: center; }
+.la-xp input { width: 42px !important; min-width: 0; text-align: center; }
+.la-xp input[readonly] { color: var(--la-muted); }
+.la-level-up { width: 20px; height: 20px; padding: 0; border: 1px solid var(--la-gold); border-radius: 50%; background: #efe3ce; color: var(--la-accent); font-size: 10px; cursor: pointer; }
+.la-level-up:hover { background: var(--la-accent); color: #fff8e9; }
+.la-max-level { color: var(--la-accent); font: 700 9px Arial,sans-serif; }
 .la-tabs { display: flex; gap: 2px; padding: 7px 12px 0; border-bottom: 1px solid var(--la-line); background: #e8dcc5; }
 .la-tabs .item { padding: 8px 10px; color: var(--la-muted); font: 700 10px Arial,sans-serif; letter-spacing: .06em; text-transform: uppercase; border-bottom: 2px solid transparent; }
 .la-tabs .item.active { color: var(--la-accent); border-color: var(--la-accent); }

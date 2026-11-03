@@ -11,7 +11,7 @@
         <label>{{localize "LA.AdvancedClass"}}<input name="system.details.advancedClass" value="{{system.details.advancedClass}}"></label>
       </div>
     </div>
-    <div class="la-level-card"><span>{{localize "LA.Level"}}</span><input type="number" name="system.details.level" value="{{system.details.level}}" min="1"><small>{{localize "LA.Experience"}}</small><div class="la-xp"><input type="number" name="system.details.xp" value="{{system.details.xp}}" min="0"><span>/</span><input type="number" name="system.details.nextLevel" value="{{system.details.nextLevel}}" min="0"></div></div>
+    <div class="la-level-card"><span>{{localize "LA.Level"}}</span><input type="number" name="system.details.level" value="{{system.details.level}}" min="1"><small>{{localize "LA.Experience"}}</small><div class="la-xp"><input type="number" name="system.details.xp" value="{{system.details.xp}}" min="0"><span>/</span>{{#if atMaxLevel}}<span class="la-max-level">{{localize "LA.MaxLevel"}}</span>{{else}}<input type="number" value="{{system.details.nextLevel}}" min="0" readonly>{{/if}}{{#if canLevelUp}}<button type="button" class="la-level-up" title="{{localize 'LA.LevelUp'}}" aria-label="{{localize 'LA.LevelUp'}}"><i class="fas fa-arrow-up" aria-hidden="true"></i></button>{{/if}}</div></div>
   </header>
 
   <nav class="sheet-tabs la-tabs" data-group="primary">

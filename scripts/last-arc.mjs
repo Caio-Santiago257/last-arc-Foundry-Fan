@@ -1,4 +1,5 @@
 const ATTRIBUTES = ["str", "vit", "agi", "int", "mnd", "cha"];
+const LEVEL_XP = [0, 0, 1000, 3000, 6000, 10000, 15000, 21000, 28000, 36000, 45000, 55000, 66000, 78000, 91000, 105000, 120000, 136000, 153000, 171000, 190000];
 const SKILLS = {
   acrobatics: "agi", alchemy: "int", athletics: "str", deception: "cha", disable: "agi",
   "lore-terrestrial": "int", "lore-mystic": "int", "lore-occult": "int", medicine: "int", perception: "mnd",
@@ -67,6 +68,8 @@ class LastArcActor extends Actor {
     const classLevels = classItems.reduce((sum, item) => sum + Math.max(0, safeNumber(item.system.classLevel)), 0);
     const level = Math.max(1, classLevels || safeNumber(system.details?.level, 1));
     system.details.level = level;
+    system.details.xp = Math.max(0, safeNumber(system.details.xp));
+    system.details.nextLevel = level < LEVEL_XP.length - 1 ? LEVEL_XP[level + 1] : 0;
     for (const key of ATTRIBUTES) {
       const score = safeNumber(system.attributes?.[key]?.score, 10);
       system.attributes[key] ??= {};
@@ -162,6 +165,10 @@ class LastArcActorSheet extends ActorSheet {
     context.skills = Object.entries(SKILLS).map(([key, attribute]) => ({ key, label: SKILL_LABELS[key], icon: SKILL_ICONS[key], attribute, attributeLabel: ATTRIBUTE_LABELS[attribute], ...this.actor.system.skills[key] }));
     context.defenceList = ["fort", "ref", "will"].map(key => ({ key, label: `LA.${key === "fort" ? "Fortitude" : key === "ref" ? "Reflex" : "Will"}`, ...this.actor.system.defences[key] }));
     context.itemGroups = ITEM_TYPES.map(type => ({ type, label: game.i18n.localize(`LA.ItemType.${type}`), items: this.actor.items.filter(item => item.type === type) }));
+    context.canLevelUp = this.actor.system.details.level < LEVEL_XP.length - 1
+      && this.actor.system.details.xp >= this.actor.system.details.nextLevel
+      && this.actor.items.some(item => ["class", "advanced-class"].includes(item.type) && safeNumber(item.system.classLevel) > 0);
+    context.atMaxLevel = this.actor.system.details.level >= LEVEL_XP.length - 1;
     return context;
   }
 
@@ -175,6 +182,76 @@ class LastArcActorSheet extends ActorSheet {
     html.find(".apply-damage").on("click", this._onApplyDamage.bind(this));
     html.find(".resource-control").on("click", this._onResourceControl.bind(this));
     html.find(".roll-attributes").on("click", this._onRollAttributes.bind(this));
+    html.find(".la-level-up").on("click", this._onLevelUp.bind(this));
+  }
+
+  async _onLevelUp(event) {
+    event.preventDefault();
+    const level = safeNumber(this.actor.system.details.level, 1);
+    const nextLevel = level + 1;
+    const xpRequired = LEVEL_XP[nextLevel];
+    if (!xpRequired || safeNumber(this.actor.system.details.xp) < xpRequired) return;
+
+    const classes = this.actor.items.filter(item => ["class", "advanced-class"].includes(item.type) && safeNumber(item.system.classLevel) > 0);
+    if (!classes.length) return ui.notifications.error(game.i18n.localize("LA.NoLevelClass"));
+    const classPack = game.packs.get("last-arc-analogue.classes");
+    const ownedClassNames = new Set(classes.filter(item => item.type === "class").map(item => item.name));
+    const availableClasses = classPack ? (await classPack.getDocuments()).filter(item => !ownedClassNames.has(item.name)) : [];
+    const classChoices = [...classes.map(item => ({ item, isNew: false })), ...availableClasses.map(item => ({ item, isNew: true }))];
+    const selectedClass = classChoices.length === 1 ? classChoices[0] : await this._chooseLevelClass(classes, availableClasses);
+    if (!selectedClass) return;
+
+    let attributeIncreases = null;
+    if (nextLevel % 4 === 0) {
+      attributeIncreases = await this._chooseAttributeIncreases();
+      if (!attributeIncreases) return;
+    }
+
+    const result = await this._applyClassDrop(selectedClass.item.toObject(), { levelUp: !selectedClass.isNew });
+    if (!result) return;
+
+    if (attributeIncreases?.length) {
+      const oldMaxHP = safeNumber(this.actor.system.resources.hp.max);
+      const oldMaxMP = safeNumber(this.actor.system.resources.mp.max);
+      const update = {};
+      for (const key of attributeIncreases) update[`system.attributes.${key}.score`] = safeNumber(this.actor.system.attributes[key].score, 10) + 1;
+      await this.actor.update(update);
+      await this._recalculateClassResources(oldMaxHP, oldMaxMP);
+    }
+    ui.notifications.info(game.i18n.format("LA.LevelUpComplete", { level: nextLevel }));
+  }
+
+  async _chooseLevelClass(classes, availableClasses) {
+    const options = [
+      ...classes.map((item, index) => `<option value="owned-${index}">${game.i18n.format("LA.AdvanceClassOption", { name: foundry.utils.escapeHTML(item.name), level: safeNumber(item.system.classLevel) })}</option>`),
+      ...availableClasses.map((item, index) => `<option value="new-${index}">${game.i18n.format("LA.StartClassOption", { name: foundry.utils.escapeHTML(item.name) })}</option>`)
+    ].join("");
+    return new Promise(resolve => new Dialog({
+      title: game.i18n.localize("LA.SelectLevelClass"),
+      content: `<form><p>${game.i18n.localize("LA.SelectLevelClassHint")}</p><select name="class">${options}</select></form>`,
+      buttons: {
+        choose: { label: game.i18n.localize("LA.Choose"), callback: html => {
+          const [kind, rawIndex] = String(html.find("[name=class]").val() ?? "").split("-");
+          const index = Number(rawIndex);
+          resolve(kind === "owned" ? { item: classes[index], isNew: false } : kind === "new" ? { item: availableClasses[index], isNew: true } : null);
+        } },
+        cancel: { label: game.i18n.localize("LA.Cancel"), callback: () => resolve(null) }
+      },
+      default: "choose", close: () => resolve(null)
+    }).render(true));
+  }
+
+  async _chooseAttributeIncreases() {
+    const options = ATTRIBUTES.map(key => `<option value="${key}">${game.i18n.localize(ATTRIBUTE_LABELS[key])}</option>`).join("");
+    return new Promise(resolve => new Dialog({
+      title: game.i18n.localize("LA.SelectAttributeIncrease"),
+      content: `<form><p>${game.i18n.localize("LA.AttributeIncreaseHint")}</p><label>${game.i18n.localize("LA.AttributeIncreaseOne")}<select name="first">${options}</select></label><label>${game.i18n.localize("LA.AttributeIncreaseTwo")}<select name="second">${options}</select></label></form>`,
+      buttons: {
+        choose: { label: game.i18n.localize("LA.Choose"), callback: html => resolve([html.find('[name="first"]').val(), html.find('[name="second"]').val()]) },
+        cancel: { label: game.i18n.localize("LA.Cancel"), callback: () => resolve(null) }
+      },
+      default: "choose", close: () => resolve(null)
+    }).render(true));
   }
 
   async _onDropItem(event, data) {
@@ -236,12 +313,14 @@ class LastArcActorSheet extends ActorSheet {
     return created;
   }
 
-  async _applyClassDrop(itemData) {
+  async _applyClassDrop(itemData, { levelUp = false } = {}) {
     if (itemData.system.needsRuleData) {
       ui.notifications.warn(`${itemData.name}: add its progression, defence, HP/MP, and skills to the compendium item before applying it.`);
       return false;
     }
-    const choices = await this._chooseItemOption(itemData, itemData.type);
+    const choices = levelUp
+      ? { selectedChoices: itemData.system.selectedChoices ?? [], effects: itemData.system.selectedEffects ?? {} }
+      : await this._chooseItemOption(itemData, itemData.type);
     if (choices === null) return false;
     const selectedSubclass = choices.selectedChoices?.[0]?.value ?? itemData.system.selectedSubclass ?? "";
     itemData.system.talentTrees ??= CLASS_TALENT_TREES[itemData.name] ?? [];
