@@ -2,11 +2,12 @@
   {{#if items.length}}
     {{#each items as |item|}}
       <div class="item la-item-row" data-item-id="{{item.id}}">
-        <button type="button" class="item-roll la-die" title="{{localize 'LA.Roll'}}"><i class="fas fa-dice-d20" aria-hidden="true"></i></button>
+        {{#unless (eq item.type "feature")}}<button type="button" class="item-roll la-die" title="{{localize 'LA.Roll'}}"><i class="fas fa-dice-d20" aria-hidden="true"></i></button>{{/unless}}
         <button type="button" class="item-edit la-link"><i class="fas {{item.system.iconClass}}" aria-hidden="true"></i> {{item.name}}</button>
         <span class="la-item-detail">{{item.system.action}} {{item.system.range}}</span>
         <span class="la-item-detail">{{item.system.cost}}</span>
         <button type="button" class="item-delete la-icon-button" title="{{localize 'LA.Delete'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
+        {{#if (eq item.type "feature")}}<small class="la-feature-description">{{item.system.description}}</small>{{/if}}
       </div>
     {{/each}}
   {{else}}<p class="la-empty">{{localize "LA.NoItems"}}</p>{{/if}}

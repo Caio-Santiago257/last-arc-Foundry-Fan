@@ -81,5 +81,10 @@
 .la-item-header img { width: 54px; height: 54px; object-fit: cover; border: 1px solid var(--la-gold); cursor: pointer; }.la-item-header>div { flex: 1; }.la-item-header small { color: var(--la-muted); font: 700 9px Arial,sans-serif; text-transform: uppercase; }
 .la-item-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }.la-item-fields label { display: grid; gap: 4px; color: var(--la-muted); font: 700 9px Arial,sans-serif; text-transform: uppercase; }.la-item-fields input { height: 28px; }
 .la-item-description { width: 100%; min-height: 360px; font: 14px/1.5 Georgia,serif; }.la-item-footer { padding: 0 16px 16px; }
+.la-race-description { margin: 4px 0 14px; line-height: 1.55; white-space: pre-wrap; }
+.la-race-traits ul { margin: 6px 0 0; padding-left: 22px; }.la-race-traits li { margin: 5px 0; line-height: 1.45; }
+.la-skill-choice-form fieldset { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 5px 12px; max-height: 320px; overflow-y: auto; border: 1px solid #bda783; padding: 10px; }
+.la-skill-choice { display: flex; align-items: flex-start; gap: 7px; }.la-skill-choice-count { font-weight: 700; }
+.la-item-row .la-feature-description { grid-column: 2 / 5; display: block; padding: 0 4px 7px; line-height: 1.4; color: #554b3f; }
 .la-result.success { color: #28643e; font-weight: 700; }.la-result.failure { color: #922f29; font-weight: 700; }
 @media (max-width: 760px) { .la-header { grid-template-columns: 65px 1fr 85px; gap: 8px; padding: 10px; }.la-portrait { width: 65px; height: 82px; }.la-identity-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }.la-overview-grid { grid-template-columns: 1fr; }.la-body { padding: 8px; }.la-skill-table { overflow-x: auto; }.la-skill-header,.la-skill-row { min-width: 590px; }.la-tabs { overflow-x: auto; }.la-tabs .item { white-space: nowrap; padding: 7px; } }

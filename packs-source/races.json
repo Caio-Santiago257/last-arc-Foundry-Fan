@@ -1,17 +1,703 @@
 [
-  {"name":"Human","type":"race","img":"icons/svg/person.svg","system":{"speed":6,"size":"Medium","attributeAdjustments":{},"attributeCaps":{"str":20,"agi":20,"vit":20,"int":20,"mnd":20,"cha":20},"languages":"Common","specialSenses":"None","effects":{},"choiceGroups":[{"key":"attribute","label":"Choose one attribute for the human +2","options":[{"name":"Strength","effects":{"attributeAdjustments":{"str":2}}},{"name":"Agility","effects":{"attributeAdjustments":{"agi":2}}},{"name":"Vitality","effects":{"attributeAdjustments":{"vit":2}}},{"name":"Intelligence","effects":{"attributeAdjustments":{"int":2}}},{"name":"Mind","effects":{"attributeAdjustments":{"mnd":2}}},{"name":"Charisma","effects":{"attributeAdjustments":{"cha":2}}}]}],"traits":["Choose one additional trained class skill at 1st level.","Gain one bonus technick at 1st level."],"description":"Medium; speed 6. Skilled: one additional trained class skill at 1st level. Versatile: one bonus technick at 1st level."}},
-  {"name":"Dwarf","type":"race","img":"icons/svg/anchor.svg","system":{"speed":4,"size":"Medium","attributeAdjustments":{"vit":2,"mnd":2,"cha":-2},"attributeCaps":{"str":20,"agi":20,"vit":22,"int":20,"mnd":22,"cha":18},"languages":"Dwarven, Common","specialSenses":"Dark vision","effects":{"defenceBonuses":{"fort":1,"ref":1,"will":1}},"traits":["Craftsman: reroll Smithing checks, keeping the second result.","Hardy: +1 to all defences.","Slow and Steady: heavy armour does not encumber."],"description":"Medium; speed 4. Dark vision. Craftsman, Hardy, and Slow and Steady racial traits."}},
-  {"name":"Highland Dwarf","type":"race","img":"icons/svg/anchor.svg","system":{"speed":4,"size":"Medium","attributeAdjustments":{"cha":2,"vit":2,"int":-2},"attributeCaps":{"str":20,"agi":20,"vit":22,"int":18,"mnd":20,"cha":22},"languages":"Dwarven, Common","specialSenses":"None","effects":{"defenceBonuses":{"fort":1,"ref":1,"will":1}},"traits":["Child of Nature: use Persuasion with beasts of Intelligence 2 or less.","Hardy: +1 to all defences.","Outrider: reroll Ride checks, keeping the second result."],"description":"Medium; speed 4. Child of Nature, Hardy, and Outrider racial traits."}},
-  {"name":"Dark Elf","type":"race","img":"icons/svg/stealth.svg","system":{"speed":6,"size":"Medium","attributeAdjustments":{"cha":2,"agi":2,"vit":-2},"attributeCaps":{"str":20,"agi":22,"vit":18,"int":20,"mnd":20,"cha":22},"languages":"Common, Elven","specialSenses":"Dark vision","effects":{"defenceBonuses":{"fort":2}},"traits":["Dark Stalker: move at full speed while using Stealth, but cannot sprint.","Deceitful: reroll Deception checks; Deception is always a class skill.","Great Fortitude: +2 Fortitude Defence."],"description":"Medium; speed 6. Dark vision. Dark Stalker, Deceitful, and Great Fortitude."}},
-  {"name":"High Elf","type":"race","img":"icons/svg/book.svg","system":{"speed":6,"size":"Medium","attributeAdjustments":{"int":2,"mnd":2,"vit":-2},"attributeCaps":{"str":20,"agi":20,"vit":18,"int":22,"mnd":22,"cha":20},"languages":"Common, Elven","specialSenses":"Low-light vision","effects":{"defenceBonuses":{"will":2}},"traits":["Ageless Mind: reroll Lore checks.","Iron Will: +2 Will Defence.","Manaflow: regain 1.5 times normal MP when resting."],"description":"Medium; speed 6. Low-light vision. Ageless Mind, Iron Will, and Manaflow."}},
-  {"name":"Wood Elf","type":"race","img":"icons/svg/wing.svg","system":{"speed":6,"size":"Medium","attributeAdjustments":{"agi":2,"mnd":2,"vit":-2},"attributeCaps":{"str":20,"agi":22,"vit":18,"int":20,"mnd":22,"cha":20},"languages":"Common, Elven","specialSenses":"Low-light vision","effects":{"defenceBonuses":{"ref":2}},"traits":["Child of Nature: use Persuasion with beasts of Intelligence 2 or less.","Lightning Reflexes: +2 Reflex Defence.","Survivalist: reroll Survival; Survival is always a class skill."],"description":"Medium; speed 6. Low-light vision. Child of Nature, Lightning Reflexes, and Survivalist."}},
-  {"name":"Gawro","type":"race","img":"icons/svg/water.svg","system":{"speed":6,"size":"Medium","attributeAdjustments":{"str":2,"vit":2,"agi":-2},"attributeCaps":{"str":22,"agi":18,"vit":22,"int":20,"mnd":20,"cha":20},"languages":"Beastongue, Common","specialSenses":"None","effects":{"defenceBonuses":{"fort":1,"ref":1}},"traits":["Amphibious: swim speed equals base speed; hold breath for 25 times Vitality score turns.","Regeneration: regain 1.5 times normal HP from resting; lost limbs regrow in 1d10+1 days.","Thick Hide: +1 Fortitude and Reflex Defence."],"description":"Medium; speed 6. Amphibious, Regeneration, and Thick Hide."}},
-  {"name":"Gnome","type":"race","img":"icons/svg/clockwork.svg","system":{"speed":4,"size":"Small","attributeAdjustments":{"int":2,"mnd":2,"str":-2},"attributeCaps":{"str":18,"agi":20,"vit":20,"int":22,"mnd":22,"cha":20},"languages":"Common, Gnomish","specialSenses":"Low-light vision","effects":{"defenceBonuses":{"ref":1},"skillBonuses":{"stealth":5}},"traits":["Small: +1 Reflex Defence and +5 Stealth.","Ethercaste: may use a second wind while unconscious; move +3 Break Gauge steps.","Meticulous: reroll Alchemy checks.","Strength of Spirit: use Will Defence instead of Fortitude against spells or abilities if higher."],"description":"Small; speed 4. Low-light vision. Ethercaste, Meticulous, Strength of Spirit."}},
-  {"name":"Tinker Gnome","type":"race","img":"icons/svg/clockwork.svg","system":{"speed":4,"size":"Small","attributeAdjustments":{"agi":2,"int":2,"vit":-2},"attributeCaps":{"str":20,"agi":22,"vit":18,"int":22,"mnd":20,"cha":20},"languages":"Gnomish, Common","specialSenses":"Dark vision","effects":{"defenceBonuses":{"ref":1},"skillBonuses":{"stealth":5}},"traits":["Small: +1 Reflex Defence and +5 Stealth.","Craftsman: reroll Smithing checks.","Ethercaste: may use a second wind while unconscious; move +3 Break Gauge steps.","Wright: reroll Pilot checks; Pilot is always a class skill."],"description":"Small; speed 4. Dark vision. Craftsman, Ethercaste, and Wright."}},
-  {"name":"Goblin","type":"race","img":"icons/svg/skull.svg","system":{"speed":6,"size":"Small","attributeAdjustments":{"agi":2,"vit":2,"cha":-2},"attributeCaps":{"str":20,"agi":22,"vit":22,"int":20,"mnd":20,"cha":18},"languages":"Goblin, Common","specialSenses":"Dark vision","effects":{"defenceBonuses":{"ref":1},"skillBonuses":{"stealth":5}},"traits":["Small: +1 Reflex Defence and +5 Stealth.","Fast Movement: +2 squares included in base speed.","Inspired Loyalty: once per encounter, add an ally's Strength modifier to Will Defence as a reaction.","Sneaky: reroll Stealth; Stealth is always a class skill."],"description":"Small; speed 6. Dark vision. Fast Movement, Inspired Loyalty, and Sneaky."}},
-  {"name":"Grassrunner","type":"race","img":"icons/svg/wing.svg","system":{"speed":4,"size":"Small","attributeAdjustments":{"agi":2,"mnd":2,"vit":-2},"attributeCaps":{"str":20,"agi":22,"vit":18,"int":20,"mnd":22,"cha":20},"languages":"Sylvan, Common","specialSenses":"Low-light vision","effects":{"defenceBonuses":{"ref":1},"skillBonuses":{"stealth":5}},"traits":["Small: +1 Reflex Defence and +5 Stealth.","Fae Luck: reroll 1s on hero-point d6s until a 2+ is rolled.","Light-footed: no movement penalty in rough terrain; cannot sprint there.","Sneaky: reroll Stealth; Stealth is always a class skill."],"description":"Small; speed 4. Low-light vision. Fae Luck, Light-footed, and Sneaky."}},
-  {"name":"Halfling","type":"race","img":"icons/svg/wing.svg","system":{"speed":4,"size":"Small","attributeAdjustments":{"agi":2,"cha":2,"str":-2},"attributeCaps":{"str":18,"agi":22,"vit":20,"int":20,"mnd":20,"cha":22},"languages":"Common, Sylvan","specialSenses":"None","effects":{"defenceBonuses":{"ref":1},"skillBonuses":{"stealth":5}},"traits":["Small: +1 Reflex Defence and +5 Stealth.","Fae Luck: reroll 1s on hero-point d6s until a 2+ is rolled.","Light-footed: no movement penalty in rough terrain; cannot sprint there.","Socialite: reroll Persuasion checks."],"description":"Small; speed 4. Fae Luck, Light-footed, and Socialite."}},
-  {"name":"Half-Elf","type":"race","img":"icons/svg/wing.svg","system":{"speed":6,"size":"Medium","attributeAdjustments":{},"attributeCaps":{"str":20,"agi":20,"vit":20,"int":20,"mnd":20,"cha":20},"languages":"Common, Elven","specialSenses":"Low-light vision","effects":{},"choiceGroups":[{"key":"attribute","label":"Choose one attribute for the half-elf +2","options":[{"name":"Strength","effects":{"attributeAdjustments":{"str":2}}},{"name":"Agility","effects":{"attributeAdjustments":{"agi":2}}},{"name":"Vitality","effects":{"attributeAdjustments":{"vit":2}}},{"name":"Intelligence","effects":{"attributeAdjustments":{"int":2}}},{"name":"Mind","effects":{"attributeAdjustments":{"mnd":2}}},{"name":"Charisma","effects":{"attributeAdjustments":{"cha":2}}}]},{"key":"heritage","label":"Choose elven heritage for +2 defence","options":[{"name":"Dark Elf","effects":{"defenceBonuses":{"fort":2},"specialSenses":"Dark vision"}},{"name":"Wood Elf","effects":{"defenceBonuses":{"ref":2},"specialSenses":"Low-light vision"}},{"name":"High Elf","effects":{"defenceBonuses":{"will":2},"specialSenses":"Low-light vision"}}]}],"traits":["Elven Heritage: +2 to Fortitude, Reflex, or Will Defence based on the elven parent.","Skilled: select one additional trained class skill at 1st level."],"description":"Medium; speed 6. Elven Heritage and Skilled."}},
-  {"name":"Nasha","type":"race","img":"icons/svg/cat.svg","system":{"speed":6,"size":"Medium","attributeAdjustments":{"agi":2,"mnd":2,"int":-2},"attributeCaps":{"str":20,"agi":22,"vit":20,"int":18,"mnd":22,"cha":20},"languages":"Beastongue, Common","specialSenses":"Dark vision","effects":{},"traits":["Graceful: reroll Acrobatics; Acrobatics is always a class skill.","Retractable Claws: unarmed attacks deal 1d6 slashing.","Keen Scent: ignore cover and concealment within 10 squares for Perception and tracking."],"description":"Medium; speed 6. Dark vision. Graceful, Retractable Claws, and Keen Scent."}},
-  {"name":"Orc","type":"race","img":"icons/svg/skull.svg","system":{"speed":6,"size":"Medium","attributeAdjustments":{"str":2,"vit":2,"int":-2},"attributeCaps":{"str":22,"agi":20,"vit":22,"int":18,"mnd":20,"cha":20},"languages":"Orcish, Common","specialSenses":"Low-light vision","effects":{},"traits":["Ham-Fisted: use Strength instead of Charisma to intimidate.","Heavyset: treated as Large for size-specific limits and grappling.","Resilient: second wind restores +5 + half level HP."],"description":"Medium; speed 6. Low-light vision. Ham-Fisted, Heavyset, and Resilient."}}
+  {
+    "name": "Human",
+    "type": "race",
+    "img": "icons/svg/person.svg",
+    "system": {
+      "speed": 6,
+      "size": "Medium",
+      "attributeAdjustments": {},
+      "attributeCaps": {
+        "str": 20,
+        "agi": 20,
+        "vit": 20,
+        "int": 20,
+        "mnd": 20,
+        "cha": 20
+      },
+      "languages": "Common",
+      "specialSenses": "None",
+      "effects": {
+        "bonusTrainedSkills": 1
+      },
+      "choiceGroups": [
+        {
+          "key": "attribute",
+          "label": "Choose one attribute for the human +2",
+          "options": [
+            {
+              "name": "Strength",
+              "effects": {
+                "attributeAdjustments": {
+                  "str": 2
+                }
+              }
+            },
+            {
+              "name": "Agility",
+              "effects": {
+                "attributeAdjustments": {
+                  "agi": 2
+                }
+              }
+            },
+            {
+              "name": "Vitality",
+              "effects": {
+                "attributeAdjustments": {
+                  "vit": 2
+                }
+              }
+            },
+            {
+              "name": "Intelligence",
+              "effects": {
+                "attributeAdjustments": {
+                  "int": 2
+                }
+              }
+            },
+            {
+              "name": "Mind",
+              "effects": {
+                "attributeAdjustments": {
+                  "mnd": 2
+                }
+              }
+            },
+            {
+              "name": "Charisma",
+              "effects": {
+                "attributeAdjustments": {
+                  "cha": 2
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "traits": [
+        "Choose one additional trained class skill at 1st level.",
+        "Gain one bonus technick at 1st level."
+      ],
+      "description": "Medium; speed 6. Skilled: one additional trained class skill at 1st level. Versatile: one bonus technick at 1st level.",
+      "classSkills": [],
+      "bonusTechnicks": 1
+    }
+  },
+  {
+    "name": "Dwarf",
+    "type": "race",
+    "img": "icons/svg/anchor.svg",
+    "system": {
+      "speed": 4,
+      "size": "Medium",
+      "attributeAdjustments": {
+        "vit": 2,
+        "mnd": 2,
+        "cha": -2
+      },
+      "attributeCaps": {
+        "str": 20,
+        "agi": 20,
+        "vit": 22,
+        "int": 20,
+        "mnd": 22,
+        "cha": 18
+      },
+      "languages": "Dwarven, Common",
+      "specialSenses": "Dark vision",
+      "effects": {
+        "defenceBonuses": {
+          "fort": 1,
+          "ref": 1,
+          "will": 1
+        }
+      },
+      "traits": [
+        "Craftsman: reroll Smithing checks, keeping the second result.",
+        "Hardy: +1 to all defences.",
+        "Slow and Steady: heavy armour does not encumber."
+      ],
+      "description": "Medium; speed 4. Dark vision. Craftsman, Hardy, and Slow and Steady racial traits.",
+      "classSkills": []
+    }
+  },
+  {
+    "name": "Highland Dwarf",
+    "type": "race",
+    "img": "icons/svg/anchor.svg",
+    "system": {
+      "speed": 4,
+      "size": "Medium",
+      "attributeAdjustments": {
+        "cha": 2,
+        "vit": 2,
+        "int": -2
+      },
+      "attributeCaps": {
+        "str": 20,
+        "agi": 20,
+        "vit": 22,
+        "int": 18,
+        "mnd": 20,
+        "cha": 22
+      },
+      "languages": "Dwarven, Common",
+      "specialSenses": "None",
+      "effects": {
+        "defenceBonuses": {
+          "fort": 1,
+          "ref": 1,
+          "will": 1
+        }
+      },
+      "traits": [
+        "Child of Nature: use Persuasion with beasts of Intelligence 2 or less.",
+        "Hardy: +1 to all defences.",
+        "Outrider: reroll Ride checks, keeping the second result."
+      ],
+      "description": "Medium; speed 4. Child of Nature, Hardy, and Outrider racial traits.",
+      "classSkills": []
+    }
+  },
+  {
+    "name": "Dark Elf",
+    "type": "race",
+    "img": "icons/svg/stealth.svg",
+    "system": {
+      "speed": 6,
+      "size": "Medium",
+      "attributeAdjustments": {
+        "cha": 2,
+        "agi": 2,
+        "vit": -2
+      },
+      "attributeCaps": {
+        "str": 20,
+        "agi": 22,
+        "vit": 18,
+        "int": 20,
+        "mnd": 20,
+        "cha": 22
+      },
+      "languages": "Common, Elven",
+      "specialSenses": "Dark vision",
+      "effects": {
+        "defenceBonuses": {
+          "fort": 2
+        }
+      },
+      "traits": [
+        "Dark Stalker: move at full speed while using Stealth, but cannot sprint.",
+        "Deceitful: reroll Deception checks; Deception is always a class skill.",
+        "Great Fortitude: +2 Fortitude Defence."
+      ],
+      "description": "Medium; speed 6. Dark vision. Dark Stalker, Deceitful, and Great Fortitude.",
+      "classSkills": [
+        "deception"
+      ]
+    }
+  },
+  {
+    "name": "High Elf",
+    "type": "race",
+    "img": "icons/svg/book.svg",
+    "system": {
+      "speed": 6,
+      "size": "Medium",
+      "attributeAdjustments": {
+        "int": 2,
+        "mnd": 2,
+        "vit": -2
+      },
+      "attributeCaps": {
+        "str": 20,
+        "agi": 20,
+        "vit": 18,
+        "int": 22,
+        "mnd": 22,
+        "cha": 20
+      },
+      "languages": "Common, Elven",
+      "specialSenses": "Low-light vision",
+      "effects": {
+        "defenceBonuses": {
+          "will": 2
+        }
+      },
+      "traits": [
+        "Ageless Mind: reroll Lore checks.",
+        "Iron Will: +2 Will Defence.",
+        "Manaflow: regain 1.5 times normal MP when resting."
+      ],
+      "description": "Medium; speed 6. Low-light vision. Ageless Mind, Iron Will, and Manaflow.",
+      "classSkills": []
+    }
+  },
+  {
+    "name": "Wood Elf",
+    "type": "race",
+    "img": "icons/svg/wing.svg",
+    "system": {
+      "speed": 6,
+      "size": "Medium",
+      "attributeAdjustments": {
+        "agi": 2,
+        "mnd": 2,
+        "vit": -2
+      },
+      "attributeCaps": {
+        "str": 20,
+        "agi": 22,
+        "vit": 18,
+        "int": 20,
+        "mnd": 22,
+        "cha": 20
+      },
+      "languages": "Common, Elven",
+      "specialSenses": "Low-light vision",
+      "effects": {
+        "defenceBonuses": {
+          "ref": 2
+        }
+      },
+      "traits": [
+        "Child of Nature: use Persuasion with beasts of Intelligence 2 or less.",
+        "Lightning Reflexes: +2 Reflex Defence.",
+        "Survivalist: reroll Survival; Survival is always a class skill."
+      ],
+      "description": "Medium; speed 6. Low-light vision. Child of Nature, Lightning Reflexes, and Survivalist.",
+      "classSkills": [
+        "survival"
+      ]
+    }
+  },
+  {
+    "name": "Gawro",
+    "type": "race",
+    "img": "icons/svg/water.svg",
+    "system": {
+      "speed": 6,
+      "size": "Medium",
+      "attributeAdjustments": {
+        "str": 2,
+        "vit": 2,
+        "agi": -2
+      },
+      "attributeCaps": {
+        "str": 22,
+        "agi": 18,
+        "vit": 22,
+        "int": 20,
+        "mnd": 20,
+        "cha": 20
+      },
+      "languages": "Beastongue, Common",
+      "specialSenses": "None",
+      "effects": {
+        "defenceBonuses": {
+          "fort": 1,
+          "ref": 1
+        }
+      },
+      "traits": [
+        "Amphibious: swim speed equals base speed; hold breath for 25 times Vitality score turns.",
+        "Regeneration: regain 1.5 times normal HP from resting; lost limbs regrow in 1d10+1 days.",
+        "Thick Hide: +1 Fortitude and Reflex Defence."
+      ],
+      "description": "Medium; speed 6. Amphibious, Regeneration, and Thick Hide.",
+      "classSkills": []
+    }
+  },
+  {
+    "name": "Gnome",
+    "type": "race",
+    "img": "icons/svg/clockwork.svg",
+    "system": {
+      "speed": 4,
+      "size": "Small",
+      "attributeAdjustments": {
+        "int": 2,
+        "mnd": 2,
+        "str": -2
+      },
+      "attributeCaps": {
+        "str": 18,
+        "agi": 20,
+        "vit": 20,
+        "int": 22,
+        "mnd": 22,
+        "cha": 20
+      },
+      "languages": "Common, Gnomish",
+      "specialSenses": "Low-light vision",
+      "effects": {
+        "defenceBonuses": {
+          "ref": 1
+        },
+        "skillBonuses": {
+          "stealth": 5
+        }
+      },
+      "traits": [
+        "Small: +1 Reflex Defence and +5 Stealth.",
+        "Ethercaste: may use a second wind while unconscious; move +3 Break Gauge steps.",
+        "Meticulous: reroll Alchemy checks.",
+        "Strength of Spirit: use Will Defence instead of Fortitude against spells or abilities if higher."
+      ],
+      "description": "Small; speed 4. Low-light vision. Ethercaste, Meticulous, Strength of Spirit.",
+      "classSkills": []
+    }
+  },
+  {
+    "name": "Tinker Gnome",
+    "type": "race",
+    "img": "icons/svg/clockwork.svg",
+    "system": {
+      "speed": 4,
+      "size": "Small",
+      "attributeAdjustments": {
+        "agi": 2,
+        "int": 2,
+        "vit": -2
+      },
+      "attributeCaps": {
+        "str": 20,
+        "agi": 22,
+        "vit": 18,
+        "int": 22,
+        "mnd": 20,
+        "cha": 20
+      },
+      "languages": "Gnomish, Common",
+      "specialSenses": "Dark vision",
+      "effects": {
+        "defenceBonuses": {
+          "ref": 1
+        },
+        "skillBonuses": {
+          "stealth": 5
+        }
+      },
+      "traits": [
+        "Small: +1 Reflex Defence and +5 Stealth.",
+        "Craftsman: reroll Smithing checks.",
+        "Ethercaste: may use a second wind while unconscious; move +3 Break Gauge steps.",
+        "Wright: reroll Pilot checks; Pilot is always a class skill."
+      ],
+      "description": "Small; speed 4. Dark vision. Craftsman, Ethercaste, and Wright.",
+      "classSkills": [
+        "pilot"
+      ]
+    }
+  },
+  {
+    "name": "Goblin",
+    "type": "race",
+    "img": "icons/svg/skull.svg",
+    "system": {
+      "speed": 6,
+      "size": "Small",
+      "attributeAdjustments": {
+        "agi": 2,
+        "vit": 2,
+        "cha": -2
+      },
+      "attributeCaps": {
+        "str": 20,
+        "agi": 22,
+        "vit": 22,
+        "int": 20,
+        "mnd": 20,
+        "cha": 18
+      },
+      "languages": "Goblin, Common",
+      "specialSenses": "Dark vision",
+      "effects": {
+        "defenceBonuses": {
+          "ref": 1
+        },
+        "skillBonuses": {
+          "stealth": 5
+        }
+      },
+      "traits": [
+        "Small: +1 Reflex Defence and +5 Stealth.",
+        "Fast Movement: +2 squares included in base speed.",
+        "Inspired Loyalty: once per encounter, add an ally's Strength modifier to Will Defence as a reaction.",
+        "Sneaky: reroll Stealth; Stealth is always a class skill."
+      ],
+      "description": "Small; speed 6. Dark vision. Fast Movement, Inspired Loyalty, and Sneaky.",
+      "classSkills": [
+        "stealth"
+      ]
+    }
+  },
+  {
+    "name": "Grassrunner",
+    "type": "race",
+    "img": "icons/svg/wing.svg",
+    "system": {
+      "speed": 4,
+      "size": "Small",
+      "attributeAdjustments": {
+        "agi": 2,
+        "mnd": 2,
+        "vit": -2
+      },
+      "attributeCaps": {
+        "str": 20,
+        "agi": 22,
+        "vit": 18,
+        "int": 20,
+        "mnd": 22,
+        "cha": 20
+      },
+      "languages": "Sylvan, Common",
+      "specialSenses": "Low-light vision",
+      "effects": {
+        "defenceBonuses": {
+          "ref": 1
+        },
+        "skillBonuses": {
+          "stealth": 5
+        }
+      },
+      "traits": [
+        "Small: +1 Reflex Defence and +5 Stealth.",
+        "Fae Luck: reroll 1s on hero-point d6s until a 2+ is rolled.",
+        "Light-footed: no movement penalty in rough terrain; cannot sprint there.",
+        "Sneaky: reroll Stealth; Stealth is always a class skill."
+      ],
+      "description": "Small; speed 4. Low-light vision. Fae Luck, Light-footed, and Sneaky.",
+      "classSkills": [
+        "stealth"
+      ]
+    }
+  },
+  {
+    "name": "Halfling",
+    "type": "race",
+    "img": "icons/svg/wing.svg",
+    "system": {
+      "speed": 4,
+      "size": "Small",
+      "attributeAdjustments": {
+        "agi": 2,
+        "cha": 2,
+        "str": -2
+      },
+      "attributeCaps": {
+        "str": 18,
+        "agi": 22,
+        "vit": 20,
+        "int": 20,
+        "mnd": 20,
+        "cha": 22
+      },
+      "languages": "Common, Sylvan",
+      "specialSenses": "None",
+      "effects": {
+        "defenceBonuses": {
+          "ref": 1
+        },
+        "skillBonuses": {
+          "stealth": 5
+        }
+      },
+      "traits": [
+        "Small: +1 Reflex Defence and +5 Stealth.",
+        "Fae Luck: reroll 1s on hero-point d6s until a 2+ is rolled.",
+        "Light-footed: no movement penalty in rough terrain; cannot sprint there.",
+        "Socialite: reroll Persuasion checks."
+      ],
+      "description": "Small; speed 4. Fae Luck, Light-footed, and Socialite.",
+      "classSkills": []
+    }
+  },
+  {
+    "name": "Half-Elf",
+    "type": "race",
+    "img": "icons/svg/wing.svg",
+    "system": {
+      "speed": 6,
+      "size": "Medium",
+      "attributeAdjustments": {},
+      "attributeCaps": {
+        "str": 20,
+        "agi": 20,
+        "vit": 20,
+        "int": 20,
+        "mnd": 20,
+        "cha": 20
+      },
+      "languages": "Common, Elven",
+      "specialSenses": "Low-light vision",
+      "effects": {
+        "bonusTrainedSkills": 1
+      },
+      "choiceGroups": [
+        {
+          "key": "attribute",
+          "label": "Choose one attribute for the half-elf +2",
+          "options": [
+            {
+              "name": "Strength",
+              "effects": {
+                "attributeAdjustments": {
+                  "str": 2
+                }
+              }
+            },
+            {
+              "name": "Agility",
+              "effects": {
+                "attributeAdjustments": {
+                  "agi": 2
+                }
+              }
+            },
+            {
+              "name": "Vitality",
+              "effects": {
+                "attributeAdjustments": {
+                  "vit": 2
+                }
+              }
+            },
+            {
+              "name": "Intelligence",
+              "effects": {
+                "attributeAdjustments": {
+                  "int": 2
+                }
+              }
+            },
+            {
+              "name": "Mind",
+              "effects": {
+                "attributeAdjustments": {
+                  "mnd": 2
+                }
+              }
+            },
+            {
+              "name": "Charisma",
+              "effects": {
+                "attributeAdjustments": {
+                  "cha": 2
+                }
+              }
+            }
+          ]
+        },
+        {
+          "key": "heritage",
+          "label": "Choose elven heritage for +2 defence",
+          "options": [
+            {
+              "name": "Dark Elf",
+              "effects": {
+                "defenceBonuses": {
+                  "fort": 2
+                },
+                "specialSenses": "Dark vision"
+              }
+            },
+            {
+              "name": "Wood Elf",
+              "effects": {
+                "defenceBonuses": {
+                  "ref": 2
+                },
+                "specialSenses": "Low-light vision"
+              }
+            },
+            {
+              "name": "High Elf",
+              "effects": {
+                "defenceBonuses": {
+                  "will": 2
+                },
+                "specialSenses": "Low-light vision"
+              }
+            }
+          ]
+        }
+      ],
+      "traits": [
+        "Elven Heritage: +2 to Fortitude, Reflex, or Will Defence based on the elven parent.",
+        "Skilled: select one additional trained class skill at 1st level."
+      ],
+      "description": "Medium; speed 6. Elven Heritage and Skilled.",
+      "classSkills": []
+    }
+  },
+  {
+    "name": "Nasha",
+    "type": "race",
+    "img": "icons/svg/cat.svg",
+    "system": {
+      "speed": 6,
+      "size": "Medium",
+      "attributeAdjustments": {
+        "agi": 2,
+        "mnd": 2,
+        "int": -2
+      },
+      "attributeCaps": {
+        "str": 20,
+        "agi": 22,
+        "vit": 20,
+        "int": 18,
+        "mnd": 22,
+        "cha": 20
+      },
+      "languages": "Beastongue, Common",
+      "specialSenses": "Dark vision",
+      "effects": {},
+      "traits": [
+        "Graceful: reroll Acrobatics; Acrobatics is always a class skill.",
+        "Retractable Claws: unarmed attacks deal 1d6 slashing.",
+        "Keen Scent: ignore cover and concealment within 10 squares for Perception and tracking."
+      ],
+      "description": "Medium; speed 6. Dark vision. Graceful, Retractable Claws, and Keen Scent.",
+      "classSkills": [
+        "acrobatics"
+      ]
+    }
+  },
+  {
+    "name": "Orc",
+    "type": "race",
+    "img": "icons/svg/skull.svg",
+    "system": {
+      "speed": 6,
+      "size": "Medium",
+      "attributeAdjustments": {
+        "str": 2,
+        "vit": 2,
+        "int": -2
+      },
+      "attributeCaps": {
+        "str": 22,
+        "agi": 20,
+        "vit": 22,
+        "int": 18,
+        "mnd": 20,
+        "cha": 20
+      },
+      "languages": "Orcish, Common",
+      "specialSenses": "Low-light vision",
+      "effects": {},
+      "traits": [
+        "Ham-Fisted: use Strength instead of Charisma to intimidate.",
+        "Heavyset: treated as Large for size-specific limits and grappling.",
+        "Resilient: second wind restores +5 + half level HP."
+      ],
+      "description": "Medium; speed 6. Low-light vision. Ham-Fisted, Heavyset, and Resilient.",
+      "classSkills": []
+    }
+  }
 ]

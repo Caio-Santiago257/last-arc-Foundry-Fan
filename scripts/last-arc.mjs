@@ -174,6 +174,7 @@ class LastArcActorSheet extends ActorSheet {
 
   async _applyRaceDrop(itemData) {
     const currentRace = this.actor.items.find(item => item.type === "race");
+    const oldRaceFeatures = this.actor.items.filter(item => item.type === "feature" && item.flags?.["last-arc-analogue"]?.racialFeature);
     const prior = this.actor.system.details.raceAdjustments ?? {};
     if (currentRace && !(await Dialog.confirm({ title: game.i18n.localize("LA.ReplaceRace"), content: game.i18n.localize("LA.ReplaceRacePrompt") }))) return false;
     const update = {};
@@ -193,6 +194,7 @@ class LastArcActorSheet extends ActorSheet {
     }
     const racialEffects = foundry.utils.mergeObject(foundry.utils.deepClone(itemData.system.effects ?? {}), choices.effects ?? {}, { inplace: false });
     update["system.details.race"] = itemData.name;
+    update["system.details.raceSize"] = itemData.system.size ?? "";
     update["system.details.raceAdjustments"] = appliedAdjustments;
     update["system.details.racialEffects"] = racialEffects;
     update["system.details.attributeCaps"] = itemData.system.attributeCaps ?? {};
@@ -202,8 +204,21 @@ class LastArcActorSheet extends ActorSheet {
     itemData.system.selectedChoices = choices.selectedChoices;
     itemData.system.selectedEffects = choices.effects;
     if (currentRace) await currentRace.delete();
+    if (oldRaceFeatures.length) await this.actor.deleteEmbeddedDocuments("Item", oldRaceFeatures.map(item => item.id));
     await this.actor.update(update);
-    const created = await this.actor.createEmbeddedDocuments("Item", [itemData]);
+    const [created] = await this.actor.createEmbeddedDocuments("Item", [itemData]);
+    const features = (itemData.system.traits ?? []).map((trait, index) => {
+      const [rawName, ...detail] = String(trait).split(":");
+      const hasTitle = detail.length > 0;
+      return {
+        name: hasTitle ? rawName.trim() : `${itemData.name}: ${rawName.trim()}`,
+        type: "feature",
+        img: itemData.img || "icons/svg/item-bag.svg",
+        system: { category: "Racial Trait", sourceRace: itemData.name, description: hasTitle ? detail.join(":").trim() : rawName.trim(), sort: index },
+        flags: { "last-arc-analogue": { racialFeature: true, raceItemId: created.id } }
+      };
+    });
+    if (features.length) await this.actor.createEmbeddedDocuments("Item", features);
     await this._recalculateClassResources(oldHP, oldMP);
     return created;
   }
@@ -269,22 +284,31 @@ class LastArcActorSheet extends ActorSheet {
 
   async _chooseClassSkills(itemData, count) {
     const available = (itemData.system.classSkills ?? []).filter(key => SKILLS[key]);
-    if (!count || !available.length) return [];
-    const options = available.map(key => `<option value="${foundry.utils.escapeHTML(key)}">${game.i18n.localize(SKILL_LABELS[key])}</option>`).join("");
+    const required = Math.min(count, available.length);
+    if (!required) return [];
+    if (count > available.length) {
+      ui.notifications.error(game.i18n.format("LA.NotEnoughClassSkills", { required: count, available: available.length }));
+      return null;
+    }
+    const options = available.map(key => `<label class="la-skill-choice"><input type="checkbox" name="skills" value="${foundry.utils.escapeHTML(key)}"><span>${game.i18n.localize(SKILL_LABELS[key])}</span></label>`).join("");
     return new Promise(resolve => new Dialog({
       title: game.i18n.localize("LA.SelectTrainedSkills"),
-      content: `<form><p>${game.i18n.format("LA.SelectTrainedSkillsHint", { count: Math.min(count, available.length) })}</p><select name="skills" multiple size="${Math.min(available.length, 10)}">${options}</select></form>`,
+      content: `<form class="la-skill-choice-form"><p>${game.i18n.format("LA.SelectTrainedSkillsHint", { count: required })}</p><p class="la-skill-choice-count">${game.i18n.format("LA.SelectedSkillsCount", { selected: 0, count: required })}</p><fieldset>${options}</fieldset></form>`,
       buttons: {
         choose: { label: game.i18n.localize("LA.Choose"), callback: html => {
-          const values = html.find("[name=skills]").val() ?? [];
-          if (values.length !== Math.min(count, available.length)) {
-            ui.notifications.warn(game.i18n.format("LA.SelectTrainedSkillsHint", { count: Math.min(count, available.length) }));
+          const values = html.find("input[name=skills]:checked").map((_, input) => input.value).get();
+          if (values.length !== required) {
+            ui.notifications.warn(game.i18n.format("LA.SelectTrainedSkillsError", { required, selected: values.length }));
             resolve(null);
           } else resolve(values);
         } },
         cancel: { label: game.i18n.localize("LA.Cancel"), callback: () => resolve(null) }
       },
-      default: "choose", close: () => resolve(null)
+      default: "choose", close: () => resolve(null),
+      render: html => html.find("input[name=skills]").on("change", () => {
+        const selected = html.find("input[name=skills]:checked").length;
+        html.find(".la-skill-choice-count").text(game.i18n.format("LA.SelectedSkillsCount", { selected, count: required }));
+      })
     }).render(true));
   }
 
@@ -408,9 +432,14 @@ class LastArcItemSheet extends ItemSheet {
     context.system.classSkillsText = Array.isArray(context.system.classSkills) ? context.system.classSkills.join("\n") : "";
     context.system.traitsText = Array.isArray(context.system.traits) ? context.system.traits.join("\n") : "";
     context.system.choiceGroupsText = JSON.stringify(context.system.choiceGroups ?? [], null, 2);
+    context.raceTraits = (context.system.traits ?? []).map(trait => {
+      const [name, ...detail] = String(trait).split(":");
+      return { name: detail.length ? name.trim() : "", description: detail.length ? detail.join(":").trim() : name.trim() };
+    });
     context.itemTypeLabel = `LA.ItemType.${this.item.type}`;
     context.isClass = ["class", "advanced-class"].includes(this.item.type);
     context.isRace = this.item.type === "race";
+    context.isNonRollable = ["race", "class", "advanced-class", "feature"].includes(this.item.type);
     return context;
   }
   activateListeners(html) {

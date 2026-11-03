@@ -18,6 +18,7 @@
         <label>{{localize "LA.Attack"}} bonus<input name="system.attack.bonus" type="number" value="{{system.attack.bonus}}"></label>
       </section>
       {{#if isRace}}
+      <section class="la-panel"><h2>{{localize "LA.RacialOverview"}}</h2><p class="la-race-description">{{system.description}}</p><div class="la-race-traits"><h3>{{localize "LA.RacialTraits"}}</h3><ul>{{#each raceTraits as |trait|}}<li>{{#if trait.name}}<strong>{{trait.name}}.</strong> {{/if}}{{trait.description}}</li>{{/each}}</ul></div></section>
       <section class="la-panel"><h2>{{localize "LA.RacialData"}}</h2><div class="la-item-fields">
         <label>{{localize "LA.Speed"}}<input name="system.speed" type="number" value="{{system.speed}}"></label>
         <label>{{localize "LA.Size"}}<input name="system.size" value="{{system.size}}"></label>
@@ -59,6 +60,6 @@
       {{/if}}
     </div>
     <div class="tab" data-group="primary" data-tab="description"><section class="la-panel"><h2>{{localize "LA.Description"}}</h2><textarea class="la-item-description" name="system.description">{{system.description}}</textarea></section></div>
-    <footer class="la-item-footer"><button type="button" class="item-roll la-primary-button">{{localize "LA.Roll"}}</button></footer>
+    {{#unless isNonRollable}}<footer class="la-item-footer"><button type="button" class="item-roll la-primary-button">{{localize "LA.Roll"}}</button></footer>{{/unless}}
   </section>
 </form>

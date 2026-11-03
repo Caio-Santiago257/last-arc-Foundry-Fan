@@ -16,7 +16,7 @@ Alternatively, download the ZIP, extract its `last-arc-analogue` folder into Fou
 - Attribute modifiers, level-scaled skill/defence values, class bonuses, passive Perception, and class initiative dice (including the combat tracker).
 - Chat rolls for attributes, skills, initiative, weapon attacks, and item damage formulas; HP/MP controls, damage application, and inventory bulk.
 - Compendium packs for races, base classes, advanced classes, talents, technicks, spells, and equipment. Race and base-class records include structured automation. Advanced-class records are configurable shells until their progression data is entered.
-- Dragging a race applies ability adjustments, caps, speed, senses, languages, and configured choice effects. Dragging a base class prompts for starting trained skills and calculates class level, HP, MP, defences, and initiative.
+- Dragging a race applies ability adjustments, caps, speed, senses, languages, and configured choice effects. Each racial trait is added to the character as a separate Feature with a concise rules summary; replacing a race removes only the race-generated Features. Dragging a base class opens a checkbox picker that shows the required trained-skill count and explains any mismatch, then calculates class level, HP, MP, defences, and initiative.
 - Core Foundry SVG icons for the D20 control and skill/item icons. Portuguese (Brazil) and English labels.
 
 The book models advancement with advanced classes and talent trees; it does not define a generic subclass item type. Configured choice groups prompt for selections such as race options.
