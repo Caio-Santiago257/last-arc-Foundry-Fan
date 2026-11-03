@@ -139,6 +139,16 @@
     "SelectTrainedSkillsError": "Class not applied: exactly {required} skills were required, but {selected} were selected. Drag the class again and try once more.",
     "NotEnoughClassSkills": "Class not applied: it requires {required} trained skills, but only {available} are configured for this class. Correct the class skill list in the compendium.",
     "Choose": "Confirm selection",
-    "Cancel": "Cancel"
+    "Cancel": "Cancel",
+    "ClassLevels": "levels",
+    "SelectedTalentTrees": "Chosen trees",
+    "SelectTalentTree": "Choose a talent tree",
+    "SelectTalentTreeHint": "For {className}, choose a tree for this talent. You may choose a tree again at later levels that grant a talent.",
+    "SelectTalent": "Choose a talent from {tree}",
+    "Talent": "Talent",
+    "TalentSummary": "Talent summary",
+    "TalentPrerequisiteHint": "Check the book for exact prerequisites and rules. The chosen talent will be added to the Features tab.",
+    "TalentPackUnavailable": "The talent compendium is unavailable. Reinstall or update the system and try again.",
+    "NoTalentsForTree": "No talent entries are registered for the {tree} tree. Update the talent compendium."
   }
 }

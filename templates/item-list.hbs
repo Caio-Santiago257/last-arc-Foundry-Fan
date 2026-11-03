@@ -1,13 +1,24 @@
 <div class="la-item-list">
   {{#if items.length}}
     {{#each items as |item|}}
-      <div class="item la-item-row" data-item-id="{{item.id}}">
-        {{#unless (eq item.type "feature")}}<button type="button" class="item-roll la-die" title="{{localize 'LA.Roll'}}"><i class="fas fa-dice-d20" aria-hidden="true"></i></button>{{/unless}}
-        <button type="button" class="item-edit la-link"><i class="fas {{item.system.iconClass}}" aria-hidden="true"></i> {{item.name}}</button>
-        <span class="la-item-detail">{{item.system.action}} {{item.system.range}}</span>
-        <span class="la-item-detail">{{item.system.cost}}</span>
-        <button type="button" class="item-delete la-icon-button" title="{{localize 'LA.Delete'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
-        {{#if (eq item.type "feature")}}<small class="la-feature-description">{{item.system.description}}</small>{{/if}}
+      <div class="item la-item-row {{#if (or (eq item.type 'feature') (eq item.type 'talent'))}}la-feature-row{{/if}} {{#if (eq item.type 'class')}}la-class-row{{/if}}" data-item-id="{{item.id}}">
+        {{#if (or (eq item.type "feature") (eq item.type "talent"))}}
+          <button type="button" class="item-edit la-link">{{item.name}}</button>
+          <button type="button" class="item-delete la-icon-button" title="{{localize 'LA.Delete'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
+          <small class="la-feature-description">{{item.system.description}}</small>
+        {{else}}
+          {{#if (eq item.type "class")}}
+            <button type="button" class="item-edit la-link">{{item.name}} · {{item.system.classLevel}} {{localize "LA.ClassLevels"}}</button>
+            <button type="button" class="item-delete la-icon-button" title="{{localize 'LA.Delete'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
+            {{#if item.system.selectedTalentTrees}}<small class="la-class-trees">{{localize "LA.SelectedTalentTrees"}}: {{#each item.system.selectedTalentTrees as |tree|}}{{tree}}{{#unless @last}}, {{/unless}}{{/each}}</small>{{/if}}
+          {{else}}
+          {{#unless (or (eq item.type "race") (eq item.type "class") (eq item.type "advanced-class"))}}<button type="button" class="item-roll la-die" title="{{localize 'LA.Roll'}}"><i class="fas fa-dice-d20" aria-hidden="true"></i></button>{{/unless}}
+          <button type="button" class="item-edit la-link"><i class="fas {{item.system.iconClass}}" aria-hidden="true"></i> {{item.name}}</button>
+          <span class="la-item-detail">{{item.system.action}} {{item.system.range}}</span>
+          <span class="la-item-detail">{{item.system.cost}}</span>
+          <button type="button" class="item-delete la-icon-button" title="{{localize 'LA.Delete'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
+          {{/if}}
+        {{/if}}
       </div>
     {{/each}}
   {{else}}<p class="la-empty">{{localize "LA.NoItems"}}</p>{{/if}}

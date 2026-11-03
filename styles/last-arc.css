@@ -85,6 +85,14 @@
 .la-race-traits ul { margin: 6px 0 0; padding-left: 22px; }.la-race-traits li { margin: 5px 0; line-height: 1.45; }
 .la-skill-choice-form fieldset { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 5px 12px; max-height: 320px; overflow-y: auto; border: 1px solid #bda783; padding: 10px; }
 .la-skill-choice { display: flex; align-items: flex-start; gap: 7px; }.la-skill-choice-count { font-weight: 700; }
-.la-item-row .la-feature-description { grid-column: 2 / 5; display: block; padding: 0 4px 7px; line-height: 1.4; color: #554b3f; }
+.la-feature-row { grid-template-columns: minmax(0,1fr) 24px; gap: 5px 10px; align-items: start; padding: 10px 4px; }
+.la-feature-row .item-edit { min-width: 0; white-space: normal; text-align: left; font: 700 15px/1.35 Georgia,serif; overflow-wrap: anywhere; }
+.la-feature-row .la-feature-description { grid-column: 1 / -1; display: block; max-width: 100%; padding: 0 0 2px; white-space: normal; overflow-wrap: anywhere; font: 14px/1.5 Georgia,serif; color: #554b3f; }
+.la-class-row { grid-template-columns: minmax(0,1fr) 24px; gap: 5px 10px; align-items: center; padding: 8px 4px; }
+.la-class-row .item-edit { min-width: 0; white-space: normal; text-align: left; font: 700 15px/1.35 Georgia,serif; }
+.la-class-trees { grid-column: 1 / -1; display: block; padding-bottom: 4px; line-height: 1.4; color: #554b3f; }
+.la-talent-choice-form label { display: grid; gap: 6px; font-weight: 700; }
+.la-talent-choice-form select { width: 100%; }
+.la-talent-preview { margin: 12px 0; min-height: 70px; white-space: normal; font: 14px/1.5 Georgia,serif; }
 .la-result.success { color: #28643e; font-weight: 700; }.la-result.failure { color: #922f29; font-weight: 700; }
 @media (max-width: 760px) { .la-header { grid-template-columns: 65px 1fr 85px; gap: 8px; padding: 10px; }.la-portrait { width: 65px; height: 82px; }.la-identity-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }.la-overview-grid { grid-template-columns: 1fr; }.la-body { padding: 8px; }.la-skill-table { overflow-x: auto; }.la-skill-header,.la-skill-row { min-width: 590px; }.la-tabs { overflow-x: auto; }.la-tabs .item { white-space: nowrap; padding: 7px; } }

@@ -32,6 +32,7 @@
         <label>+/- {{localize "LA.Charisma"}}<input name="system.attributeAdjustments.cha" type="number" value="{{system.attributeAdjustments.cha}}"></label>
       </div><label>{{localize "LA.RacialTraits"}}<textarea name="system.traitsText">{{system.traitsText}}</textarea></label><label>{{localize "LA.ChoiceGroupsJSON"}}<textarea name="system.choiceGroupsText">{{system.choiceGroupsText}}</textarea></label></section>
       {{/if}}
+      {{#if isTalent}}<section class="la-panel"><h2>{{localize "LA.TalentSummary"}}</h2><p class="la-talent-summary">{{system.description}}</p><p><strong>{{localize "LA.Requirements"}}:</strong> {{system.prerequisites}}</p><p class="la-hint">{{system.automation.reason}}</p></section>{{/if}}
       {{#if isClass}}
       <section class="la-panel"><h2>{{localize "LA.ClassProgression"}}</h2><div class="la-item-fields">
         <label>{{localize "LA.ClassKind"}}<select name="system.classKind"><option value="base" {{#if (eq system.classKind "base")}}selected{{/if}}>{{localize "LA.BaseClass"}}</option><option value="advanced" {{#if (eq system.classKind "advanced")}}selected{{/if}}>{{localize "LA.AdvancedClass"}}</option></select></label>
