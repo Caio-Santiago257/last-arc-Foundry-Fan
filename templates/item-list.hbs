@@ -1,8 +1,12 @@
 <div class="la-item-list">
   {{#if items.length}}
     {{#each items as |item|}}
-      <div class="item la-item-row {{#if (or (eq item.type 'feature') (eq item.type 'talent'))}}la-feature-row{{/if}} {{#if (eq item.type 'class')}}la-class-row{{/if}}" data-item-id="{{item.id}}">
-        {{#if (or (eq item.type "feature") (eq item.type "talent"))}}
+      <div class="item la-item-row {{#if (eq item.type 'technick')}}la-technick-row{{/if}} {{#if (or (eq item.type 'feature') (eq item.type 'talent'))}}la-feature-row{{/if}} {{#if (eq item.type 'class')}}la-class-row{{/if}}" data-item-id="{{item.id}}">
+        {{#if (eq item.type "technick")}}
+          <button type="button" class="item-edit la-link">{{item.name}}</button>
+          <button type="button" class="item-delete la-icon-button" title="{{localize 'LA.Delete'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
+          <small class="la-item-tech-description">{{item.system.description}}{{#if item.system.selectedSkillLabel}} · {{item.system.selectedSkillLabel}}{{/if}}{{#if item.system.selectedWeaponGroupLabel}} · {{localize "LA.WeaponGroupChoice"}}: {{item.system.selectedWeaponGroupLabel}}{{/if}}</small>
+        {{else if (or (eq item.type "feature") (eq item.type "talent"))}}
           <button type="button" class="item-edit la-link">{{item.name}}</button>
           <button type="button" class="item-delete la-icon-button" title="{{localize 'LA.Delete'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
           <small class="la-feature-description">{{item.system.description}}</small>

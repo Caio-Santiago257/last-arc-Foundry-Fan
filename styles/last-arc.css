@@ -53,6 +53,21 @@
 .la-primary-button { padding: 8px 12px; background: var(--la-accent); color: #fff8e9; }
 .la-weapon-row,.la-item-row { display: grid; grid-template-columns: 32px minmax(90px,1.5fr) repeat(2,minmax(60px,1fr)) 24px; gap: 8px; align-items: center; padding: 6px 3px; border-bottom: 1px solid #e6dccb; }
 .la-item-row { grid-template-columns: 32px minmax(90px,1.4fr) minmax(70px,1fr) minmax(50px,.7fr) 24px; }
+.la-item-row.la-technick-row { grid-template-columns: minmax(0,1fr) 24px; }
+.la-item-tech-description { grid-column: 1 / -1; color: var(--la-muted); font: 11px/1.4 Arial,sans-serif; }
+.la-technick-choice-form fieldset { display: grid; gap: 5px; max-height: 58vh; overflow-y: auto; padding: 4px; border: 0; }
+.la-technick-choice { display: grid; grid-template-columns: 18px minmax(0,1fr); gap: 8px; align-items: start; padding: 7px; border: 1px solid var(--la-line); background: var(--la-card); cursor: pointer; }
+.la-technick-choice input { margin-top: 3px; }
+.la-technick-choice span { display: grid; gap: 4px; }
+.la-technick-choice strong { color: var(--la-accent); font: 700 13px Georgia,serif; }
+.la-technick-choice small { color: var(--la-ink); font: 11px/1.35 Arial,sans-serif; }
+.la-technick-choice .la-technick-requirement { color: var(--la-muted); font-size: 10px; }
+.la-toggle { display: flex; align-items: center; gap: 7px; margin: 10px 0; color: var(--la-muted); font: 700 10px Arial,sans-serif; }
+.la-technick-summary { display: flex; flex-wrap: wrap; gap: 8px 14px; color: var(--la-muted); font: 10px/1.4 Arial,sans-serif; }
+.la-languages { display: grid; gap: 4px; margin-bottom: 12px; color: var(--la-muted); font: 700 10px Arial,sans-serif; text-transform: uppercase; }
+.la-languages textarea { min-height: 42px; color: var(--la-ink); font: 12px/1.4 Georgia,serif; text-transform: none; }
+.la-languages small { font: 10px Arial,sans-serif; text-transform: none; }
+.la-technick-description { white-space: pre-line; font: 13px/1.5 Georgia,serif; }
 .la-link { padding: 0; border: 0; background: transparent; color: var(--la-ink); text-align: left; font: 700 13px Georgia,serif; cursor: pointer; }
 .la-item-detail,.la-weapon-row>span { color: var(--la-muted); font: 11px Arial,sans-serif; }
 .la-icon-button { border: 0; background: transparent; color: #a34d42; font-size: 18px; cursor: pointer; }

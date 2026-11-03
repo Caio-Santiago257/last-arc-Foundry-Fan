@@ -72,6 +72,26 @@
         "Dancer",
         "Mediator",
         "Minstrel"
+      ],
+      "bonusTechnicks": [
+        "Bardic Study",
+        "Dodge",
+        "Improved Initiative",
+        "Linguist",
+        "Precise Shot",
+        "Quick Reload",
+        "Rapid Counter",
+        "Rapid Shot",
+        "Skill Focus",
+        "Skill Training",
+        "Tactical Guard",
+        "Tactical Withdrawal",
+        "Triple Crit",
+        "Weapon Finesse",
+        "Weapon Proficiency (axes)",
+        "Weapon Proficiency (bludgeons)",
+        "Weapon Proficiency (crossbows)",
+        "Weapon Proficiency (polearms)"
       ]
     }
   },
@@ -146,6 +166,26 @@
         "Cleric",
         "Devotee",
         "Occultist"
+      ],
+      "bonusTechnicks": [
+        "Arcane Study",
+        "Armour Proficiency (light)",
+        "Armour Proficiency (heavy)",
+        "Channel",
+        "Combat Casting",
+        "Improved Initiative",
+        "Improved Shield Bash",
+        "Linguist",
+        "MP Up",
+        "Precise Shot",
+        "Shield Bash",
+        "Skill Focus",
+        "Skill Training",
+        "Weapon Proficiency (axes)",
+        "Weapon Proficiency (bludgeons)",
+        "Weapon Proficiency (crossbows)",
+        "Weapon Proficiency (polearms)",
+        "Weapon Proficiency (swords)"
       ]
     }
   },
@@ -218,6 +258,24 @@
         "Conjurer",
         "Elementalist",
         "Illusionist"
+      ],
+      "bonusTechnicks": [
+        "Arcane Study",
+        "Armour Proficiency (light)",
+        "Channel",
+        "Combat Casting",
+        "Farshot",
+        "Improved Initiative",
+        "Linguist",
+        "MP Up",
+        "Rapid Shot",
+        "Skill Focus",
+        "Skill Training",
+        "Tactical Guard",
+        "Triple Crit",
+        "Weapon Proficiency (axes)",
+        "Weapon Proficiency (bludgeons)",
+        "Weapon Proficiency (crossbows)"
       ]
     }
   },
@@ -292,6 +350,30 @@
         "Hunter",
         "Scout",
         "Tamer"
+      ],
+      "bonusTechnicks": [
+        "Deadly Aim",
+        "Disruptive",
+        "Dodge",
+        "Dual Wield I",
+        "Dual Wield II",
+        "Dual Wield III",
+        "Farshot",
+        "Focused Shot",
+        "Improved Initiative",
+        "Mounted Archery",
+        "Mounted Combat",
+        "Quick Draw",
+        "Quick Reload",
+        "Rapid Shot",
+        "Running Attack",
+        "Skill Focus",
+        "Skill Training",
+        "Tactical Withdrawal",
+        "Triple Crit",
+        "Weapon Finesse",
+        "Weapon Proficiency (bludgeons)",
+        "Weapon Proficiency (polearms)"
       ]
     }
   },
@@ -369,6 +451,30 @@
         "Footpad",
         "Saboteur",
         "Thief"
+      ],
+      "bonusTechnicks": [
+        "Acrobatic Strike",
+        "Agile Manoeuvres",
+        "Rapid Counter",
+        "Disruptive",
+        "Dodge",
+        "Dodge Roll",
+        "Dual Wield I",
+        "Dual Wield II",
+        "Dual Wield III",
+        "Improved Initiative",
+        "Lunge",
+        "Quick Draw",
+        "Rapid Strike",
+        "Running Attack",
+        "Skill Focus",
+        "Skill Training",
+        "Tactical Guard",
+        "Tactical Withdrawal",
+        "Trip",
+        "Triple Crit",
+        "Weapon Proficiency (axes)",
+        "Weapon Proficiency (bows)"
       ]
     }
   },
@@ -445,6 +551,46 @@
         "Defender",
         "Fighter",
         "Uhlan"
+      ],
+      "bonusTechnicks": [
+        "Brawler I",
+        "Brawler II",
+        "Brawler III",
+        "Bull Rush",
+        "Cleave",
+        "Crush",
+        "Disruptive",
+        "Dual Wield I",
+        "Dual Wield II",
+        "Dual Wield III",
+        "HP Up",
+        "Improved Charge",
+        "Improved Disarm",
+        "Improved Initiative",
+        "Improved Shield Bash",
+        "Lunge",
+        "Mighty Strikes",
+        "Mounted Combat",
+        "Pin",
+        "Pole Fighter",
+        "Power Attack",
+        "Powerful Charge",
+        "Quick Draw",
+        "Rapid Counter",
+        "Rapid Strike",
+        "Running Attack",
+        "Shake it Off",
+        "Shield Bash",
+        "Skill Focus",
+        "Skill Training",
+        "Tactical Guard",
+        "Tactical Withdrawal",
+        "Threshold Up",
+        "Throw",
+        "Trample",
+        "Trip",
+        "Unseat",
+        "Whirlwind Attack"
       ]
     }
   }

@@ -1,5 +1,6 @@
 const ATTRIBUTES = ["str", "vit", "agi", "int", "mnd", "cha"];
 const LEVEL_XP = [0, 0, 1000, 3000, 6000, 10000, 15000, 21000, 28000, 36000, 45000, 55000, 66000, 78000, 91000, 105000, 120000, 136000, 153000, 171000, 190000];
+const WEAPON_GROUPS = ["axes", "bows", "bludgeons", "crossbows", "knives", "polearms", "swords"];
 const SKILLS = {
   acrobatics: "agi", alchemy: "int", athletics: "str", deception: "cha", disable: "agi",
   "lore-terrestrial": "int", "lore-mystic": "int", "lore-occult": "int", medicine: "int", perception: "mnd",
@@ -33,6 +34,17 @@ function safeNumber(value, fallback = 0) {
 
 function signed(value) { return `${value >= 0 ? "+" : ""}${value}`; }
 
+function formatTechnickPrerequisites(system = {}) {
+  const requirements = system.prerequisites ?? {};
+  const parts = [];
+  for (const [key, minimum] of Object.entries(requirements.attributes ?? {})) parts.push(`${game.i18n.localize(ATTRIBUTE_LABELS[key] ?? key)} ${minimum}+`);
+  if (requirements.characterLevel) parts.push(`${game.i18n.localize("LA.CharacterLevel")} ${requirements.characterLevel}+`);
+  for (const key of requirements.skills ?? []) parts.push(`${game.i18n.localize(SKILL_LABELS[key] ?? key)} (${game.i18n.localize("LA.Trained")})`);
+  if (requirements.anySkills?.length) parts.push(game.i18n.localize("LA.AnyPerformanceTrained"));
+  if (requirements.technicks?.length) parts.push(requirements.technicks.join(", "));
+  return parts.join("; ");
+}
+
 Hooks.once("init", () => {
   CONFIG.Actor.documentClass = LastArcActor;
   CONFIG.Item.documentClass = LastArcItem;
@@ -62,6 +74,18 @@ class LastArcActor extends Actor {
     for (const key of ATTRIBUTES) system.attributes[key] ??= { score: 10 };
     const classItems = this.items.filter(item => ["class", "advanced-class"].includes(item.type));
     const raceItem = this.items.find(item => item.type === "race");
+    const technicks = this.items.filter(item => item.type === "technick");
+    const technickEffects = technicks.map(item => item.system.effects ?? {});
+    const technickDefences = technickEffects.reduce((result, effect) => {
+      for (const key of ["fort", "ref", "will"]) result[key] += safeNumber(effect.defenceBonuses?.[key]);
+      return result;
+    }, { fort: 0, ref: 0, will: 0 });
+    const brawlerBonus = Math.max(0, ...technicks.filter(item => /^Brawler [I]+$/.test(item.name)).map(item => safeNumber(item.system.effects?.conditional?.defenceBonuses?.ref)));
+    const technickSkillBonuses = technickEffects.reduce((result, effect) => {
+      for (const [key, value] of Object.entries(effect.skillBonuses ?? {})) result[key] = safeNumber(result[key]) + safeNumber(value);
+      return result;
+    }, {});
+    const countTechnickEffect = key => technickEffects.reduce((sum, effect) => sum + safeNumber(effect[key]), 0);
     const activeClasses = classItems.filter(item => safeNumber(item.system.classLevel) > 0);
     system.details.className = activeClasses.filter(item => item.type === "class").map(item => item.name).join(", ");
     system.details.advancedClass = activeClasses.filter(item => item.type === "advanced-class").map(item => item.name).join(", ");
@@ -87,7 +111,7 @@ class LastArcActor extends Actor {
         halfLevel,
         attributeMod: system.attributes[attribute].modifier,
         classSkill: classItems.some(item => item.system.classSkills?.includes(key)) || raceItem?.system.classSkills?.includes(key) || false,
-        total: halfLevel + (skill.trained ? 5 : 0) + safeNumber(skill.classBonus) + classItems.reduce((sum, item) => sum + safeNumber(item.system.skillBonuses?.[key]) + safeNumber(item.system.selectedEffects?.skillBonuses?.[key]), 0) + safeNumber(system.details.racialEffects?.skillBonuses?.[key]) + safeNumber(skill.misc) + system.attributes[attribute].modifier
+        total: halfLevel + (skill.trained ? 5 : 0) + safeNumber(skill.classBonus) + classItems.reduce((sum, item) => sum + safeNumber(item.system.skillBonuses?.[key]) + safeNumber(item.system.selectedEffects?.skillBonuses?.[key]), 0) + safeNumber(system.details.racialEffects?.skillBonuses?.[key]) + safeNumber(technickSkillBonuses[key]) + safeNumber(skill.misc) + system.attributes[attribute].modifier
       };
     }
     for (const defence of ["fort", "ref", "will"]) {
@@ -100,7 +124,7 @@ class LastArcActor extends Actor {
         base: 10,
         attributeMod: system.attributes[attribute].modifier,
         classBonus,
-        total: 10 + system.attributes[attribute].modifier + classBonus + safeNumber(system.details.racialEffects?.defenceBonuses?.[defence]) + level + safeNumber(record.misc)
+        total: 10 + system.attributes[attribute].modifier + classBonus + safeNumber(system.details.racialEffects?.defenceBonuses?.[defence]) + technickDefences[defence] + (defence === "ref" && system.combat.emptyHands && !system.combat.flatFooted ? brawlerBonus : 0) + level + safeNumber(record.misc)
       };
     }
     const hp = system.resources?.hp ?? {};
@@ -109,7 +133,21 @@ class LastArcActor extends Actor {
     system.resources.mp = { value: safeNumber(mp.value), max: safeNumber(mp.max) };
     system.combat.passivePerception = 10 + safeNumber(system.skills.perception?.total);
     const classInitiative = classItems.map(item => item.system.initiativeDie).filter(Boolean).sort((a, b) => Number((b.match(/d(\d+)/i) ?? [0, 0])[1]) - Number((a.match(/d(\d+)/i) ?? [0, 0])[1]))[0];
-    system.combat.initiativeDie = classInitiative || system.combat.initiativeDie || "1d20";
+    const initiativeSteps = Math.min(technicks.filter(item => item.name === "Improved Initiative").length, 5);
+    const initiativeSizes = [12, 10, 8, 6, 4, 3];
+    const baseDie = classInitiative || system.combat.initiativeDie || "1d20";
+    const baseDieSize = Number((baseDie.match(/d(\d+)/i) ?? [0, 20])[1]);
+    const dieIndex = initiativeSizes.findIndex(size => size <= baseDieSize);
+    system.combat.initiativeDie = initiativeSteps ? `1d${initiativeSizes[Math.min(initiativeSizes.length - 1, Math.max(0, dieIndex) + initiativeSteps)]}` : baseDie;
+    system.combat.heroPointsPerDayBonus = countTechnickEffect("heroPointsPerDay");
+    system.combat.extraSecondWinds = countTechnickEffect("extraSecondWinds");
+    system.combat.breakThresholdBonus = countTechnickEffect("breakThresholdBonus");
+    system.combat.additionalCounterattacks = technicks.some(item => item.system.effects?.counterattacksPerTurnFromAgi) ? Math.max(0, system.attributes.agi.modifier) : 0;
+    system.combat.rangedCriticalMultiplier = technicks.some(item => item.system.effects?.rangedCriticalMultiplier) ? 3 : 2;
+    system.combat.weaponProficiencies = [...new Set(technicks.map(item => item.system.selectedWeaponGroup).filter(Boolean))];
+    system.details.additionalLanguages = technicks.reduce((sum, item) => sum + (item.system.effects?.languages ? (item.system.selectedLanguages?.length ?? Math.max(1, 1 + system.attributes.int.modifier)) : 0), 0);
+    system.details.additionalSpellSlots = technicks.reduce((sum, item) => sum + safeNumber(item.system.effects?.spellSlotsPerCopy) * Math.max(1, 1 + system.attributes.int.modifier), 0);
+    system.details.additionalPerformanceSlots = technicks.reduce((sum, item) => sum + safeNumber(item.system.effects?.performanceSlotsPerCopy) * Math.max(1, 1 + system.attributes.int.modifier), 0);
     system.inventory ??= {};
     system.inventoryBulk = this.items.reduce((sum, item) => sum + safeNumber(item.system.quantity, 1) * safeNumber(item.system.bulk), 0);
     system.inventory.maxBulk = 5 + safeNumber(system.attributes.str.score);
@@ -130,16 +168,25 @@ class LastArcActor extends Actor {
 class LastArcItem extends Item {
   async roll() {
     const actor = this.parent;
-    const formula = this.system.damage?.formula || this.system.roll?.formula;
+    let formula = this.system.damage?.formula || this.system.roll?.formula;
     const title = this.name;
+    let damageTitle = title;
     if (this.type === "weapon" && actor) {
-      const bonus = safeNumber(this.system.attack?.bonus);
+      const weaponGroup = String(this.system.weaponGroup ?? "").toLowerCase();
+      const proficiencyPenalty = weaponGroup && !actor.system.combat.weaponProficiencies?.includes(weaponGroup) ? -5 : 0;
+      const bonus = safeNumber(this.system.attack?.bonus) + proficiencyPenalty;
       const attack = await (new Roll(`1d20 + (${bonus})`, actor.getRollData())).evaluate();
-      await attack.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${game.i18n.localize("LA.AttackRoll")}: ${foundry.utils.escapeHTML(title)} (${signed(bonus)})` });
+      await attack.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${game.i18n.localize("LA.AttackRoll")}: ${foundry.utils.escapeHTML(title)} (${signed(bonus)}${proficiencyPenalty ? `; ${game.i18n.localize("LA.UnproficientPenalty")}` : ""})` });
+      const naturalTwenty = attack.dice.some(die => die.results?.some(result => result.result === 20));
+      if (formula && ["bows", "crossbows"].includes(weaponGroup) && naturalTwenty && safeNumber(actor.system.combat.rangedCriticalMultiplier) > 2) {
+        const multiplier = safeNumber(actor.system.combat.rangedCriticalMultiplier);
+        formula = `(${formula}) * ${multiplier}`;
+        damageTitle = `${title} — Critical ×${multiplier}`;
+      }
     }
     if (formula) {
       const roll = await (new Roll(formula, actor?.getRollData?.() ?? {})).evaluate();
-      await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: title });
+      await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: damageTitle });
       return roll;
     }
     await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content: `<h3>${foundry.utils.escapeHTML(title)}</h3><p>${foundry.utils.escapeHTML(this.system.description ?? "")}</p>` });
@@ -169,6 +216,9 @@ class LastArcActorSheet extends ActorSheet {
       && this.actor.system.details.xp >= this.actor.system.details.nextLevel
       && this.actor.items.some(item => ["class", "advanced-class"].includes(item.type) && safeNumber(item.system.classLevel) > 0);
     context.atMaxLevel = this.actor.system.details.level >= LEVEL_XP.length - 1;
+    context.showTripleCrit = this.actor.system.combat.rangedCriticalMultiplier > 2;
+    context.hasWeaponProficiencies = Boolean(this.actor.system.combat.weaponProficiencies?.length);
+    context.weaponProficiencyList = (this.actor.system.combat.weaponProficiencies ?? []).map(group => game.i18n.localize(`LA.WeaponGroup.${group}`));
     return context;
   }
 
@@ -207,7 +257,29 @@ class LastArcActorSheet extends ActorSheet {
       if (!attributeIncreases) return;
     }
 
-    const result = await this._applyClassDrop(selectedClass.item.toObject(), { levelUp: !selectedClass.isNew });
+    const projectedAttributes = {};
+    for (const key of ATTRIBUTES) projectedAttributes[key] = safeNumber(this.actor.system.attributes[key].score, 10);
+    for (const key of attributeIncreases ?? []) projectedAttributes[key] += 1;
+    const nextClassLevel = selectedClass.isNew ? Math.max(1, safeNumber(selectedClass.item.system.classLevel, 1)) : safeNumber(selectedClass.item.system.classLevel) + 1;
+    const newTechnicks = [];
+    if (selectedClass.isNew && selectedClass.item.system.startingTechnicks?.length) {
+      const startingTechnick = await this._chooseTechnick({ bonusTechnicks: selectedClass.item.system.startingTechnicks, classItem: selectedClass.item, characterLevel: nextLevel, projectedAttributes, priorSelections: newTechnicks });
+      if (!startingTechnick) return;
+      newTechnicks.push(startingTechnick);
+    }
+    if (nextLevel > 1 && nextLevel % 2 === 1) {
+      const technick = await this._chooseTechnick({ classItem: selectedClass.item, characterLevel: nextLevel, projectedAttributes, priorSelections: newTechnicks });
+      if (!technick) return;
+      newTechnicks.push(technick);
+    }
+    const bonusLevels = selectedClass.item.system.bonusTechnickLevels ?? [];
+    if (!selectedClass.isNew && selectedClass.item.type === "class" && bonusLevels.map(Number).includes(nextClassLevel)) {
+      const technick = await this._chooseTechnick({ bonusTechnicks: selectedClass.item.system.bonusTechnicks ?? [], classItem: selectedClass.item, characterLevel: nextLevel, projectedAttributes, priorSelections: newTechnicks });
+      if (!technick) return;
+      newTechnicks.push(technick);
+    }
+
+    const result = await this._applyClassDrop(selectedClass.item.toObject(), { levelUp: true });
     if (!result) return;
 
     if (attributeIncreases?.length) {
@@ -218,6 +290,7 @@ class LastArcActorSheet extends ActorSheet {
       await this.actor.update(update);
       await this._recalculateClassResources(oldMaxHP, oldMaxMP);
     }
+    for (const technick of newTechnicks) await this._grantTechnick(technick);
     ui.notifications.info(game.i18n.format("LA.LevelUpComplete", { level: nextLevel }));
   }
 
@@ -254,12 +327,194 @@ class LastArcActorSheet extends ActorSheet {
     }).render(true));
   }
 
+  async _chooseTechnick({ bonusTechnicks = null, classItem = null, characterLevel, projectedAttributes = {}, projectedTrainedSkills = [], priorSelections = [] } = {}) {
+    const pack = game.packs.get("last-arc-analogue.technicks");
+    if (!pack) {
+      ui.notifications.error(game.i18n.localize("LA.TechnickPackUnavailable"));
+      return null;
+    }
+    const all = await pack.getDocuments();
+    const normalize = name => String(name ?? "").normalize("NFKC").toLowerCase().replace(/\s+/g, " ").trim();
+    const bonusNames = bonusTechnicks?.map(normalize) ?? null;
+    const bonusWeaponGroups = (bonusTechnicks ?? []).map(name => String(name).match(/^Weapon Proficiency \((.+)\)$/i)?.[1]?.toLowerCase()).filter(Boolean);
+    const docs = all.filter(item => {
+      const isWeaponChoice = item.name === "Weapon Proficiency" && bonusWeaponGroups.length > 0;
+      if (bonusNames && !bonusNames.includes(normalize(item.name)) && !isWeaponChoice) return false;
+      return this._meetsTechnickPrerequisites(item, { characterLevel, projectedAttributes, projectedTrainedSkills, priorSelections, classItem, allowedWeaponGroups: bonusNames ? bonusWeaponGroups : WEAPON_GROUPS });
+    });
+    if (!docs.length) {
+      ui.notifications.error(game.i18n.localize("LA.NoEligibleTechnicks"));
+      return null;
+    }
+    const rows = docs.map((item, index) => {
+      const requirements = this._technickPrerequisiteText(item);
+      return `<label class="la-technick-choice"><input type="checkbox" name="technick" value="${index}"><span><strong>${foundry.utils.escapeHTML(item.name)}</strong><small>${foundry.utils.escapeHTML(item.system.description ?? "")}</small>${requirements ? `<small class="la-technick-requirement">${game.i18n.localize("LA.Requirements")}: ${foundry.utils.escapeHTML(requirements)}</small>` : ""}</span></label>`;
+    }).join("");
+    const selection = await new Promise(resolve => new Dialog({
+      title: game.i18n.localize("LA.SelectTechnick"),
+      content: `<form class="la-technick-choice-form"><p>${game.i18n.localize(bonusNames ? "LA.SelectClassBonusTechnickHint" : "LA.SelectTechnickHint")}</p><fieldset>${rows}</fieldset></form>`,
+      buttons: {
+        choose: { label: game.i18n.localize("LA.Choose"), callback: html => {
+          const checked = html.find('input[name="technick"]:checked');
+          if (checked.length !== 1) {
+            ui.notifications.warn(game.i18n.localize("LA.ChooseOneTechnick"));
+            resolve(null);
+            return;
+          }
+          resolve(docs[Number(checked.val())] ?? null);
+        } },
+        cancel: { label: game.i18n.localize("LA.Cancel"), callback: () => resolve(null) }
+      },
+      default: "choose", close: () => resolve(null),
+      render: html => html.find('input[name="technick"]').on("change", event => {
+        if (event.currentTarget.checked) html.find('input[name="technick"]').not(event.currentTarget).prop("checked", false);
+      })
+    }).render(true));
+    if (!selection) return null;
+
+    return this._configureTechnick(selection.toObject(), { classItem, projectedAttributes, projectedTrainedSkills, priorSelections, weaponGroups: bonusNames ? bonusWeaponGroups : null });
+  }
+
+  async _configureTechnick(itemData, { classItem = null, projectedAttributes = {}, projectedTrainedSkills = [], priorSelections = [], weaponGroups = null } = {}) {
+    const choiceType = itemData.system.choice?.type;
+    if (!choiceType) return itemData;
+    let choices = [];
+    if (choiceType === "trainedSkill") {
+      choices = Object.keys(SKILLS).filter(key => (this.actor.system.skills[key]?.trained || projectedTrainedSkills.includes(key)) && !this.actor.items.some(item => item.type === "technick" && item.system.selectedSkill === key) && !priorSelections.some(item => item.system.choice?.type === "trainedSkill" && item.system.selectedSkill === key));
+    } else if (choiceType === "classSkillTraining") {
+      const classSkills = new Set([...this.actor.items.filter(item => ["class", "advanced-class"].includes(item.type)).flatMap(item => item.system.classSkills ?? []), ...(classItem?.system.classSkills ?? [])]);
+      choices = [...classSkills].filter(key => SKILLS[key] && !this.actor.system.skills[key]?.trained && !projectedTrainedSkills.includes(key) && !priorSelections.some(item => item.system.selectedSkill === key && item.system.choice?.type === "classSkillTraining"));
+    } else if (choiceType === "weaponGroup") {
+      choices = (weaponGroups ?? itemData.system.choice.options ?? WEAPON_GROUPS).filter(group => !this.actor.items.some(item => item.type === "technick" && item.system.selectedWeaponGroup === group) && !priorSelections.some(item => item.system.selectedWeaponGroup === group));
+    }
+    if (["trainedSkill", "classSkillTraining", "weaponGroup"].includes(choiceType)) {
+      if (!choices.length) {
+        ui.notifications.error(game.i18n.localize("LA.NoTechnickChoices"));
+        return null;
+      }
+      const options = choices.map((key, index) => `<option value="${index}">${game.i18n.localize(SKILL_LABELS[key] ?? `LA.WeaponGroup.${key}`)}</option>`).join("");
+      const chosen = await new Promise(resolve => new Dialog({
+        title: game.i18n.localize("LA.TechnickChoice"),
+        content: `<form><label>${game.i18n.localize(choiceType === "weaponGroup" ? "LA.WeaponGroupChoice" : "LA.SkillChoice")}<select name="choice">${options}</select></label></form>`,
+        buttons: {
+          choose: { label: game.i18n.localize("LA.Choose"), callback: html => resolve(choices[Number(html.find("[name=choice]").val())] ?? null) },
+          cancel: { label: game.i18n.localize("LA.Cancel"), callback: () => resolve(null) }
+        },
+        default: "choose", close: () => resolve(null)
+      }).render(true));
+      if (!chosen) return null;
+      if (choiceType === "weaponGroup") {
+        itemData.system.selectedWeaponGroup = chosen;
+        itemData.system.selectedWeaponGroupLabel = game.i18n.localize(`LA.WeaponGroup.${chosen}`);
+      } else {
+        itemData.system.selectedSkill = chosen;
+        itemData.system.selectedSkillLabel = game.i18n.localize(SKILL_LABELS[chosen] ?? chosen);
+      }
+      if (choiceType === "trainedSkill") itemData.system.effects.skillBonuses = { [chosen]: 5 };
+    } else if (choiceType === "languages") {
+      const intelligence = safeNumber(projectedAttributes.int, this.actor.system.attributes.int.score);
+      const count = Math.max(1, 1 + Math.floor((intelligence - 10) / 2));
+      const names = await new Promise(resolve => new Dialog({
+        title: game.i18n.localize("LA.TechnickChoice"),
+        content: `<form><p>${game.i18n.format("LA.EnterLanguagesHint", { count })}</p><input name="languages" type="text"></form>`,
+        buttons: {
+          choose: { label: game.i18n.localize("LA.Choose"), callback: html => resolve(String(html.find("[name=languages]").val() ?? "").split(",").map(value => value.trim()).filter(Boolean)) },
+          cancel: { label: game.i18n.localize("LA.Cancel"), callback: () => resolve(null) }
+        },
+        default: "choose", close: () => resolve(null)
+      }).render(true));
+      if (!names || names.length !== count) {
+        ui.notifications.warn(game.i18n.format("LA.EnterLanguagesError", { count }));
+        return null;
+      }
+      itemData.system.selectedLanguages = names;
+    }
+    return itemData;
+  }
+
+  _meetsTechnickPrerequisites(item, { characterLevel, projectedAttributes = {}, projectedTrainedSkills = [], priorSelections = [], classItem = null, allowedWeaponGroups = WEAPON_GROUPS } = {}) {
+    const requirements = item.system.prerequisites ?? {};
+    const score = key => safeNumber(projectedAttributes[key], this.actor.system.attributes[key]?.score);
+    if (safeNumber(characterLevel, this.actor.system.details.level) < safeNumber(requirements.characterLevel)) return false;
+    for (const [key, minimum] of Object.entries(requirements.attributes ?? {})) if (score(key) < safeNumber(minimum)) return false;
+    const trained = key => this.actor.system.skills[key]?.trained || projectedTrainedSkills.includes(key);
+    if ((requirements.skills ?? []).some(key => !trained(key))) return false;
+    if ((requirements.anySkills ?? []).length && !requirements.anySkills.some(trained)) return false;
+    const normalize = name => String(name ?? "").normalize("NFKC").toLowerCase().replace(/\s+/g, " ").trim();
+    const owned = new Set([...this.actor.items.filter(entry => entry.type === "technick").map(entry => normalize(entry.name)), ...priorSelections.map(entry => normalize(entry.name))]);
+    if (requirements.technicks?.some(name => !owned.has(normalize(name)))) return false;
+    if (!item.system.repeatable && owned.has(normalize(item.name))) return false;
+    if (item.system.choice?.type === "classSkillTraining") {
+      const classSkills = new Set([...this.actor.items.filter(entry => ["class", "advanced-class"].includes(entry.type)).flatMap(entry => entry.system.classSkills ?? []), ...(classItem?.system.classSkills ?? [])]);
+      if (![...classSkills].some(key => SKILLS[key] && !trained(key) && !priorSelections.some(entry => entry.system.choice?.type === "classSkillTraining" && entry.system.selectedSkill === key))) return false;
+    }
+    if (item.system.choice?.type === "weaponGroup") {
+      const choices = allowedWeaponGroups ?? item.system.choice.options ?? WEAPON_GROUPS;
+      if (!choices.some(group => !this.actor.items.some(entry => entry.type === "technick" && entry.system.selectedWeaponGroup === group) && !priorSelections.some(entry => entry.system.selectedWeaponGroup === group))) return false;
+    }
+    if (item.system.choice?.type === "trainedSkill" && !Object.keys(SKILLS).some(key => trained(key) && !this.actor.items.some(entry => entry.type === "technick" && entry.system.selectedSkill === key) && !priorSelections.some(entry => entry.system.choice?.type === "trainedSkill" && entry.system.selectedSkill === key))) return false;
+    return true;
+  }
+
+  _technickPrerequisiteText(item) {
+    return formatTechnickPrerequisites(item.system);
+  }
+
+  async _grantTechnick(itemData) {
+    const oldMaxHP = safeNumber(this.actor.system.resources.hp.max);
+    const oldMaxMP = safeNumber(this.actor.system.resources.mp.max);
+    const [created] = await this.actor.createEmbeddedDocuments("Item", [itemData]);
+    if (itemData.system.selectedSkill && itemData.system.choice?.type === "classSkillTraining") {
+      await this.actor.update({ [`system.skills.${itemData.system.selectedSkill}.trained`]: true });
+    }
+    if (itemData.system.selectedLanguages?.length) {
+      const current = String(this.actor.system.details.languages ?? "").split(",").map(name => name.trim()).filter(Boolean);
+      await this.actor.update({ "system.details.languages": [...new Set([...current, ...itemData.system.selectedLanguages])].join(", ") });
+    }
+    await this._recalculateClassResources(oldMaxHP, oldMaxMP);
+    return created;
+  }
+
+  async _startingTechnickData(names = [], classItem, projectedTrainedSkills = []) {
+    const pack = game.packs.get("last-arc-analogue.technicks");
+    if (!pack) return [];
+    const documents = await pack.getDocuments();
+    const normalize = name => String(name ?? "").normalize("NFKC").toLowerCase().replace(/\s+/g, " ").trim();
+    const granted = [];
+    for (const sourceName of names) {
+      const group = String(sourceName).match(/^Weapon Proficiency \((.+)\)$/i)?.[1]?.toLowerCase();
+      const lookupName = group ? "Weapon Proficiency" : sourceName;
+      const document = documents.find(item => normalize(item.name) === normalize(lookupName));
+      if (!document) continue;
+      const data = document.toObject();
+      if (group) {
+        data.system.selectedWeaponGroup = group;
+        data.system.selectedWeaponGroupLabel = game.i18n.localize(`LA.WeaponGroup.${group}`);
+      }
+      if (!this._meetsTechnickPrerequisites(data, { characterLevel: 1, projectedTrainedSkills, priorSelections: granted, classItem })) continue;
+      granted.push(data);
+    }
+    return granted;
+  }
+
   async _onDropItem(event, data) {
     const dropped = await Item.implementation.fromDropData(data);
+    if (dropped.type === "technick") return this._applyTechnickDrop(dropped.toObject());
     if (!["race", "class", "advanced-class"].includes(dropped.type)) return super._onDropItem(event, data);
     const itemData = dropped.toObject();
     if (dropped.type === "race") return this._applyRaceDrop(itemData);
     return this._applyClassDrop(itemData);
+  }
+
+  async _applyTechnickDrop(itemData) {
+    const classItem = this.actor.items.find(item => ["class", "advanced-class"].includes(item.type));
+    if (!this._meetsTechnickPrerequisites(itemData, { characterLevel: this.actor.system.details.level, classItem })) {
+      ui.notifications.warn(game.i18n.format("LA.TechnickPrerequisiteFailed", { requirements: foundry.utils.escapeHTML(this._technickPrerequisiteText(itemData) || game.i18n.localize("LA.NoPrerequisites")) }));
+      return false;
+    }
+    const configured = await this._configureTechnick(itemData, { classItem });
+    if (!configured) return false;
+    return this._grantTechnick(configured);
   }
 
   async _applyRaceDrop(itemData) {
@@ -355,10 +610,29 @@ class LastArcActorSheet extends ActorSheet {
     const talentSelection = itemData.system.talentTrees.length ? await this._chooseClassTalent(itemData) : null;
     if (itemData.system.talentTrees.length && !talentSelection) return false;
     if (talentSelection) itemData.system.selectedTalentTrees = [talentSelection.tree];
+    const awardedTechnicks = [];
+    if (!levelUp) {
+      const newCharacterLevel = safeNumber(this.actor.system.details.level, 1) + (classes.length ? 1 : 0);
+      const startingTechnicks = classes.length === 0
+        ? await this._startingTechnickData(itemData.system.startingTechnicks ?? [], itemData, trainedSkills)
+        : [];
+      awardedTechnicks.push(...startingTechnicks);
+      if (classes.length > 0 && itemData.type === "class" && itemData.system.startingTechnicks?.length) {
+        const startingChoice = await this._chooseTechnick({ bonusTechnicks: itemData.system.startingTechnicks, classItem: itemData, characterLevel: newCharacterLevel, projectedTrainedSkills: trainedSkills, priorSelections: awardedTechnicks });
+        if (!startingChoice) return false;
+        awardedTechnicks.push(startingChoice);
+      }
+      if (classes.length === 0 || (newCharacterLevel > 1 && newCharacterLevel % 2 === 1)) {
+        const generalChoice = await this._chooseTechnick({ classItem: itemData, characterLevel: newCharacterLevel, projectedTrainedSkills: trainedSkills, priorSelections: awardedTechnicks });
+        if (!generalChoice) return false;
+        awardedTechnicks.push(generalChoice);
+      }
+    }
     const created = await this.actor.createEmbeddedDocuments("Item", [itemData]);
     if (trainedSkills.length) await this.actor.update(Object.fromEntries(trainedSkills.map(key => [`system.skills.${key}.trained`, true])));
     if (talentSelection) await this._createTalentItem(talentSelection.talent, created[0]);
     await this._recalculateClassResources(oldMaxHP, oldMaxMP);
+    for (const technick of awardedTechnicks) await this._grantTechnick(technick);
     return created;
   }
 
@@ -427,14 +701,22 @@ class LastArcActorSheet extends ActorSheet {
       const initial = item.system.isStartingClass ? safeNumber(item.system.mpAtFirstLevel) : 0;
       return sum + initial + Math.max(0, levels - (item.system.isStartingClass ? 1 : 0)) * Math.max(1, safeNumber(item.system.mpPerLevel) + this.actor.system.attributes.mnd.modifier) + (item.system.isStartingClass ? this.actor.system.attributes.mnd.modifier : 0);
     }, 0);
-    if (!classes.length) return;
-    const hpGain = hpMax - oldMaxHP;
-    const mpGain = mpMax - oldMaxMP;
+    const technickResources = this.actor.items.filter(item => item.type === "technick").reduce((totals, item) => {
+      const resources = item.system.effects?.resources ?? {};
+      totals.hp += safeNumber(resources.hpMaxFlat) + safeNumber(resources.hpMaxPerLevel) * safeNumber(this.actor.system.details.level, 1);
+      totals.mp += safeNumber(resources.mpMaxFlat) + safeNumber(resources.mpMaxPerLevel) * safeNumber(this.actor.system.details.level, 1);
+      return totals;
+    }, { hp: 0, mp: 0 });
+    const finalHPMax = hpMax + technickResources.hp;
+    const finalMPMax = mpMax + technickResources.mp;
+    if (!classes.length && !this.actor.items.some(item => item.type === "technick")) return;
+    const hpGain = finalHPMax - oldMaxHP;
+    const mpGain = finalMPMax - oldMaxMP;
     await this.actor.update({
-      "system.resources.hp.max": hpMax,
-      "system.resources.hp.value": Math.max(0, Math.min(hpMax, safeNumber(this.actor.system.resources.hp.value) + hpGain)),
-      "system.resources.mp.max": mpMax,
-      "system.resources.mp.value": Math.max(0, Math.min(mpMax, safeNumber(this.actor.system.resources.mp.value) + mpGain))
+      "system.resources.hp.max": finalHPMax,
+      "system.resources.hp.value": Math.max(0, Math.min(finalHPMax, safeNumber(this.actor.system.resources.hp.value) + hpGain)),
+      "system.resources.mp.max": finalMPMax,
+      "system.resources.mp.value": Math.max(0, Math.min(finalMPMax, safeNumber(this.actor.system.resources.mp.value) + mpGain))
     });
   }
 
@@ -536,7 +818,12 @@ class LastArcActorSheet extends ActorSheet {
   async _onItemDelete(event) {
     const row = event.currentTarget.closest(".item");
     const item = this.actor.items.get(row.dataset.itemId);
-    if (item && await Dialog.confirm({ title: game.i18n.localize("LA.Delete"), content: game.i18n.localize("LA.ConfirmDelete") })) await item.delete();
+    if (item && await Dialog.confirm({ title: game.i18n.localize("LA.Delete"), content: game.i18n.localize("LA.ConfirmDelete") })) {
+      const oldMaxHP = safeNumber(this.actor.system.resources.hp.max);
+      const oldMaxMP = safeNumber(this.actor.system.resources.mp.max);
+      await item.delete();
+      if (item.type === "technick") await this._recalculateClassResources(oldMaxHP, oldMaxMP);
+    }
   }
   _onItemRoll(event) { this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId)?.roll(); }
   async _onApplyDamage(event) {
@@ -595,8 +882,14 @@ class LastArcItemSheet extends ItemSheet {
     context.itemTypeLabel = `LA.ItemType.${this.item.type}`;
     context.isClass = ["class", "advanced-class"].includes(this.item.type);
     context.isRace = this.item.type === "race";
+    context.isTechnick = this.item.type === "technick";
+    context.isWeapon = this.item.type === "weapon";
+    context.weaponGroups = WEAPON_GROUPS.map(key => ({ key, label: `LA.WeaponGroup.${key}` }));
+    context.system.selectedSkillLabel ??= SKILL_LABELS[context.system.selectedSkill] ? game.i18n.localize(SKILL_LABELS[context.system.selectedSkill]) : context.system.selectedSkill;
+    context.system.selectedWeaponGroupLabel ??= context.system.selectedWeaponGroup ? game.i18n.localize(`LA.WeaponGroup.${context.system.selectedWeaponGroup}`) : "";
+    context.technickPrerequisiteText = formatTechnickPrerequisites(context.system);
     context.isTalent = this.item.type === "talent";
-    context.isNonRollable = ["race", "class", "advanced-class", "feature", "talent"].includes(this.item.type);
+    context.isNonRollable = ["race", "class", "advanced-class", "feature", "talent", "technick"].includes(this.item.type);
     return context;
   }
   activateListeners(html) {

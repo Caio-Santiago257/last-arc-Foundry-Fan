@@ -16,6 +16,7 @@
         <label>{{localize "LA.Quantity"}}<input name="system.quantity" type="number" min="0" value="{{system.quantity}}"></label>
         <label>{{localize "LA.Damage"}} formula<input name="system.damage.formula" value="{{system.damage.formula}}" placeholder="e.g. 1d6 + 2"></label>
         <label>{{localize "LA.Attack"}} bonus<input name="system.attack.bonus" type="number" value="{{system.attack.bonus}}"></label>
+        {{#if isWeapon}}<label>{{localize "LA.WeaponGroupChoice"}}<select name="system.weaponGroup"><option value="">—</option>{{#each weaponGroups as |group|}}<option value="{{group.key}}" {{#if (eq ../system.weaponGroup group.key)}}selected{{/if}}>{{localize group.label}}</option>{{/each}}</select></label>{{/if}}
       </section>
       {{#if isRace}}
       <section class="la-panel"><h2>{{localize "LA.RacialOverview"}}</h2><p class="la-race-description">{{system.description}}</p><div class="la-race-traits"><h3>{{localize "LA.RacialTraits"}}</h3><ul>{{#each raceTraits as |trait|}}<li>{{#if trait.name}}<strong>{{trait.name}}.</strong> {{/if}}{{trait.description}}</li>{{/each}}</ul></div></section>
@@ -33,6 +34,7 @@
       </div><label>{{localize "LA.RacialTraits"}}<textarea name="system.traitsText">{{system.traitsText}}</textarea></label><label>{{localize "LA.ChoiceGroupsJSON"}}<textarea name="system.choiceGroupsText">{{system.choiceGroupsText}}</textarea></label></section>
       {{/if}}
       {{#if isTalent}}<section class="la-panel"><h2>{{localize "LA.TalentSummary"}}</h2><p class="la-talent-summary">{{system.description}}</p><p><strong>{{localize "LA.Requirements"}}:</strong> {{system.prerequisites}}</p><p class="la-hint">{{system.automation.reason}}</p></section>{{/if}}
+      {{#if isTechnick}}<section class="la-panel"><h2>{{localize "LA.Technicks"}}</h2><p class="la-technick-description">{{system.description}}</p><p><strong>{{localize "LA.Requirements"}}:</strong> {{#if technickPrerequisiteText}}{{technickPrerequisiteText}}{{else}}{{localize "LA.NoPrerequisites"}}{{/if}}</p>{{#if system.selectedSkillLabel}}<p><strong>{{localize "LA.SkillChoice"}}:</strong> {{system.selectedSkillLabel}}</p>{{/if}}{{#if system.selectedWeaponGroupLabel}}<p><strong>{{localize "LA.WeaponGroupChoice"}}:</strong> {{system.selectedWeaponGroupLabel}}</p>{{/if}}{{#if system.selectedLanguages}}<p><strong>{{localize "LA.Languages"}}:</strong> {{#each system.selectedLanguages as |language|}}{{language}}{{#unless @last}}, {{/unless}}{{/each}}</p>{{/if}}</section>{{/if}}
       {{#if isClass}}
       <section class="la-panel"><h2>{{localize "LA.ClassProgression"}}</h2><div class="la-item-fields">
         <label>{{localize "LA.ClassKind"}}<select name="system.classKind"><option value="base" {{#if (eq system.classKind "base")}}selected{{/if}}>{{localize "LA.BaseClass"}}</option><option value="advanced" {{#if (eq system.classKind "advanced")}}selected{{/if}}>{{localize "LA.AdvancedClass"}}</option></select></label>

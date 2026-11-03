@@ -18,11 +18,12 @@ Alternatively, download the ZIP, extract its `last-arc-analogue` folder into Fou
 - Compendium packs for races, base classes, advanced classes, talents, technicks, spells, and equipment. Race and base-class records include structured automation. The base-class talent pack contains 100 concise summaries organized into the 25 base-class trees. Advanced-class records are configurable shells until their progression data is entered.
 - Dragging a race applies ability adjustments, caps, speed, senses, languages, and configured choice effects. Each racial trait is added to the character as a separate Feature with a concise rules summary; replacing a race removes only the race-generated Features. Dragging a base class opens a checkbox picker that shows the required trained-skill count and explains any mismatch, then calculates class level, HP, MP, defences, and initiative.
 - After trained skills, the class flow prompts for a talent tree and a talent from that tree. Each later odd class level repeats the tree/talent choice. The chosen class appears in the sheet header and selected trees are listed on the class entry. Talent descriptions are short summaries; usage limits, prerequisites, and conditional effects still require the book.
+- The Technicks compendium contains 67 rule summaries with structured prerequisites. Level-up offers general Technicks at odd character levels and class-restricted bonus Technicks at even base-class levels; ineligible choices are hidden. Passive effects such as HP Up, MP Up, Defence Up, Improved Initiative, Skill Focus, and Weapon Proficiency are automated.
 - Core Foundry SVG icons for the D20 control and skill/item icons. Portuguese (Brazil) and English labels.
 
 The book models advancement with advanced classes and talent trees; it does not define a generic subclass item type. Configured choice groups prompt for selections such as race options.
 
-Talents, technicks, spells, equipment, and detailed advanced-class progressions must be entered from a rulebook copy the GM is authorized to use. This is an initial playable framework, not a complete rules implementation. The printed character sheet appears on pages 378–379 of the supplied v0.3 Rules Cyclopedia (PDF pages 379–380); this sheet follows its information architecture with an original web layout.
+The item descriptions are concise rules summaries. Use a rulebook copy the GM is authorized to use for exact wording and for situational effects not automated by the sheet. Spells, equipment, and detailed advanced-class progressions still need campaign data. This is an initial playable framework, not a complete rules implementation. The printed character sheet appears on pages 378–379 of the supplied v0.3 Rules Cyclopedia (PDF pages 379–380); this sheet follows its information architecture with an original web layout.
 
 ## Development
 
@@ -30,7 +31,9 @@ The system package ID is `last-arc-analogue`. Edit `packs-source/*.json` and run
 
 Version 0.2.3 removes duplicate defences from the Attributes tab, displays the active class defence bonus as a derived read-only value in Combat, and shows each skill's governing attribute modifier while removing the unused Class column.
 
-Version 0.2.4 adds the book's XP thresholds through level 20 and a compact level-up button that appears when the character qualifies. It advances an active class, applies its HP/MP progression and talent choice, and prompts for the two attribute increases every four character levels. Technick selection is intentionally deferred.
+Version 0.2.4 adds the book's XP thresholds through level 20 and a compact level-up button that appears when the character qualifies. It advances an active class, applies its HP/MP progression and talent choice, and prompts for the two attribute increases every four character levels.
+
+Version 0.2.5 adds 67 Technicks, structured prerequisite checks, class bonus lists, level-up choices, and automation for the passive effects represented in the actor data.
 
 ## Attribution and status
 
