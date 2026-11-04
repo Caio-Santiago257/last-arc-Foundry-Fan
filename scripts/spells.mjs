@@ -16,7 +16,7 @@ function targetActors(item, actor) {
   const selected = [...(game.user?.targets ?? [])].map(token => ({ actor: token.actor, token })).filter(target => target.actor);
   if (selected.length) return selected;
   if (["self", "self-or-selected"].includes(item.system.targetMode)) {
-    const token = actor.getActiveTokens(true, true)[0] ?? null;
+    const token = actor.getActiveTokens(false, false)[0] ?? null;
     return [{ actor, token }];
   }
   return [];
@@ -143,7 +143,7 @@ async function showSpellCard(item, actor = null) {
 
   let defensivePenalty = 0;
   let threatsCount = 0;
-  const casterToken = actor.getActiveTokens(true, true)[0] ?? null;
+  const casterToken = actor.getActiveTokens(false, false)[0] ?? null;
   if (casterToken && canvas?.scene) {
     threatsCount = canvas.tokens.placeables.filter(token => token !== casterToken
       && token.document.disposition === CONST.TOKEN_DISPOSITIONS.HOSTILE

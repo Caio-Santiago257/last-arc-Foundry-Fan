@@ -2,6 +2,7 @@ const escapeHTML = value => foundry.utils.escapeHTML(String(value ?? ""));
 const number = (value, fallback = 0) => Number.isFinite(Number(value)) ? Number(value) : fallback;
 const signature = item => item.system.automation ?? {};
 const activeData = effect => effect.getFlag("last-arc-analogue", "performanceEffect");
+const activePlaceableToken = actor => actor.getActiveTokens(false, false)[0] ?? null;
 const combatActors = combat => new Set([
   ...combat.combatants.map(combatant => combatant.actor),
   ...(game.actors?.contents ?? []),
@@ -54,7 +55,7 @@ function defenceTotal(actor, key) {
 }
 
 async function threatenedCast(actor) {
-  const casterToken = actor.getActiveTokens(true, true)[0] ?? null;
+  const casterToken = activePlaceableToken(actor);
   if (!casterToken || !canvas?.scene) return { penalty: 0, defensive: false, warning: "" };
   const threats = canvas.tokens.placeables.filter(token => token !== casterToken
     && token.document.disposition === CONST.TOKEN_DISPOSITIONS.HOSTILE
@@ -141,7 +142,7 @@ async function applyPerformanceEffect(effect, target, performer, performance, pe
     if (old.length) await target.deleteEmbeddedDocuments("ActiveEffect", old.map(active => active.id));
   }
   const combat = game.combat;
-  const performerToken = performer.getActiveTokens(true, true)[0] ?? null;
+  const performerToken = activePlaceableToken(performer);
   const performerCombatant = combat?.combatants.find(combatant => combatant.actorId === performer.id && (!performerToken || combatant.tokenId === performerToken.id));
   const expiresAfter = performerCombatant ? { combatId: combat.id, combatantId: performerCombatant.id, round: combat.round, turn: combat.turn } : null;
   const duration = {};
@@ -184,7 +185,7 @@ async function applyPerformanceEffect(effect, target, performer, performance, pe
 async function addPerformanceImmunity(target, performer, performance, side) {
   if (!signature(performance).immuneUntilNextTurn) return;
   const combat = game.combat;
-  const performerToken = performer.getActiveTokens(true, true)[0] ?? null;
+  const performerToken = activePlaceableToken(performer);
   const combatant = combat?.combatants.find(entry => entry.actorId === performer.id && (!performerToken || entry.tokenId === performerToken.id));
   const expiresAfter = combatant ? { combatId: combat.id, combatantId: combatant.id, round: combat.round, turn: combat.turn } : null;
   await target.createEmbeddedDocuments("ActiveEffect", [{
@@ -207,7 +208,7 @@ async function perform(item, performer) {
     ui.notifications.warn(game.i18n.localize("LA.SelectPerformanceTargets"));
     return null;
   }
-  const sourceToken = performer.getActiveTokens(true, true)[0] ?? null;
+  const sourceToken = activePlaceableToken(performer);
   const side = item.system.targetSide === "ally" ? "ally" : "enemy";
   const valid = tokens.filter(token => !sourceToken || (side === "ally"
     ? token.document.disposition === sourceToken.document.disposition

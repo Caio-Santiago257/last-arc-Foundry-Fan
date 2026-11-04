@@ -49,6 +49,8 @@ Version 0.2.10 shows the damage dice roll in chat for targeted damage Magick and
 
 Version 0.2.11 adds the Performances compendium, Bardic Study selection limits and retroactive slots, tier-based Perform checks, supported recipient effects, and the Active Effects sheet tab.
 
+Version 0.2.12 fixes performance rolls by consistently using active scene Token placeables for performer position and disposition checks. It also fixes the same token-type mismatch in spellcasting melee-range checks.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork or copied rule text. The system code is provided without an added license until the repository owner chooses one.
