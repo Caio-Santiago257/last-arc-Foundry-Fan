@@ -1106,14 +1106,21 @@ class LastArcActorSheet extends ActorSheet {
       rolls.push(roll);
       values.push(6 + roll.total, 19 - roll.total);
     }
-    const choices = ATTRIBUTES.map((key, index) => `<label class="la-attribute-assignment-choice"><span>${game.i18n.localize(ATTRIBUTE_LABELS[key])}</span><select name="attribute-${key}" required>${values.map((value, valueIndex) => `<option value="${valueIndex}" ${valueIndex === index ? "selected" : ""}>${valueIndex + 1}. ${value}</option>`).join("")}</select></label>`).join("");
+    for (let index = 0; index < rolls.length; index++) {
+      await rolls[index].toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor: `${game.i18n.localize("LA.AttributeGeneration")} — ${values[index * 2]} / ${values[index * 2 + 1]}`
+      });
+    }
+    const choices = ATTRIBUTES.map(key => `<label class="la-attribute-assignment-choice"><span>${game.i18n.localize(ATTRIBUTE_LABELS[key])}</span><select name="attribute-${key}" required><option value="" selected disabled>—</option>${values.map((value, valueIndex) => `<option value="${valueIndex}">${valueIndex + 1}. ${value}</option>`).join("")}</select></label>`).join("");
     const assignment = await new Promise(resolve => new Dialog({
       title: game.i18n.localize("LA.AssignAttributes"),
       content: `<form class="la-attribute-assignment-form"><p>${game.i18n.localize("LA.AssignAttributesHint")}</p><fieldset>${choices}</fieldset></form>`,
       buttons: {
         choose: { label: game.i18n.localize("LA.Choose"), callback: html => {
-          const indices = ATTRIBUTES.map(key => Number(html.find(`[name="attribute-${key}"]`).val()));
-          if (new Set(indices).size !== ATTRIBUTES.length || indices.some(index => !Number.isInteger(index) || index < 0 || index >= values.length)) {
+          const selections = ATTRIBUTES.map(key => html.find(`[name="attribute-${key}"]`).val());
+          const indices = selections.map(Number);
+          if (selections.some(value => value === null || value === "") || new Set(indices).size !== ATTRIBUTES.length || indices.some(index => !Number.isInteger(index) || index < 0 || index >= values.length)) {
             ui.notifications.warn(game.i18n.localize("LA.AssignAttributesUnique"));
             resolve(null);
             return;
@@ -1140,7 +1147,6 @@ class LastArcActorSheet extends ActorSheet {
     const update = {};
     ATTRIBUTES.forEach((key, index) => { update[`system.attributes.${key}.score`] = values[assignment[index]]; });
     await this.actor.update(update);
-    for (const roll of rolls) await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: game.i18n.localize("LA.AttributeGeneration") });
     const summary = ATTRIBUTES.map((key, index) => `<li>${foundry.utils.escapeHTML(game.i18n.localize(ATTRIBUTE_LABELS[key]))}: <strong>${values[assignment[index]]}</strong></li>`).join("");
     await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), content: `<p><strong>${game.i18n.localize("LA.AttributeAssignments")}</strong></p><ul>${summary}</ul>` });
   }

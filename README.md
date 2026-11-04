@@ -55,6 +55,8 @@ Version 0.2.13 adds the Equipage compendium folder and all 495 core equipment re
 
 Version 0.2.14 lets players assign the six generated attribute values to any attribute without reusing a value, and fixes the inventory row layout and size of the equipped toggle.
 
+Version 0.2.15 leaves all attribute assignment selectors empty so players choose every value themselves, and posts each 2d6 roll with its paired generated values to chat before assignment.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork. The system code is provided without an added license until the repository owner chooses one.
