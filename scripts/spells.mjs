@@ -130,10 +130,6 @@ async function showSpellCard(item, actor = null) {
     return null;
   }
   const targets = targetActors(item, actor);
-  if (!targets.length && system.targetMode !== "none") {
-    ui.notifications.warn(game.i18n.localize("LA.SelectSpellTargets"));
-    return null;
-  }
 
   let defensivePenalty = 0;
   let threatsCount = 0;
@@ -165,8 +161,20 @@ async function showSpellCard(item, actor = null) {
 
   await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${game.i18n.localize("LA.SpellcraftCheck")}: ${escapeHTML(item.name)} (${escapeHTML(system.school)})` });
   if (castSucceeded && effects.length) {
-    for (const { actor: target } of targets) {
-      for (const effect of effects) await applySpellEffect(effect, target, actor, item, checkTotal, results);
+    if (targets.length) {
+      for (const { actor: target } of targets) {
+        for (const effect of effects) await applySpellEffect(effect, target, actor, item, checkTotal, results);
+      }
+    } else {
+      // A spell can be rolled before choosing a token. Damage is still rolled
+      // from the Spellcraft tier, while target defence and damage reduction
+      // remain unapplied until the GM has a target to resolve against.
+      for (const effect of effects.filter(entry => entry.type === "damage")) {
+        const formula = String(effect.formula).replaceAll("@level", String(number(actor.system.details.level)));
+        const damageRoll = await (new Roll(formula, { ...actor.getRollData(), level: actor.system.details.level })).evaluate();
+        results.push(`${item.name}: ${formula} = ${damageRoll.total} ${game.i18n.localize("LA.DamageRolledUnapplied")}`);
+        await damageRoll.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${escapeHTML(item.name)} — ${game.i18n.localize("LA.DamageRolledUnapplied")}` });
+      }
     }
   }
   const tierLabel = tier ? `${game.i18n.localize("LA.SpellThreshold")}: ${tier.dc}` : castSucceeded ? game.i18n.localize("LA.SpellNoTier") : `${game.i18n.localize("LA.SpellFailed")}: ${minimumDC}+`;

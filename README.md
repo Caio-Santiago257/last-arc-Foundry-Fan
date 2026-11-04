@@ -42,6 +42,8 @@ Version 0.2.7 publishes a package ZIP under the system ID and points the updater
 
 Version 0.2.8 adds the complete 76-spell Magick catalogue in five school packs, Spellcraft rolls, MP spending, tier checks, and supported target effect automation.
 
+Version 0.2.9 lets players roll targeted Magick without preselecting a token. The Spellcraft tier selects damage dice, which are rolled to chat without applying defence or damage reduction until a target is chosen; selected targets still receive supported automatic effects.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork or copied rule text. The system code is provided without an added license until the repository owner chooses one.

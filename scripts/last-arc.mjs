@@ -838,7 +838,15 @@ class LastArcActorSheet extends ActorSheet {
       if (item.type === "technick") await this._recalculateClassResources(oldMaxHP, oldMaxMP);
     }
   }
-  _onItemRoll(event) { this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId)?.roll(); }
+  async _onItemRoll(event) {
+    event.preventDefault();
+    const item = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId);
+    try { await item?.roll(); }
+    catch (error) {
+      console.error(`Last Arc | Failed to roll item ${item?.name ?? "unknown"}`, error);
+      ui.notifications.error(game.i18n.localize("LA.ItemRollFailed"));
+    }
+  }
   async _onApplyDamage(event) {
     event.preventDefault();
     const amount = await new Promise(resolve => new Dialog({ title: game.i18n.localize("LA.ApplyDamage"), content: `<form><label>${game.i18n.localize("LA.Damage")}<input type="number" name="damage" min="0" value="0"></label><label>${game.i18n.localize("LA.DamageType")}<input name="damageType" value="unaspected"></label></form>`, buttons: { apply: { label: game.i18n.localize("LA.ApplyDamage"), callback: html => resolve({ amount: html.find("[name=damage]").val(), type: html.find("[name=damageType]").val() }) }, cancel: { label: "×", callback: () => resolve(null) } }, default: "apply", close: () => resolve(null) }).render(true));
@@ -909,7 +917,14 @@ class LastArcItemSheet extends ItemSheet {
   }
   activateListeners(html) {
     super.activateListeners(html);
-    html.find(".item-roll").on("click", event => { event.preventDefault(); this.item.roll(); });
+    html.find(".item-roll").on("click", async event => {
+      event.preventDefault();
+      try { await this.item.roll(); }
+      catch (error) {
+        console.error(`Last Arc | Failed to roll item ${this.item.name}`, error);
+        ui.notifications.error(game.i18n.localize("LA.ItemRollFailed"));
+      }
+    });
   }
   async _updateObject(event, formData) {
     const data = foundry.utils.expandObject(formData);
