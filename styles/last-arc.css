@@ -152,4 +152,32 @@
 .la-talent-choice-form select { width: 100%; }
 .la-talent-preview { margin: 12px 0; min-height: 70px; white-space: normal; font: 14px/1.5 Georgia,serif; }
 .la-result.success { color: #28643e; font-weight: 700; }.la-result.failure { color: #922f29; font-weight: 700; }
+.la-break-panel { background: linear-gradient(135deg,rgba(255,252,244,.95),rgba(242,231,210,.8)); }
+.la-break-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.la-break-heading h2 { margin-bottom:4px; }
+.la-break-heading p { margin:0 0 10px; color:var(--la-muted); font:10px/1.45 Arial,sans-serif; }
+.la-break-heading>strong { min-width:58px; padding:7px 10px; border:1px solid var(--la-gold); background:#fffaf0; color:var(--la-accent); text-align:center; font:700 23px Georgia,serif; }
+.la-break-track { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:6px; }
+.la-break-step { display:grid; justify-items:center; gap:5px; min-height:54px; padding:7px 4px; border:1px solid #d8c8ad; background:rgba(255,255,255,.42); color:#675d50; }
+.la-break-step>span { display:grid; place-items:center; width:24px; height:24px; border-radius:50%; background:#e8decc; font:700 12px Arial,sans-serif; }
+.la-break-step small { font:700 9px/1.2 Arial,sans-serif; text-align:center; }
+.la-break-step:nth-child(2).current,.la-break-step:nth-child(3).current { border-color:#bf8c46; background:#fbefd9; color:#81521f; }
+.la-break-step:nth-child(4).current,.la-break-step:nth-child(5).current { border-color:#b8543b; background:#f8e2d9; color:#8d3427; }
+.la-break-step.critical { border-color:#922f29; background:#f2d8d1; color:#7d211d; }
+.la-break-step.current>span { background:var(--la-accent); color:#fff8ea; box-shadow:0 0 0 3px rgba(146,47,41,.14); }
+.la-break-status { display:flex; justify-content:space-between; gap:10px; margin:9px 0; color:#5f5548; font:11px/1.4 Arial,sans-serif; }
+.la-break-status>strong { color:#8e2f28; }
+.la-break-status>span { color:#922f29; font-weight:700; }
+.la-break-actions { display:flex; flex-wrap:wrap; gap:7px; }
+.la-break-actions button { display:inline-flex; align-items:center; gap:6px; width:auto; min-height:29px; padding:5px 10px; border:1px solid #c6a66f; background:#f3e7d2; color:#684a26; font:700 10px Arial,sans-serif; }
+.la-break-actions button:hover:not(:disabled) { border-color:var(--la-accent); background:#fff7e9; }
+.la-break-actions button:disabled { opacity:.45; cursor:not-allowed; }
+.la-injury-list { margin-top:12px; padding-top:8px; border-top:1px solid #dfd1bc; }
+.la-injury-list h3 { margin:0 0 5px; color:var(--la-accent); font:700 10px Arial,sans-serif; letter-spacing:.08em; text-transform:uppercase; }
+.la-injury-row { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 2px; border-top:1px solid #eadfce; }
+.la-injury-row>span { display:grid; gap:3px; min-width:0; }
+.la-injury-row b { font:700 12px Georgia,serif; }
+.la-injury-row small { color:#5f5548; font:11px/1.4 Arial,sans-serif; }
+.la-injury-delete { width:28px; min-width:28px; height:26px; padding:2px; color:#922f29; }
+@media (max-width: 760px) { .la-break-track { grid-template-columns:repeat(3,minmax(0,1fr)); }.la-break-heading { align-items:flex-start; } }
 @media (max-width: 760px) { .la-header { grid-template-columns: 65px minmax(0,1fr) 156px; gap: 8px; padding: 10px; }.la-level-card { padding: 5px; }.la-portrait { width: 65px; height: 82px; }.la-identity-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }.la-overview-grid { grid-template-columns: 1fr; }.la-body { padding: 8px; }.la-skill-table { overflow-x: auto; }.la-skill-header,.la-skill-row { min-width: 590px; }.la-tabs { overflow-x: auto; }.la-tabs .item { white-space: nowrap; padding: 7px; } }

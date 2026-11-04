@@ -173,9 +173,10 @@ async function applySpellEffect(effect, target, caster, spell, checkTotal, resul
     const formula = String(effect.formula).replaceAll("@level", String(number(caster.system.details.level)));
     const healingRoll = await (new Roll(formula, caster.getRollData())).evaluate();
     const hp = target.system.resources?.hp ?? { value: 0, max: 0 };
-    const value = Math.min(number(hp.max), number(hp.value) + Math.max(0, Math.floor(healingRoll.total)));
-    await target.update({ "system.resources.hp.value": value });
-    results.push(`${target.name}: +${value - number(hp.value)} HP`);
+    const healing = Math.max(0, Math.floor(healingRoll.total));
+    const healed = typeof target.applyHealing === "function" ? await target.applyHealing(healing) : Math.min(healing, Math.max(0, number(hp.max) - number(hp.value)));
+    if (typeof target.applyHealing !== "function") await target.update({ "system.resources.hp.value": number(hp.value) + healed, "system.combat.persistentHpRecovery": false });
+    results.push(`${target.name}: +${healed} HP`);
   } else if (effect.type === "condition") {
     if (effect.defence && hasFailure) return;
     const rounds = number(effect.durationRounds) * (highArcana === "lingeringSpell" ? 2 : 1);
@@ -324,7 +325,7 @@ async function showSpellCard(item, actor = null) {
       if (classLevel >= 2 && magicalDamage && featureNames.has("Soul Eater")) {
         const hp = actor.system.resources.hp;
         const gain = Math.min(Math.floor(classLevel / 2), Math.max(0, number(hp.max) - number(hp.value)));
-        if (gain) { await actor.update({ "system.resources.hp.value": number(hp.value) + gain }); results.push(`Soul Eater: +${gain} HP`); }
+        if (gain) { if (typeof actor.applyHealing === "function") await actor.applyHealing(gain); else await actor.update({ "system.resources.hp.value": number(hp.value) + gain, "system.combat.persistentHpRecovery": false }); results.push(`Soul Eater: +${gain} HP`); }
       }
     }
   }

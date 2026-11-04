@@ -114,6 +114,10 @@ class LastArcActor extends Actor {
     system.combat.baseElementalDamageReduction ??= safeNumber(system.combat.elementalDamageReduction);
     system.combat.physicalDamageReduction ??= 0;
     system.combat.elementalDamageReduction ??= 0;
+    system.combat.breakGauge = Math.max(0, Math.min(5, Math.floor(safeNumber(system.combat.breakGauge))));
+    system.combat.injuries ??= [];
+    system.combat.recoveryMinorActions = Math.max(0, Math.min(2, Math.floor(safeNumber(system.combat.recoveryMinorActions))));
+    system.combat.persistentHpRecovery ??= false;
     for (const key of ATTRIBUTES) system.attributes[key] ??= { score: 10 };
     const classItems = this.items.filter(item => ["class", "advanced-class"].includes(item.type));
     const raceItem = this.items.find(item => item.type === "race");
@@ -190,6 +194,16 @@ class LastArcActor extends Actor {
       system.attributes[key] ??= {};
       system.attributes[key].modifier = Math.floor((score - 10) / 2);
     }
+    const injuryPenalties = { str: 0, agi: 0 };
+    for (const injury of system.combat.injuries) {
+      if (injury.type === "severed-arm") { injuryPenalties.str -= 5; injuryPenalties.agi -= 5; }
+      if (injury.type === "severed-leg") injuryPenalties.agi -= 5;
+    }
+    system.combat.injuryAttributePenalties = injuryPenalties;
+    const gaugePenalty = [0, -1, -2, -5, -10, -10][system.combat.breakGauge];
+    system.combat.breakGaugePenalty = gaugePenalty;
+    system.combat.unconscious = system.combat.breakGauge >= 5 || (safeNumber(system.resources?.hp?.max) > 0 && safeNumber(system.resources?.hp?.value) <= 0 && !system.combat.dead);
+    for (const key of ATTRIBUTES) system.attributes[key].checkModifier = system.attributes[key].modifier + safeNumber(injuryPenalties[key]) + gaugePenalty;
     const halfLevel = Math.floor(level / 2);
     system.halfLevel = halfLevel;
     system.initiative = { total: 0 };
@@ -202,7 +216,7 @@ class LastArcActor extends Actor {
         halfLevel,
         attributeMod: system.attributes[attribute].modifier,
         classSkill: WEAPON_SKILLS.has(key) || classItems.some(item => item.system.classSkills?.includes(key)) || raceItem?.system.classSkills?.includes(key) || false,
-        total: halfLevel + (skill.trained ? 5 : 0) + safeNumber(skill.classBonus) + classItems.reduce((sum, item) => sum + safeNumber(item.system.skillBonuses?.[key]) + safeNumber(item.system.selectedEffects?.skillBonuses?.[key]), 0) + safeNumber(system.details.racialEffects?.skillBonuses?.[key]) + safeNumber(technickSkillBonuses[key]) + performanceSkillBonus(key) + safeNumber(gearSkillBonuses[key]) + armourPenaltyForSkill(key, attribute, armourPenalty) + safeNumber(skill.misc) + system.attributes[attribute].modifier
+        total: halfLevel + (skill.trained ? 5 : 0) + safeNumber(skill.classBonus) + classItems.reduce((sum, item) => sum + safeNumber(item.system.skillBonuses?.[key]) + safeNumber(item.system.selectedEffects?.skillBonuses?.[key]), 0) + safeNumber(system.details.racialEffects?.skillBonuses?.[key]) + safeNumber(technickSkillBonuses[key]) + performanceSkillBonus(key) + safeNumber(gearSkillBonuses[key]) + armourPenaltyForSkill(key, attribute, armourPenalty) + safeNumber(skill.misc) + system.attributes[attribute].modifier + safeNumber(injuryPenalties[attribute]) + gaugePenalty
       };
     }
     for (const defence of ["fort", "ref", "will"]) {
@@ -218,7 +232,7 @@ class LastArcActor extends Actor {
         base: 10,
         attributeMod: attributeModifier,
         classBonus,
-        total: 10 + (defence === "ref" ? Math.min(attributeModifier, armourTotals.maxAgilityBonus) : attributeModifier) + classBonus + (defence === "ref" ? armourTotals.reflexBonus : 0) + safeNumber(system.details.racialEffects?.defenceBonuses?.[defence]) + technickDefences[defence] + performanceDefenceBonuses[defence] + gearDefenceBonuses[defence] + (defence === "ref" && system.combat.emptyHands && !system.combat.flatFooted ? brawlerBonus : 0) + level + safeNumber(record.misc)
+        total: 10 + (defence === "ref" ? Math.min(attributeModifier, armourTotals.maxAgilityBonus) : attributeModifier) + classBonus + (defence === "ref" ? armourTotals.reflexBonus : 0) + safeNumber(system.details.racialEffects?.defenceBonuses?.[defence]) + technickDefences[defence] + performanceDefenceBonuses[defence] + gearDefenceBonuses[defence] + (defence === "ref" && system.combat.emptyHands && !system.combat.flatFooted ? brawlerBonus : 0) + level + safeNumber(record.misc) + gaugePenalty + safeNumber(injuryPenalties[attribute])
       };
     }
     const hp = system.resources?.hp ?? {};
@@ -226,7 +240,12 @@ class LastArcActor extends Actor {
     system.resources.hp = { value: safeNumber(hp.value), max: safeNumber(system.resources.hp.baseMax, safeNumber(hp.max)) + gearHpBonus, baseMax: safeNumber(system.resources.hp.baseMax, safeNumber(hp.max)) };
     system.resources.mp = { value: safeNumber(mp.value), max: safeNumber(mp.max) };
     system.combat.breakThresholdBonus = countTechnickEffect("breakThresholdBonus") + gearBreakBonus;
-    system.combat.speed = safeNumber(system.combat.baseSpeed, safeNumber(system.combat.speed)) + gearSpeedBonus;
+    const size = String(raceItem?.system.size ?? system.combat.creatureSize ?? "medium").toLowerCase();
+    const sizeBonus = ({ large: 5, huge: 10, gargantuan: 20, colossal: 50 })[size] ?? 0;
+    system.combat.breakThresholdSizeBonus = sizeBonus;
+    system.combat.breakThreshold = Math.max(0, safeNumber(system.defences.fort.total) + safeNumber(system.combat.breakThresholdBonus) + safeNumber(system.combat.damageThreshold) + sizeBonus);
+    const legPenalty = system.combat.injuries.some(injury => injury.type === "severed-leg");
+    system.combat.speed = Math.floor((safeNumber(system.combat.baseSpeed, safeNumber(system.combat.speed)) + gearSpeedBonus) / (legPenalty ? 2 : 1));
     system.combat.passivePerception = 10 + safeNumber(system.skills.perception?.total);
     const classInitiative = classItems.map(item => item.system.initiativeDie).filter(Boolean).sort((a, b) => Number((b.match(/d(\d+)/i) ?? [0, 0])[1]) - Number((a.match(/d(\d+)/i) ?? [0, 0])[1]))[0];
     const initiativeSteps = Math.min(technicks.filter(item => item.name === "Improved Initiative").length, 5);
@@ -237,7 +256,6 @@ class LastArcActor extends Actor {
     system.combat.initiativeDie = initiativeSteps ? `1d${initiativeSizes[Math.min(initiativeSizes.length - 1, Math.max(0, dieIndex) + initiativeSteps)]}` : baseDie;
     system.combat.heroPointsPerDayBonus = countTechnickEffect("heroPointsPerDay");
     system.combat.extraSecondWinds = countTechnickEffect("extraSecondWinds");
-    system.combat.breakThresholdBonus = countTechnickEffect("breakThresholdBonus");
     system.combat.additionalCounterattacks = technicks.some(item => item.system.effects?.counterattacksPerTurnFromAgi) ? Math.max(0, system.attributes.agi.modifier) : 0;
     system.combat.performanceWeaponSkillBonus = activePerformances.reduce((sum, effect) => sum + safeNumber(effect.weaponSkillBonus), 0);
     system.combat.performanceAttackBonus = activePerformances.reduce((sum, effect) => sum + safeNumber(effect.attackBonus), 0);
@@ -257,8 +275,8 @@ class LastArcActor extends Actor {
     system.details.additionalPerformanceSlots = technicks.reduce((sum, item) => sum + safeNumber(item.system.effects?.performanceSlotsPerCopy) * Math.max(0, 1 + system.attributes.int.modifier), 0);
     system.inventory ??= {};
     system.inventoryBulk = this.items.reduce((sum, item) => sum + safeNumber(item.system.quantity, 1) * safeNumber(item.system.bulk), 0);
-    system.inventory.maxBulk = 5 + safeNumber(system.attributes.str.score);
-    system.inventory.overBulk = 10 + safeNumber(system.attributes.str.score);
+    system.inventory.maxBulk = Math.floor((5 + safeNumber(system.attributes.str.score)) / (legPenalty ? 2 : 1));
+    system.inventory.overBulk = Math.floor((10 + safeNumber(system.attributes.str.score)) / (legPenalty ? 2 : 1));
   }
 
   async applyDamage(amount, { type = "unaspected", bypassDR = false } = {}) {
@@ -278,15 +296,123 @@ class LastArcActor extends Actor {
     const dr = bypassDR ? 0 : Math.max(0, safeNumber(this.system.combat?.damageReduction) + physicalDR + elementalDR);
     const applied = Math.max(0, damage - dr);
     const hp = this.system.resources.hp;
-    await this.update({ "system.resources.hp.value": Math.max(0, hp.value - applied) });
-    await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<p><strong>${game.i18n.localize("LA.ApplyDamage")}:</strong> ${applied} (${foundry.utils.escapeHTML(type)}). ${game.i18n.localize("LA.Health")}: ${Math.max(0, hp.value - applied)}/${hp.max}.</p>` });
+    const oldHp = safeNumber(hp.value);
+    const newHp = Math.max(0, oldHp - applied);
+    const threshold = safeNumber(this.system.combat.breakThreshold);
+    const beatsThreshold = applied > threshold;
+    let gauge = safeNumber(this.system.combat.breakGauge);
+    const update = { "system.resources.hp.value": newHp, "system.combat.recoveryMinorActions": 0 };
+    if (applied > 0 && beatsThreshold) gauge = Math.min(5, gauge + 1);
+    if (newHp <= 0 && oldHp > 0) gauge = 5;
+    const lethal = beatsThreshold && newHp <= 0;
+    let savedByHeroPoint = false;
+    if (lethal && this.type === "character" && safeNumber(this.system.resources.heroPoints?.value) > 0) {
+      const spend = await Dialog.confirm({
+        title: game.i18n.localize("LA.DeathPrevented"),
+        content: `<p>${game.i18n.localize("LA.SpendHeroPointForDeath")}</p>`,
+        yes: () => true, no: () => false, defaultYes: false
+      });
+      if (spend) {
+        update["system.resources.heroPoints.value"] = safeNumber(this.system.resources.heroPoints.value) - 1;
+        savedByHeroPoint = true;
+      } else update["system.combat.dead"] = true;
+    } else if (lethal) update["system.combat.dead"] = true;
+    if (newHp <= 0 || gauge >= 5) gauge = 5;
+    update["system.combat.breakGauge"] = gauge;
+    if (savedByHeroPoint) {
+      const injury = await this._rollInjuryAndDismemberment();
+      if (injury) {
+        const injuries = [...(this.system.combat.injuries ?? []), injury];
+        update["system.combat.injuries"] = injuries;
+      }
+    }
+    await this.update(update);
+    const outcome = update["system.combat.dead"] ? `<strong>${game.i18n.localize("LA.Dead")}</strong>` : gauge >= 5 ? `<strong>${game.i18n.localize("LA.Unconscious")}</strong>` : `${game.i18n.localize("LA.BreakGauge")}: ${gauge}/5`;
+    await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<p><strong>${game.i18n.localize("LA.ApplyDamage")}:</strong> ${applied} (${foundry.utils.escapeHTML(type)}). ${game.i18n.localize("LA.Health")}: ${newHp}/${hp.max}. ${game.i18n.localize("LA.BreakThreshold")}: ${threshold}; ${outcome}.</p>` });
     return applied;
+  }
+
+  async _rollInjuryAndDismemberment() {
+    const roll = await (new Roll("1d100")).evaluate();
+    const result = roll.total <= 5 ? { type: "severed-arm", name: game.i18n.localize("LA.SeveredArm"), description: game.i18n.localize("LA.SeveredArmEffect") }
+      : roll.total <= 10 ? { type: "severed-leg", name: game.i18n.localize("LA.SeveredLeg"), description: game.i18n.localize("LA.SeveredLegEffect") }
+        : roll.total <= 90 ? { type: "injury", name: game.i18n.localize("LA.Injury"), description: game.i18n.localize("LA.InjuryEffect") }
+          : null;
+    const text = result ? `<p><strong>${result.name}:</strong> ${result.description}</p>` : `<p>${game.i18n.localize("LA.NoInjury")}</p>`;
+    await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this }), flavor: `${game.i18n.localize("LA.InjuryAndDismemberment")} — ${text}` });
+    return result ? { ...result, id: foundry.utils.randomID(), date: Date.now() } : null;
+  }
+
+  async useSecondWind() {
+    if (this.type !== "character") return ui.notifications.warn(game.i18n.localize("LA.SecondWindHeroicOnly"));
+    if (this.system.combat.secondWindUsed) return ui.notifications.warn(game.i18n.localize("LA.SecondWindUsed"));
+    const hp = this.system.resources.hp;
+    if (safeNumber(hp.value) > safeNumber(hp.max) / 2) return ui.notifications.warn(game.i18n.localize("LA.SecondWindHalfHp"));
+    if (this.system.combat.unconscious || this.system.combat.dead) return ui.notifications.warn(game.i18n.localize("LA.CannotActUnconscious"));
+    const healed = Math.max(Math.floor(safeNumber(hp.max) / 4), safeNumber(this.system.attributes.vit.score));
+    await this.update({ "system.resources.hp.value": Math.min(safeNumber(hp.max), safeNumber(hp.value) + healed), "system.combat.secondWindUsed": true, "system.combat.recoveryMinorActions": 0 });
+    await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<p><strong>${game.i18n.localize("LA.SecondWind")}:</strong> ${healed} HP.</p>` });
+  }
+
+  async rest(hours, comfortable) {
+    const duration = Math.max(0, Math.min(24, Math.floor(safeNumber(hours))));
+    if (duration <= 0) return;
+    if (!comfortable) return ui.notifications.warn(game.i18n.localize("LA.RestNeedsComfort"));
+    const now = Date.now();
+    const periodStart = safeNumber(this.system.combat.restPeriodStartedAt);
+    const previousHours = periodStart && now - periodStart < 24 * 60 * 60 * 1000 ? safeNumber(this.system.combat.restHoursInPeriod) : 0;
+    const effectiveHours = Math.min(duration, Math.max(0, 8 - previousHours));
+    const level = safeNumber(this.system.details.level, 1);
+    const hp = this.system.resources.hp;
+    const mp = this.system.resources.mp;
+    const restCanHealHp = !this.system.combat.persistentHpRecovery && ![...this.effects].some(effect => /poison|disease|zombif/i.test(`${effect.name} ${effect.description ?? ""}`));
+    const hpRecovery = restCanHealHp ? Math.max(0, (safeNumber(this.system.attributes.vit.modifier) + level) * effectiveHours) : 0;
+    const mpRecovery = Math.max(0, (safeNumber(this.system.attributes.mnd.modifier) + level) * effectiveHours);
+    const totalHours = previousHours + effectiveHours;
+    const update = {
+      "system.resources.hp.value": Math.min(safeNumber(hp.max), safeNumber(hp.value) + hpRecovery),
+      "system.resources.mp.value": Math.min(safeNumber(mp.max), safeNumber(mp.value) + mpRecovery),
+      "system.combat.restHoursInPeriod": totalHours,
+      "system.combat.restPeriodStartedAt": previousHours ? periodStart : now,
+      "system.combat.recoveryMinorActions": 0
+    };
+    if (totalHours >= 8) update["system.combat.secondWindUsed"] = false;
+    await this.update(update);
+    await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<p><strong>${game.i18n.localize("LA.RestAndRecovery")} (${duration} ${game.i18n.localize("LA.Hours")}):</strong> +${hpRecovery} HP, +${mpRecovery} MP${totalHours >= 8 ? `; ${game.i18n.localize("LA.DailyAbilitiesRestored")}` : ""}.</p>` });
+  }
+
+  async takeRecoveryAction() {
+    if (this.system.combat.unconscious || this.system.combat.dead) return ui.notifications.warn(game.i18n.localize("LA.CannotActUnconscious"));
+    const gauge = safeNumber(this.system.combat.breakGauge);
+    const persistent = (this.system.combat.injuries ?? []).filter(injury => injury.type === "injury").length;
+    if (gauge <= persistent) return ui.notifications.info(game.i18n.localize("LA.NoRemovableBreakPenalty"));
+    const next = safeNumber(this.system.combat.recoveryMinorActions) + 1;
+    if (next < 3) {
+      await this.update({ "system.combat.recoveryMinorActions": next });
+      return ui.notifications.info(game.i18n.format("LA.RecoveryActionsProgress", { count: next }));
+    }
+    await this.update({ "system.combat.breakGauge": Math.max(persistent, gauge - 1), "system.combat.recoveryMinorActions": 0 });
+    await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<p>${game.i18n.localize("LA.RecoveryStepRemoved")}</p>` });
+  }
+
+  async applyHealing(amount) {
+    const hp = this.system.resources.hp;
+    const healed = Math.max(0, Math.floor(safeNumber(amount)));
+    const actual = Math.min(healed, Math.max(0, safeNumber(hp.max) - safeNumber(hp.value)));
+    if (!actual) return 0;
+    await this.update({ "system.resources.hp.value": safeNumber(hp.value) + actual, "system.combat.persistentHpRecovery": false });
+    return actual;
   }
 }
 
 class LastArcItem extends Item {
   async roll() {
     const actor = this.parent;
+    if (actor?.system.combat.dead || actor?.system.combat.unconscious) {
+      ui.notifications.warn(game.i18n.localize(actor.system.combat.dead ? "LA.Dead" : "LA.CannotActUnconscious"));
+      return null;
+    }
+    if (actor && safeNumber(actor.system.combat.recoveryMinorActions) > 0) await actor.update({ "system.combat.recoveryMinorActions": 0 });
     if (this.type === "spell") return rollSpell(this);
     if (this.type === "performance") return rollPerformance(this);
     if (this.type === "talent" && actor) return this.rollTalent(actor);
@@ -307,6 +433,10 @@ class LastArcItem extends Item {
       return block;
     }
     if (this.type === "weapon" && actor) {
+      if (actor.system.combat.injuries?.some(injury => injury.type === "severed-arm") && (this.system.weaponSkill === "two-handed" || safeNumber(this.system.hands) >= 2)) {
+        ui.notifications.warn(game.i18n.localize("LA.CannotUseTwoHandedSeveredArm"));
+        return null;
+      }
       const weaponGroup = String(this.system.weaponGroup ?? "").toLowerCase();
       const proficiencyPenalty = weaponGroup && !actor.system.combat.weaponProficiencies?.includes(weaponGroup) ? -5 : 0;
       const performanceAttackBonus = safeNumber(actor.system.combat.performanceWeaponSkillBonus) + safeNumber(actor.system.combat.performanceAttackBonus);
@@ -366,7 +496,7 @@ class LastArcItem extends Item {
         const applied = await target.applyDamage(amount, { type: "dark" });
         const hp = actor.system.resources.hp;
         const healed = Math.min(applied, Math.max(0, safeNumber(hp.max) - safeNumber(hp.value)));
-        await actor.update({ "system.resources.hp.value": safeNumber(hp.value) + healed });
+        await actor.applyHealing(healed);
         await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content: `<p>${game.i18n.localize("LA.Healing")}: ${healed} HP (${safeNumber(hp.value) + healed}/${safeNumber(hp.max)}).</p>` });
         return damage;
       }
@@ -412,6 +542,13 @@ class LastArcActorSheet extends ActorSheet {
     context.canLevelUp = this.actor.system.details.level < LEVEL_XP.length - 1
       && this.actor.system.details.xp >= this.actor.system.details.nextLevel
       && this.actor.items.some(item => ["class", "advanced-class"].includes(item.type) && safeNumber(item.system.classLevel) > 0);
+    context.gaugeSteps = [0, 1, 2, 3, 4, 5].map(step => ({ step, current: safeNumber(this.actor.system.combat.breakGauge) === step, bottom: step === 5, label: game.i18n.localize(["LA.BreakGaugeNormal", "LA.BreakGaugeMinusOne", "LA.BreakGaugeMinusTwo", "LA.BreakGaugeMinusFive", "LA.BreakGaugeMinusTen", "LA.BreakGaugeBottom"][step]) }));
+    context.canSecondWind = this.actor.type === "character" && !this.actor.system.combat.secondWindUsed && !this.actor.system.combat.unconscious && !this.actor.system.combat.dead && safeNumber(this.actor.system.resources.hp.value) <= safeNumber(this.actor.system.resources.hp.max) / 2;
+    context.canWakeCheck = this.actor.system.combat.unconscious && !this.actor.system.combat.dead && !this.actor.system.combat.persistentHpRecovery;
+    context.injuries = this.actor.system.combat.injuries ?? [];
+    context.recoveryActions = safeNumber(this.actor.system.combat.recoveryMinorActions);
+    context.breakGaugePenaltyLabel = signed(this.actor.system.combat.breakGaugePenalty);
+    context.isGM = game.user.isGM;
     context.atMaxLevel = this.actor.system.details.level >= LEVEL_XP.length - 1;
     context.showTripleCrit = this.actor.system.combat.rangedCriticalMultiplier > 2;
     context.hasWeaponProficiencies = Boolean(this.actor.system.combat.weaponProficiencies?.length);
@@ -431,6 +568,11 @@ class LastArcActorSheet extends ActorSheet {
       if (item) await item.update({ "system.equipped": event.currentTarget.checked });
     });
     html.find(".apply-damage").on("click", this._onApplyDamage.bind(this));
+    html.find(".la-second-wind").on("click", async event => { event.preventDefault(); await this.actor.useSecondWind(); });
+    html.find(".la-rest").on("click", this._onRest.bind(this));
+    html.find(".la-recovery-action").on("click", async event => { event.preventDefault(); await this.actor.takeRecoveryAction(); });
+    html.find(".la-wake-check").on("click", this._onWakeCheck.bind(this));
+    html.find(".la-injury-delete").on("click", this._onInjuryDelete.bind(this));
     html.find(".resource-control").on("click", this._onResourceControl.bind(this));
     html.find(".roll-attributes").on("click", this._onRollAttributes.bind(this));
     html.find(".la-level-up").on("click", this._onLevelUp.bind(this));
@@ -1338,6 +1480,8 @@ class LastArcActorSheet extends ActorSheet {
     const kind = target.dataset.roll;
     const key = target.dataset.key;
     const actor = this.actor;
+    if (safeNumber(actor.system.combat.recoveryMinorActions) > 0) await actor.update({ "system.combat.recoveryMinorActions": 0 });
+    if (actor.system.combat.dead || actor.system.combat.unconscious) return ui.notifications.warn(game.i18n.localize(actor.system.combat.dead ? "LA.Dead" : "LA.CannotActUnconscious"));
     let label = target.dataset.label || game.i18n.localize("LA.Roll");
     let bonus = safeNumber(target.dataset.bonus);
     if (kind === "skill") { label = game.i18n.localize(SKILL_LABELS[key] ?? label); bonus = actor.system.skills[key]?.total ?? bonus; }
@@ -1395,6 +1539,41 @@ class LastArcActorSheet extends ActorSheet {
     event.preventDefault();
     const amount = await new Promise(resolve => new Dialog({ title: game.i18n.localize("LA.ApplyDamage"), content: `<form><label>${game.i18n.localize("LA.Damage")}<input type="number" name="damage" min="0" value="0"></label><label>${game.i18n.localize("LA.DamageType")}<input name="damageType" value="unaspected"></label></form>`, buttons: { apply: { label: game.i18n.localize("LA.ApplyDamage"), callback: html => resolve({ amount: html.find("[name=damage]").val(), type: html.find("[name=damageType]").val() }) }, cancel: { label: "×", callback: () => resolve(null) } }, default: "apply", close: () => resolve(null) }).render(true));
     if (amount) await this.actor.applyDamage(amount.amount, { type: amount.type });
+  }
+  async _onRest(event) {
+    event.preventDefault();
+    const result = await new Promise(resolve => new Dialog({
+      title: game.i18n.localize("LA.RestAndRecovery"),
+      content: `<form><label>${game.i18n.localize("LA.HoursRested")}<input type="number" name="hours" min="1" max="24" value="8"></label><label class="checkbox"><input type="checkbox" name="comfortable"> ${game.i18n.localize("LA.RestComfortHint")}</label></form>`,
+      buttons: { rest: { label: game.i18n.localize("LA.Rest"), callback: html => resolve({ hours: html.find('[name="hours"]').val(), comfortable: html.find('[name="comfortable"]').prop("checked") }) }, cancel: { label: game.i18n.localize("LA.Cancel"), callback: () => resolve(null) } },
+      default: "rest", close: () => resolve(null)
+    }).render(true));
+    if (result) await this.actor.rest(result.hours, result.comfortable);
+  }
+  async _onWakeCheck(event) {
+    event.preventDefault();
+    if (!await Dialog.confirm({ title: game.i18n.localize("LA.RegainConsciousness"), content: `<p>${game.i18n.localize("LA.RegainConsciousnessHint")}</p>` })) return;
+    const roll = await (new Roll(`1d20 + (${safeNumber(this.actor.system.attributes.vit.modifier)})`, this.actor.getRollData())).evaluate();
+    const natural = roll.dice[0]?.results?.[0]?.result;
+    const success = roll.total >= 10;
+    await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor: `${game.i18n.localize("LA.RegainConsciousness")} — DC 10` });
+    if (success) {
+      const gauge = safeNumber(this.actor.system.combat.breakGauge);
+      const persistent = (this.actor.system.combat.injuries ?? []).filter(injury => injury.type === "injury").length;
+      const hp = this.actor.system.resources.hp;
+      await this.actor.update({ "system.combat.breakGauge": Math.max(persistent, gauge - 1), "system.resources.hp.value": Math.min(safeNumber(hp.max), safeNumber(this.actor.system.details.level, 1)), "system.combat.prone": true, "system.combat.persistentHpRecovery": false });
+      return;
+    }
+    if (natural === 1 || roll.total <= 5) await this.actor.update({ "system.combat.dead": true });
+    else await this.actor.update({ "system.combat.persistentHpRecovery": true });
+  }
+  async _onInjuryDelete(event) {
+    event.preventDefault();
+    if (!game.user.isGM) return ui.notifications.warn(game.i18n.localize("LA.GMOnlyInjuryCare"));
+    const id = event.currentTarget.closest("[data-injury-id]")?.dataset.injuryId;
+    const injuries = (this.actor.system.combat.injuries ?? []).filter(injury => injury.id !== id);
+    if (injuries.length === (this.actor.system.combat.injuries ?? []).length) return;
+    if (await Dialog.confirm({ title: game.i18n.localize("LA.ResolveInjury"), content: `<p>${game.i18n.localize("LA.ResolveInjuryHint")}</p>` })) await this.actor.update({ "system.combat.injuries": injuries });
   }
   async _onResourceControl(event) {
     const el = event.currentTarget;

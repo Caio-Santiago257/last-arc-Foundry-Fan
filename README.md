@@ -13,6 +13,7 @@ Alternatively, download the ZIP, extract its `last-arc-analogue` folder into Fou
 ## Included
 
 - Character and NPC sheets with attributes, skills, defences, combat resources, weapons, features, spell/technick lists, inventory, and biography.
+- Break Threshold is derived from Fortitude Defence, Technick/equipment and miscellaneous bonuses, and creature size. Damage that exceeds it moves a character down the Break Gauge; gauge penalties affect defences, attacks, skills, and attribute checks. The sheet tracks unconsciousness, persistent injuries, limb loss, Second Wind, recovery actions, consciousness checks, and rest-based HP/MP recovery.
 - Attribute modifiers, level-scaled skill/defence values, class bonuses, passive Perception, and class initiative dice (including the combat tracker).
 - Chat rolls for attributes, skills, initiative, weapon attacks, and item damage formulas; HP/MP controls, damage application, and inventory bulk.
 - Compendium packs for races, base classes, advanced classes, talents, Technicks, Performances, Magick, and Equipage. Magick is split into Black, Blue, Green, Red, and White schools. Equipage is a grouped folder with 27 category packs and 495 records: all weapon groups, shields, three armour classes, accessories, instruments, consumables, poisons, ammunition, scrolls, scores, gear, prosthetics, mounts, and crafting resources. Table prices, availability, weapon attack/damage, size, armour statistics, special item rules, and requirements are included. Weapon skills include 1-Handed, 2-Handed, Light Weapon, Ranged, and Unarmed; weapons use attack bonuses and applicable proficiency, level, and Strength modifiers. Equipped armour contributes Reflex, damage reduction, and its Agility cap, while unproficient armour applies its check penalty. Supported passive equipment bonuses are applied while equipped.
@@ -72,6 +73,8 @@ Version 0.2.21 adds the six High Arcana to a dedicated Magick compendium. Archma
 Version 0.2.22 keeps race names on one row in the item list and widens the XP fields so six-digit totals remain readable. Mage's starting Arcane Study plus a separately chosen level-1 repeatable copy remain allowed.
 
 Version 0.2.23 sizes Add Item controls to their labels and keeps them beside the section headings, reducing visual clutter across the character sheet.
+
+Version 0.2.24 adds the Break Threshold formula and a visual Break Gauge with automatic damage-triggered steps and roll/defence penalties; Second Wind, rest and recovery, unconsciousness checks, death prevention with Hero Points, and the Injury and Dismemberment table. Injury penalties affect checks, movement, and carrying capacity; the Combat tab now includes compact state and recovery controls.
 
 ## Attribution and status
 
