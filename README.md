@@ -63,6 +63,8 @@ Version 0.2.17 adds requirements, defence and HP/MP progression, feature referen
 
 Version 0.2.18 refreshes advanced-class data from its compendium before prerequisite and talent selection, ensuring advanced classes use their own talent trees and feature progression. It also corrects the talent list layout so roll, name, and delete controls stay aligned.
 
+Version 0.2.19 grants bonus Technicks according to the selected base class's class-level progression. Character-level parity no longer triggers a Mage bonus when advancing into a new advanced class.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork. The system code is provided without an added license until the repository owner chooses one.

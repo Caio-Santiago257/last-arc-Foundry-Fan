@@ -478,13 +478,12 @@ class LastArcActorSheet extends ActorSheet {
       newTechnicks.push(startingTechnick);
     }
     const bonusLevels = selectedClass.item.system.bonusTechnickLevels ?? [];
-    const earnsTechnick = nextLevel === 1 || nextLevel % 2 === 0;
-    if (earnsTechnick) {
-      const hasClassBonus = !selectedClass.isNew
-        && selectedClass.item.type === "class"
-        && bonusLevels.map(Number).includes(nextClassLevel);
+    const hasClassBonus = !selectedClass.isNew
+      && selectedClass.item.type === "class"
+      && bonusLevels.map(Number).includes(nextClassLevel);
+    if (hasClassBonus) {
       const technick = await this._chooseTechnick({
-        ...(hasClassBonus ? { bonusTechnicks: selectedClass.item.system.bonusTechnicks ?? [] } : {}),
+        bonusTechnicks: selectedClass.item.system.bonusTechnicks ?? [],
         classItem: selectedClass.item,
         characterLevel: nextLevel,
         projectedAttributes,
