@@ -37,6 +37,8 @@ Version 0.2.5 adds 67 Technicks, structured prerequisite checks, class bonus lis
 
 Version 0.2.6 corrects Technick advancement so characters receive their level-up choice at level 1 and even character levels, using the class bonus list when the class progression grants one.
 
+Version 0.2.7 publishes a package ZIP under the system ID and points the updater to that versioned archive instead of GitHub's repository snapshot ZIP.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork or copied rule text. The system code is provided without an added license until the repository owner chooses one.
