@@ -44,6 +44,8 @@ Version 0.2.8 adds the complete 76-spell Magick catalogue in five school packs, 
 
 Version 0.2.9 lets players roll targeted Magick without preselecting a token. The Spellcraft tier selects damage dice, which are rolled to chat without applying defence or damage reduction until a target is chosen; selected targets still receive supported automatic effects.
 
+Version 0.2.10 shows the damage dice roll in chat for targeted damage Magick and uses a compact result card in place of the full spell description. Spellcraft tier selection and automatic damage application are unchanged.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork or copied rule text. The system code is provided without an added license until the repository owner chooses one.

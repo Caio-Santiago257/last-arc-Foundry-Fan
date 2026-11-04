@@ -87,6 +87,10 @@ async function applySpellEffect(effect, target, caster, spell, checkTotal, resul
   if (effect.type === "damage") {
     if (hasFailure && !effect.halfOnFailure) return;
     const damageRoll = await (new Roll(effect.formula, { ...caster.getRollData(), level: caster.system.details.level })).evaluate();
+    await damageRoll.toMessage({
+      speaker: ChatMessage.getSpeaker({ actor: caster }),
+      flavor: `${escapeHTML(spell.name)} — ${escapeHTML(target.name)} (${escapeHTML(effect.formula)})`
+    });
     const amount = Math.max(0, Math.floor(hasFailure && effect.halfOnFailure ? damageRoll.total / 2 : damageRoll.total));
     const applied = await target.applyDamage(amount, { type: effect.damageType ?? "unaspected", bypassDR: Boolean(effect.bypassDR) });
     results.push(`${target.name}: ${applied} ${effect.damageType ?? "damage"}${hasFailure ? ` (${game.i18n.localize("LA.SpellDefenceMiss")})` : ""}`);
@@ -122,7 +126,11 @@ async function showSpellCard(item, actor = null) {
   const system = item.system;
   const description = escapeHTML(system.description).replaceAll("\n", "<br>");
   const special = escapeHTML(system.specialRules).replaceAll("\n", "<br>");
-  const header = `<h3>${escapeHTML(item.name)} <small>(${escapeHTML(system.mpCost)} MP)</small></h3><p><b>${escapeHTML(system.school)}</b> · ${escapeHTML(system.action)} · ${escapeHTML(system.target)}</p><p>${description}</p>${special ? `<p><b>${game.i18n.localize("LA.Special")}:</b> ${special}</p>` : ""}`;
+  const damageSpell = [...(system.automation?.tiers ?? [])].some(entry => entry.effects?.some(effect => effect.type === "damage"))
+    || (system.automation?.effects ?? []).some(effect => effect.type === "damage");
+  const compactHeader = `<h3>${escapeHTML(item.name)} <small>(${escapeHTML(system.mpCost)} MP)</small></h3><p><b>${escapeHTML(system.school)}</b> · ${escapeHTML(system.action)}</p>`;
+  const fullHeader = `${compactHeader}<p><b>${game.i18n.localize("LA.Targets")}:</b> ${escapeHTML(system.target)}</p><p>${description}</p>${special ? `<p><b>${game.i18n.localize("LA.Special")}:</b> ${special}</p>` : ""}`;
+  const header = damageSpell ? compactHeader : fullHeader;
   if (!actor || !system.automation) return ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content: header });
 
   if (number(actor.system.resources.mp.value) < number(system.mpCost)) {
