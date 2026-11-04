@@ -131,6 +131,11 @@
 .la-feature-row { grid-template-columns: minmax(0,1fr) 24px; gap: 5px 10px; align-items: start; padding: 10px 4px; }
 .la-feature-row .item-edit { min-width: 0; white-space: normal; text-align: left; font: 700 15px/1.35 Georgia,serif; overflow-wrap: anywhere; }
 .la-feature-row .la-feature-description { grid-column: 1 / -1; display: block; max-width: 100%; padding: 0 0 2px; white-space: normal; overflow-wrap: anywhere; font: 14px/1.5 Georgia,serif; color: #554b3f; }
+.la-talent-row { grid-template-columns: 27px minmax(0,1fr) 24px; gap: 5px 10px; align-items: start; padding: 10px 4px; }
+.la-talent-row .item-roll { grid-column: 1; grid-row: 1; width: 27px !important; min-width: 27px; max-width: 27px; height: 25px; padding: 1px 4px; justify-self: start; display: flex; align-items: center; justify-content: center; }
+.la-talent-row .item-edit { grid-column: 2; grid-row: 1; width: 100%; min-width: 0; justify-self: stretch; white-space: normal; text-align: left; overflow-wrap: anywhere; }
+.la-talent-row .item-delete { grid-column: 3; grid-row: 1; justify-self: end; }
+.la-talent-row .la-feature-description { grid-column: 1 / -1; }
 .la-class-row { grid-template-columns: minmax(0,1fr) 24px; gap: 5px 10px; align-items: center; padding: 8px 4px; }
 .la-class-row .item-edit { min-width: 0; white-space: normal; text-align: left; font: 700 15px/1.35 Georgia,serif; }
 .la-class-trees { grid-column: 1 / -1; display: block; padding-bottom: 4px; line-height: 1.4; color: #554b3f; }

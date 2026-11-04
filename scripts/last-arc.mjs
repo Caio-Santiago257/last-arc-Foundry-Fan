@@ -883,6 +883,27 @@ class LastArcActorSheet extends ActorSheet {
       ui.notifications.warn(`${itemData.name}: add its progression, defence, HP/MP, and skills to the compendium item before applying it.`);
       return false;
     }
+    // Advanced-class compendium entries are canonical. Resolve them before any
+    // prerequisite or talent-tree choice so stale world copies cannot leak a
+    // base-class tree into the advanced-class selection flow.
+    if (itemData.type === "advanced-class") {
+      const pack = game.packs.get("last-arc-analogue.advanced-classes");
+      const canonical = pack && (await pack.getDocuments()).find(entry => entry.name === itemData.name);
+      if (canonical) {
+        itemData.system = { ...itemData.system, ...foundry.utils.deepClone(canonical.system) };
+        itemData.name = canonical.name;
+        itemData.img = canonical.img;
+      }
+      // Tree names may be shared with a base class (for example, Mage and
+      // Archmage both list Arcanist). Keep only trees with talents authored
+      // for this advanced class, or the selector will offer Mage talents.
+      const talentPack = game.packs.get("last-arc-analogue.talents");
+      if (talentPack) {
+        const talents = await talentPack.getDocuments();
+        const classTrees = new Set(talents.filter(talent => talent.system.className === itemData.name).map(talent => talent.system.tree));
+        itemData.system.talentTrees = (itemData.system.talentTrees ?? []).filter(tree => classTrees.has(tree));
+      }
+    }
     if (itemData.type === "advanced-class") {
       const effectiveLevel = levelUp ? safeNumber(this.actor.system.details.level, 1) + 1 : safeNumber(this.actor.system.details.level, 1);
       if (!this._meetsAdvancedClassPrerequisites(itemData, effectiveLevel)) {
@@ -895,36 +916,37 @@ class LastArcActorSheet extends ActorSheet {
       : await this._chooseItemOption(itemData, itemData.type);
     if (choices === null) return false;
     const selectedSubclass = choices.selectedChoices?.[0]?.value ?? itemData.system.selectedSubclass ?? "";
-    if (itemData.type === "advanced-class") {
-      const pack = game.packs.get("last-arc-analogue.advanced-classes");
-      const canonical = pack && (await pack.getDocuments()).find(entry => entry.name === itemData.name);
-      if (canonical) {
-        for (const [key, value] of Object.entries(canonical.system)) {
-          const current = itemData.system[key];
-          if (current === undefined || current === null || current === "" || Array.isArray(current) && !current.length) itemData.system[key] = foundry.utils.deepClone(value);
-        }
-      }
-    }
     itemData.system.talentTrees ??= CLASS_TALENT_TREES[itemData.name] ?? [];
     const existing = this.actor.items.find(item => item.type === itemData.type && item.name === itemData.name && (item.system.selectedSubclass ?? "") === selectedSubclass);
     const oldMaxHP = safeNumber(this.actor.system.resources.hp.max);
     const oldMaxMP = safeNumber(this.actor.system.resources.mp.max);
     if (existing) {
       const nextLevel = safeNumber(existing.system.classLevel, 1) + 1;
-      const classTrees = existing.system.talentTrees?.length ? existing.system.talentTrees : itemData.system.talentTrees?.length ? itemData.system.talentTrees : CLASS_TALENT_TREES[existing.name] ?? [];
-      const talentLevels = existing.system.talentLevels?.length ? existing.system.talentLevels : itemData.system.talentLevels ?? [];
+      const classTrees = existing.type === "advanced-class"
+        ? itemData.system.talentTrees ?? []
+        : existing.system.talentTrees?.length ? existing.system.talentTrees : itemData.system.talentTrees?.length ? itemData.system.talentTrees : CLASS_TALENT_TREES[existing.name] ?? [];
+      const talentLevels = existing.type === "advanced-class" ? itemData.system.talentLevels ?? [] : existing.system.talentLevels?.length ? existing.system.talentLevels : itemData.system.talentLevels ?? [];
+      const priorTrees = existing.system.selectedTalentTrees ?? [];
+      const validPriorTrees = priorTrees.filter(tree => classTrees.includes(tree));
+      const legacyTreeMismatch = existing.type === "advanced-class" && (priorTrees.length !== validPriorTrees.length || !priorTrees.length);
+      const obsoleteTalents = existing.type === "advanced-class" ? this.actor.items.filter(entry => entry.type === "talent"
+        && entry.flags?.["last-arc-analogue"]?.classItemId === existing.id
+        && !classTrees.includes(entry.system.sourceTree ?? entry.system.tree)) : [];
       let talentSelection = null;
-      if (talentLevels.includes(nextLevel)) talentSelection = await this._chooseClassTalent({ ...existing, system: { ...existing.system, talentTrees: classTrees } });
-      if (talentLevels.includes(nextLevel) && classTrees.length && !talentSelection) return false;
-      const selectedTrees = [...new Set([...(existing.system.selectedTalentTrees ?? []), ...(talentSelection ? [talentSelection.tree] : [])])];
+      if (talentLevels.includes(nextLevel) || legacyTreeMismatch) talentSelection = await this._chooseClassTalent({ name: existing.name, system: { ...existing.system, talentTrees: classTrees } });
+      if ((talentLevels.includes(nextLevel) || legacyTreeMismatch) && classTrees.length && !talentSelection) return false;
+      if (obsoleteTalents.length) await this.actor.deleteEmbeddedDocuments("Item", obsoleteTalents.map(entry => entry.id));
+      const selectedTrees = [...new Set([...validPriorTrees, ...(talentSelection ? [talentSelection.tree] : [])])];
       await existing.update({
         "system.classLevel": nextLevel,
         "system.talentTrees": classTrees,
         "system.talentLevels": talentLevels,
-        "system.classFeatures": existing.system.classFeatures?.length ? existing.system.classFeatures : itemData.system.classFeatures ?? [],
-        "system.hpPerLevel": safeNumber(existing.system.hpPerLevel) || safeNumber(itemData.system.hpPerLevel),
-        "system.mpPerLevel": safeNumber(existing.system.mpPerLevel) || safeNumber(itemData.system.mpPerLevel),
-        "system.defenceBonuses": Object.keys(existing.system.defenceBonuses ?? {}).length ? existing.system.defenceBonuses : itemData.system.defenceBonuses ?? {},
+        "system.classFeatures": existing.type === "advanced-class" ? itemData.system.classFeatures ?? [] : existing.system.classFeatures?.length ? existing.system.classFeatures : itemData.system.classFeatures ?? [],
+        "system.levelProgression": existing.type === "advanced-class" ? itemData.system.levelProgression ?? [] : existing.system.levelProgression ?? itemData.system.levelProgression ?? [],
+        "system.featureReference": existing.type === "advanced-class" ? itemData.system.featureReference ?? "" : existing.system.featureReference ?? itemData.system.featureReference ?? "",
+        "system.hpPerLevel": existing.type === "advanced-class" ? safeNumber(itemData.system.hpPerLevel) : safeNumber(existing.system.hpPerLevel) || safeNumber(itemData.system.hpPerLevel),
+        "system.mpPerLevel": existing.type === "advanced-class" ? safeNumber(itemData.system.mpPerLevel) : safeNumber(existing.system.mpPerLevel) || safeNumber(itemData.system.mpPerLevel),
+        "system.defenceBonuses": existing.type === "advanced-class" ? itemData.system.defenceBonuses ?? {} : Object.keys(existing.system.defenceBonuses ?? {}).length ? existing.system.defenceBonuses : itemData.system.defenceBonuses ?? {},
         "system.selectedTalentTrees": selectedTrees
       });
       if (talentSelection) await this._createTalentItem(talentSelection.talent, existing);
@@ -983,8 +1005,9 @@ class LastArcActorSheet extends ActorSheet {
     }
     const documents = await pack.getDocuments();
     const ownedNames = new Set(this.actor.items.filter(item => item.type === "talent" && !item.system.repeatable).map(item => item.name));
+    const classTalents = item => classItem.type !== "advanced-class" || item.system.className === classItem.name;
     const allTrees = classItem.system.talentTrees?.length ? classItem.system.talentTrees : CLASS_TALENT_TREES[classItem.name] ?? [];
-    const trees = allTrees.filter(tree => documents.some(item => item.system.tree === tree
+    const trees = allTrees.filter(tree => documents.some(item => classTalents(item) && item.system.tree === tree
       && (item.system.repeatable || !ownedNames.has(item.name))
       && this._meetsTalentPrerequisites(item)));
     if (!trees.length) {
@@ -1001,7 +1024,7 @@ class LastArcActorSheet extends ActorSheet {
       default: "choose", close: () => resolve(null)
     }).render(true));
     if (!tree) return null;
-    const talents = documents.filter(item => item.system.tree === tree
+    const talents = documents.filter(item => classTalents(item) && item.system.tree === tree
       && (item.system.repeatable || !ownedNames.has(item.name))
       && this._meetsTalentPrerequisites(item));
     if (!talents.length) {
@@ -1051,14 +1074,34 @@ class LastArcActorSheet extends ActorSheet {
 
   async _grantClassFeatures(classItem, classLevel) {
     const features = (classItem.system.classFeatures ?? []).filter(feature => safeNumber(feature.level, 1) <= classLevel);
-    const existing = new Set(this.actor.items.filter(item => item.type === "feature" && item.flags?.["last-arc-analogue"]?.classItemId === classItem.id).map(item => item.flags["last-arc-analogue"].featureKey));
-    const rows = features.filter(feature => !existing.has(`${feature.level}:${feature.name}`)).map(feature => ({
-      name: `${classItem.name}: ${feature.name}`,
-      type: "feature",
-      img: classItem.img || "icons/svg/item-bag.svg",
-      system: { category: "Class Feature", sourceClass: classItem.name, classLevel: feature.level, description: feature.description, automation: feature.automation ?? {} },
-      flags: { "last-arc-analogue": { classItemId: classItem.id, featureKey: `${feature.level}:${feature.name}`, advancedClassFeature: true } }
-    }));
+    const owned = this.actor.items.filter(item => item.type === "feature" && item.flags?.["last-arc-analogue"]?.classItemId === classItem.id);
+    const desired = new Map(features.map(feature => [`${feature.level}:${feature.name}`, feature]));
+    const byKey = new Map();
+    const staleIds = [];
+    for (const item of owned) {
+      const key = item.flags["last-arc-analogue"].featureKey;
+      if (!desired.has(key) || byKey.has(key)) staleIds.push(item.id);
+      else byKey.set(key, item);
+    }
+    if (staleIds.length) await this.actor.deleteEmbeddedDocuments("Item", staleIds);
+    const rows = [];
+    for (const [key, feature] of desired) {
+      const existing = byKey.get(key);
+      const description = feature.description ?? "";
+      if (existing) {
+        if (existing.name !== `${classItem.name}: ${feature.name}` || existing.system.description !== description) {
+          await existing.update({ name: `${classItem.name}: ${feature.name}`, "system.category": "Class Feature", "system.sourceClass": classItem.name, "system.classLevel": feature.level, "system.description": description, "system.automation": feature.automation ?? {} });
+        }
+        continue;
+      }
+      rows.push({
+        name: `${classItem.name}: ${feature.name}`,
+        type: "feature",
+        img: classItem.img || "icons/svg/item-bag.svg",
+        system: { category: "Class Feature", sourceClass: classItem.name, classLevel: feature.level, description, automation: feature.automation ?? {} },
+        flags: { "last-arc-analogue": { classItemId: classItem.id, featureKey: key, advancedClassFeature: true } }
+      });
+    }
     if (rows.length) await this.actor.createEmbeddedDocuments("Item", rows);
   }
 
