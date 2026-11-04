@@ -20,6 +20,7 @@
     <a class="item" data-tab="skills">{{localize "LA.Skills"}}</a>
     <a class="item" data-tab="features">{{localize "LA.Features"}}</a>
     <a class="item" data-tab="spells">{{localize "LA.Spells"}} / {{localize "LA.Technicks"}}</a>
+    <a class="item" data-tab="effects">{{localize "LA.ActiveEffects"}}</a>
     <a class="item" data-tab="inventory">{{localize "LA.Inventory"}}</a>
     <a class="item" data-tab="biography">{{localize "LA.Biography"}}</a>
   </nav>
@@ -63,13 +64,23 @@
 
     <div class="tab" data-group="primary" data-tab="features">
       {{#each itemGroups as |group|}}{{#if (or (eq group.type "race") (eq group.type "class") (eq group.type "advanced-class") (eq group.type "feature") (eq group.type "talent"))}}
-      <section class="la-panel la-item-section"><div class="la-section-heading"><h2>{{group.label}}</h2><button type="button" class="item-create la-add" data-type="{{group.type}}">＋ {{localize "LA.AddItem"}}</button></div>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}</section>{{/if}}{{/each}}
+      <section class="la-panel la-item-section"><div class="la-section-heading"><h2>{{group.label}}</h2>{{#unless (eq group.type "performance")}}<button type="button" class="item-create la-add" data-type="{{group.type}}">＋ {{localize "LA.AddItem"}}</button>{{/unless}}</div>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}</section>{{/if}}{{/each}}
     </div>
 
     <div class="tab" data-group="primary" data-tab="spells">
       {{#if (or system.details.additionalSpellSlots system.details.additionalPerformanceSlots)}}<section class="la-panel la-technick-summary">{{#if system.details.additionalSpellSlots}}<span>{{localize "LA.AdditionalSpellSlots"}}: +{{system.details.additionalSpellSlots}}</span>{{/if}}{{#if system.details.additionalPerformanceSlots}}<span>{{localize "LA.AdditionalPerformanceSlots"}}: +{{system.details.additionalPerformanceSlots}}</span>{{/if}}</section>{{/if}}
-      {{#each itemGroups as |group|}}{{#if (or (eq group.type "spell") (eq group.type "technick"))}}
+      {{#each itemGroups as |group|}}{{#if (or (eq group.type "spell") (eq group.type "technick") (eq group.type "performance"))}}
       <section class="la-panel la-item-section"><div class="la-section-heading"><h2>{{group.label}}</h2><button type="button" class="item-create la-add" data-type="{{group.type}}">＋ {{localize "LA.AddItem"}}</button></div>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}</section>{{/if}}{{/each}}
+    </div>
+
+    <div class="tab" data-group="primary" data-tab="effects">
+      <section class="la-panel"><h2>{{localize "LA.ActiveEffects"}}</h2>
+        {{#if activeEffects.length}}
+          {{#each activeEffects as |effect|}}
+            <div class="la-active-effect" data-effect-id="{{effect.id}}"><img src="{{effect.img}}" alt=""><div><strong>{{effect.name}}</strong><small>{{effect.duration}}</small>{{#if effect.description}}<p>{{effect.description}}</p>{{/if}}</div><button type="button" class="active-effect-delete la-icon-button" title="{{localize 'LA.RemoveEffect'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button></div>
+          {{/each}}
+        {{else}}<p class="la-empty">{{localize "LA.NoActiveEffects"}}</p>{{/if}}
+      </section>
     </div>
 
     <div class="tab" data-group="primary" data-tab="inventory">

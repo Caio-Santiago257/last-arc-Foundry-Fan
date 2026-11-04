@@ -9,6 +9,7 @@ const outputDir = join(root, "packs");
 await mkdir(outputDir, { recursive: true });
 
 const { SPELLS } = await import("./spell-catalog.mjs");
+const { PERFORMANCES } = await import("./performance-catalog.mjs");
 const schoolPacks = new Map([
   ["Black Magick", "magick-black"], ["Blue Magick", "magick-blue"], ["Green Magick", "magick-green"],
   ["Red Magick", "magick-red"], ["White Magick", "magick-white"]
@@ -18,6 +19,9 @@ for (const [school, packName] of schoolPacks) {
   await writeFile(join(outputDir, `${packName}.db`), rows.map(row => JSON.stringify(row)).join("\n") + (rows.length ? "\n" : ""), "utf8");
   console.log(`${packName}: ${rows.length} documents`);
 }
+const performanceRows = PERFORMANCES.map(source => makePackRow("performances", source));
+await writeFile(join(outputDir, "performances.db"), performanceRows.map(row => JSON.stringify(row)).join("\n") + "\n", "utf8");
+console.log(`performances: ${performanceRows.length} documents`);
 
 for (const file of await readdir(sourceDir)) {
   if (!file.endsWith(".json")) continue;
@@ -49,5 +53,5 @@ function makePackRow(packName, entry) {
 }
 
 function inferType(pack) {
-  return ({ races: "race", classes: "class", "advanced-classes": "advanced-class", talents: "talent", technicks: "technick", spells: "spell", equipment: "equipment" })[pack] ?? "other";
+  return ({ races: "race", classes: "class", "advanced-classes": "advanced-class", talents: "talent", technicks: "technick", spells: "spell", performances: "performance", equipment: "equipment" })[pack] ?? "other";
 }

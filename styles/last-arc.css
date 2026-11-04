@@ -56,6 +56,22 @@
 .la-item-row.la-technick-row { grid-template-columns: minmax(0,1fr) 24px; }
 .la-item-row.la-spell-row { grid-template-columns: 28px minmax(100px,1fr) minmax(120px,1.2fr) 55px 24px; }
 .la-spell-description { grid-column: 2 / -1; color: var(--la-muted); font: 11px/1.4 Arial,sans-serif; }
+.la-item-row.la-performance-row { grid-template-columns: 28px minmax(100px,1fr) minmax(90px,.8fr) minmax(60px,.6fr) 24px; }
+.la-performance-description { grid-column: 2 / -1; color: var(--la-muted); font: 11px/1.4 Arial,sans-serif; }
+.la-performance-choice-form fieldset { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 6px; max-height: 60vh; overflow-y: auto; padding: 5px; border: 1px solid var(--la-line); }
+.la-choice-row { display: grid; grid-template-columns: 18px minmax(0,1fr); gap: 7px; align-items: start; padding: 7px; border: 1px solid #e2d4bd; background: var(--la-card); cursor: pointer; }
+.la-choice-row span { display: grid; gap: 3px; }
+.la-choice-row strong { color: var(--la-accent); font: 700 12px Georgia,serif; }
+.la-choice-row small { color: var(--la-ink); font: 10px/1.35 Arial,sans-serif; }
+.la-performance-choice-count { font-weight: 700; }
+.la-performance-tiers { padding-left: 22px; }
+.la-performance-tiers li { margin: 4px 0; line-height: 1.4; }
+.la-active-effect { display: grid; grid-template-columns: 34px minmax(0,1fr) 24px; gap: 10px; align-items: start; padding: 8px 3px; border-bottom: 1px solid #e6dccb; }
+.la-active-effect img { width: 30px; height: 30px; border: 1px solid var(--la-gold); background: #efe3ce; }
+.la-active-effect>div { display: grid; gap: 3px; }
+.la-active-effect strong { color: var(--la-accent); font: 700 13px Georgia,serif; }
+.la-active-effect small { color: var(--la-muted); font: 10px Arial,sans-serif; }
+.la-active-effect p { margin: 2px 0 0; color: var(--la-ink); font: 11px/1.4 Arial,sans-serif; }
 .la-spell-special { display: grid; gap: 4px; margin-top: 10px; color: var(--la-muted); font: 700 9px Arial,sans-serif; text-transform: uppercase; }
 .la-spell-special textarea { min-height: 72px; color: var(--la-ink); font: 11px/1.4 Consolas,monospace; text-transform: none; }
 .la-item-tech-description { grid-column: 1 / -1; color: var(--la-muted); font: 11px/1.4 Arial,sans-serif; }

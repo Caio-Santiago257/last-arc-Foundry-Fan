@@ -1,7 +1,7 @@
 <div class="la-item-list">
   {{#if items.length}}
     {{#each items as |item|}}
-      <div class="item la-item-row {{#if (eq item.type 'technick')}}la-technick-row{{/if}} {{#if (eq item.type 'spell')}}la-spell-row{{/if}} {{#if (or (eq item.type 'feature') (eq item.type 'talent'))}}la-feature-row{{/if}} {{#if (eq item.type 'class')}}la-class-row{{/if}}" data-item-id="{{item.id}}">
+      <div class="item la-item-row {{#if (eq item.type 'technick')}}la-technick-row{{/if}} {{#if (eq item.type 'spell')}}la-spell-row{{/if}} {{#if (eq item.type 'performance')}}la-performance-row{{/if}} {{#if (or (eq item.type 'feature') (eq item.type 'talent'))}}la-feature-row{{/if}} {{#if (eq item.type 'class')}}la-class-row{{/if}}" data-item-id="{{item.id}}">
         {{#if (eq item.type "technick")}}
           <button type="button" class="item-edit la-link">{{item.name}}</button>
           <button type="button" class="item-delete la-icon-button" title="{{localize 'LA.Delete'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
@@ -13,6 +13,13 @@
           <span class="la-item-detail">{{item.system.mpCost}} MP</span>
           <button type="button" class="item-delete la-icon-button" title="{{localize 'LA.Delete'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
           <small class="la-spell-description">{{item.system.description}}</small>
+        {{else if (eq item.type "performance")}}
+          <button type="button" class="item-roll la-die" title="{{localize 'LA.UsePerformance'}}"><i class="fas fa-dice-d20" aria-hidden="true"></i></button>
+          <button type="button" class="item-edit la-link">{{item.name}}</button>
+          <span class="la-item-detail">{{#if (eq item.system.targetSide "ally")}}{{localize "LA.Allies"}}{{else}}{{localize "LA.Enemies"}}{{/if}}</span>
+          <span class="la-item-detail">{{localize "LA.Perform"}}</span>
+          <button type="button" class="item-delete la-icon-button" title="{{localize 'LA.Delete'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
+          <small class="la-performance-description">{{item.system.description}}</small>
         {{else if (or (eq item.type "feature") (eq item.type "talent"))}}
           <button type="button" class="item-edit la-link">{{item.name}}</button>
           <button type="button" class="item-delete la-icon-button" title="{{localize 'LA.Delete'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>

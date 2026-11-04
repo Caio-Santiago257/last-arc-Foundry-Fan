@@ -38,7 +38,9 @@ function defenceResult(target, caster, defence, spell, checkTotal) {
     ? number(spell.system.higherLevelDefenceBonus) : 0;
   const margin = typeof defence === "object" ? number(defence.margin) : 0;
   const key = typeof defence === "object" ? defence.defence : defence;
-  const total = number(target.system.defences?.[key]?.total, 10) + higherLevelBonus;
+  const ordinary = number(target.system.defences?.[key]?.total, 10) + number(target.system.combat?.performanceSpellDefenceBonuses?.[key]);
+  const substitute = number(target.system.combat?.performanceDefenceSubstitutions?.[key]);
+  const total = Math.max(ordinary, substitute) + higherLevelBonus;
   return { success: checkTotal > total + margin, total, bonus: higherLevelBonus };
 }
 

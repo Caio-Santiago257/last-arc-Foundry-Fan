@@ -1,6 +1,6 @@
 # Last Arc: Tactics Analogue for Foundry VTT
 
-Unofficial Foundry VTT system framework for Last Arc: Tactics Analogue. This release provides structured race, class, Technick, and Magick compendium records with automation for core character calculations and supported spell effects. It does not redistribute artwork or verbatim rulebook descriptions.
+Unofficial Foundry VTT system framework for Last Arc: Tactics Analogue. This release provides structured race, class, Technick, Performance, and Magick compendium records with automation for core character calculations and supported effects. It does not redistribute artwork or verbatim rulebook descriptions.
 
 ## Install
 
@@ -15,11 +15,12 @@ Alternatively, download the ZIP, extract its `last-arc-analogue` folder into Fou
 - Character and NPC sheets with attributes, skills, defences, combat resources, weapons, features, spell/technick lists, inventory, and biography.
 - Attribute modifiers, level-scaled skill/defence values, class bonuses, passive Perception, and class initiative dice (including the combat tracker).
 - Chat rolls for attributes, skills, initiative, weapon attacks, and item damage formulas; HP/MP controls, damage application, and inventory bulk.
-- Compendium packs for races, base classes, advanced classes, talents, Technicks, Magick, and equipment. Magick is split into Black, Blue, Green, Red, and White schools. The Magick pack includes all 76 spells from the core spell list, with MP cost, action, target, summarized special rules, Spellcraft thresholds, and structured effects where supported.
+- Compendium packs for races, base classes, advanced classes, talents, Technicks, Performances, Magick, and equipment. Magick is split into Black, Blue, Green, Red, and White schools. The Magick pack includes all 76 spells from the core spell list, with MP cost, action, target, summarized special rules, Spellcraft thresholds, and structured effects where supported. The Performances pack includes all 15 entries from the core list.
 - Dragging a race applies ability adjustments, caps, speed, senses, languages, and configured choice effects. Each racial trait is added to the character as a separate Feature with a concise rules summary; replacing a race removes only the race-generated Features. Dragging a base class opens a checkbox picker that shows the required trained-skill count and explains any mismatch, then calculates class level, HP, MP, defences, and initiative.
 - After trained skills, the class flow prompts for a talent tree and a talent from that tree. Each later odd class level repeats the tree/talent choice. The chosen class appears in the sheet header and selected trees are listed on the class entry. Talent descriptions are short summaries; usage limits, prerequisites, and conditional effects still require the book.
 - The Technicks compendium contains 67 rule summaries with structured prerequisites. Level-up offers general Technicks at level 1 and even character levels; ineligible choices are hidden. Passive effects such as HP Up, MP Up, Defence Up, Improved Initiative, Skill Focus, and Weapon Proficiency are automated.
 - Clicking a Magick item rolls Spellcraft, spends MP, selects the highest reached threshold, resolves supported damage, healing, conditions, defence/skill changes, and dispels, and posts a chat result. Marked targets drive targeted and area effects; self-target spells default to the caster when nothing is selected.
+- Bardic Study prompts for Performances equal to 1 + Intelligence modifier; increased Intelligence opens any newly available choices. Perform rolls accept controlled or targeted tokens, apply eligible bonuses, penalties, damage, and MP loss, and list active effects on the sheet. Timed effects expire at the performer's next turn during combat; outside combat, remove them from the Active Effects tab.
 - Core Foundry SVG icons for the D20 control and skill/item icons. Portuguese (Brazil) and English labels.
 
 The book models advancement with advanced classes and talent trees; it does not define a generic subclass item type. Configured choice groups prompt for selections such as race options.
@@ -45,6 +46,8 @@ Version 0.2.8 adds the complete 76-spell Magick catalogue in five school packs, 
 Version 0.2.9 lets players roll targeted Magick without preselecting a token. The Spellcraft tier selects damage dice, which are rolled to chat without applying defence or damage reduction until a target is chosen; selected targets still receive supported automatic effects.
 
 Version 0.2.10 shows the damage dice roll in chat for targeted damage Magick and uses a compact result card in place of the full spell description. Spellcraft tier selection and automatic damage application are unchanged.
+
+Version 0.2.11 adds the Performances compendium, Bardic Study selection limits and retroactive slots, tier-based Perform checks, supported recipient effects, and the Active Effects sheet tab.
 
 ## Attribution and status
 

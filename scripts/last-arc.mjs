@@ -1,4 +1,5 @@
 import { rollSpell } from "./spells.mjs";
+import { rollPerformance } from "./performances.mjs";
 
 const ATTRIBUTES = ["str", "vit", "agi", "int", "mnd", "cha"];
 const LEVEL_XP = [0, 0, 1000, 3000, 6000, 10000, 15000, 21000, 28000, 36000, 45000, 55000, 66000, 78000, 91000, 105000, 120000, 136000, 153000, 171000, 190000];
@@ -8,7 +9,7 @@ const SKILLS = {
   "lore-terrestrial": "int", "lore-mystic": "int", "lore-occult": "int", medicine: "int", perception: "mnd",
   perform: "cha", persuasion: "cha", pilot: "agi", ride: "agi", smithing: "int", spellcraft: "mnd", stealth: "agi", survival: "mnd"
 };
-const ITEM_TYPES = ["race", "class", "advanced-class", "spell", "talent", "technick", "weapon", "armor", "equipment", "feature", "other"];
+const ITEM_TYPES = ["race", "class", "advanced-class", "spell", "performance", "talent", "technick", "weapon", "armor", "equipment", "feature", "other"];
 const CLASS_TALENT_TREES = {
   Bard: ["Academic", "Dancer", "Mediator", "Minstrel"],
   Initiate: ["Animist", "Cleric", "Devotee", "Occultist"],
@@ -47,6 +48,27 @@ function formatTechnickPrerequisites(system = {}) {
   return parts.join("; ");
 }
 
+function describePerformanceEffect(effect = {}) {
+  if (effect.type === "damage") return `${effect.formula} ${game.i18n.localize("LA.Damage")} (${game.i18n.localize("LA.Unaspected")})`;
+  if (effect.type === "mpDamage") return `${effect.formula} MP ${game.i18n.localize("LA.Lost")}`;
+  if (effect.type === "debuff") return effect.defence === "all" ? game.i18n.localize("LA.PerformanceAllDefencesMinusTwo")
+    : effect.defence === "attacksAndSkills" ? game.i18n.localize("LA.PerformanceAttacksSkillsMinusTwo")
+      : `${game.i18n.localize(`LA.${effect.defence === "fort" ? "Fortitude" : "Will"}`)} ${signed(effect.value)}`;
+  const bonuses = effect.bonuses ?? {};
+  if (bonuses.damageDice) {
+    const modeLabel = bonuses.damageDice.weaponMode === "ranged" ? "LA.Ranged" : "LA.Melee";
+    return `+1d${bonuses.damageDice.die} ${game.i18n.localize("LA.Damage")} (${game.i18n.localize(modeLabel)})`;
+  }
+  if (bonuses.weaponSkillBonus) return `${signed(bonuses.weaponSkillBonus)} ${game.i18n.localize("LA.WeaponSkills")}`;
+  if (bonuses.skillBonus?.value) return `${signed(bonuses.skillBonus.value)} ${game.i18n.localize("LA.EligibleSkillChecks")}`;
+  if (bonuses.skillBonuses?.spellcraft) return `${signed(bonuses.skillBonuses.spellcraft)} ${game.i18n.localize("LA.Spellcraft")}`;
+  if (bonuses.spellDefenceBonuses?.ref) return `${signed(bonuses.spellDefenceBonuses.ref)} ${game.i18n.localize("LA.Reflex")} ${game.i18n.localize("LA.AgainstSpells")}`;
+  if (bonuses.defenceBonuses?.ref) return `${signed(bonuses.defenceBonuses.ref)} ${game.i18n.localize("LA.Reflex")} ${game.i18n.localize("LA.Defence")}`;
+  if (bonuses.substituteDefence?.will) return `${game.i18n.localize("LA.UsePerformAsWill")}`;
+  if (bonuses.substituteDefence?.fort) return `${game.i18n.localize("LA.UsePerformAsFort")}`;
+  return game.i18n.localize("LA.PerformanceEffectSummary");
+}
+
 Hooks.once("init", () => {
   CONFIG.Actor.documentClass = LastArcActor;
   CONFIG.Item.documentClass = LastArcItem;
@@ -80,6 +102,7 @@ class LastArcActor extends Actor {
     const raceItem = this.items.find(item => item.type === "race");
     const technicks = this.items.filter(item => item.type === "technick");
     const technickEffects = technicks.map(item => item.system.effects ?? {});
+    const activePerformances = [...(this.effects ?? [])].map(effect => effect.getFlag("last-arc-analogue", "performanceEffect")).filter(effect => effect && !effect.immunity);
     const technickDefences = technickEffects.reduce((result, effect) => {
       for (const key of ["fort", "ref", "will"]) result[key] += safeNumber(effect.defenceBonuses?.[key]);
       return result;
@@ -90,6 +113,15 @@ class LastArcActor extends Actor {
       return result;
     }, {});
     const countTechnickEffect = key => technickEffects.reduce((sum, effect) => sum + safeNumber(effect[key]), 0);
+    const performanceSkillBonus = key => activePerformances.reduce((sum, effect) => {
+      const scoped = effect.skillBonus;
+      const all = scoped && (scoped.allExcept ?? []).includes(key) ? 0 : safeNumber(scoped?.value);
+      return sum + all + safeNumber(effect.skillBonuses?.[key]);
+    }, 0);
+    const performanceDefenceBonuses = activePerformances.reduce((result, effect) => {
+      for (const [key, value] of Object.entries(effect.defenceBonuses ?? {})) result[key] += safeNumber(value);
+      return result;
+    }, { fort: 0, ref: 0, will: 0 });
     const activeClasses = classItems.filter(item => safeNumber(item.system.classLevel) > 0);
     system.details.className = activeClasses.filter(item => item.type === "class").map(item => item.name).join(", ");
     system.details.advancedClass = activeClasses.filter(item => item.type === "advanced-class").map(item => item.name).join(", ");
@@ -115,7 +147,7 @@ class LastArcActor extends Actor {
         halfLevel,
         attributeMod: system.attributes[attribute].modifier,
         classSkill: classItems.some(item => item.system.classSkills?.includes(key)) || raceItem?.system.classSkills?.includes(key) || false,
-        total: halfLevel + (skill.trained ? 5 : 0) + safeNumber(skill.classBonus) + classItems.reduce((sum, item) => sum + safeNumber(item.system.skillBonuses?.[key]) + safeNumber(item.system.selectedEffects?.skillBonuses?.[key]), 0) + safeNumber(system.details.racialEffects?.skillBonuses?.[key]) + safeNumber(technickSkillBonuses[key]) + safeNumber(skill.misc) + system.attributes[attribute].modifier
+        total: halfLevel + (skill.trained ? 5 : 0) + safeNumber(skill.classBonus) + classItems.reduce((sum, item) => sum + safeNumber(item.system.skillBonuses?.[key]) + safeNumber(item.system.selectedEffects?.skillBonuses?.[key]), 0) + safeNumber(system.details.racialEffects?.skillBonuses?.[key]) + safeNumber(technickSkillBonuses[key]) + performanceSkillBonus(key) + safeNumber(skill.misc) + system.attributes[attribute].modifier
       };
     }
     for (const defence of ["fort", "ref", "will"]) {
@@ -128,7 +160,7 @@ class LastArcActor extends Actor {
         base: 10,
         attributeMod: system.attributes[attribute].modifier,
         classBonus,
-        total: 10 + system.attributes[attribute].modifier + classBonus + safeNumber(system.details.racialEffects?.defenceBonuses?.[defence]) + technickDefences[defence] + (defence === "ref" && system.combat.emptyHands && !system.combat.flatFooted ? brawlerBonus : 0) + level + safeNumber(record.misc)
+        total: 10 + system.attributes[attribute].modifier + classBonus + safeNumber(system.details.racialEffects?.defenceBonuses?.[defence]) + technickDefences[defence] + performanceDefenceBonuses[defence] + (defence === "ref" && system.combat.emptyHands && !system.combat.flatFooted ? brawlerBonus : 0) + level + safeNumber(record.misc)
       };
     }
     const hp = system.resources?.hp ?? {};
@@ -147,11 +179,22 @@ class LastArcActor extends Actor {
     system.combat.extraSecondWinds = countTechnickEffect("extraSecondWinds");
     system.combat.breakThresholdBonus = countTechnickEffect("breakThresholdBonus");
     system.combat.additionalCounterattacks = technicks.some(item => item.system.effects?.counterattacksPerTurnFromAgi) ? Math.max(0, system.attributes.agi.modifier) : 0;
+    system.combat.performanceWeaponSkillBonus = activePerformances.reduce((sum, effect) => sum + safeNumber(effect.weaponSkillBonus), 0);
+    system.combat.performanceAttackBonus = activePerformances.reduce((sum, effect) => sum + safeNumber(effect.attackBonus), 0);
+    system.combat.performanceDamageDice = activePerformances.map(effect => effect.damageDice).filter(Boolean);
+    system.combat.performanceSpellDefenceBonuses = activePerformances.reduce((result, effect) => {
+      for (const [key, value] of Object.entries(effect.spellDefenceBonuses ?? {})) result[key] += safeNumber(value);
+      return result;
+    }, { fort: 0, ref: 0, will: 0 });
+    system.combat.performanceDefenceSubstitutions = activePerformances.reduce((result, effect) => {
+      for (const [key, value] of Object.entries(effect.substituteDefence ?? {})) if (value) result[key] = Math.max(safeNumber(result[key]), safeNumber(effect.performTotal));
+      return result;
+    }, {});
     system.combat.rangedCriticalMultiplier = technicks.some(item => item.system.effects?.rangedCriticalMultiplier) ? 3 : 2;
     system.combat.weaponProficiencies = [...new Set(technicks.map(item => item.system.selectedWeaponGroup).filter(Boolean))];
     system.details.additionalLanguages = technicks.reduce((sum, item) => sum + (item.system.effects?.languages ? (item.system.selectedLanguages?.length ?? Math.max(1, 1 + system.attributes.int.modifier)) : 0), 0);
     system.details.additionalSpellSlots = technicks.reduce((sum, item) => sum + safeNumber(item.system.effects?.spellSlotsPerCopy) * Math.max(1, 1 + system.attributes.int.modifier), 0);
-    system.details.additionalPerformanceSlots = technicks.reduce((sum, item) => sum + safeNumber(item.system.effects?.performanceSlotsPerCopy) * Math.max(1, 1 + system.attributes.int.modifier), 0);
+    system.details.additionalPerformanceSlots = technicks.reduce((sum, item) => sum + safeNumber(item.system.effects?.performanceSlotsPerCopy) * Math.max(0, 1 + system.attributes.int.modifier), 0);
     system.inventory ??= {};
     system.inventoryBulk = this.items.reduce((sum, item) => sum + safeNumber(item.system.quantity, 1) * safeNumber(item.system.bulk), 0);
     system.inventory.maxBulk = 5 + safeNumber(system.attributes.str.score);
@@ -176,16 +219,21 @@ class LastArcItem extends Item {
   async roll() {
     const actor = this.parent;
     if (this.type === "spell") return rollSpell(this);
+    if (this.type === "performance") return rollPerformance(this);
     let formula = this.system.damage?.formula || this.system.roll?.formula;
     const title = this.name;
     let damageTitle = title;
     if (this.type === "weapon" && actor) {
       const weaponGroup = String(this.system.weaponGroup ?? "").toLowerCase();
       const proficiencyPenalty = weaponGroup && !actor.system.combat.weaponProficiencies?.includes(weaponGroup) ? -5 : 0;
-      const bonus = safeNumber(this.system.attack?.bonus) + proficiencyPenalty;
+      const performanceAttackBonus = safeNumber(actor.system.combat.performanceWeaponSkillBonus) + safeNumber(actor.system.combat.performanceAttackBonus);
+      const bonus = safeNumber(this.system.attack?.bonus) + proficiencyPenalty + performanceAttackBonus;
       const attack = await (new Roll(`1d20 + (${bonus})`, actor.getRollData())).evaluate();
       await attack.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${game.i18n.localize("LA.AttackRoll")}: ${foundry.utils.escapeHTML(title)} (${signed(bonus)}${proficiencyPenalty ? `; ${game.i18n.localize("LA.UnproficientPenalty")}` : ""})` });
       const naturalTwenty = attack.dice.some(die => die.results?.some(result => result.result === 20));
+      const weaponMode = ["bows", "crossbows"].includes(weaponGroup) || /ranged|range|distance/i.test(String(this.system.range ?? "")) ? "ranged" : "melee";
+      const damageBonuses = (actor.system.combat.performanceDamageDice ?? []).filter(entry => entry.weaponMode === weaponMode);
+      if (formula && damageBonuses.length) formula = `${formula} + ${damageBonuses.map(entry => `1d${safeNumber(entry.die)}`).join(" + ")}`;
       if (formula && ["bows", "crossbows"].includes(weaponGroup) && naturalTwenty && safeNumber(actor.system.combat.rangedCriticalMultiplier) > 2) {
         const multiplier = safeNumber(actor.system.combat.rangedCriticalMultiplier);
         formula = `(${formula}) * ${multiplier}`;
@@ -220,6 +268,12 @@ class LastArcActorSheet extends ActorSheet {
     context.skills = Object.entries(SKILLS).map(([key, attribute]) => ({ key, label: SKILL_LABELS[key], icon: SKILL_ICONS[key], attribute, attributeLabel: ATTRIBUTE_LABELS[attribute], ...this.actor.system.skills[key] }));
     context.defenceList = ["fort", "ref", "will"].map(key => ({ key, label: `LA.${key === "fort" ? "Fortitude" : key === "ref" ? "Reflex" : "Will"}`, ...this.actor.system.defences[key] }));
     context.itemGroups = ITEM_TYPES.map(type => ({ type, label: game.i18n.localize(`LA.ItemType.${type}`), items: this.actor.items.filter(item => item.type === type) }));
+    context.activeEffects = [...this.actor.effects].map(effect => {
+      const performance = effect.getFlag("last-arc-analogue", "performanceEffect");
+      const duration = performance?.expiresAfter ? game.i18n.localize("LA.UntilPerformersNextTurn")
+        : effect.duration?.rounds ? `${effect.duration.rounds} ${game.i18n.localize("LA.Rounds")}` : game.i18n.localize("LA.UntilRemoved");
+      return { id: effect.id, name: effect.name, img: effect.img, description: performance?.description ?? effect.description ?? "", duration };
+    });
     context.canLevelUp = this.actor.system.details.level < LEVEL_XP.length - 1
       && this.actor.system.details.xp >= this.actor.system.details.nextLevel
       && this.actor.items.some(item => ["class", "advanced-class"].includes(item.type) && safeNumber(item.system.classLevel) > 0);
@@ -241,6 +295,7 @@ class LastArcActorSheet extends ActorSheet {
     html.find(".resource-control").on("click", this._onResourceControl.bind(this));
     html.find(".roll-attributes").on("click", this._onRollAttributes.bind(this));
     html.find(".la-level-up").on("click", this._onLevelUp.bind(this));
+    html.find(".active-effect-delete").on("click", this._onActiveEffectDelete.bind(this));
   }
 
   async _onLevelUp(event) {
@@ -304,6 +359,7 @@ class LastArcActorSheet extends ActorSheet {
       await this._recalculateClassResources(oldMaxHP, oldMaxMP);
     }
     for (const technick of newTechnicks) await this._grantTechnick(technick);
+    if (attributeIncreases?.includes("int")) await this._learnOpenPerformanceSlots();
     ui.notifications.info(game.i18n.format("LA.LevelUpComplete", { level: nextLevel }));
   }
 
@@ -386,6 +442,54 @@ class LastArcActorSheet extends ActorSheet {
     if (!selection) return null;
 
     return this._configureTechnick(selection.toObject(), { classItem, projectedAttributes, projectedTrainedSkills, priorSelections, weaponGroups: bonusNames ? bonusWeaponGroups : null });
+  }
+
+  async _choosePerformances(count) {
+    const required = Math.max(0, Math.floor(safeNumber(count)));
+    if (!required) return [];
+    const pack = game.packs.get("last-arc-analogue.performances");
+    if (!pack) {
+      ui.notifications.error(game.i18n.localize("LA.PerformancePackUnavailable"));
+      return null;
+    }
+    const learned = new Set(this.actor.items.filter(item => item.type === "performance").map(item => item.name));
+    const choices = (await pack.getDocuments()).filter(item => !learned.has(item.name));
+    if (choices.length < required) {
+      ui.notifications.error(game.i18n.format("LA.NotEnoughUnlearnedPerformances", { required, available: choices.length }));
+      return null;
+    }
+    const rows = choices.map((item, index) => `<label class="la-choice-row"><input type="checkbox" name="performance" value="${index}"><span><strong>${foundry.utils.escapeHTML(item.name)}</strong><small>${foundry.utils.escapeHTML(item.system.description ?? "")}</small></span></label>`).join("");
+    const selected = await new Promise(resolve => new Dialog({
+      title: game.i18n.localize("LA.LearnPerformances"),
+      content: `<form class="la-performance-choice-form"><p>${game.i18n.format("LA.SelectPerformancesHint", { count: required })}</p><p class="la-performance-choice-count">${game.i18n.format("LA.SelectedPerformancesCount", { selected: 0, count: required })}</p><fieldset>${rows}</fieldset></form>`,
+      buttons: {
+        choose: { label: game.i18n.localize("LA.Choose"), callback: html => {
+          const checked = html.find('input[name="performance"]:checked').map((_, input) => Number(input.value)).get();
+          if (checked.length !== required) {
+            ui.notifications.warn(game.i18n.format("LA.SelectPerformancesError", { required, selected: checked.length }));
+            resolve(null);
+          } else resolve(checked.map(index => choices[index]).filter(Boolean));
+        } },
+        cancel: { label: game.i18n.localize("LA.Cancel"), callback: () => resolve(null) }
+      },
+      default: "choose", close: () => resolve(null),
+      render: html => html.find('input[name="performance"]').on("change", event => {
+        if (html.find('input[name="performance"]:checked').length > required) event.currentTarget.checked = false;
+        const current = html.find('input[name="performance"]:checked').length;
+        html.find(".la-performance-choice-count").text(game.i18n.format("LA.SelectedPerformancesCount", { selected: current, count: required }));
+      })
+    }).render(true));
+    return selected;
+  }
+
+  async _learnOpenPerformanceSlots() {
+    const copies = this.actor.items.filter(item => item.type === "technick" && item.name === "Bardic Study").length;
+    const slots = copies * Math.max(0, 1 + safeNumber(this.actor.system.attributes.int?.modifier));
+    const missing = Math.max(0, slots - this.actor.items.filter(item => item.type === "performance").length);
+    if (!missing) return [];
+    const selections = await this._choosePerformances(missing);
+    if (!selections) return null;
+    return this.actor.createEmbeddedDocuments("Item", selections.map(item => item.toObject()));
   }
 
   async _configureTechnick(itemData, { classItem = null, projectedAttributes = {}, projectedTrainedSkills = [], priorSelections = [], weaponGroups = null } = {}) {
@@ -474,9 +578,16 @@ class LastArcActorSheet extends ActorSheet {
   }
 
   async _grantTechnick(itemData) {
+    let performances = [];
+    if (itemData.name === "Bardic Study") {
+      const slots = Math.max(0, safeNumber(itemData.system.effects?.performanceSlotsPerCopy) * (1 + safeNumber(this.actor.system.attributes.int?.modifier)));
+      performances = await this._choosePerformances(slots);
+      if (!performances) return null;
+    }
     const oldMaxHP = safeNumber(this.actor.system.resources.hp.max);
     const oldMaxMP = safeNumber(this.actor.system.resources.mp.max);
     const [created] = await this.actor.createEmbeddedDocuments("Item", [itemData]);
+    if (performances.length) await this.actor.createEmbeddedDocuments("Item", performances.map(item => item.toObject()));
     if (itemData.system.selectedSkill && itemData.system.choice?.type === "classSkillTraining") {
       await this.actor.update({ [`system.skills.${itemData.system.selectedSkill}.trained`]: true });
     }
@@ -513,6 +624,7 @@ class LastArcActorSheet extends ActorSheet {
   async _onDropItem(event, data) {
     const dropped = await Item.implementation.fromDropData(data);
     if (dropped.type === "technick") return this._applyTechnickDrop(dropped.toObject());
+    if (dropped.type === "performance") return this._applyPerformanceDrop(dropped.toObject());
     if (!["race", "class", "advanced-class"].includes(dropped.type)) return super._onDropItem(event, data);
     const itemData = dropped.toObject();
     if (dropped.type === "race") return this._applyRaceDrop(itemData);
@@ -530,7 +642,24 @@ class LastArcActorSheet extends ActorSheet {
     return this._grantTechnick(configured);
   }
 
+  async _applyPerformanceDrop(itemData) {
+    const capacity = this.actor.items.filter(item => item.type === "technick" && item.name === "Bardic Study").length
+      * Math.max(0, 1 + safeNumber(this.actor.system.attributes.int?.modifier));
+    const learned = this.actor.items.filter(item => item.type === "performance");
+    if (!capacity || learned.length >= capacity) {
+      ui.notifications.warn(game.i18n.localize("LA.NoPerformanceSlots"));
+      return false;
+    }
+    if (learned.some(item => item.name === itemData.name)) {
+      ui.notifications.warn(game.i18n.localize("LA.PerformanceAlreadyKnown"));
+      return false;
+    }
+    const [created] = await this.actor.createEmbeddedDocuments("Item", [itemData]);
+    return created;
+  }
+
   async _applyRaceDrop(itemData) {
+    const previousIntelligenceModifier = safeNumber(this.actor.system.attributes.int?.modifier);
     const currentRace = this.actor.items.find(item => item.type === "race");
     const oldRaceFeatures = this.actor.items.filter(item => item.type === "feature" && item.flags?.["last-arc-analogue"]?.racialFeature);
     const prior = this.actor.system.details.raceAdjustments ?? {};
@@ -578,6 +707,7 @@ class LastArcActorSheet extends ActorSheet {
     });
     if (features.length) await this.actor.createEmbeddedDocuments("Item", features);
     await this._recalculateClassResources(oldHP, oldMP);
+    if (safeNumber(this.actor.system.attributes.int?.modifier) > previousIntelligenceModifier) await this._learnOpenPerformanceSlots();
     return created;
   }
 
@@ -821,6 +951,19 @@ class LastArcActorSheet extends ActorSheet {
     await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `<strong>${foundry.utils.escapeHTML(label)}</strong> ${signed(bonus)}${result}` });
   }
 
+  async _updateObject(event, formData) {
+    const previousIntelligenceModifier = safeNumber(this.actor.system.attributes.int?.modifier);
+    await super._updateObject(event, formData);
+    const currentIntelligenceModifier = safeNumber(this.actor.system.attributes.int?.modifier);
+    if (currentIntelligenceModifier > previousIntelligenceModifier) await this._learnOpenPerformanceSlots();
+  }
+
+  async _onActiveEffectDelete(event) {
+    event.preventDefault();
+    const id = event.currentTarget.closest("[data-effect-id]").dataset.effectId;
+    if (this.actor.effects.has(id)) await this.actor.deleteEmbeddedDocuments("ActiveEffect", [id]);
+  }
+
   async _onItemCreate(event) {
     event.preventDefault();
     const type = event.currentTarget.dataset.type || "other";
@@ -912,6 +1055,8 @@ class LastArcItemSheet extends ItemSheet {
     context.technickPrerequisiteText = formatTechnickPrerequisites(context.system);
     context.isTalent = this.item.type === "talent";
     context.isSpell = this.item.type === "spell";
+    context.isPerformance = this.item.type === "performance";
+    context.performanceTiers = (context.system.automation?.tiers ?? []).map(tier => ({ dc: tier.dc, summary: (tier.effects ?? []).map(describePerformanceEffect).join("; ") }));
     context.isNonRollable = ["race", "class", "advanced-class", "feature", "talent", "technick"].includes(this.item.type);
     return context;
   }
