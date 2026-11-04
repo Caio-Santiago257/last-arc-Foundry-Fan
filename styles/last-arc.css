@@ -63,6 +63,9 @@
 .la-performance-description { grid-column: 2 / -1; color: var(--la-muted); font: 11px/1.4 Arial,sans-serif; }
 .la-performance-choice-form fieldset { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 6px; max-height: 60vh; overflow-y: auto; padding: 5px; border: 1px solid var(--la-line); }
 .la-spell-choice-form fieldset { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 6px; max-height: 60vh; overflow-y: auto; padding: 5px; border: 1px solid var(--la-line); }
+.la-high-arcana-form fieldset { display: grid; gap: 6px; max-height: 55vh; overflow-y: auto; padding: 5px; border: 1px solid var(--la-line); }
+.la-high-arcana-option { display: grid; grid-template-columns: 18px minmax(0,1fr); gap: 7px; align-items: start; padding: 7px; border: 1px solid #e2d4bd; background: var(--la-card); cursor: pointer; }
+.la-high-arcana-option span { display: grid; gap: 3px; }.la-high-arcana-option small { font: 11px/1.4 Arial,sans-serif; }
 .la-choice-row { display: grid; grid-template-columns: 18px minmax(0,1fr); gap: 7px; align-items: start; padding: 7px; border: 1px solid #e2d4bd; background: var(--la-card); cursor: pointer; }
 .la-choice-row span { display: grid; gap: 3px; }
 .la-choice-row strong { color: var(--la-accent); font: 700 12px Georgia,serif; }

@@ -1,0 +1,68 @@
+[
+  {
+    "name": "Adamant Spell",
+    "type": "feature",
+    "img": "icons/magic/symbols/rune-sigil-green.webp",
+    "system": {
+      "category": "High Arcana",
+      "className": "Archmage",
+      "description": "When using this High Arcana, ignore Break Gauge penalties to the Spellcraft check. Using a High Arcana doubles the spell's MP cost; only one High Arcana may be used on a spell. Apply any MP cost reductions after doubling.",
+      "automation": { "highArcana": "adamantSpell" }
+    }
+  },
+  {
+    "name": "Distant Spell",
+    "type": "feature",
+    "img": "icons/magic/symbols/rune-sigil-blue.webp",
+    "system": {
+      "category": "High Arcana",
+      "className": "Archmage",
+      "description": "When using this High Arcana, double the spell's range. Using a High Arcana doubles the spell's MP cost; only one High Arcana may be used on a spell. Apply any MP cost reductions after doubling.",
+      "automation": { "highArcana": "distantSpell" }
+    }
+  },
+  {
+    "name": "Enlarged Spell",
+    "type": "feature",
+    "img": "icons/magic/symbols/rune-sigil-orange.webp",
+    "system": {
+      "category": "High Arcana",
+      "className": "Archmage",
+      "description": "When using this High Arcana, double the spell's targeted area; secondary effects are not enlarged. Using a High Arcana doubles the spell's MP cost; only one High Arcana may be used on a spell. Apply any MP cost reductions after doubling.",
+      "automation": { "highArcana": "enlargedSpell" }
+    }
+  },
+  {
+    "name": "Intensified Spell",
+    "type": "feature",
+    "img": "icons/magic/symbols/rune-sigil-red.webp",
+    "system": {
+      "category": "High Arcana",
+      "className": "Archmage",
+      "description": "When using this High Arcana, double the number of damage dice rolled by the spell. Using a High Arcana doubles the spell's MP cost; only one High Arcana may be used on a spell. Apply any MP cost reductions after doubling.",
+      "automation": { "highArcana": "intensifiedSpell" }
+    }
+  },
+  {
+    "name": "Lingering Spell",
+    "type": "feature",
+    "img": "icons/magic/symbols/rune-sigil-purple.webp",
+    "system": {
+      "category": "High Arcana",
+      "className": "Archmage",
+      "description": "When using this High Arcana, double a spell's duration when its duration scales. Using a High Arcana doubles the spell's MP cost; only one High Arcana may be used on a spell. Apply any MP cost reductions after doubling.",
+      "automation": { "highArcana": "lingeringSpell" }
+    }
+  },
+  {
+    "name": "Multi-Spell",
+    "type": "feature",
+    "img": "icons/magic/symbols/rune-sigil-gold.webp",
+    "system": {
+      "category": "High Arcana",
+      "className": "Archmage",
+      "description": "When using this High Arcana, target a number of additional creatures equal to your Mind modifier (minimum 1). It applies only to spells targeting one creature; area spells may not overlap. Using a High Arcana doubles the spell's MP cost; only one High Arcana may be used on a spell. Apply any MP cost reductions after doubling.",
+      "automation": { "highArcana": "multiSpell" }
+    }
+  }
+]

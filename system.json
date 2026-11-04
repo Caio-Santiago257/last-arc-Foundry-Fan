@@ -2,7 +2,7 @@
   "id": "last-arc-analogue",
   "title": "Last Arc: Tactics Analogue (Fan System)",
   "description": "Community-built Foundry VTT system framework for Last Arc: Tactics Analogue.",
-  "version": "0.2.20",
+  "version": "0.2.21",
   "compatibility": {
     "minimum": 12,
     "verified": 13
@@ -105,6 +105,13 @@
       "name": "magick-white",
       "label": "White Magick",
       "path": "packs/magick-white.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "high-arcana",
+      "label": "High Arcana",
+      "path": "packs/high-arcana.db",
       "type": "Item",
       "system": "last-arc-analogue"
     },
@@ -308,7 +315,8 @@
         "magick-blue",
         "magick-green",
         "magick-red",
-        "magick-white"
+        "magick-white",
+        "high-arcana"
       ],
       "folders": []
     },
@@ -386,5 +394,5 @@
   "secondaryTokenAttribute": "resources.mp",
   "url": "https://github.com/Caio-Santiago257/last-arc-Foundry-Fan",
   "manifest": "https://raw.githubusercontent.com/Caio-Santiago257/last-arc-Foundry-Fan/main/system.json",
-  "download": "https://raw.githubusercontent.com/Caio-Santiago257/last-arc-Foundry-Fan/main/releases/last-arc-analogue-v0.2.20.zip"
+  "download": "https://raw.githubusercontent.com/Caio-Santiago257/last-arc-Foundry-Fan/main/releases/last-arc-analogue-v0.2.21.zip"
 }

@@ -67,6 +67,8 @@ Version 0.2.19 grants bonus Technicks according to the selected base class's cla
 
 Version 0.2.20 prompts for eligible Magicks whenever Arcane Study is learned. Each copy grants a new selection of 1 + Intelligence modifier spells (minimum 1), excluding spells already known and checking any recorded spell prerequisites.
 
+Version 0.2.21 adds the six High Arcana to a dedicated Magick compendium. Archmage class levels 6 through 10 each grant one previously unlearned option. Spell casting can activate one owned High Arcana at a time, doubles its MP cost, and applies supported effects including doubled Intensified Spell damage dice, Distant Spell range, Lingering Spell tracked duration, and Multi-Spell target limits.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork. The system code is provided without an added license until the repository owner chooses one.

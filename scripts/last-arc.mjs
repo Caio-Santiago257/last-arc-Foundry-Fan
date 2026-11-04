@@ -858,6 +858,10 @@ class LastArcActorSheet extends ActorSheet {
 
   async _onDropItem(event, data) {
     const dropped = await Item.implementation.fromDropData(data);
+    if (dropped.type === "feature" && dropped.system.category === "High Arcana") {
+      ui.notifications.warn(game.i18n.localize("LA.HighArcanaLevelOnly"));
+      return false;
+    }
     if (dropped.type === "technick") return this._applyTechnickDrop(dropped.toObject());
     if (dropped.type === "performance") return this._applyPerformanceDrop(dropped.toObject());
     if (!["race", "class", "advanced-class"].includes(dropped.type)) return super._onDropItem(event, data);
@@ -1003,6 +1007,17 @@ class LastArcActorSheet extends ActorSheet {
       let talentSelection = null;
       if (talentLevels.includes(nextLevel) || legacyTreeMismatch) talentSelection = await this._chooseClassTalent({ name: existing.name, system: { ...existing.system, talentTrees: classTrees } });
       if ((talentLevels.includes(nextLevel) || legacyTreeMismatch) && classTrees.length && !talentSelection) return false;
+      const highArcanaSelections = [];
+      if (existing.type === "advanced-class" && existing.name === "Archmage") {
+        const earnedLevels = new Set(this.actor.items.filter(entry => entry.type === "feature" && entry.flags?.["last-arc-analogue"]?.archmageHighArcana)
+          .map(entry => safeNumber(entry.flags["last-arc-analogue"].archmageHighArcana.classLevel)));
+        for (let classLevel = 6; classLevel <= Math.min(10, nextLevel); classLevel++) {
+          if (earnedLevels.has(classLevel)) continue;
+          const choice = await this._chooseHighArcana([...highArcanaSelections.map(entry => entry.item.name)]);
+          if (!choice) return false;
+          highArcanaSelections.push({ item: choice, classLevel });
+        }
+      }
       if (obsoleteTalents.length) await this.actor.deleteEmbeddedDocuments("Item", obsoleteTalents.map(entry => entry.id));
       const selectedTrees = [...new Set([...validPriorTrees, ...(talentSelection ? [talentSelection.tree] : [])])];
       await existing.update({
@@ -1018,6 +1033,7 @@ class LastArcActorSheet extends ActorSheet {
         "system.selectedTalentTrees": selectedTrees
       });
       if (talentSelection) await this._createTalentItem(talentSelection.talent, existing);
+      for (const selection of highArcanaSelections) await this._createHighArcanaItem(selection.item, existing, selection.classLevel);
       await this._grantClassFeatures(existing, nextLevel);
       await this._recalculateClassResources(oldMaxHP, oldMaxMP);
       return existing;
@@ -1112,6 +1128,48 @@ class LastArcActorSheet extends ActorSheet {
       render: html => html.find("[name=talent]").on("change", event => html.find(".la-talent-preview").text(event.currentTarget.selectedOptions[0]?.dataset.description ?? ""))
     }).render(true));
     return talent ? { tree, talent } : null;
+  }
+
+  async _chooseHighArcana(priorSelections = []) {
+    const pack = game.packs.get("last-arc-analogue.high-arcana");
+    if (!pack) {
+      ui.notifications.error(game.i18n.localize("LA.HighArcanaPackUnavailable"));
+      return null;
+    }
+    const learned = new Set([
+      ...this.actor.items.filter(item => item.type === "feature" && item.system.category === "High Arcana").map(item => item.name),
+      ...priorSelections
+    ].map(name => String(name).toLowerCase()));
+    const options = (await pack.getDocuments()).filter(item => !learned.has(item.name.toLowerCase()));
+    if (!options.length) {
+      ui.notifications.error(game.i18n.localize("LA.NoHighArcanaChoices"));
+      return null;
+    }
+    const choices = options.map((item, index) => `<option value="${index}">${foundry.utils.escapeHTML(item.name)}</option>`).join("");
+    const descriptions = options.map(item => foundry.utils.escapeHTML(item.system.description ?? ""));
+    const selected = await new Promise(resolve => new Dialog({
+      title: game.i18n.localize("LA.SelectHighArcana"),
+      content: `<form class="la-talent-choice-form"><p>${game.i18n.localize("LA.SelectHighArcanaHint")}</p><label>${game.i18n.localize("LA.HighArcana")}<select name="highArcana">${choices}</select></label><p class="la-talent-preview">${descriptions[0]}</p></form>`,
+      buttons: {
+        choose: { label: game.i18n.localize("LA.Choose"), callback: html => resolve(options[Number(html.find('[name="highArcana"]').val())] ?? null) },
+        cancel: { label: game.i18n.localize("LA.Cancel"), callback: () => resolve(null) }
+      },
+      default: "choose", close: () => resolve(null),
+      render: html => html.find('[name="highArcana"]').on("change", event => html.find(".la-talent-preview").text(descriptions[Number(event.currentTarget.value)] ?? ""))
+    }).render(true));
+    return selected;
+  }
+
+  async _createHighArcanaItem(source, classItem, classLevel) {
+    const data = source.toObject();
+    delete data._id;
+    delete data.folder;
+    data.system.category = "High Arcana";
+    data.system.sourceClass = classItem.name;
+    data.flags ??= {};
+    data.flags["last-arc-analogue"] ??= {};
+    data.flags["last-arc-analogue"].archmageHighArcana = { classItemId: classItem.id, classLevel };
+    return this.actor.createEmbeddedDocuments("Item", [data]);
   }
 
   _meetsTalentPrerequisites(item) {
