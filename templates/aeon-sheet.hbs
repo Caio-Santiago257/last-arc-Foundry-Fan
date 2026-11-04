@@ -1,0 +1,48 @@
+<form class="la-sheet la-npc la-aeon-sheet" autocomplete="off">
+  <header class="la-header la-aeon-header">
+    <div class="la-portrait"><img src="{{actor.img}}" data-edit="img" alt=""></div>
+    <div class="la-identity">
+      <input class="la-name" name="name" type="text" value="{{actor.name}}">
+      <p>{{aeon.epithet}} · {{localize "LA.Aeon"}} · {{localize "LA.SummonerClassLevel"}} {{aeon.summonerClassLevel}}</p>
+      <p>{{localize "LA.Affinity"}}: {{aeonAffinityLabel}} · {{localize "LA.Size"}}: {{aeon.size}} · {{localize "LA.Reach"}}: {{aeon.reach}}</p>
+    </div>
+    <div class="la-level-card la-aeon-level"><span>{{localize "LA.SummonerClassLevel"}}</span><strong>{{aeon.summonerClassLevel}}</strong><small>{{localize "LA.AeonSummonCost"}}</small><b>{{aeonSummonCost}} MP</b></div>
+  </header>
+
+  <nav class="sheet-tabs la-tabs" data-group="primary">
+    <a class="item" data-tab="overview">{{localize "LA.AeonOverview"}}</a>
+    <a class="item" data-tab="spells">{{localize "LA.Spells"}} / {{localize "LA.Technicks"}}</a>
+    <a class="item" data-tab="features">{{localize "LA.Features"}}</a>
+    <a class="item" data-tab="progression">{{localize "LA.AeonProgression"}}</a>
+  </nav>
+
+  <section class="sheet-body la-body">
+    <div class="tab" data-group="primary" data-tab="overview">
+      <div class="la-aeon-resource-grid">
+        <section class="la-panel la-resource-card hp"><label>{{localize "LA.Health"}}</label><div><button type="button" class="resource-control" data-resource="resources.hp" data-delta="-1">−</button><input type="number" name="system.resources.hp.value" value="{{system.resources.hp.value}}"><span>/</span><input type="number" name="system.resources.hp.max" value="{{system.resources.hp.max}}"><button type="button" class="resource-control" data-resource="resources.hp" data-delta="1">+</button></div></section>
+        <section class="la-panel la-resource-card mp"><label>{{localize "LA.Mana"}}</label><div><button type="button" class="resource-control" data-resource="resources.mp" data-delta="-1">−</button><input type="number" name="system.resources.mp.value" value="{{system.resources.mp.value}}"><span>/</span><input type="number" name="system.resources.mp.max" value="{{system.resources.mp.max}}"><button type="button" class="resource-control" data-resource="resources.mp" data-delta="1">+</button></div></section>
+        <section class="la-panel la-aeon-summary"><h2>{{localize "LA.AeonCombatProfile"}}</h2><div class="la-aeon-stat-grid"><div><small>{{localize "LA.Attack"}}</small><b>+{{aeonCurrent.attack}}</b></div><div><small>{{localize "LA.Damage"}}</small><b>{{aeonCurrent.damage}} {{aeonCurrent.damageType}}</b></div><div><small>{{localize "LA.DamageReduction"}}</small><b>{{aeonCurrent.dr}}</b></div><div><small>{{localize "LA.Speed"}}</small><b>{{aeonSpeedText}}</b></div><div><small>{{localize "LA.Reach"}}</small><b>{{aeon.reach}}</b></div></div><button type="button" class="apply-damage la-primary-button">{{localize "LA.ApplyDamage"}}</button></section>
+      </div>
+      <div class="la-overview-grid la-aeon-defences">
+        <section class="la-panel"><h2>{{localize "LA.Defenses"}}</h2><div class="la-aeon-stat-grid"><div><small>{{localize "LA.Reflex"}}</small><b>{{aeonCurrent.ref}}</b><em>{{localize "LA.FlatFooted"}} {{aeonCurrent.flatFootedRef}}</em></div><div><small>{{localize "LA.Fortitude"}}</small><b>{{aeonCurrent.fort}}</b></div><div><small>{{localize "LA.Will"}}</small><b>{{aeonCurrent.will}}</b></div></div></section>
+        <section class="la-panel"><h2>{{localize "LA.Skills"}}</h2><div class="la-aeon-stat-grid"><div><small>{{localize "LA.Perception"}}</small><b>+{{aeonCurrent.skills.perception}}</b></div><div><small>{{localize "LA.Spellcraft"}}</small><b>+{{aeonCurrent.skills.spellcraft}}</b></div><div><small>{{localize "LA.Unarmed"}}</small><b>+{{aeonCurrent.skills.unarmed}}</b></div></div><p>{{localize "LA.AeonImmunities"}}: {{#if system.combat.immunities.length}}{{#each system.combat.immunities as |entry|}}{{entry}}{{#unless @last}}, {{/unless}}{{/each}}{{else}}—{{/if}}</p><p>{{localize "LA.Resistances"}}: {{#if system.combat.resistances.length}}{{#each system.combat.resistances as |entry|}}{{entry}}{{#unless @last}}, {{/unless}}{{/each}}{{else}}—{{/if}} · {{localize "LA.Vulnerabilities"}}: {{#if system.combat.vulnerabilities.length}}{{#each system.combat.vulnerabilities as |entry|}}{{entry}}{{#unless @last}}, {{/unless}}{{else}}—{{/each}}{{/if}}</p></section>
+      </div>
+      <section class="la-panel"><h2>{{localize "LA.AeonDescription"}}</h2><p>{{aeon.description}}</p></section>
+      <section class="la-panel la-weapons"><h2>{{localize "LA.Attack"}}</h2>{{#each itemGroups as |group|}}{{#if (eq group.type "weapon")}}{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}{{/if}}{{/each}}</section>
+    </div>
+
+    <div class="tab" data-group="primary" data-tab="spells">
+      {{#each itemGroups as |group|}}{{#if (or (eq group.type "spell") (eq group.type "technick"))}}<section class="la-panel la-item-section"><div class="la-section-heading"><h2>{{group.label}}</h2></div>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}</section>{{/if}}{{/each}}
+    </div>
+
+    <div class="tab" data-group="primary" data-tab="features">
+      {{#each itemGroups as |group|}}{{#if (eq group.type "feature")}}<section class="la-panel la-item-section"><h2>{{localize "LA.AeonTraitsAndUltimate"}}</h2>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}</section>{{/if}}{{/each}}
+    </div>
+
+    <div class="tab" data-group="primary" data-tab="progression">
+      <section class="la-panel la-aeon-progression"><h2>{{localize "LA.AeonProgression"}}</h2><p>{{localize "LA.AeonProgressionHint"}}</p><div class="la-aeon-table-wrap"><table><thead><tr><th>{{localize "LA.SummonerClassLevel"}}</th><th>HP</th><th>MP</th><th>{{localize "LA.Attack"}}</th><th>{{localize "LA.Damage"}}</th><th>{{localize "LA.Reflex"}}</th><th>{{localize "LA.Fortitude"}}</th><th>{{localize "LA.Will"}}</th><th>DR</th><th>{{localize "LA.Skills"}}</th><th>{{localize "LA.Spells"}}</th><th>{{localize "LA.Technicks"}}</th></tr></thead><tbody>
+      {{#each aeonRows as |row|}}<tr class="{{#if (eq row.level ../aeon.summonerClassLevel)}}current{{/if}}"><td>{{row.level}}</td><td>{{row.hp}}</td><td>{{row.mp}}</td><td>+{{row.attack}}</td><td>{{row.damage}} {{row.damageType}}</td><td>{{row.ref}} / {{row.flatFootedRef}}</td><td>{{row.fort}}</td><td>{{row.will}}</td><td>{{row.dr}}</td><td>Perception +{{row.skills.perception}} · Spellcraft +{{row.skills.spellcraft}} · Unarmed +{{row.skills.unarmed}}</td><td>{{row.spells}}</td><td>{{row.technicks}}</td></tr>{{/each}}
+      </tbody></table></div></section>
+    </div>
+  </section>
+</form>

@@ -159,6 +159,29 @@
 .la-apply-damage-dialog { display:grid; gap:9px; }
 .la-apply-damage-dialog label { display:grid; gap:4px; }
 .la-apply-damage-dialog select { width:100%; }
+.la-aeon-sheet .la-aeon-header { align-items:center; }
+.la-aeon-header .la-identity p { margin:4px 0; color:var(--la-muted); font:11px/1.45 Arial,sans-serif; }
+.la-aeon-level { display:grid; justify-items:center; gap:4px; min-width:115px; }
+.la-aeon-level strong { font:700 28px Georgia,serif; }
+.la-aeon-level small { color:var(--la-muted); font:10px Arial,sans-serif; text-transform:uppercase; }
+.la-aeon-resource-grid { display:grid; grid-template-columns:repeat(2,minmax(180px,1fr)); gap:12px; align-items:stretch; }
+.la-aeon-resource-grid .la-aeon-summary { grid-column:1/-1; }
+.la-aeon-resource-grid .la-resource-card { padding:12px; }
+.la-aeon-stat-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:8px; }
+.la-aeon-stat-grid > div { display:grid; gap:4px; padding:8px; border:1px solid var(--la-line); background:rgba(255,255,255,.35); }
+.la-aeon-stat-grid small { color:var(--la-muted); font:700 10px Arial,sans-serif; text-transform:uppercase; }
+.la-aeon-stat-grid b { color:var(--la-ink); font:700 18px Georgia,serif; }
+.la-aeon-stat-grid em { color:var(--la-muted); font:10px Arial,sans-serif; }
+.la-aeon-defences p { margin:10px 0 0; font:11px/1.5 Arial,sans-serif; }
+.la-aeon-table-wrap { overflow:auto; max-height:520px; }
+.la-aeon-progression table { min-width:1500px; border-collapse:collapse; font:11px/1.35 Arial,sans-serif; }
+.la-aeon-progression th,.la-aeon-progression td { padding:6px 8px; border-bottom:1px solid var(--la-line); text-align:left; vertical-align:top; }
+.la-aeon-progression th { position:sticky; top:0; z-index:1; background:var(--la-card); color:var(--la-accent); }
+.la-aeon-progression tr.current { background:rgba(181,126,53,.16); font-weight:700; }
+.la-aeon-sheet .la-item-list .item.la-item-row { grid-template-columns:32px minmax(140px,1fr) 120px 100px 32px; }
+.la-aeon-sheet .la-feature-row small { grid-column:2/-1; }
+.la-aeon-sheet .la-feature-row .item-delete { grid-column:5; }
+.la-small-button { width:auto; min-height:26px; padding:3px 8px; font:700 10px Arial,sans-serif; }
 .la-break-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; }
 .la-break-heading h2 { margin-bottom:4px; }
 .la-break-heading p { margin:0 0 10px; color:var(--la-muted); font:10px/1.45 Arial,sans-serif; }

@@ -14,10 +14,14 @@ const escapeHTML = value => foundry.utils.escapeHTML(String(value ?? ""));
 const number = (value, fallback = 0) => Number.isFinite(Number(value)) ? Number(value) : fallback;
 const signed = value => `${value >= 0 ? "+" : ""}${value}`;
 
-function spellDamageFormula(formula, caster, intensified = false) {
+function spellDamageFormula(formula, caster, intensified = false, damageType = "", school = "") {
   const base = String(formula).replaceAll("@level", String(number(caster.system.details?.level)));
-  if (!intensified) return base;
-  return base.replace(/(\d*)d(\d+)/gi, (_match, count, faces) => `${Math.max(1, number(count, 1)) * 2}d${faces}`);
+  const aeonDie = ({ sirius: "fire", altair: "electric", arcturus: "cold", pleiades: "piercing", alioth: "slashing", rasalas: "blunt" })[caster.system.aeon?.aeonId];
+  const requiredSchool = ["sirius", "altair", "arcturus"].includes(caster.system.aeon?.aeonId) ? "red" : "green";
+  const affinityBoosted = aeonDie && String(damageType).toLowerCase() === aeonDie && String(school).toLowerCase().includes(requiredSchool);
+  const improved = affinityBoosted ? base.replace(/d6\b/gi, "d8") : base;
+  if (!intensified) return improved;
+  return improved.replace(/(\d*)d(\d+)/gi, (_match, count, faces) => `${Math.max(1, number(count, 1)) * 2}d${faces}`);
 }
 
 function hasDamage(spell) {
@@ -94,7 +98,8 @@ function defenceResult(target, caster, defence, spell, checkTotal) {
     ? number(spell.system.higherLevelDefenceBonus) : 0;
   const margin = typeof defence === "object" ? number(defence.margin) : 0;
   const key = typeof defence === "object" ? defence.defence : defence;
-  const ordinary = number(target.system.defences?.[key]?.total, 10) + number(target.system.combat?.performanceSpellDefenceBonuses?.[key]);
+  const aeonRangedSpellBonus = target.system.aeon?.aeonId === "rasalas" && key === "ref" ? 5 : 0;
+  const ordinary = number(target.system.defences?.[key]?.total, 10) + number(target.system.combat?.performanceSpellDefenceBonuses?.[key]) + aeonRangedSpellBonus;
   const substitute = number(target.system.combat?.performanceDefenceSubstitutions?.[key]);
   const total = Math.max(ordinary, substitute) + higherLevelBonus;
   return { success: checkTotal > total + margin, total, bonus: higherLevelBonus };
@@ -161,10 +166,12 @@ async function applySpellEffect(effect, target, caster, spell, checkTotal, resul
 
   if (effect.type === "damage") {
     if (hasFailure && !effect.halfOnFailure) return;
-    const baseFormula = spellDamageFormula(effect.formula, caster, highArcana === "intensifiedSpell");
+    const baseFormula = spellDamageFormula(effect.formula, caster, highArcana === "intensifiedSpell", effect.damageType, spell.system.school);
     const formula = damageBonus ? `(${baseFormula}) + ${damageBonus}` : baseFormula;
     const damageRoll = await (new Roll(formula, { ...caster.getRollData(), level: caster.system.details.level })).evaluate();
-    const amount = Math.max(0, Math.floor(hasFailure && effect.halfOnFailure ? damageRoll.total / 2 : damageRoll.total));
+    const areaSpell = Boolean(spell.system.automation?.areaEffect) || /area|cone|all (?:enemies|creatures)|within \d+ squares?/i.test(String(spell.system.target ?? ""));
+    const fomalhautAreaHit = target.system.aeon?.aeonId === "fomalhaut" && areaSpell;
+    const amount = Math.max(0, Math.floor(fomalhautAreaHit ? (hasFailure ? 0 : damageRoll.total / 2) : hasFailure && effect.halfOnFailure ? damageRoll.total / 2 : damageRoll.total));
     await postDamageRoll(damageRoll, {
       speaker: ChatMessage.getSpeaker({ actor: caster }),
       flavor: `${escapeHTML(spell.name)} — ${escapeHTML(target.name)} (${escapeHTML(formula)})`,
@@ -287,6 +294,10 @@ async function showSpellCard(item, actor = null) {
   }
 
   await actor.update({ "system.resources.mp.value": number(actor.system.resources.mp.value) - mpCost });
+  if (actor.system.aeon?.aeonId === "fomalhaut") {
+    const nextResistance = effects.find(effect => effect.type === "damage" && ["cold", "dark", "electric", "fire", "holy"].includes(String(effect.damageType).toLowerCase()))?.damageType ?? "";
+    await actor.update({ "system.aeon.dragonphaseResistance": nextResistance });
+  }
   const bonus = number(actor.system.skills?.spellcraft?.total);
   const roll = await (new Roll(`1d20 + (${bonus + defensivePenalty - amplificationPenalty})`, actor.getRollData())).evaluate();
   const checkTotal = roll.total;

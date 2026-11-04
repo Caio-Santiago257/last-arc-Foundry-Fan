@@ -2,7 +2,7 @@
   "id": "last-arc-analogue",
   "title": "Last Arc: Tactics Analogue (Fan System)",
   "description": "Community-built Foundry VTT system framework for Last Arc: Tactics Analogue.",
-  "version": "0.2.25",
+  "version": "0.2.26",
   "compatibility": {
     "minimum": 12,
     "verified": 13
@@ -50,6 +50,13 @@
       "label": "Classes Avançadas",
       "path": "packs/advanced-classes.db",
       "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "aeons",
+      "label": "Aeons",
+      "path": "packs/aeons.db",
+      "type": "Actor",
       "system": "last-arc-analogue"
     },
     {
@@ -307,6 +314,13 @@
   ],
   "packFolders": [
     {
+      "name": "Aeons",
+      "sorting": "a",
+      "color": "#6f7891",
+      "packs": ["aeons"],
+      "folders": []
+    },
+    {
       "name": "Magick",
       "sorting": "a",
       "color": "#7a3f78",
@@ -394,5 +408,5 @@
   "secondaryTokenAttribute": "resources.mp",
   "url": "https://github.com/Caio-Santiago257/last-arc-Foundry-Fan",
   "manifest": "https://raw.githubusercontent.com/Caio-Santiago257/last-arc-Foundry-Fan/main/system.json",
-  "download": "https://raw.githubusercontent.com/Caio-Santiago257/last-arc-Foundry-Fan/main/releases/last-arc-analogue-v0.2.25.zip"
+  "download": "https://raw.githubusercontent.com/Caio-Santiago257/last-arc-Foundry-Fan/main/releases/last-arc-analogue-v0.2.26.zip"
 }

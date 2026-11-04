@@ -29,7 +29,8 @@ export async function postDamageRoll(roll, {
       actorUuid: token.actor?.uuid ?? document.actor?.uuid ?? "",
       tokenId: document.id ?? token.id ?? "",
       actorId: token.actor?.id ?? document.actor?.id ?? "",
-      sceneId: document.parent?.id ?? canvas?.scene?.id ?? ""
+      sceneId: document.parent?.id ?? canvas?.scene?.id ?? "",
+      aeonEntity: document.getFlag?.(SYSTEM_ID, "aeonEntity") ?? ""
     }];
   })).values()];
   return roll.toMessage({
@@ -88,14 +89,14 @@ function isActiveGM() {
   return Boolean(game.user?.isGM && activeGM?.id === game.user.id);
 }
 
-async function applyToActor(actor, payload, amount, type) {
+async function applyToActor(actor, payload, amount, type, aeonEntity = "") {
   if (payload.resource === "mp") {
     const mp = actor.system.resources?.mp ?? { value: 0, max: 0 };
     const loss = Math.min(Math.max(0, Number(mp.value) || 0), amount);
     await actor.update({ "system.resources.mp.value": Math.max(0, Number(mp.value) - loss) });
     return loss;
   }
-  return actor.applyDamage(amount, { type, bypassDR: Boolean(payload.bypassDR) });
+  return actor.applyDamage(amount, { type, bypassDR: Boolean(payload.bypassDR), aeonEntity });
 }
 
 async function applyRiders(payload, totalApplied) {
@@ -143,7 +144,8 @@ async function onChatApply(message, button) {
       type,
       resource: payload.resource,
       targetUuids: targets.map(target => target.actor.uuid),
-      targetKeys: targets.map(target => target.key)
+      targetKeys: targets.map(target => target.key),
+      aeonEntities: targets.map(target => target.token?.document?.getFlag?.(SYSTEM_ID, "aeonEntity") ?? "")
     });
     return;
   }
@@ -152,7 +154,7 @@ async function onChatApply(message, button) {
   const results = [];
   let totalApplied = 0;
   for (const target of targets) {
-    const applied = await applyToActor(target.actor, payload, amount, type);
+    const applied = await applyToActor(target.actor, payload, amount, type, target.token?.document?.getFlag?.(SYSTEM_ID, "aeonEntity") ?? "");
     totalApplied += applied;
     results.push(`${foundry.utils.escapeHTML(target.actor.name)}: ${applied} ${payload.resource === "mp" ? "MP" : game.i18n.localize("LA.Damage")}`);
   }
@@ -187,7 +189,7 @@ export function registerDamageChatControls() {
         for (let index = 0; index < (data.targetUuids ?? []).length; index++) {
           const actor = await fromUuid(data.targetUuids[index]).catch(() => null);
           if (!actor) continue;
-          const applied = await applyToActor(actor, payload, Math.min(payload.amount, Math.max(0, Number(data.amount) || 0)), data.type);
+          const applied = await applyToActor(actor, payload, Math.min(payload.amount, Math.max(0, Number(data.amount) || 0)), data.type, data.aeonEntities?.[index] ?? "");
           totalApplied += applied;
           results.push(`${foundry.utils.escapeHTML(actor.name)}: ${applied} ${payload.resource === "mp" ? "MP" : game.i18n.localize("LA.Damage")}`);
         }

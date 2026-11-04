@@ -46,6 +46,272 @@ function armourPenaltyForSkill(key, attribute, penalty) {
 
 function signed(value) { return `${value >= 0 ? "+" : ""}${value}`; }
 
+function prepareAeonDerivedData(actor, system) {
+  const level = Math.max(1, Math.min(10, Math.floor(safeNumber(system.aeon.summonerClassLevel, 1))));
+  const row = system.aeon.levels?.[level - 1] ?? system.aeon.levels?.[0] ?? {};
+  system.details.level = Math.max(1, safeNumber(system.aeon.summonerCharacterLevel, level));
+  system.details.nextLevel = 0;
+  system.details.xp = 0;
+  system.details.className = "Aeon";
+  system.details.advancedClass = "";
+  system.details.aeonClassLevel = level;
+  system.halfLevel = Math.floor(system.details.level / 2);
+  for (const key of ATTRIBUTES) {
+    system.attributes[key] ??= { score: 10 };
+    system.attributes[key].modifier = Math.floor((safeNumber(system.attributes[key].score, 10) - 10) / 2);
+  }
+  const oldHP = system.resources.hp ?? {};
+  const oldMP = system.resources.mp ?? {};
+  system.resources.hp = { value: Math.min(safeNumber(oldHP.value, row.hp), row.hp), max: row.hp, baseMax: row.hp };
+  system.resources.mp = { value: Math.min(safeNumber(oldMP.value, row.mp), row.mp), max: row.mp };
+  system.defences = {
+    fort: { ...(system.defences?.fort ?? {}), base: 0, attributeMod: 0, classBonus: 0, total: row.fort },
+    ref: { ...(system.defences?.ref ?? {}), base: 0, attributeMod: 0, classBonus: 0, total: row.ref },
+    will: { ...(system.defences?.will ?? {}), base: 0, attributeMod: 0, classBonus: 0, total: row.will }
+  };
+  for (const [key, attribute] of Object.entries(SKILLS)) {
+    const skill = system.skills[key] ?? {};
+    system.skills[key] = { ...skill, attribute, trained: true, halfLevel: 0, attributeMod: 0, misc: 0, total: safeNumber(row.skills?.[key]) };
+  }
+  system.combat.baseDamageReduction = row.dr;
+  system.combat.damageReduction = row.dr;
+  system.combat.physicalDamageReduction = 0;
+  system.combat.elementalDamageReduction = 0;
+  system.combat.creatureSize = system.aeon.size;
+  system.combat.speed = safeNumber(system.aeon.speed?.land);
+  system.combat.baseSpeed = system.combat.speed;
+  system.combat.flightSpeed = safeNumber(system.aeon.speed?.fly);
+  system.combat.swimSpeed = safeNumber(system.aeon.speed?.swim);
+  system.combat.reach = safeNumber(system.aeon.reach);
+  system.combat.initiativeDie = "1d20";
+  system.combat.immunities = system.aeon.immunities ?? [];
+  system.combat.resistances = [...new Set([...(system.aeon.resistances ?? []), ...(system.aeon.dragonphaseResistance ? [system.aeon.dragonphaseResistance] : [])])];
+  system.combat.vulnerabilities = system.aeon.vulnerabilities ?? [];
+  const fomalhautSpellDefence = system.aeon.aeonId === "fomalhaut" ? 5 : 0;
+  system.combat.performanceSpellDefenceBonuses = { fort: fomalhautSpellDefence, ref: fomalhautSpellDefence, will: fomalhautSpellDefence };
+  system.combat.breakGauge = Math.max(0, Math.min(5, Math.floor(safeNumber(system.combat.breakGauge))));
+  system.combat.breakGaugePenalty = [0, -1, -2, -5, -10, -10][system.combat.breakGauge];
+  system.combat.breakThreshold = safeNumber(row.fort) + ({ large: 5, huge: 10, gargantuan: 20, colossal: 50 }[system.aeon.size] ?? 0);
+  system.initiative = { total: row.attack };
+  return system;
+}
+
+let aeonSpellDocuments;
+let aeonTechnickDocuments;
+
+async function getAeonGrantSource(kind, name) {
+  if (kind === "spell") {
+    if (!aeonSpellDocuments) {
+      const packs = ["magick-black", "magick-blue", "magick-green", "magick-red", "magick-white"].map(id => game.packs.get(`last-arc-analogue.${id}`)).filter(Boolean);
+      aeonSpellDocuments = (await Promise.all(packs.map(pack => pack.getDocuments()))).flat();
+    }
+    return aeonSpellDocuments.find(entry => entry.name.toLowerCase() === name.toLowerCase()) ?? null;
+  }
+  if (!aeonTechnickDocuments) {
+    const pack = game.packs.get("last-arc-analogue.technicks");
+    aeonTechnickDocuments = pack ? await pack.getDocuments() : [];
+  }
+  const match = name.match(/^([^(]+?)(?:\s*\((.+)\))?$/);
+  const baseName = match?.[1]?.trim() ?? name;
+  const selection = match?.[2]?.trim() ?? "";
+  const source = aeonTechnickDocuments.find(entry => entry.name.toLowerCase() === baseName.toLowerCase());
+  if (!source) return null;
+  const data = source.toObject();
+  delete data._id;
+  if (/^weapon proficiency$/i.test(baseName)) data.system.selectedWeaponGroup = selection;
+  if (/^skill focus$/i.test(baseName)) data.system.selectedSkill = selection;
+  data.name = name;
+  return data;
+}
+
+async function syncAeonProgression(aeonActor, classLevel, characterLevel) {
+  if (!aeonActor?.system?.aeon?.isAeon) return;
+  const aeon = aeonActor.system.aeon;
+  const level = Math.max(1, Math.min(10, Math.floor(safeNumber(classLevel, 1))));
+  const row = aeon.levels[level - 1];
+  const oldHP = aeonActor.system.resources.hp;
+  const oldMP = aeonActor.system.resources.mp;
+  const hpIncrease = Math.max(0, row.hp - safeNumber(oldHP.max));
+  const mpIncrease = Math.max(0, row.mp - safeNumber(oldMP.max));
+  await aeonActor.update({
+    "system.aeon.summonerClassLevel": level,
+    "system.aeon.summonerCharacterLevel": Math.max(1, safeNumber(characterLevel, level)),
+    "system.details.level": Math.max(1, safeNumber(characterLevel, level)),
+    "system.resources.hp.max": row.hp,
+    "system.resources.hp.baseMax": row.hp,
+    "system.resources.hp.value": Math.min(row.hp, safeNumber(oldHP.value) + hpIncrease),
+    "system.resources.mp.max": row.mp,
+    "system.resources.mp.value": Math.min(row.mp, safeNumber(oldMP.value) + mpIncrease),
+    "system.combat.damageReduction": row.dr,
+    "system.combat.baseDamageReduction": row.dr,
+    "system.combat.creatureSize": aeon.size,
+    "system.combat.baseSpeed": safeNumber(aeon.speed?.land),
+    "system.combat.immunities": aeon.immunities ?? [],
+    "system.combat.resistances": aeon.resistances ?? [],
+    "system.combat.vulnerabilities": aeon.vulnerabilities ?? []
+  });
+  const attack = aeonActor.items.find(item => item.type === "weapon" && item.system.aeonPrimaryAttack);
+  if (attack) await attack.update({ name: `${aeon.name} Natural Attack`, "system.damage.formula": row.damage, "system.damage.type": row.damageType });
+  const wanted = new Map();
+  for (const unlock of aeon.spellProgression ?? []) if (unlock.level <= level) for (const name of unlock.spells) wanted.set(`spell:${name}`, { kind: "spell", name, level: unlock.level });
+  for (const unlock of aeon.technickProgression ?? []) if (unlock.level <= level) for (const name of unlock.technicks) wanted.set(`technick:${name}`, { kind: "technick", name, level: unlock.level });
+  const existingGranted = aeonActor.items.filter(item => item.flags?.["last-arc-analogue"]?.aeonGranted);
+  const keep = new Set(wanted.keys());
+  const stale = existingGranted.filter(item => !keep.has(`${item.flags["last-arc-analogue"].aeonGranted.kind}:${item.flags["last-arc-analogue"].aeonGranted.name}`));
+  if (stale.length) await aeonActor.deleteEmbeddedDocuments("Item", stale.map(item => item.id));
+  const existingKeys = new Set(aeonActor.items.filter(item => item.flags?.["last-arc-analogue"]?.aeonGranted).map(item => `${item.flags["last-arc-analogue"].aeonGranted.kind}:${item.flags["last-arc-analogue"].aeonGranted.name}`));
+  const additions = [];
+  for (const [key, metadata] of wanted) {
+    if (existingKeys.has(key)) continue;
+    const source = await getAeonGrantSource(metadata.kind, metadata.name);
+    if (!source) { console.warn(`Last Arc | Aeon progression references missing ${metadata.kind}: ${metadata.name}`); continue; }
+    const data = source.toObject ? source.toObject() : source;
+    delete data._id;
+    delete data.folder;
+    data.flags ??= {};
+    data.flags["last-arc-analogue"] = { ...(data.flags["last-arc-analogue"] ?? {}), aeonGranted: metadata };
+    if (metadata.kind === "spell") data.system.aeonEntity = aeon.spellOwners?.[metadata.name] ?? "";
+    additions.push(data);
+  }
+  if (additions.length) await aeonActor.createEmbeddedDocuments("Item", additions);
+}
+
+async function clearAeonSummonTokens(effect) {
+  const summon = effect.getFlag("last-arc-analogue", "aeonSummon");
+  if (!summon) return;
+  const activeGM = game.users?.activeGM ?? game.users?.find(user => user.isGM && user.active);
+  if (activeGM && activeGM.id !== game.user?.id) return;
+  const scene = game.scenes.get(summon.sceneId);
+  if (scene && summon.tokenIds?.length) await scene.deleteEmbeddedDocuments("Token", summon.tokenIds).catch(error => console.warn("Last Arc | Could not remove expired Aeon tokens", error));
+}
+
+async function rollAeonBasicAttack(item, actor) {
+  const aeon = actor.system.aeon;
+  const row = aeon.levels[Math.max(0, safeNumber(aeon.summonerClassLevel, 1) - 1)];
+  const targets = [...(game.user?.targets ?? [])].filter(token => token.actor);
+  if (!targets.length) return ui.notifications.warn(game.i18n.localize("LA.SelectAeonActionTarget"));
+  let lastRoll;
+  for (let index = 0; index < Math.max(1, safeNumber(row.attacks, 1)); index++) {
+    const attack = await (new Roll(`1d20 + ${safeNumber(row.attack)}`, actor.getRollData())).evaluate();
+    await attack.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${game.i18n.localize("LA.AttackRoll")}: ${foundry.utils.escapeHTML(aeon.name)} (${index + 1}/${Math.max(1, safeNumber(row.attacks, 1))})` });
+    const damage = await (new Roll(row.damage, { ...actor.getRollData(), level: safeNumber(aeon.summonerClassLevel) })).evaluate();
+    const hits = targets.filter(token => attack.total > safeNumber(token.actor.system.defences?.ref?.total, 10));
+    if (hits.length) await postDamageRoll(damage, { speaker: ChatMessage.getSpeaker({ actor }), flavor: `${foundry.utils.escapeHTML(aeon.name)} — ${game.i18n.localize("LA.Attack")} ${index + 1}`, type: row.damageType, targetTokens: hits });
+    else await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content: `<p>${foundry.utils.escapeHTML(aeon.name)}: ${game.i18n.localize("LA.AeonUltimateMiss")}</p>` });
+    lastRoll = damage;
+  }
+  return lastRoll;
+}
+
+async function rollAeonAction(item, actor) {
+  const aeon = actor.system.aeon;
+  const actionId = item.system.automation?.actionId;
+  const row = aeon.levels[Math.max(0, safeNumber(aeon.summonerClassLevel, 1) - 1)];
+  let targets = [...(game.user?.targets ?? [])].filter(token => token.actor);
+  if (!targets.length) return ui.notifications.warn(game.i18n.localize("LA.SelectAeonActionTarget"));
+  if (actionId !== "swarmAttack") targets = targets.slice(0, 1);
+  if (actionId === "gnawxiousBite" && !targets.some(token => token.actor.effects.some(effect => effect.statuses?.has?.("pinned") || effect.name.toLowerCase().includes("pin")))) {
+    return ui.notifications.warn(game.i18n.localize("LA.GnawxiousBiteRequiresPin"));
+  }
+  const addDamageDie = formula => formula.replace(/(\d*)d(\d+)/i, (_match, count, die) => `${Math.max(1, Number(count || 1) + 1)}d${die}`);
+  const baseFormula = actionId === "gnawxiousBite" ? "1d8" : actionId === "razorGale" ? addDamageDie(row.damage) : row.damage;
+  const attack = await (new Roll(`1d20 + ${safeNumber(row.attack)}`, actor.getRollData())).evaluate();
+  await attack.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${game.i18n.localize("LA.AttackRoll")}: ${foundry.utils.escapeHTML(item.name)}` });
+  const outcomes = [];
+  for (const token of targets) {
+    const defence = safeNumber(token.actor.system.defences?.ref?.total, 10);
+    const success = attack.total > defence;
+    const targetSize = String(token.actor.system.combat?.creatureSize ?? token.actor.system.details?.raceSize ?? "medium").toLowerCase();
+    const formula = actionId === "swarmAttack" && ["large", "huge", "gargantuan", "colossal"].includes(targetSize) ? addDamageDie(baseFormula) : baseFormula;
+    const damage = success ? await (new Roll(formula, { ...actor.getRollData(), level: safeNumber(aeon.summonerClassLevel) })).evaluate() : null;
+    if (success) {
+      await postDamageRoll(damage, {
+        speaker: ChatMessage.getSpeaker({ actor }), flavor: `${foundry.utils.escapeHTML(item.name)} — ${foundry.utils.escapeHTML(token.actor.name)}`,
+        type: actionId === "gnawxiousBite" ? "piercing" : row.damageType, targetTokens: [token]
+      });
+      if (actionId === "gnawxiousBite") {
+        const chance = safeNumber(aeon.summonerClassLevel) >= 6 ? 100 : safeNumber(aeon.summonerClassLevel) >= 2 ? 75 : 50;
+        if (Math.random() * 100 < chance) await applyAeonCondition(token.actor, actor, "poisoned");
+      }
+    }
+    outcomes.push(`${foundry.utils.escapeHTML(token.actor.name)}: ${success ? game.i18n.localize("LA.Hit") : game.i18n.localize("LA.AeonUltimateMiss")}${success ? ` (${damage.total} ${game.i18n.localize("LA.Damage")})` : ""}`);
+  }
+  await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content: `<p><strong>${foundry.utils.escapeHTML(item.name)}:</strong></p><ul>${outcomes.map(outcome => `<li>${outcome}</li>`).join("")}</ul>` });
+  return attack;
+}
+
+async function applyAeonCondition(target, source, condition) {
+  const immunityValues = [target.system.combat?.immunities, target.system.combat?.equipmentImmunities]
+    .flatMap(value => Array.isArray(value) ? value : String(value ?? "").split(/[,;\n]+/))
+    .map(value => String(value).trim().toLowerCase().replace(/[ _-]/g, ""));
+  const normalized = condition.toLowerCase().replace(/[ _-]/g, "");
+  if (immunityValues.includes("all") || immunityValues.includes(normalized)) return false;
+  if (target.effects.some(effect => effect.getFlag("last-arc-analogue", "aeonCondition") === condition)) return true;
+  await target.createEmbeddedDocuments("ActiveEffect", [{
+    name: `${source.system.aeon.name}: ${condition}`, img: "icons/svg/aura.svg", origin: source.uuid, changes: [],
+    statuses: [condition], flags: { "last-arc-analogue": { aeonCondition: condition, aeonSource: source.system.aeon.aeonId } }
+  }]);
+  return true;
+}
+
+async function unsummonAeon(actor) {
+  const effects = actor.effects.filter(effect => effect.getFlag("last-arc-analogue", "aeonSummon"));
+  if (effects.length) await actor.deleteEmbeddedDocuments("ActiveEffect", effects.map(effect => effect.id));
+  const companions = canvas.tokens.placeables.filter(token => token.actor?.id === actor.id);
+  if (companions.length) await canvas.scene.deleteEmbeddedDocuments("Token", companions.map(token => token.id));
+}
+
+async function rollAeonUltimate(item, actor) {
+  const aeon = actor.system.aeon;
+  const row = aeon.levels[Math.max(0, safeNumber(aeon.summonerClassLevel, 1) - 1)];
+  const defence = item.system.automation.attackDefence ?? "ref";
+  const aeonTokens = actor.getActiveTokens(true, true).filter(token => token.scene?.id === canvas?.scene?.id);
+  const maxDistance = 6 * safeNumber(canvas.grid?.size, 100);
+  let targets = [...(game.user?.targets ?? [])].filter(token => token.actor && token.scene?.id === canvas?.scene?.id);
+  if (!targets.length) {
+    targets = canvas.tokens.placeables.filter(token => token.actor && token.document.disposition !== CONST.TOKEN_DISPOSITIONS.FRIENDLY
+      && aeonTokens.some(origin => {
+        const ax = origin.document.x + origin.w / 2, ay = origin.document.y + origin.h / 2;
+        const tx = token.document.x + token.w / 2, ty = token.document.y + token.h / 2;
+        return Math.hypot(tx - ax, ty - ay) <= maxDistance;
+      }));
+  }
+  if (!targets.length) return ui.notifications.warn(game.i18n.localize("LA.SelectAeonUltimateTargets"));
+  const attack = await (new Roll(`1d20 + ${safeNumber(row.attack)}`, actor.getRollData())).evaluate();
+  await attack.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${game.i18n.localize("LA.AeonUltimate")}: ${foundry.utils.escapeHTML(item.name)}` });
+  const level = safeNumber(aeon.summonerClassLevel, 1);
+  const dice = level >= 10 ? 10 : level >= 6 ? 8 : 6;
+  const isCesspool = aeon.aeonId === "betelgeuse";
+  const formula = `${dice}d6 + ${level}`;
+  let damageRoll = null;
+  if (!isCesspool) damageRoll = await (new Roll(formula, { ...actor.getRollData(), level })).evaluate();
+  if (damageRoll) await damageRoll.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${foundry.utils.escapeHTML(aeon.name)} — ${game.i18n.localize("LA.AeonUltimateDamage")} (${formula}; ${item.system.automation.damageType})` });
+  const outcomes = [];
+  for (const token of targets) {
+    const total = safeNumber(token.actor.system.defences?.[defence]?.total, 10);
+    const success = attack.total > total;
+    if (isCesspool && success) {
+      const conditions = ["slowed", "poisoned", "diseased", "blinded"];
+      if (level >= 6) conditions.push("silenced");
+      if (level >= 10) conditions.push("paralysed");
+      for (const condition of conditions) await applyAeonCondition(token.actor, actor, condition);
+      outcomes.push(`${foundry.utils.escapeHTML(token.actor.name)}: ${conditions.join(", ")}`);
+      continue;
+    }
+    if (!damageRoll) { outcomes.push(`${foundry.utils.escapeHTML(token.actor.name)}: ${game.i18n.localize("LA.AeonUltimateMiss")}`); continue; }
+    const amount = success ? damageRoll.total : Math.floor(damageRoll.total / 2);
+    await postDamageRoll(damageRoll, {
+      speaker: ChatMessage.getSpeaker({ actor }), amount, type: item.system.automation.damageType,
+      flavor: `${foundry.utils.escapeHTML(aeon.name)} — ${foundry.utils.escapeHTML(token.actor.name)} (${success ? game.i18n.localize("LA.Hit") : game.i18n.localize("LA.HalfDamage")})`,
+      targetTokens: [token]
+    });
+    outcomes.push(`${foundry.utils.escapeHTML(token.actor.name)}: ${amount} ${game.i18n.localize("LA.Damage")}`);
+  }
+  await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content: `<p><strong>${game.i18n.localize("LA.AeonUltimate")}:</strong></p><ul>${outcomes.map(outcome => `<li>${outcome}</li>`).join("")}</ul>` });
+  await unsummonAeon(actor);
+  return damageRoll ?? attack;
+}
+
 function itemDamageType(item) {
   const type = String(item.system.damage?.type ?? item.system.damageType ?? "unaspected");
   if (!/^see text$/i.test(type)) return type;
@@ -100,6 +366,7 @@ Hooks.once("init", () => {
     const activeActor = combat.combatants.get(combat.combatantId)?.actor;
     if (activeActor && safeNumber(activeActor.system.combat?.shieldBlocksThisTurn)) activeActor.update({ "system.combat.shieldBlocksThisTurn": 0 });
   });
+  Hooks.on("deleteActiveEffect", effect => clearAeonSummonTokens(effect).catch(error => console.error("Last Arc | Failed to clear an expired Aeon summon", error)));
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("last-arc-analogue", LastArcActorSheet, { types: ["character"], makeDefault: true, label: "LA.CharacterSheet" });
   Actors.registerSheet("last-arc-analogue", LastArcNPCSheet, { types: ["npc"], makeDefault: true, label: "LA.NPCSheet" });
@@ -112,6 +379,10 @@ class LastArcActor extends Actor {
   prepareDerivedData() {
     super.prepareDerivedData();
     const system = this.system;
+    if (system.aeon?.isAeon) {
+      prepareAeonDerivedData(this, system);
+      return;
+    }
     system.attributes ??= {};
     system.skills ??= {};
     system.defences ??= {};
@@ -289,7 +560,7 @@ class LastArcActor extends Actor {
     system.inventory.overBulk = Math.floor((10 + safeNumber(system.attributes.str.score)) / (legPenalty ? 2 : 1));
   }
 
-  async applyDamage(amount, { type = "unaspected", bypassDR = false } = {}) {
+  async applyDamage(amount, { type = "unaspected", bypassDR = false, aeonEntity = "" } = {}) {
     let damage = Math.max(0, Math.floor(safeNumber(amount)));
     const kind = String(type).toLowerCase();
     const kindGroup = ["blunt", "piercing", "slashing"].includes(kind) ? "physical" : ["cold", "dark", "electric", "fire", "holy"].includes(kind) ? "elemental" : kind;
@@ -297,6 +568,10 @@ class LastArcActor extends Actor {
     const immunities = [...parseTypes(this.system.combat?.immunities), ...parseTypes(this.system.combat?.equipmentImmunities)];
     const resistances = [...parseTypes(this.system.combat?.resistances), ...parseTypes(this.system.combat?.equipmentResistances)];
     const vulnerabilities = parseTypes(this.system.combat?.vulnerabilities);
+    if (this.system.aeon?.aeonId === "pleiades") {
+      const entity = String(aeonEntity).toLowerCase();
+      if (entity === "maiden" && kind === "dark" || entity === "pythoness" && kind === "fire") vulnerabilities.push(kind);
+    }
     const matches = values => values.some(entry => [kind, kindGroup, "all"].includes(entry));
     if (matches(immunities)) damage = 0;
     else if (matches(vulnerabilities)) damage *= 2;
@@ -387,6 +662,9 @@ class LastArcActor extends Actor {
       "system.combat.recoveryMinorActions": 0
     };
     if (totalHours >= 8) update["system.combat.secondWindUsed"] = false;
+    if (totalHours >= 8 && this.items.some(item => item.type === "advanced-class" && item.name === "Summoner")) {
+      update["system.combat.aeonSummons"] = { day: Math.floor(safeNumber(game.time?.worldTime) / 86400), usedAeonIds: [], astralUsesSpent: 0 };
+    }
     await this.update(update);
     await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<p><strong>${game.i18n.localize("LA.RestAndRecovery")} (${duration} ${game.i18n.localize("LA.Hours")}):</strong> +${hpRecovery} HP, +${mpRecovery} MP${totalHours >= 8 ? `; ${game.i18n.localize("LA.DailyAbilitiesRestored")}` : ""}.</p>` });
   }
@@ -426,6 +704,9 @@ class LastArcItem extends Item {
     if (this.type === "spell") return rollSpell(this);
     if (this.type === "performance") return rollPerformance(this);
     if (this.type === "talent" && actor) return this.rollTalent(actor);
+    if (actor?.system.aeon?.isAeon && this.type === "weapon" && this.system.aeonPrimaryAttack) return rollAeonBasicAttack(this, actor);
+    if (actor?.system.aeon?.isAeon && this.type === "feature" && this.system.automation?.kind === "aeonUltimate") return rollAeonUltimate(this, actor);
+    if (actor?.system.aeon?.isAeon && this.type === "feature" && this.system.automation?.kind === "aeonAction") return rollAeonAction(this, actor);
     let formula = this.system.damage?.formula || this.system.roll?.formula;
     const title = this.name;
     let damageTitle = title;
@@ -535,11 +816,25 @@ class LastArcActorSheet extends ActorSheet {
     });
   }
 
-  get template() { return "systems/last-arc-analogue/templates/actor-sheet.hbs"; }
+  get template() { return this.actor.system.aeon?.isAeon ? "systems/last-arc-analogue/templates/aeon-sheet.hbs" : "systems/last-arc-analogue/templates/actor-sheet.hbs"; }
   async getData(options) {
     const context = await super.getData(options);
     context.system = this.actor.system;
     context.isCharacter = this.actor.type === "character";
+    context.isAeon = Boolean(this.actor.system.aeon?.isAeon);
+    if (context.isAeon) {
+      const aeon = this.actor.system.aeon;
+      context.aeon = aeon;
+      context.aeonSummonCost = Math.max(1, safeNumber(aeon.summonerClassLevel, 1)) * 5;
+      context.aeonAffinityLabel = game.i18n.localize(DAMAGE_TYPES.find(type => type.value === aeon.affinity)?.label ?? "LA.DamageUnaspected");
+      context.aeonCurrent = aeon.levels?.[Math.max(0, safeNumber(aeon.summonerClassLevel, 1) - 1)] ?? {};
+      context.aeonRows = (aeon.levels ?? []).map((row, index) => ({
+        ...row, level: index + 1,
+        spells: aeon.spellProgression.filter(entry => entry.level <= index + 1).flatMap(entry => entry.spells).join(", "),
+        technicks: aeon.technickProgression.filter(entry => entry.level <= index + 1).flatMap(entry => entry.technicks).join(", ")
+      }));
+      context.aeonSpeedText = [aeon.speed?.land ? `${aeon.speed.land} sq` : "", aeon.speed?.fly ? `${aeon.speed.fly} fly` : "", aeon.speed?.swim ? `${aeon.speed.swim} swim` : ""].filter(Boolean).join(" · ");
+    }
     context.attributeList = ATTRIBUTES.map(key => ({ key, label: ATTRIBUTE_LABELS[key], ...this.actor.system.attributes[key] }));
     context.skills = Object.entries(SKILLS).map(([key, attribute]) => ({ key, label: SKILL_LABELS[key], icon: SKILL_ICONS[key], attribute, attributeLabel: ATTRIBUTE_LABELS[attribute], ...this.actor.system.skills[key] }));
     context.defenceList = ["fort", "ref", "will"].map(key => ({ key, label: `LA.${key === "fort" ? "Fortitude" : key === "ref" ? "Reflex" : "Will"}`, ...this.actor.system.defences[key] }));
@@ -574,6 +869,9 @@ class LastArcActorSheet extends ActorSheet {
     html.find(".item-edit").on("click", this._onItemEdit.bind(this));
     html.find(".item-delete").on("click", this._onItemDelete.bind(this));
     html.find(".item-roll").on("click", this._onItemRoll.bind(this));
+    html.find(".la-aeon-open").on("click", this._onAeonOpen.bind(this));
+    html.find(".la-aeon-add").on("click", this._onAeonAdd.bind(this));
+    html.find(".la-aeon-summon").on("click", this._onAeonSummon.bind(this));
     html.find("input[data-item-equipped]").on("change", async event => {
       const item = this.actor.items.get(event.currentTarget.dataset.itemId);
       if (item) await item.update({ "system.equipped": event.currentTarget.checked });
@@ -700,6 +998,132 @@ class LastArcActorSheet extends ActorSheet {
       },
       default: "choose", close: () => resolve(null)
     }).render(true));
+  }
+
+  async _chooseAeonName(excluded = []) {
+    const pack = game.packs.get("last-arc-analogue.aeons");
+    if (!pack) { ui.notifications.error(game.i18n.localize("LA.AeonPackUnavailable")); return null; }
+    const documents = (await pack.getDocuments()).filter(entry => !excluded.includes(entry.system.aeon?.aeonId));
+    if (!documents.length) { ui.notifications.warn(game.i18n.localize("LA.NoMoreAeons")); return null; }
+    const options = documents.map(entry => `<option value="${foundry.utils.escapeHTML(entry.system.aeon.aeonId)}">${foundry.utils.escapeHTML(entry.system.aeon.name)} — ${foundry.utils.escapeHTML(entry.system.aeon.epithet)}</option>`).join("");
+    return new Promise(resolve => new Dialog({
+      title: game.i18n.localize("LA.SelectAeon"),
+      content: `<form><p>${game.i18n.localize("LA.SelectAeonHint")}</p><label>${game.i18n.localize("LA.Aeon")}<select name="aeon">${options}</select></label></form>`,
+      buttons: { choose: { label: game.i18n.localize("LA.Choose"), callback: html => resolve(String(html.find('[name="aeon"]').val() ?? "")) }, cancel: { label: game.i18n.localize("LA.Cancel"), callback: () => resolve(null) } },
+      default: "choose", close: () => resolve(null)
+    }).render(true));
+  }
+
+  async _createSummonerAeon(aeonId, classItem) {
+    const pack = game.packs.get("last-arc-analogue.aeons");
+    const sourceActor = pack && (await pack.getDocuments()).find(entry => entry.system.aeon?.aeonId === aeonId);
+    if (!sourceActor) return ui.notifications.error(game.i18n.localize("LA.AeonPackUnavailable"));
+    try {
+      const source = sourceActor.toObject();
+      delete source._id;
+      for (const item of source.items ?? []) delete item._id;
+      source.name = `${source.system.aeon.name} — ${this.actor.name}`;
+      const ownership = { default: 0 };
+      for (const user of game.users) if (!user.isGM && this.actor.testUserPermission(user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)) ownership[user.id] = CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER;
+      source.ownership = ownership;
+      source.flags ??= {};
+      source.flags["last-arc-analogue"] = { ...(source.flags["last-arc-analogue"] ?? {}), aeonCompanion: { ownerSummonerUuid: this.actor.uuid, aeonId } };
+      source.system.aeon.ownerSummonerUuid = this.actor.uuid;
+      const aeonActor = await Actor.create(source, { keepId: false });
+      await syncAeonProgression(aeonActor, safeNumber(classItem.system.classLevel, 1), safeNumber(this.actor.system.details.level, 1));
+      await this.actor.createEmbeddedDocuments("Item", [{
+        name: `${aeonActor.system.aeon.name} · ${game.i18n.localize("LA.Aeon")}`,
+        type: "feature", img: aeonActor.img,
+        system: { category: "Aeon", description: game.i18n.format("LA.AeonRosterDescription", { level: classItem.system.classLevel, cost: safeNumber(classItem.system.classLevel) * 5 }), automation: { kind: "aeonRoster", actorUuid: aeonActor.uuid, aeonId } },
+        flags: { "last-arc-analogue": { aeonRoster: true, summonerActorUuid: this.actor.uuid, aeonActorUuid: aeonActor.uuid } }
+      }]);
+      ui.notifications.info(game.i18n.format("LA.AeonAdded", { name: aeonActor.system.aeon.name }));
+      return aeonActor;
+    } catch (error) {
+      console.error("Last Arc | Could not create Summoner Aeon actor", error);
+      ui.notifications.error(game.i18n.localize("LA.AeonCreateFailed"));
+      return null;
+    }
+  }
+
+  async _syncSummonerAeons(classItem) {
+    const entries = this.actor.items.filter(item => item.type === "feature" && item.system.automation?.kind === "aeonRoster");
+    for (const entry of entries) {
+      const companion = await fromUuid(entry.system.automation.actorUuid).catch(() => null);
+      if (companion) await syncAeonProgression(companion, safeNumber(classItem.system.classLevel, 1), safeNumber(this.actor.system.details.level, 1));
+    }
+  }
+
+  async _onAeonOpen(event) {
+    event.preventDefault();
+    const aeon = await fromUuid(event.currentTarget.dataset.actorUuid).catch(() => null);
+    if (!aeon) return ui.notifications.warn(game.i18n.localize("LA.AeonActorMissing"));
+    aeon.sheet.render(true);
+  }
+
+  async _onAeonAdd(event) {
+    event.preventDefault();
+    const known = this.actor.items.filter(item => item.type === "feature" && item.system.automation?.kind === "aeonRoster").map(item => item.system.automation.aeonId);
+    const choice = await this._chooseAeonName(known);
+    if (!choice) return;
+    const summoner = this.actor.items.find(item => item.type === "advanced-class" && item.name === "Summoner");
+    if (summoner) await this._createSummonerAeon(choice, summoner);
+  }
+
+  async _onAeonSummon(event) {
+    event.preventDefault();
+    const row = event.currentTarget.closest("[data-item-id]");
+    const entry = this.actor.items.get(row?.dataset.itemId);
+    const aeon = await fromUuid(entry?.system.automation?.actorUuid ?? "").catch(() => null);
+    if (!aeon) return ui.notifications.warn(game.i18n.localize("LA.AeonActorMissing"));
+    await this._summonAeon(aeon);
+  }
+
+  async _summonAeon(aeonActor) {
+    const classItem = this.actor.items.find(item => item.type === "advanced-class" && item.name === "Summoner");
+    if (!classItem) return ui.notifications.warn(game.i18n.localize("LA.SummonerClassRequired"));
+    const scene = canvas?.scene;
+    const summonerToken = this.actor.getActiveTokens(true, true).find(token => token.scene?.id === scene?.id);
+    if (!scene || !summonerToken) return ui.notifications.warn(game.i18n.localize("LA.PlaceSummonerToken"));
+    const classLevel = Math.max(1, safeNumber(classItem.system.classLevel, 1));
+    const mpCost = 5 * classLevel;
+    if (safeNumber(this.actor.system.resources.mp.value) < mpCost) return ui.notifications.warn(game.i18n.format("LA.AeonNotEnoughMP", { cost: mpCost }));
+    const day = Math.floor(safeNumber(game.time?.worldTime) / 86400);
+    let daily = this.actor.system.combat.aeonSummons ?? { day, usedAeonIds: [], astralUsesSpent: 0 };
+    if (safeNumber(daily.day, -1) !== day) daily = { day, usedAeonIds: [], astralUsesSpent: 0 };
+    const alreadyUsed = (daily.usedAeonIds ?? []).includes(aeonActor.system.aeon.aeonId);
+    const extraUses = Math.floor(classLevel / 2);
+    if (alreadyUsed && safeNumber(daily.astralUsesSpent) >= extraUses) return ui.notifications.warn(game.i18n.localize("LA.AeonDailyUseSpent"));
+    await syncAeonProgression(aeonActor, classLevel, safeNumber(this.actor.system.details.level, 1));
+    const previousSummons = canvas.tokens.placeables.filter(token => token.actor?.flags?.["last-arc-analogue"]?.aeonCompanion?.ownerSummonerUuid === this.actor.uuid);
+    const oldIds = previousSummons.map(token => token.id);
+    const oldEffects = aeonActor.effects.filter(effect => effect.getFlag("last-arc-analogue", "aeonSummon"));
+    if (oldIds.length) await scene.deleteEmbeddedDocuments("Token", oldIds);
+    if (oldEffects.length) await aeonActor.deleteEmbeddedDocuments("ActiveEffect", oldEffects.map(effect => effect.id));
+    const grid = safeNumber(canvas.grid?.size, 100);
+    const positions = [{ x: summonerToken.document.x + summonerToken.document.width * grid, y: summonerToken.document.y }];
+    if (aeonActor.system.aeon.aeonId === "pleiades") positions.push({ x: positions[0].x + grid, y: positions[0].y });
+    const tokenData = [];
+    for (const position of positions) {
+      const doc = await aeonActor.getTokenDocument({ ...position, disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY, actorLink: true });
+      const data = doc.toObject();
+      delete data._id;
+      data.actorId = aeonActor.id;
+      data.actorLink = true;
+      data.flags ??= {};
+      data.flags["last-arc-analogue"] = { ...(data.flags["last-arc-analogue"] ?? {}), aeonEntity: positions.length > 1 ? (tokenData.length ? "Pythoness" : "Maiden") : "" };
+      tokenData.push(data);
+    }
+    const tokens = await scene.createEmbeddedDocuments("Token", tokenData);
+    const turns = Math.max(1, 5 + safeNumber(this.actor.system.attributes.mnd.modifier));
+    await aeonActor.createEmbeddedDocuments("ActiveEffect", [{
+      name: `${aeonActor.system.aeon.name} · ${game.i18n.localize("LA.Summoned")}`,
+      img: aeonActor.img, origin: this.actor.uuid, duration: { rounds: turns }, changes: [],
+      flags: { "last-arc-analogue": { aeonSummon: { ownerSummonerUuid: this.actor.uuid, sceneId: scene.id, tokenIds: tokens.map(token => token.id) } } }
+    }]);
+    const nextDaily = { ...daily, usedAeonIds: [...new Set([...(daily.usedAeonIds ?? []), aeonActor.system.aeon.aeonId])], astralUsesSpent: safeNumber(daily.astralUsesSpent) + (alreadyUsed ? 1 : 0) };
+    await this.actor.update({ "system.resources.mp.value": safeNumber(this.actor.system.resources.mp.value) - mpCost, "system.combat.aeonSummons": nextDaily });
+    await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), content: `<p><strong>${game.i18n.localize("LA.SummonAeon")}:</strong> ${foundry.utils.escapeHTML(aeonActor.system.aeon.name)} (${game.i18n.format("LA.AeonCostTurns", { cost: mpCost, turns })}).</p>` });
   }
 
   async _chooseAttributeIncreases() {
@@ -1143,6 +1567,8 @@ class LastArcActorSheet extends ActorSheet {
     const selectedSubclass = choices.selectedChoices?.[0]?.value ?? itemData.system.selectedSubclass ?? "";
     itemData.system.talentTrees ??= CLASS_TALENT_TREES[itemData.name] ?? [];
     const existing = this.actor.items.find(item => item.type === itemData.type && item.name === itemData.name && (item.system.selectedSubclass ?? "") === selectedSubclass);
+    const initialAeon = !existing && itemData.type === "advanced-class" && itemData.name === "Summoner" ? await this._chooseAeonName() : null;
+    if (!existing && itemData.type === "advanced-class" && itemData.name === "Summoner" && !initialAeon) return false;
     const oldMaxHP = safeNumber(this.actor.system.resources.hp.max);
     const oldMaxMP = safeNumber(this.actor.system.resources.mp.max);
     if (existing) {
@@ -1161,9 +1587,10 @@ class LastArcActorSheet extends ActorSheet {
       if (talentLevels.includes(nextLevel) || legacyTreeMismatch) talentSelection = await this._chooseClassTalent({ name: existing.name, system: { ...existing.system, talentTrees: classTrees } });
       if ((talentLevels.includes(nextLevel) || legacyTreeMismatch) && classTrees.length && !talentSelection) return false;
       const highArcanaSelections = [];
-      if (existing.type === "advanced-class" && existing.name === "Archmage") {
-        const earnedLevels = new Set(this.actor.items.filter(entry => entry.type === "feature" && entry.flags?.["last-arc-analogue"]?.archmageHighArcana)
-          .map(entry => safeNumber(entry.flags["last-arc-analogue"].archmageHighArcana.classLevel)));
+      if (existing.type === "advanced-class" && ["Archmage", "Summoner"].includes(existing.name)) {
+        const earnedLevels = new Set(this.actor.items.filter(entry => entry.type === "feature"
+          && (entry.flags?.["last-arc-analogue"]?.classHighArcana?.classItemId === existing.id || entry.flags?.["last-arc-analogue"]?.archmageHighArcana?.classItemId === existing.id))
+          .map(entry => safeNumber(entry.flags["last-arc-analogue"].classHighArcana?.classLevel ?? entry.flags["last-arc-analogue"].archmageHighArcana?.classLevel)));
         for (let classLevel = 6; classLevel <= Math.min(10, nextLevel); classLevel++) {
           if (earnedLevels.has(classLevel)) continue;
           const choice = await this._chooseHighArcana([...highArcanaSelections.map(entry => entry.item.name)]);
@@ -1189,6 +1616,7 @@ class LastArcActorSheet extends ActorSheet {
       for (const selection of highArcanaSelections) await this._createHighArcanaItem(selection.item, existing, selection.classLevel);
       await this._grantClassFeatures(existing, nextLevel);
       await this._recalculateClassResources(oldMaxHP, oldMaxMP);
+      if (existing.type === "advanced-class" && existing.name === "Summoner") await this._syncSummonerAeons(existing);
       return existing;
     }
     itemData.system.classLevel = Math.max(1, safeNumber(itemData.system.classLevel, 1));
@@ -1229,6 +1657,7 @@ class LastArcActorSheet extends ActorSheet {
     if (trainedSkills.length) await this.actor.update(Object.fromEntries(trainedSkills.map(key => [`system.skills.${key}.trained`, true])));
     if (talentSelection) await this._createTalentItem(talentSelection.talent, created[0]);
     await this._grantClassFeatures(created[0], safeNumber(itemData.system.classLevel, 1));
+    if (created[0].type === "advanced-class" && created[0].name === "Summoner" && initialAeon) await this._createSummonerAeon(initialAeon, created[0]);
     await this._recalculateClassResources(oldMaxHP, oldMaxMP);
     for (const technick of awardedTechnicks) await this._grantTechnick(technick);
     return created;
@@ -1321,7 +1750,8 @@ class LastArcActorSheet extends ActorSheet {
     data.system.sourceClass = classItem.name;
     data.flags ??= {};
     data.flags["last-arc-analogue"] ??= {};
-    data.flags["last-arc-analogue"].archmageHighArcana = { classItemId: classItem.id, classLevel };
+    data.flags["last-arc-analogue"].classHighArcana = { classItemId: classItem.id, classLevel };
+    if (classItem.name === "Archmage") data.flags["last-arc-analogue"].archmageHighArcana = { classItemId: classItem.id, classLevel };
     return this.actor.createEmbeddedDocuments("Item", [data]);
   }
 
@@ -1368,7 +1798,7 @@ class LastArcActorSheet extends ActorSheet {
       const existing = byKey.get(key);
       const description = feature.description ?? "";
       if (existing) {
-        if (existing.name !== `${classItem.name}: ${feature.name}` || existing.system.description !== description) {
+        if (existing.name !== `${classItem.name}: ${feature.name}` || existing.system.description !== description || JSON.stringify(existing.system.automation ?? {}) !== JSON.stringify(feature.automation ?? {})) {
           await existing.update({ name: `${classItem.name}: ${feature.name}`, "system.category": "Class Feature", "system.sourceClass": classItem.name, "system.classLevel": feature.level, "system.description": description, "system.automation": feature.automation ?? {} });
         }
         continue;

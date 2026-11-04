@@ -2303,7 +2303,8 @@
         {
           "level": 1,
           "name": "Summon Aeon",
-          "description": "Summon an owned Aeon idol using Summon Elemental; duration scales with Mind."
+          "description": "Choose an Aeon and add additional Aeons when you acquire their idols. Summon an owned Aeon by spending 5 MP per Summoner class level. It remains for 5 + Mind modifier turns. Its statistics, spells, and Technicks scale with Summoner class level.",
+          "automation": { "kind": "summonAeon" }
         },
         {
           "level": 2,
@@ -2332,7 +2333,8 @@
           {
             "level": 1,
             "name": "Summon Aeon",
-            "description": "Summon an owned Aeon idol using Summon Elemental; duration scales with Mind."
+          "description": "Choose an Aeon and add additional Aeons when you acquire their idols. Summon an owned Aeon by spending 5 MP per Summoner class level. It remains for 5 + Mind modifier turns. Its statistics, spells, and Technicks scale with Summoner class level.",
+          "automation": { "kind": "summonAeon" }
           },
           {
             "level": 2,
@@ -2365,7 +2367,7 @@
         }
       ],
       "prerequisiteSummary": "Minimum character level 7 (earliest advanced-class level is character level 8). Required trained skills, Technicks, and talent groups are checked automatically. The special setting requirement, when listed, remains for GM adjudication.",
-      "featureReference": "Summon Aeon The Summoner may summon any Aeon for which they possess the corresponding idol, using the Summon Elemental ability. Each Aeon may be summoned once per day, remaining in play for a number of turns equal to 5 + the summoner’s Mnd modifier. An Aeon’s power scales with the Summoner’s class level and is treated as being equal to the summoner’s character level for all level-based effects. Refer to each Aeon’s entry for its specific modifiers, spells, and abilities at each level. Aeons count as elementals for the purpose of effects,",
+      "featureReference": "Summon Aeon: the Summoner may summon Aeons for which they possess the corresponding idols, using Summon Elemental. Each Aeon may be summoned once per day and stays for 5 + Mind modifier turns. Summoning costs 5 MP per Summoner class level. Aeon statistics and unlocks use Summoner class level; level-based effects use character level. Aeons count as elementals. Astral Conduit grants one additional daily summon at level 2 and every even class level thereafter.",
       "levelProgression": [
         {
           "level": 1,
