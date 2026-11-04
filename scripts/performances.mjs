@@ -56,14 +56,27 @@ function defenceTotal(actor, key) {
 
 async function threatenedCast(actor) {
   const casterToken = activePlaceableToken(actor);
-  if (!casterToken || !canvas?.scene) return { penalty: 0, defensive: false, warning: "" };
+  const bladeDancer = actor.items.find(item => item.type === "advanced-class" && item.name === "Blade Dancer" && number(item.system.classLevel) >= 2);
+  const chooseStyle = async () => new Promise(resolve => new Dialog({
+    title: game.i18n.localize("LA.PerformanceStyle"),
+    content: `<form><label>${game.i18n.localize("LA.PerformanceStyle")}<select name="style"><option value="dance">${game.i18n.localize("LA.PerformDance")}</option><option value="instrument">${game.i18n.localize("LA.PerformInstrument")}</option><option value="oratory">${game.i18n.localize("LA.PerformOratory")}</option></select></label></form>`,
+    buttons: { choose: { label: game.i18n.localize("LA.Continue"), callback: html => resolve(html.find('[name="style"]').val()) }, cancel: { label: game.i18n.localize("LA.Cancel"), callback: () => resolve(null) } },
+    default: "choose", close: () => resolve(null)
+  }).render(true));
+  if (!casterToken || !canvas?.scene) {
+    const style = bladeDancer ? await chooseStyle() : "instrument";
+    return style ? { penalty: 0, defensive: false, warning: "", style } : null;
+  }
   const threats = canvas.tokens.placeables.filter(token => token !== casterToken
     && token.document.disposition === CONST.TOKEN_DISPOSITIONS.HOSTILE
     && canvas.grid.measureDistance(casterToken.center, token.center) <= 1).length;
-  if (!threats) return { penalty: 0, defensive: false, warning: "" };
+  if (!threats) {
+    const style = bladeDancer ? await chooseStyle() : "instrument";
+    return style ? { penalty: 0, defensive: false, warning: "", style } : null;
+  }
   const answer = await new Promise(resolve => new Dialog({
     title: game.i18n.localize("LA.PerformingInMelee"),
-    content: `<form><p>${game.i18n.format("LA.PerformThreatenedHint", { count: threats })}</p><label>${game.i18n.localize("LA.PerformanceStyle")}<select name="style"><option value="instrument">${game.i18n.localize("LA.PerformInstrument")}</option><option value="dance">${game.i18n.localize("LA.PerformDance")}</option><option value="oratory">${game.i18n.localize("LA.PerformOratory")}</option></select></label></form>`,
+    content: `<form><p>${game.i18n.format("LA.PerformThreatenedHint", { count: threats })}</p><label>${game.i18n.localize("LA.PerformanceStyle")}<select name="style"><option value="instrument">${game.i18n.localize("LA.PerformInstrument")}</option><option value="dance" ${bladeDancer ? "selected" : ""}>${game.i18n.localize("LA.PerformDance")}</option><option value="oratory">${game.i18n.localize("LA.PerformOratory")}</option></select></label></form>`,
     buttons: {
       defensive: { label: game.i18n.localize("LA.PerformDefensively"), callback: html => resolve({ defensive: true, style: html.find('[name="style"]').val() }) },
       normal: { label: game.i18n.localize("LA.PerformNormally"), callback: html => resolve({ defensive: false, style: html.find('[name="style"]').val() }) },
@@ -72,12 +85,33 @@ async function threatenedCast(actor) {
     default: "defensive", close: () => resolve(null)
   }).render(true));
   if (!answer) return null;
-  const perThreat = answer.defensive ? (answer.style === "instrument" ? -5 : -2) : 0;
+  const warDance = bladeDancer?.system.classFeatures?.some(feature => feature.name === "War Dance");
+  const troubadour = actor.items.some(item => item.type === "advanced-class" && item.name === "Troubador" && number(item.system.classLevel) > 0);
+  const threatsForPenalty = answer.style === "instrument" && troubadour ? 1 : threats;
+  const perThreat = answer.defensive && !(answer.style === "dance" && warDance) ? (answer.style === "instrument" ? -5 : -2) : 0;
   return {
-    penalty: perThreat * threats,
+    penalty: perThreat * threatsForPenalty,
     defensive: answer.defensive,
-    warning: answer.defensive ? "" : game.i18n.format("LA.PerformCounterattackHint", { count: threats })
+    warning: answer.defensive ? "" : game.i18n.format("LA.PerformCounterattackHint", { count: threats }),
+    style: answer.style
   };
+}
+
+async function applyDosado(performer, performance, style) {
+  if (style !== "dance") return;
+  const dancer = performer.items.find(item => item.type === "advanced-class" && item.name === "Blade Dancer" && number(item.system.classLevel) >= 2);
+  if (!dancer) return;
+  const bonus = Math.floor(number(dancer.system.classLevel) / 2);
+  const combat = game.combat;
+  const token = activePlaceableToken(performer);
+  const combatant = combat?.combatants.find(entry => entry.actorId === performer.id && (!token || entry.tokenId === token.id));
+  const expiresAfter = combatant ? { combatId: combat.id, combatantId: combatant.id, round: combat.round, turn: combat.turn } : null;
+  const prior = performer.effects.filter(effect => effect.getFlag("last-arc-analogue", "classFeature") === "Dosado");
+  if (prior.length) await performer.deleteEmbeddedDocuments("ActiveEffect", prior.map(effect => effect.id));
+  await performer.createEmbeddedDocuments("ActiveEffect", [{
+    name: `Dosado (+${bonus})`, img: "icons/svg/aura.svg", disabled: false, duration: {}, changes: [],
+    flags: { "last-arc-analogue": { classFeature: "Dosado", performanceEffect: { side: "self", defenceBonuses: { fort: bonus, will: bonus }, description: `+${bonus} Fortitude and Will Defence until the start of the blade dancer's next turn.`, expiresAfter } } }
+  }]);
 }
 
 function conditionBonuses(effect) {
@@ -227,6 +261,7 @@ async function perform(item, performer) {
   const minimum = number(item.system.automation.minimumDC);
   const succeeded = check.total >= minimum;
   const results = [];
+  let affectedEnemy = false;
   const immunity = signature(item).immuneUntilNextTurn;
   if (succeeded) {
     for (const token of valid) {
@@ -238,9 +273,10 @@ async function perform(item, performer) {
       for (const effect of effects) {
         const result = await applyPerformanceEffect(effect, target, performer, item, check.total, side);
         if (result.resisted) results.push(`${target.name}: ${game.i18n.localize("LA.PerformanceResisted")}`);
-        else if (result.result) results.push(result.result);
+        else if (result.result) { results.push(result.result); if (side === "enemy") affectedEnemy = true; }
       }
     }
+    if (affectedEnemy) await applyDosado(performer, item, melee.style);
   }
   const label = tier ? `${game.i18n.localize("LA.PerformanceTier")}: ${tier.dc}` : succeeded ? game.i18n.localize("LA.PerformanceNoTier") : `${game.i18n.localize("LA.PerformanceFailed")}: ${minimum}+`;
   const sideLabel = game.i18n.localize(side === "ally" ? "LA.Allies" : "LA.Enemies");

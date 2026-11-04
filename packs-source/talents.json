@@ -1998,5 +1998,2988 @@
         "max": 0
       }
     }
+  },
+  {
+    "name": "Addle",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Archmage",
+      "tree": "Thaumaturge",
+      "description": "You wear down your target’s magickal defences, ensuring your next spell connects. Whenever you fail to beat a target’s defence with a spell, their defences are treated as 5 lower against your next spell.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Amplification",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Archmage",
+      "tree": "Thaumaturge",
+      "description": "Whenever you cast a spell, you may take up to a -1 penalty (max -5) to your Spellcraft check for every 5 MP spent to cast the spell, gaining double the amount as a bonus to your damage roll.",
+      "prerequisites": "Penetrating Spell",
+      "automation": {
+        "type": "spellcastingModifier",
+        "automated": false,
+        "requiresCastIntegration": true
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Counterspell",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Archmage",
+      "tree": "Thaumaturge",
+      "description": "Once per day, as a reaction; when an enemy within 12 squares and line of sight would provoke a counterattack, you may cast a spell with a casting time of a primary action against the target. This includes targets that are casting defensively, performing defensively, juking, etc.",
+      "prerequisites": "Swift Spell",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Dual Cast I",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Archmage",
+      "tree": "Thaumaturge",
+      "description": "You cast multiple powerful spells at once. Once per encounter, as an all-out action, you may cast two spells with a casting time of a primary action. However, both Spellcraft checks suffer a -5 penalty.",
+      "prerequisites": "",
+      "automation": {
+        "type": "spellcastingModifier",
+        "automated": false,
+        "requiresCastIntegration": true
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Dual Cast II",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Archmage",
+      "tree": "Thaumaturge",
+      "description": "You have greater control over multiple spells. You reduce the Spellcraft penalty for using the Dual Cast talent to -2.",
+      "prerequisites": "Dual Cast I",
+      "automation": {
+        "type": "spellcastingModifier",
+        "automated": false,
+        "requiresCastIntegration": true
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Mana Shield",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Archmage",
+      "tree": "Thaumaturge",
+      "description": "Whenever you cast a spell, you may take up to a -1 penalty (max -5) to your Spellcraft check for every 5 MP spent to cast the spell, gaining an equal bonus to your Ref Defence until the start of your next turn.",
+      "prerequisites": "",
+      "automation": {
+        "type": "spellcastingModifier",
+        "automated": false,
+        "requiresCastIntegration": true
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Mana Wall",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Archmage",
+      "tree": "Thaumaturge",
+      "description": "As a reaction, you may reduce the amount of damage you would take by 1/2. You then lose an amount of MP equal to the damage negated this way. Should you have 0 MP after resolving the damage, you move -1 persistent step on the Break Gauge. This condition persists for the duration of the encounter.",
+      "prerequisites": "Mana Shield",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Spell Mastery",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Archmage",
+      "tree": "Thaumaturge",
+      "description": "You are able to empower your spells more often. You may now use the Focused Spell talent once per encounter.",
+      "prerequisites": "Focused Spell",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Aphonia",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Assassin",
+      "tree": "Blackguard",
+      "description": "You strike at your enemy’s throat, robbing them of their ability to speak. When you trigger your Backstab talent, you may silence the target if your attack beats the target’s Ref and Fort Defence. Cannot be used with Hyphema.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Atrophy",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Assassin",
+      "tree": "Blackguard",
+      "description": "You lacerate and rupture vital tendons, paralysing your target. When using the Hyphema talent, you may now choose to either blind or paralyse the target.",
+      "prerequisites": "Hyphema",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Death Knell",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Assassin",
+      "tree": "Blackguard",
+      "description": "Once per turn, when you reduce a target to 0 hit points or the bottom of the Break Gauge, you gain an additional primary action. You must use this action before the end of your turn or it is lost.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Delirium",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Assassin",
+      "tree": "Blackguard",
+      "description": "You strike your target in the back of the head, forcing them into a panicked state of confusion. When using the Aphonia talent, you may now choose to either silence or confuse the target.",
+      "prerequisites": "Aphonia",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Hyphema",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Assassin",
+      "tree": "Blackguard",
+      "description": "You slash at your target’s eyes, robbing them of sight. When you trigger your Backstab talent, you may blind the target if your attack beats the target’s Ref and Fort Defence. Cannot be used with Aphonia.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Vanish",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Assassin",
+      "tree": "Blackguard",
+      "description": "As a master of stealth, you can seemingly vanish into thin air. Once per encounter, you may make a Stealth check against the Passive Perception of all creatures within line of sight. If you beat a target’s Passive Perception, you gain total concealment against the target until the end of the encounter. Actions other than moving, sneaking, interacting with unattended objects (subject to GM discretion), or your Mark of Death ability immediately end this effect.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Ambuscade",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Assassin",
+      "tree": "Sniper",
+      "description": "You open fire on your targets from the shadows, catching them by surprise. Your ranged attacks gain the benefit of your Backstab talent while you are undetected or have high ground against the target.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Deadly Range",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Assassin",
+      "tree": "Sniper",
+      "description": "Your ranged weapons hit with deadly precision. Your ranged attacks crit on a natural 19-20 while you are undetected or have high ground against the target.",
+      "prerequisites": "Ambuscade",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Opening Shot",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Assassin",
+      "tree": "Sniper",
+      "description": "You take your target by surprise, catching them out of position. When you make a ranged attack against a creature that has yet to act in combat, your damage ignores the target’s DR.",
+      "prerequisites": "Ambuscade",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Sniper’s Eye",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Assassin",
+      "tree": "Sniper",
+      "description": "Your aim is true as it is swift. You can now aim as a single minor action, rather than two.",
+      "prerequisites": "Ambuscade",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Battle Trance",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Battlemage",
+      "tree": "Spellblade",
+      "description": "Whenever you combo while under the effect of either Galvanic Strike, Gelid Strike, or Scorching Strike, the duration of the spell is extended to the end of your next turn. Additionally, the effect of the Effusion talent extends to the duration of the spell.",
+      "prerequisites": "Effusion I",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Effusion I",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Battlemage",
+      "tree": "Spellblade",
+      "description": "Whenever you cast a red magick spell, your melee attacks combo on a natural 19-20 until the start of your next turn.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Effusion II",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Battlemage",
+      "tree": "Spellblade",
+      "description": "Whenever you cast a red magick spell, your melee attacks now combo on a natural 18-20 until the start of your next turn.",
+      "prerequisites": "Effusion I",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Enspell",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Battlemage",
+      "tree": "Spellblade",
+      "description": "You needn't sacrifice mobility to combine spell and steel. You may now cast the Galvanic Strike, Gelid Strike, or Scorching Strike spells as a minor action.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Mana Blade",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Battlemage",
+      "tree": "Spellblade",
+      "description": "You channel your magickal power through your arcane weaponry. You may cast a red magick spell through melee weapons with which you are proficient, applying the item’s attack bonus to the check. Additionally, you may spend two minor actions to add your melee weapon’s damage dice to any spell cast this way, within the same turn, that targets another creature.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Control Summon",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Battlemage",
+      "tree": "Spellbreaker",
+      "description": "You wrest control of a summoned creature away from its master. Once per encounter, you may cause your Banish spell to instead grant control of the summon (this unsummons or dismisses your own summons or pets). While under your control, the original summoner cannot summon another creature.",
+      "prerequisites": "Spell Steal",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Feedback",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Battlemage",
+      "tree": "Spellbreaker",
+      "description": "You draw upon the mana of your foes. Whenever a target loses MP from your Mana Burn talent, you gain an equal amount of temporary MP . This temporary MP is used first and remains until the end of the encounter.",
+      "prerequisites": "Mana Burn",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Mana Burn",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Battlemage",
+      "tree": "Spellbreaker",
+      "description": "You may choose to take a -5 penalty on an attack roll made with a melee or thrown weapon. If the attack is successful, the target loses an amount of MP equal to half the damage dealt.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Negate Spell",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Battlemage",
+      "tree": "Spellbreaker",
+      "description": "Your shield absorbs spells entirely, negating their effects. When blocking spells with your shield, you take no damage when you successfully block and failed blocks are resolved as if you had the Evasive talent. If you have the Shield Ally or Deflect talent, this effect also applies to creatures you block for.",
+      "prerequisites": "Deflect, Shield Ally, Shield Proficiency",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Spell Steal",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Battlemage",
+      "tree": "Spellbreaker",
+      "description": "When you cast the Dispel or Cleanse spell, you may target another creature within 6 squares and line of sight. If your check is successful, you instead transfer the effects or statuses from the first target to the second. Should the second target be unwilling, your check must also beat their Will Defence.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Frenzy I",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Berserker",
+      "tree": "Viking",
+      "description": "Your fury sends you into bouts of relentless attacks. While raging, you combo on a natural 19-20.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Frenzy II",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Berserker",
+      "tree": "Viking",
+      "description": "As your fury deepens, your attacks become ever more unrestrained. While raging, you now combo on a natural 18-20.",
+      "prerequisites": "Frenzy I",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Gorefeast",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Berserker",
+      "tree": "Viking",
+      "description": "In the carnage, you find your strength. While raging, successful attacks against a target grant you temporary HP equal to the target’s level. While using the Cleave technick, you instead gain temporary HP equal to half the combined levels of all targets you hit. This temporary HP is used first and lasts until the start of your next turn.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Ironside",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Berserker",
+      "tree": "Viking",
+      "description": "You can fight on regardless of debilitating effects. Once per encounter, as a reaction, you may choose to ignore all instances of damage and any negative effects, instead resolving them at the end of your next turn.",
+      "prerequisites": "Toughness",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "No Escape",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Berserker",
+      "tree": "Viking",
+      "description": "Once per turn, as a reaction, you may move up to your speed towards a creature that moved out of one of your threatened squares, ending in an adjacent square if possible. While in a berserk rage, you may only move towards the randomly selected target and must do so when they move out of one of your threatened squares.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Roused Anger",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Berserker",
+      "tree": "Viking",
+      "description": "While raging, you ignore Break Gauge penalties, though you still fall unconscious when you are 5 steps down the Break Gauge.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Tireless",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Berserker",
+      "tree": "Viking",
+      "description": "You can rage without the taxing aftereffects. You no longer move down the Break Gauge when your rage ends.",
+      "prerequisites": "Roused Anger",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Unstoppable",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Berserker",
+      "tree": "Viking",
+      "description": "You fight on, no matter how grave your wounds. While raging, you do not fall unconscious at 0 HP and are not immediately moved to the bottom of the Break Gauge. Additionally, while raging, you do not fall unconscious due to the Break Gauge. However, you may only take a primary action each turn while at 0 HP or the bottom of the Break Gauge.",
+      "prerequisites": "Roused Anger",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Asylum",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Bishop",
+      "tree": "Priest",
+      "description": "You bestow your allies with a divine blessing that cannot be overcome. Enemies suffer a -5 penalty to any skill checks made to dispel your white magick.",
+      "prerequisites": "Sanctuary",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Benediction",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Bishop",
+      "tree": "Priest",
+      "description": "You bestow the merciful blessings of the Goddess unto others. Whenever you cast a white magick spell that heals a creature, you also move the creature +1 step on the Break Gauge.",
+      "prerequisites": "Healer’s Blessing I",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Devotion",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Bishop",
+      "tree": "Priest",
+      "description": "You draw upon the power of the archangels for greater healing power. You may use your Lay on Hands talent to administer first aid an additional time per day, per creature.",
+      "prerequisites": "Lay on Hands",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Divine Intervention",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Bishop",
+      "tree": "Priest",
+      "description": "The Goddess sees your allies through the darkest of times. Allies under the effect of your oratory bardic performance may, as a reaction, take a free second wind when they are reduced to 0 HP , preventing them from dying or falling unconcious; though they may still fall unconscious if they are moved to the bottom of the Break Gauge. Each ally may benefit from this talent once per day.",
+      "prerequisites": "Bardic Study, Prayer, Trained in Perform Oratory",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Prayer",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Bishop",
+      "tree": "Priest",
+      "description": "You recite a holy prayer, granting your allies the blessings of Elysium. When you affect an ally with an oratory bardic performance, they also gain an amount of temporary HP equal to your class level. This temporary HP is used first and lasts until the start of your next turn.",
+      "prerequisites": "Bardic Study, Trained in Perform Oratory",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Sacrosanctity",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Bishop",
+      "tree": "Priest",
+      "description": "Your holy magick continues to fortify your allies against vile magicks. Whenever you remove one or more status effects from yourself or an ally with the Cleanse spell, the target gains immunity to the removed status effects until the start of your next turn.",
+      "prerequisites": "Asylum, Sanctuary",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Sanctuary",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Bishop",
+      "tree": "Priest",
+      "description": "The forces of evil find it difficult to overcome your divine power. Whenever you grant allies DR with white magick spells, the DR is only reduced by 3 points when exceeded by damage, rather than 5.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Seraph’s Pact",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Bishop",
+      "tree": "Priest",
+      "description": "Your commitment to the light is rewarded with greater protection. Casting a white magick spell on an ally also grants you an amount of temporary HP equal to your class level. This temporary HP is used first and lasts until the start of your next turn.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Blade Flurry",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Blade Dancer",
+      "tree": "Dervish",
+      "description": "Your blades weave together, no strike truly apart from the dance. Your war dance is as a swarm of sharp blades. During the same turn you make a Perform Dance check, you may treat damage from all combos (made with the same weapon) as a single attack for the sake of overcoming DR, threshold, etc.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Dual Weapon Flourish I",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Blade Dancer",
+      "tree": "Dervish",
+      "description": "In each hand, a step- together, a deadly rhythm. While dual wielding, your Perform Dance checks cause your attacks to combo on a natural 19-20 until the start of your next turn.",
+      "prerequisites": "Dual Wield I",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Dual Weapon Flourish II",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Blade Dancer",
+      "tree": "Dervish",
+      "description": "The tempo quickens, every movement a seamless duet of steel. While dual wielding, your Perform Dance checks now cause your attacks to combo on a natural 18-20 until the start of your next turn.",
+      "prerequisites": "Dual Wield I, Dual Wield II, Dual Weapon Flourish I",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Grand Pas",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Blade Dancer",
+      "tree": "Dervish",
+      "description": "The master’s leap lands always with grace, whether bold or subtle. Whenever you use the Presto talent, you may now keep the higher of the two results.",
+      "prerequisites": "Presto",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Polearm Flourish I",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Blade Dancer",
+      "tree": "Dervish",
+      "description": "Your sweeping arcs carve a circle no foe dares enter. While wielding a polearm, your Perform Dance checks cause your attacks to combo on a natural 19-20 until the start of your next turn.",
+      "prerequisites": "Pole Fighter, Weapon Proficiency (polearms)",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Polearm Flourish II",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Blade Dancer",
+      "tree": "Dervish",
+      "description": "Each whirling step drives the long blade with irresistible momentum. While wielding a polearm, your Perform Dance checks now cause your attacks to combo on a natural 18-20 until the start of your next turn.",
+      "prerequisites": "Polearm Flourish I, Pole Fighter, Weapon Proficiency (polearms)",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Razor Dance",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Blade Dancer",
+      "tree": "Dervish",
+      "description": "Their eyes follow the rhythm, never the edge that bites. Your foes are entranced by the movement of your blades. You may add the attack bonus of a single melee weapon you are wielding to your Perform Dance checks. Additionally, damage from your Savage Szcherzo performance and MP lost from your Scamp’s Nocturn performance is increased by an amount equal to the weapon’s damage bonus.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Rolling Flurry",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Blade Dancer",
+      "tree": "Dervish",
+      "description": "The dance does not stop—it carries you forward, strike to strike. When you make a Perform Dance check; until the start of your next turn, your combos allow you to move up to 2 squares before making the additional attack. This does not provoke counterattacks.",
+      "prerequisites": "Blade Flurry",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Dragonheart",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Dragoon",
+      "tree": "Dragoneer",
+      "description": "Your strong bond with your dragon spurs it to keep on fighting. Once per day, when your pet dragon is reduced to 0 HP , it may heal an amount of HP equal to its Vit score or 1/4 its max HP , whichever is higher, preventing it from falling unconscious; though it may still fall unconscious if it is moved to the bottom of the Break Gauge.",
+      "prerequisites": "Tame, Wardscale, Wyrmtamer",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Dragon Surge",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Dragoon",
+      "tree": "Dragoneer",
+      "description": "Once per encounter, as a minor action, you may grant your pet dragon it’s full turn of actions. This talent has no affect while you’re mounted on your pet dragon.",
+      "prerequisites": "Tame, Wyrmtamer",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Steady Wing",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Dragoon",
+      "tree": "Dragoneer",
+      "description": "You may now use the Mounted Combat technick on your pet dragon if it is within 6 squares and line of sight. Additionally, when you negate an attack against your pet dragon with the Mounted Combat technick, you regain a use of the technick.",
+      "prerequisites": "Mounted Combat, Tame, Wyrmtamer",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Wardscale",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Dragoon",
+      "tree": "Dragoneer",
+      "description": "Your dragon keeps fighting at peak condition. Once per encounter, when your pet dragon would be moved down the Break Gauge, you may choose not to move it down the Break Gauge.",
+      "prerequisites": "Tame, Wyrmtamer",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Wyrmtamer",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Dragoon",
+      "tree": "Dragoneer",
+      "description": "You not only specialize in quelling dragons, but also in commanding them. You may now tame dragons with the Tame talent. Additionally, you may use bait to affect dragons. Lastly, while your pet dragon is within 4 squares and line of sight, you may negate attacks against it with the Mounted Combat technick.",
+      "prerequisites": "Tame",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Dragon Breaker",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Dragoon",
+      "tree": "Lancer",
+      "description": "Foes shatter beneath the power of your thrust. While using the Leaping Lance ability, each explosive damage die creates 2 additional dice, rather than 1.",
+      "prerequisites": "Mighty Charge",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Dragon Piercer I",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Dragoon",
+      "tree": "Lancer",
+      "description": "Your powerful thrust punches through the opponents’ armour. While using the Leaping Lance ability, you ignore 5 DR for every 10 points your attack roll beat the target’s Ref Defence.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Dragon Piercer II",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Dragoon",
+      "tree": "Lancer",
+      "description": "While using the Leaping Lance ability, you now ignore 5 DR for every 5 points your attack roll beat the target’s Ref Defence.",
+      "prerequisites": "Dragon Piercer I",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Elusive Jump",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Dragoon",
+      "tree": "Lancer",
+      "description": "You leap backwards, giving yourself room to manoeuvre. Once per turn, as a minor action, you may make a DC 15 Athletics check to move up to half your speed without provoking counterattacks.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Lancet",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Dragoon",
+      "tree": "Lancer",
+      "description": "You draw upon the power of your enemy. Once per encounter, while wielding a polearm; when you deal damage to a creature, you may choose to heal an amount of HP equal to the target’s Vit score.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Call of the Wild",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Druid",
+      "tree": "Beastcaller",
+      "description": "Nature answers your summons. Once per encounter, you may use the Summon Wild talent to summon 3 beasts of a single type at no additional MP cost. Each beast must be at least 5 levels lower than an appropriate companion for your level (see page 278). Additionally, each beast gains a bonus to their attack rolls, skill checks, damage rolls, and defences equal to your class level. Lastly, they gain DR equal to half your class level.",
+      "prerequisites": "Summon Wild",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Force of Nature",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Druid",
+      "tree": "Beastcaller",
+      "description": "When using the Call of the Wild talent, you may summon beasts 3 levels lower than your normal limit. However, these beasts gain no bonus DR.",
+      "prerequisites": "Call of the Wild, Summon Wild",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Run Wild",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Druid",
+      "tree": "Beastcaller",
+      "description": "Beasts surge forth, braying and howling. Once per encounter, as a minor action, you may move all summoned beasts you control up to their speed.",
+      "prerequisites": "Summon Wild",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Stampede",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Druid",
+      "tree": "Beastcaller",
+      "description": "Once per encounter, as an all-out action, you may cause all summoned beasts you control to charge. Additionally, they are treated as having the Trample technick and are treated as both mount and rider while charging. Lastly, while transformed via the Beast Shape talent, you may also gain the benefit of this talent.",
+      "prerequisites": "Call of the wild, Force of Nature, Summon Wild",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Fae Touched",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Druid",
+      "tree": "Shapeshifter",
+      "description": "You have been granted the mystical power of the fae. You may now include fae when using talents such as Summon Wild and Beast Shape. Additionally, you may now cast white magick spells while transformed via the Beast Shape talent.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Nature’s Blessing",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Druid",
+      "tree": "Shapeshifter",
+      "description": "The maiden aids you in the defence of nature, cleansing you for the fight to come. Whenever you use the Beast Shape talent to transform, remove all status effects on yourself (except curses) and move +3 steps on the Break Gauge.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Nature’s Wrath",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Druid",
+      "tree": "Shapeshifter",
+      "description": "The pythoness aids you in the destruction of nature’s enemies, filling you with her fury. While transformed via the Beast Shape talent; at the start of each of your turns, you may take a -5 penalty to your Will Defence to reroll any attack rolls you make, keeping the second result, even if worse. This effect lasts until the start of your next turn.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Savage Bite",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Druid",
+      "tree": "Shapeshifter",
+      "description": "The wild takes hold, your jaws rending with untamed fury. While transformed via the Beast Shape talent, your natural attacks deal +1 die of damage. Prerequisite: Nature’s Wrath",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Verdant Force I",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Druid",
+      "tree": "Shapeshifter",
+      "description": "The ferocity of your bestial form leaves your opponents no opening to attack you when casting spells. While transformed via the Beast Shape talent, you do not suffer a penalty for casting defensively.",
+      "prerequisites": "Combat Casting",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Verdant Force II",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Druid",
+      "tree": "Shapeshifter",
+      "description": "Your bestial form allows you to channel even greater terrestrial power. While transformed via the Beast Shape talent, you gain a bonus equal to half your class level to Spellcraft checks made to cast green magick spells. This bonus only applies to your own Spellcraft modifier, not your beast form’s.",
+      "prerequisites": "Combat Casting, Verdant Force I",
+      "automation": {
+        "type": "spellcastingModifier",
+        "automated": false,
+        "requiresCastIntegration": true
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Abyssal Drain I",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Fell Knight",
+      "tree": "Reaver",
+      "description": "You draw life from your foe like a candle guttering before the void. As a primary action, you may spend 1/4 your max MP to make a Spellcraft check against a single creature within 6 squares and line of sight. Should your check beat the target’s Fort Defence, the target takes 4d6 dark damage and you gain an amount of HP equal to the damage dealt. Otherwise, the target takes half damage.",
+      "prerequisites": "",
+      "automation": {
+        "type": "rollableResourceOrAttack",
+        "automated": false,
+        "requiresTargetOrResourcePrompt": true
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Abyssal Drain II",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Fell Knight",
+      "tree": "Reaver",
+      "description": "Your Abyssal Drain talent’s range is increased to 12 squares and its damage is increased to 8d6 dark damage.",
+      "prerequisites": "Abyssal Drain I",
+      "automation": {
+        "type": "rollableResourceOrAttack",
+        "automated": false,
+        "requiresTargetOrResourcePrompt": true
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Dark Fervour",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Fell Knight",
+      "tree": "Reaver",
+      "description": "As the blood leaves your body, you feel a rush of infernal power. Whenever you spend HP to use a fell knight feature or talent, you recover an amount of MP equal to half your class level.",
+      "prerequisites": "Infernal Strike I",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Dark Harvest",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Fell Knight",
+      "tree": "Reaver",
+      "description": "The more foes that gather, the more power you draw from them. Once per encounter, you may target up to 3 creatures with your Abyssal Drain talent. However, you only gain an amount of HP equal to half the total damage dealt.",
+      "prerequisites": "Abyssal Drain I, Abyssal Drain II",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Hellblade",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Fell Knight",
+      "tree": "Reaver",
+      "description": "The infernal power of your attacks crush both body and spirit. While using the Infernal Strike talent, if the target would move 1 or more steps down the Break Gauge from damage dealt by your melee attack, they move down another step.",
+      "prerequisites": "Infernal Strike I",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Infernal Strike I",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Fell Knight",
+      "tree": "Reaver",
+      "description": "Your dark blade feeds off of your malice and blood, spreading greater destruction. As a free action, you may spend 2 HP to deal +1d4 damage on all successful melee attacks until the start of your next turn. You may increase the damage die up to 4 steps (maximum +1d12) by spending 2 additional HP for each die step increase.",
+      "prerequisites": "",
+      "automation": {
+        "type": "rollableResourceOrAttack",
+        "automated": false,
+        "requiresTargetOrResourcePrompt": true
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Infernal Strike II",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Fell Knight",
+      "tree": "Reaver",
+      "description": "You focus your immense cruelty upon your foes, lessening your own suffering in exchange. The HP cost of your Infernal Strike talent, including each die step increase, is reduced to 1 HP .",
+      "prerequisites": "Infernal Strike I",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Terrorise",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Fell Knight",
+      "tree": "Reaver",
+      "description": "Your presence alone saps your adversaries’ will to fight. While in combat; the first time an enemy comes within 4 squares of you, make a Spellcraft check against the target. Should the check beat the target’s Will Defence, they suffer a -2 penalty to all defences, attack rolls, and skill checks whenever they are within 4 squares of you. This effect lasts until the end of the encounter. This is a fear effect.",
+      "prerequisites": "",
+      "automation": {
+        "type": "spellcastingModifier",
+        "automated": false,
+        "requiresCastIntegration": true
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Adrenaline Rush",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Gladiator",
+      "tree": "Champion",
+      "description": "You live for the thrill of battle and the promise of glory. Once per encounter, you may choose to treat your Break Gauge penalty, instead, as a bonus until the start of your next turn.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Beatdown",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Gladiator",
+      "tree": "Champion",
+      "description": "You overpower your opponent with your strength and momentum. You may knock a target prone, provided they are no more than 1 size category larger than you, after a successful attack made with a charge.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Beat Rush",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Gladiator",
+      "tree": "Champion",
+      "description": "A fool’s distance means nothing when you close it. Once per turn, when you successfully block a ranged attack with your shield, you may move up to your speed towards the opponent, making a counterattack against them at the end of your movement, if able.",
+      "prerequisites": "Counterstrike, Shield Proficiency, Strikeback, Weapon Specialization",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Blitz",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Gladiator",
+      "tree": "Champion",
+      "description": "You can move with surprising speed, closing in on opponents before they are ready. Once per encounter, as a free action, you may move up to your speed.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Double Hand",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Gladiator",
+      "tree": "Champion",
+      "description": "You are able to maximize the carnage dealt with one-handed weapons. You may use 1-handed and light weapons with the 2-handed skill, gaining x2 Str bonus to damage. (Normally, you cannot get x2 Str toward damage, even when wielding a one-handed weapon with 2 hands)",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Low Blow",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Gladiator",
+      "tree": "Champion",
+      "description": "You are not above fighting dirty to gain the advantage in a fight. Whenever you roll a natural 1 on a melee attack roll, the target moves –1 step on the Break Gauge.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Strikeback",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Gladiator",
+      "tree": "Champion",
+      "description": "You use your shield to throw your opponent off balance. Whenever you successfully block a melee attack with your shield, you may immediately make a counterattack against the opponent.",
+      "prerequisites": "Counterstrike, Shield Proficiency, Weapon Specialization",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Vendetta",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Gladiator",
+      "tree": "Champion",
+      "description": "Your taunts and jeers are hard to ignore, even for those strong of will. Failing to beat a target’s Will Defence with your Provoke talent imposes a -2 penalty to the target, instead of having no effect.",
+      "prerequisites": "Provoke",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Condemn",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Necromancer",
+      "tree": "Necromant",
+      "description": "With a word, you damn your foe, and the dead obey. As a primary action, you may designate a target within 12 squares and line of sight. Until the end of the encounter, all undead you control may reroll attack rolls against the target, keeping the second result, even if worse. As a primary action, you may select a different target to become affected by this talent.",
+      "prerequisites": "Death March",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Death March",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Necromancer",
+      "tree": "Necromant",
+      "description": "The fallen march again, bound to your will alone. Once per encounter, as a minor action, you may move all undead you control up to their speed.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Eternal Servitude",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Necromancer",
+      "tree": "Necromant",
+      "description": "You refuse to allow your minions to fall in battle. When an undead you control is reduced to 0 HP or is moved to the bottom of the Break Gauge, there is a 50% chance (50 or less on d%) that it is not immediately destroyed, instead falling unconscious. At the end of your next turn, the undead heals 1/4 its max HP and moves +3 steps on the Break Gauge.",
+      "prerequisites": "Necrotic Healing",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Massacre",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Necromancer",
+      "tree": "Necromant",
+      "description": "The wrath of your horde is fuelled by your dark power. Whenever an undead under your control deals damage to a target affected by your Condemn talent, each explosive damage die creates 2 additional dice, rather than 1.",
+      "prerequisites": "Condemn, Death March",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Necrotic Healing",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Necromancer",
+      "tree": "Necromant",
+      "description": "You have twisted the power of healing magick to your dark will, using it in a way that was never intended. You may target undead creatures with white magick spells that heal, restoring their HP as normal. Additionally, white magick spells you cast may ignore the effects of zombify.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Outbreak",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Necromancer",
+      "tree": "Necromant",
+      "description": "The sickening effects of your dark powers spread outward. Your Pestilence talent also deals damage to enemies within 2 squares of the target. If this deals damage to a living creature currently affected by a status effect, they become affected by Pestilence. This talent has no effect on creatures already affected by Pestilence.",
+      "prerequisites": "Pestilence",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Pestilence",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Necromancer",
+      "tree": "Necromant",
+      "description": "Your magick carries a vile, infectious power. Whenever you successfully cast a black magick spell that inflicts a status effect on a living creature; the target suffers 1d6 unaspected damage at the start of each of their turns for each status effect currently affecting them. This effect ends when all status effects are removed from the target.",
+      "prerequisites": "",
+      "automation": {
+        "type": "rollableResourceOrAttack",
+        "automated": false,
+        "requiresTargetOrResourcePrompt": true
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Triumph of Death",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Necromancer",
+      "tree": "Necromant",
+      "description": "Each soul claimed drives your legions onward. Whenever you or an undead you control kill a creature affected by your Condemn talent, you regain a use of your Death March talent.",
+      "prerequisites": "Condemn, Death March",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Bulwark",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Paladin",
+      "tree": "Templar",
+      "description": "When all else falls, faith becomes the final fortress. Whenever you spend MP for your Palisade talent, you may instead spend a hero point to grant immunity to all physical and elemental damage until the damage is resolved.",
+      "prerequisites": "Palisade, Rampart",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Chivalry",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Paladin",
+      "tree": "Templar",
+      "description": "You use your divine power to pursue justice. As a free action, you may spend 2 MP to deal +1d4 damage on all successful melee attacks until the start of your next turn. You may increase the damage die up to 4 steps (maximum +1d12) by spending 2 additional MP for each die step increase.",
+      "prerequisites": "",
+      "automation": {
+        "type": "rollableResourceOrAttack",
+        "automated": false,
+        "requiresTargetOrResourcePrompt": true
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Clemency",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Paladin",
+      "tree": "Templar",
+      "description": "You bring relief and respite to those in need. While within 4 squares of you, allies that take a second wind heal an additional amount of HP equal to your class level and may do so while above 1/2 their max HP .",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Fealty",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Paladin",
+      "tree": "Templar",
+      "description": "Your strong sense of honour and duty drives you to fight harder for those you seek to protect. The MP cost of your Chivalry talent, including each die step increase, is reduced to 1 MP .",
+      "prerequisites": "Chivalry",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Intercession",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Paladin",
+      "tree": "Templar",
+      "description": "Together, your faith and your shield protect you from the worst forms of evil. While blocking with the Shield Ally talent, failed blocks grant you resistance to all physical and elemental damage until the damage is resolved.",
+      "prerequisites": "Shield Ally, Shield Proficiency",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Palisade",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Paladin",
+      "tree": "Templar",
+      "description": "You raise a bastion of light, and the faithful shelter within its glow. Once per turn, as a reaction, you may spend 1/4 your max MP to grant all allies within 6 squares and line of sight resistance to all physical and elemental damage until the damage is resolved.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Rampart",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Paladin",
+      "tree": "Templar",
+      "description": "Your faith becomes a citadel, untouched by hexes, poxes, and madness. When you activate palisade, affected allies also gain immunity to non-damaging effects until the triggering action is resolved.",
+      "prerequisites": "Palisade",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Self-Sacrifice",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Paladin",
+      "tree": "Templar",
+      "description": "In giving of yourself, you are made whole. Whenever you attempt to block with the Shield Ally talent, you gain an amount of MP equal to half your class level. Any MP gained above your max MP becomes temporary MP . This temporary MP is used first and lasts until the end of your next turn.",
+      "prerequisites": "Intercession, Shield Ally, Shield Proficiency A Fall from Grace A paladin that turns away from the Goddess, either by betraying the tenets of their knightly order or through slow corruption by sinister forces, may no longer take levels in this class and must repent for their sins or else tread ever further into the clutches of a grim fate. The ex-paladin may choose to undertake a malevolent quest in the search of a newer, greater power, damning their souls in the process (GM’s discretion). If accomplished, the ex-paladin may immediately retrain any number of their cleric talents (minimum 1) to either occultist or devotee talents, as well as convert all their paladin class levels to fell knight class levels.",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Accomplice",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Purloiner",
+      "tree": "Brigand",
+      "description": "Your cohorts afford you an easy opening to escape. Once per turn, when an ally makes a successful attack roll against a target that is threatening you, you may, as a reaction, disengage. The target threatens no squares while you are disengaging with this talent. This may not be used during your turn.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Collaborator",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Purloiner",
+      "tree": "Brigand",
+      "description": "You aid your cohorts in taking down the mark. You may make a single melee attack, using the Light weapon skill, instead of disengaging with your Accomplice talent. Treat the damage from both attacks as one attack for the sake of overcoming DR, threshold, etc.",
+      "prerequisites": "Accomplice",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Conspirator",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Purloiner",
+      "tree": "Brigand",
+      "description": "You take full advantage of any openings left by your mark. Whenever you make a successful melee attack with your Collaborator talent, you may, as",
+      "prerequisites": "Accomplice, Collaborator",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Mug I",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Purloiner",
+      "tree": "Brigand",
+      "description": "You relentlessly assault your target, then make off with their belongings. Attacks made with the Stab & Grab talent combo on a natural 19-20.",
+      "prerequisites": "Stab & Grab",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Mug II",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Purloiner",
+      "tree": "Brigand",
+      "description": "Your muggings are now more lethal. Attacks made with the Stab & Grab talent now combo on a natural 18-20.",
+      "prerequisites": "Mug I, Stab & Grab",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Rob Blind",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Purloiner",
+      "tree": "Brigand",
+      "description": "You’re palm more items from your mark. Attempting to pickpocket a target increases the DC of future pickpocket attempts against the same target by 2 points, rather than 5.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Grand Scheme",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Purloiner",
+      "tree": "Trickster",
+      "description": "You commit fraud on a large scale. Once per day, you may use your Swindle talent on any number of targets within 4 squares and line of sight of you.",
+      "prerequisites": "Convincing Liar, Honeyed Words, Outwit, Swindle",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Outwit",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Purloiner",
+      "tree": "Trickster",
+      "description": "You dupe your opponent into looking the other way or shielding their face while you help yourself to their belongings. While using the Swindle talent, you may treat the target’s attitude toward you as 1 step more favourable.",
+      "prerequisites": "Convincing Liar, Honeyed Words, Swindle",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Larceny",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Purloiner",
+      "tree": "Trickster",
+      "description": "Your sudden theft allows you to not only steal a target’s items, but also their advantage. Whenever you successfully pickpocket a target with your Swindle talent, you also dispel any beneficial effects that may be dispelled, transferring the dispelled effects to yourself for the remainder of their duration.",
+      "prerequisites": "Convincing Liar, Honeyed Words, Outwit, Swindle",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Ruse",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Purloiner",
+      "tree": "Trickster",
+      "description": "You feign cowardice, making your enemies less likely to bother with you. Once per encounter, whenever you successfully feint against a target, you may gain a +5 bonus to your Ref Defence against the target and the target only deals half damage against you. This effect lasts until the start of your next turn; or until you make an attack roll or skill check against the creature, whichever comes first.",
+      "prerequisites": "Convincing Liar, Honeyed Words, Outwit, Swindle",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Battuta",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Sabreur",
+      "tree": "Fencer",
+      "description": "You knock your enemy’s weapon, throwing them off. While wielding a sword or knife with the 1-handed or Light weapon skill, you may feint using two consecutive minor actions, rather than a primary action.",
+      "prerequisites": "Trained in Deception, Trompement",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Fleche",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Sabreur",
+      "tree": "Fencer",
+      "description": "While wielding a sword or knife with the 1-handed or Light weapon skill, you may choose to deal half damage with a successful attack roll to move your target into your square and vice versa, provided they are no more than 1 size category larger than you. This talent cannot cause you or the target to be in a square they couldn’t normally occupy. Neither you nor the target provoke counterattacks while moving this way.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Inquartata",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Sabreur",
+      "tree": "Fencer",
+      "description": "Whenever you successfully avoid an attack with the Dodge technick, you may make a counterattack against the opponent, treating them as flat-footed. This counterattack must be made with a sword or knife using the 1-handed or Light weapon skill.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Opportunist",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Sabreur",
+      "tree": "Fencer",
+      "description": "You may make a counterattack against an enemy that attacks a target that is not you. This attack must be made with a sword or knife using the 1-handed or Light weapon skill.",
+      "prerequisites": "Trompement, Trained in Deception",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Reprise",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Sabreur",
+      "tree": "Fencer",
+      "description": "You ready your blade for another counterattack. Successful attack rolls with the Riposte talent cause you to regain a use of the Parry class feature. Additionally, if you have the Trompement talent, you regain a use of the talent.",
+      "prerequisites": "Riposte",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Riposte",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Sabreur",
+      "tree": "Fencer",
+      "description": "Whenever you successfully parry a melee attack, you may make a counterattack against the opponent. This counterattack must be made with a sword or knife using the 1-handed or Light weapon skill.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Trompement",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Sabreur",
+      "tree": "Fencer",
+      "description": "You create an opening in your opponent’s form, exploiting it with a swift counterattack. Once per encounter, when you successfully feint, you may make a counterattack against the same target. This counterattack must be made with a sword or knife using the 1-handed or Light weapon skill.",
+      "prerequisites": "Trained in Deception",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Volte",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Sabreur",
+      "tree": "Fencer",
+      "description": "You perform a graceful dodge. Whenever you successfully parry a melee attack, you may immediately move up to 2 squares. You may still make the counterattack granted from the Riposte talent, if able.",
+      "prerequisites": "Riposte",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Apex Arrow",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Shikari",
+      "tree": "Marksman",
+      "description": "You unleash a powerful shot capable of piercing through multiple foes at once. Once per encounter, as a primary action; while wielding a bow or crossbow, you may make a single ranged attack against a target within point blank range and all creatures between you and the target. This attack ignores DR.",
+      "prerequisites": "Deadly Aim, Eagle Eye Shot, Focused Shot",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Barrage",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Shikari",
+      "tree": "Marksman",
+      "description": "You unleash multiple arrows in quick succession. While using the Volley talent, you may instead target a single square to deal +2 dice of damage with the attack. Unlike other area effects, this attack may crit.",
+      "prerequisites": "Volley I",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Deflecting Shot",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Shikari",
+      "tree": "Marksman",
+      "description": "You can shoot other projectiles mid-air. Once per turn, as a reaction; while wielding a bow or crossbow, you may negate a successful ranged attack roll made against you or an ally within point-blank range and line of sight by making an opposed attack roll. Should your attack roll beat the opposing attack roll, the damage and any secondary effects are negated. This talent may not be used against area effects.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Eagle Eye Shot",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Shikari",
+      "tree": "Marksman",
+      "description": "You spot a clear opening for the perfect shot. When you aim at a target, your next ranged attack against the target crits on a natural 19-20.",
+      "prerequisites": "Deadly Aim, Focused Shot",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Sharpshot",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Shikari",
+      "tree": "Marksman",
+      "description": "You can nock and loose an arrow with incredible speed. Once per encounter, while wielding a bow or crossbow, you may make a single ranged attack as a minor action.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Crossfire",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Shikari",
+      "tree": "Skirmisher",
+      "description": "Enemies caught between you and your target risk being hit by stray arrows or bolts. Once per turn, while wielding a bow or crossbow, you may reroll a failed ranged attack, selecting a new target that is directly between you and your initial target. You may not use this talent with area effects.",
+      "prerequisites": "Encircle",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Encircle",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Shikari",
+      "tree": "Skirmisher",
+      "description": "You surround your target, bombarding them with ranged fire. While wielding a bow or crossbow, if you are within point-blank range of a target, you are treated as occupying the nearest space adjacent to the target for the purposes of flanking, allowing you to both provide and gain bonuses for flanking with your bow or crossbow.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Fallback",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Shikari",
+      "tree": "Skirmisher",
+      "description": "You can make a tactical retreat when in a tight spot. Once per turn, as a reaction; when you take damage, you may disengage. The target threatens no squares while you are disengaging with this talent.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Repelling Shot",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Shikari",
+      "tree": "Skirmisher",
+      "description": "As you leap back, you fire a retaliatory shot. Once per encounter, while wielding a bow or crossbow; after you disengage with the Fallback talent, you may make a ranged attack against the opponent.",
+      "prerequisites": "Fallback",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Strafing Fire",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Shikari",
+      "tree": "Skirmisher",
+      "description": "You fire several shots while repositioning. When a ranged attack you made with a bow or crossbow misses, you may immediately move up to your speed and make a free ranged attack against a different target. You may do this a number of times per encounter equal to your Agi modifier. This talent does not work with area attacks.",
+      "prerequisites": "Fallback, Repelling Shot",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Astral Rush I",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Summoner",
+      "tree": "Evoker",
+      "description": "Your elementals fervently heed your commands. You may use a secondary action, rather than a primary action, to grant your summoned elemental its entire turn of actions.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Astral Rush II",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Summoner",
+      "tree": "Evoker",
+      "description": "You may now use a minor action to grant your summoned elemental its entire turn of actions.",
+      "prerequisites": "Astral Rush I",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Astral Surge",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Summoner",
+      "tree": "Evoker",
+      "description": "You draw upon the power of the elements, granting your elemental a surge of stamina. Once per encounter, as a primary action, you may move your elemental to the top the Break Gauge.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Focus Aggression",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Summoner",
+      "tree": "Evoker",
+      "description": "You push your elemental into a frenzied state. Once per turn, as a minor action, you may make a DC 20 Spellcraft check. If successful, your summoned elemental deals +1 die of damage on all successful attacks until the start of your next turn.",
+      "prerequisites": "Ferocious Guardian, Focus Mettle, Guardian Force",
+      "automation": {
+        "type": "spellcastingModifier",
+        "automated": false,
+        "requiresCastIntegration": true
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Focus Mettle",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Summoner",
+      "tree": "Evoker",
+      "description": "Even in the chaos of battle, your elemental moves with heightened grace and power, attuned to your will. Once per turn, as a minor action, you may make a DC 20 Spellcraft check. If successful, your summoned elemental gains a +2 bonus to all attack rolls, skill checks, and defences until the start of your next turn.",
+      "prerequisites": "Ferocious Guardian, Guardian Force",
+      "automation": {
+        "type": "spellcastingModifier",
+        "automated": false,
+        "requiresCastIntegration": true
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Life Bond",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Summoner",
+      "tree": "Evoker",
+      "description": "While your summoned elemental has at least 1 HP , you cannot be reduced to 0 HP by damage. Any damage that would reduce you to 0 HP instead reduces your elemental’s HP . If the damage exceeds your elemental’s remaining HP , the excess damage is applied to you normally. This talent has no effect if you and your elemental are damaged by the same source.",
+      "prerequisites": "Life Link",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Life Link",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Summoner",
+      "tree": "Evoker",
+      "description": "Your connection with your summons is deeper than blood. While you have at least 1 HP , your summoned elemental cannot be reduced to 0 HP by damage. Any damage that would reduce your summoned elemental to 0 HP instead reduces your HP by the same amount. This talent has no effect if the damage would exceed your current HP . This talent has no effect if you and your elemental are damaged by the same source.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Mana Cede",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Summoner",
+      "tree": "Evoker",
+      "description": "You allow your Aeon to draw from your own power. Whenever your Aeon would cast a spell with an MP cost that exceeds its current MP , it may also spend any amount of your MP to cast the spell. Additionally, it may use one of your high arcana to augment a spell it casts, increasing the MP cost appropriately.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Battle Voice",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Troubador",
+      "tree": "Balladeer",
+      "description": "Your many adventures have taught you how to maintain your composure in the heat of battle. Once per encounter, you may choose to have no penalties apply to your Perform Instrument check. This talent may be taken more than once, each time granting you an additional use per encounter.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": true,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Con Anima",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Troubador",
+      "tree": "Balladeer",
+      "description": "Blade and stone have no sway upon your spirited performance. Whenever you make a Perform Instrument check, you gain resistance to physical damage until the start of your next turn.",
+      "prerequisites": "Battle Voice",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Con Brio",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Troubador",
+      "tree": "Balladeer",
+      "description": "Neither steel nor spell can halt your masterful performance. You may choose to instead gain resistance to magickal damage when you use the Con Anima talent.",
+      "prerequisites": "Battle Voice, Con Anima",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Crescendo",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Troubador",
+      "tree": "Balladeer",
+      "description": "Your song reaches its climax. Whenever you use the Marcato talent, you may now keep the highest result.",
+      "prerequisites": "Marcato",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Finale",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Troubador",
+      "tree": "Balladeer",
+      "description": "Once per encounter, whenever you make a Perform Instrument check, you may double the effect of your bardic performance(s). However, you may not perform the same bardic performance(s) again for the duration of the encounter. This talent has no effect on performances that use your Performance check in place of a creature’s defence. This talent may be taken more than once, each time granting you an additional use per encounter.",
+      "prerequisites": "Crescendo, Marcato",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": true,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Maestro",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Troubador",
+      "tree": "Balladeer",
+      "description": "You play as a one-man symphony, effortlessly carrying multiple tunes at once. The penalty for performing multiple bardic performances with your Medley talent is reduced to -2 and -5 respectively.",
+      "prerequisites": "Medley",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Magnum Opus",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Troubador",
+      "tree": "Balladeer",
+      "description": "Maybe once in a lifetime, if an artist is lucky, they create a true masterpiece to be lauded for ages to come. Whenever you roll a natural 19-20 on a Perform Instrument check, you gain a temporary hero point. This temporary hero point is used first and lasts until the end of the encounter.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Nightingale",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Troubador",
+      "tree": "Balladeer",
+      "description": "You are blessed by the songbird. Once per encounter, you may use the Tenuto talent as a free action. This talent may be taken more than once, each time granting you an additional use per encounter.",
+      "prerequisites": "Tenuto",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": true,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Blood Frenzy",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Warlock",
+      "tree": "Diabolist",
+      "description": "Your infernal minion enters a blood- crazed state. Whenever you lose HP with the Blood Pact talent, your summoned infernal gains a bonus to all attack rolls and skill checks equal to the HP spent. This bonus lasts until the start of your next turn.",
+      "prerequisites": "Blood Magick, Blood Pact, Summon Darkness",
+      "automation": {
+        "type": "situationalBonus",
+        "automated": false,
+        "needsEncounterContext": true
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Blood Magick",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Warlock",
+      "tree": "Diabolist",
+      "description": "You tap into the profane power of blood sacrifice to empower your dark magick. Whenever you cast a black magick spell, you may reroll your Spellcraft check, keeping the second result, even if worse. You then lose 2d6 HP .",
+      "prerequisites": "",
+      "automation": {
+        "type": "rollableResourceOrAttack",
+        "automated": false,
+        "requiresTargetOrResourcePrompt": true
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Blood Pact",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Warlock",
+      "tree": "Diabolist",
+      "description": "You may call upon more powerful daemons but must pay their price in blood. When summoning an infernal with the Summon Darkness talent, you may summon an infernal 2 levels higher than your normal limit. However, at the start of each turn, you lose 1d6 HP . If this would reduce you to 0 HP , your infernal is immediately unsummoned.",
+      "prerequisites": "Blood Magick, Summon Darkness",
+      "automation": {
+        "type": "rollableResourceOrAttack",
+        "automated": false,
+        "requiresTargetOrResourcePrompt": true
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Blood Rite",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Warlock",
+      "tree": "Diabolist",
+      "description": "The dark powers you serve grant you greater protection, but at an even greater cost to your soul. As a secondary action, you may move yourself -1 persistent step on the Break Gauge to remove all status effects affecting you. Additionally, you gain immunity to all status effects until the start of your next turn. This persistent step lasts until the end of the encounter or when you use the Dark Renewal talent, whichever comes first.",
+      "prerequisites": "",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Doomfire",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Warlock",
+      "tree": "Diabolist",
+      "description": "You draw upon the hellfire of the abyss, unleashing it upon your enemies. Whenever you cast a red magick spell that deals fire damage, you may instead treat it as a black magick spell and change the spell’s damage type to dark damage. You may still apply the Searing Flame talent to spells affected by this talent.",
+      "prerequisites": "Searing Flame",
+      "automation": {
+        "type": "manual",
+        "automated": false
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Execration",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Warlock",
+      "tree": "Diabolist",
+      "description": "Your dark master grants you access to the most powerful of the dark arts, though such power is dangerous to wield. Once per day, as an all-out action, you may make a Spellcraft check against the Will Defence of a target within 6 squares and line of sight. If successful, the target gains a curse of your choice (excluding doom, lycanthropy, and vampyrism). However, should you roll a natural 1, you gain a random curse, as determined by the GM. Natural 1’s rolled with this talent may not be rerolled. Higher-level targets gain a +5 bonus to their defence against this talent (or +2 if you have the Goety talent).",
+      "prerequisites": "Blood Magick, Blood Rite",
+      "automation": {
+        "type": "spellcastingModifier",
+        "automated": false,
+        "requiresCastIntegration": true
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Mana Tap",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Warlock",
+      "tree": "Diabolist",
+      "description": "Power is never lost—only taken—and you ensure it falls into the right hands. Once per encounter, as a primary action, you may make a Spellcraft check against the Will Defence of a target within 12 squares and line of sight. If successful, the target loses 4d6 MP and you gain an equal amount of MP . These dice may explode.",
+      "prerequisites": "Blood Magick",
+      "automation": {
+        "type": "rollableResourceOrAttack",
+        "automated": false,
+        "requiresTargetOrResourcePrompt": true
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
+  },
+  {
+    "name": "Spelleater",
+    "type": "talent",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+      "className": "Warlock",
+      "tree": "Diabolist",
+      "description": "The dark hunger within you grows into a craving for raw magick. Once per turn, as a reaction; when you are targeted by a spell, you may make an opposed Spellcraft check. Should your check beat the opposing Spellcraft check, the spell is negated and you gain temporary HP equal to the spell’s MP cost. This temporary HP is used first and lasts until the end of your next turn. Otherwise, you move -1 step on the Break Gauge.",
+      "prerequisites": "Blood Magick, Mana Tap",
+      "automation": {
+        "type": "spellcastingModifier",
+        "automated": false,
+        "requiresCastIntegration": true
+      },
+      "repeatable": false,
+      "uses": {
+        "frequency": "see description"
+      }
+    }
   }
 ]

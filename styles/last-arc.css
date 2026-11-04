@@ -134,6 +134,7 @@
 .la-class-row { grid-template-columns: minmax(0,1fr) 24px; gap: 5px 10px; align-items: center; padding: 8px 4px; }
 .la-class-row .item-edit { min-width: 0; white-space: normal; text-align: left; font: 700 15px/1.35 Georgia,serif; }
 .la-class-trees { grid-column: 1 / -1; display: block; padding-bottom: 4px; line-height: 1.4; color: #554b3f; }
+.la-class-feature-reference { white-space: normal; line-height: 1.5; }
 .la-talent-choice-form label { display: grid; gap: 6px; font-weight: 700; }
 .la-talent-choice-form select { width: 100%; }
 .la-talent-preview { margin: 12px 0; min-height: 70px; white-space: normal; font: 14px/1.5 Georgia,serif; }

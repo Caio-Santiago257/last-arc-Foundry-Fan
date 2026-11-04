@@ -75,7 +75,7 @@ async function applyCondition(target, caster, spell, condition, rounds = 0, chan
   return true;
 }
 
-async function applySpellEffect(effect, target, caster, spell, checkTotal, results) {
+async function applySpellEffect(effect, target, caster, spell, checkTotal, results, damageBonus = 0) {
   const cancelsSpell = { Inertia: "Haste", Gravity: "Levitation" }[spell.name];
   if (effect.type === "condition" && cancelsSpell) {
     const active = target.effects.filter(entry => entry.getFlag("last-arc-analogue", "spellName") === cancelsSpell);
@@ -93,14 +93,23 @@ async function applySpellEffect(effect, target, caster, spell, checkTotal, resul
   }
   const checks = (effect.requiresDefences ?? (effect.defence ? [effect.defence] : [])).map(defence => defenceResult(target, caster, defence, spell, checkTotal));
   const hasFailure = checks.some(check => !check.success);
+  if (hasFailure && caster.items?.some(entry => entry.type === "talent" && entry.name === "Addle")) {
+    const prior = target.effects.filter(active => active.getFlag("last-arc-analogue", "addleEffect")?.casterActorId === caster.id);
+    if (prior.length) await target.deleteEmbeddedDocuments("ActiveEffect", prior.map(active => active.id));
+    await target.createEmbeddedDocuments("ActiveEffect", [{
+      name: `Addle (${caster.name})`, img: "icons/svg/daze.svg", origin: spell.uuid, disabled: false, duration: {}, changes: [],
+      flags: { "last-arc-analogue": { addleEffect: { casterActorId: caster.id, description: "Target defences are treated as 5 lower against this caster's next spell." } } }
+    }]);
+  }
   if (effect.requiresDefences?.length && hasFailure) return;
 
   if (effect.type === "damage") {
     if (hasFailure && !effect.halfOnFailure) return;
-    const damageRoll = await (new Roll(effect.formula, { ...caster.getRollData(), level: caster.system.details.level })).evaluate();
+    const formula = damageBonus ? `(${effect.formula}) + ${damageBonus}` : effect.formula;
+    const damageRoll = await (new Roll(formula, { ...caster.getRollData(), level: caster.system.details.level })).evaluate();
     await damageRoll.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: caster }),
-      flavor: `${escapeHTML(spell.name)} — ${escapeHTML(target.name)} (${escapeHTML(effect.formula)})`
+      flavor: `${escapeHTML(spell.name)} — ${escapeHTML(target.name)} (${escapeHTML(formula)})`
     });
     const amount = Math.max(0, Math.floor(hasFailure && effect.halfOnFailure ? damageRoll.total / 2 : damageRoll.total));
     const applied = await target.applyDamage(amount, { type: effect.damageType ?? "unaspected", bypassDR: Boolean(effect.bypassDR) });
@@ -148,9 +157,25 @@ async function showSpellCard(item, actor = null) {
     ui.notifications.warn(game.i18n.format("LA.NotEnoughMP", { cost: number(system.mpCost) }));
     return null;
   }
+  const canAmplify = actor.items?.some(entry => entry.type === "talent" && entry.name === "Amplification");
+  const amplificationLimit = canAmplify ? Math.min(5, Math.floor(number(system.mpCost) / 5)) : 0;
+  let amplificationPenalty = 0;
+  if (amplificationLimit > 0) {
+    amplificationPenalty = await new Promise(resolve => new Dialog({
+      title: game.i18n.localize("LA.Amplification"),
+      content: `<form><p>${game.i18n.format("LA.AmplificationHint", { max: amplificationLimit })}</p><label>${game.i18n.localize("LA.AmplificationPenalty")}<input type="number" name="penalty" min="0" max="${amplificationLimit}" value="0"></label></form>`,
+      buttons: {
+        cast: { label: game.i18n.localize("LA.Continue"), callback: html => resolve(Math.max(0, Math.min(amplificationLimit, Math.floor(number(html.find('[name="penalty"]').val()))))) },
+        cancel: { label: game.i18n.localize("LA.Cancel"), callback: () => resolve(null) }
+      },
+      default: "cast", close: () => resolve(null)
+    }).render(true));
+    if (amplificationPenalty === null) return null;
+  }
   const targets = targetActors(item, actor);
 
   let defensivePenalty = 0;
+  let classCastingNote = "";
   let threatsCount = 0;
   const casterToken = actor.getActiveTokens(false, false)[0] ?? null;
   if (casterToken && canvas?.scene) {
@@ -166,12 +191,25 @@ async function showSpellCard(item, actor = null) {
       no: () => false,
       defaultYes: true
     });
-    if (castDefensively) defensivePenalty = -5 * threatsCount;
+    if (castDefensively) {
+      defensivePenalty = -5 * threatsCount;
+      const classes = actor.items.filter(entry => entry.type === "advanced-class" && number(entry.system.classLevel) > 0);
+      const actionIsQuick = /primary|minor|free/i.test(String(system.action ?? ""));
+      const surecast = actionIsQuick && classes.some(entry => entry.name === "Archmage" && entry.system.classFeatures?.some(feature => feature.name === "Surecast"));
+      const armour = actor.items.find(entry => entry.type === "armor" && entry.system.equipped);
+      const armourType = String(armour?.system.armorType ?? "").toLowerCase();
+      const armourProficient = armour && actor.items.some(entry => entry.type === "technick" && entry.name.toLowerCase() === `armour proficiency (${armourType})`);
+      const arcaneArmour = armourProficient && classes.some(entry => entry.name === "Battlemage" && entry.system.classFeatures?.some(feature => feature.name === "Arcane Armour"));
+      if (surecast || arcaneArmour) {
+        defensivePenalty = 0;
+        classCastingNote = `<p>${game.i18n.localize(surecast ? "LA.SurecastApplied" : "LA.ArcaneArmourApplied")}</p>`;
+      }
+    }
   }
 
   await actor.update({ "system.resources.mp.value": number(actor.system.resources.mp.value) - number(system.mpCost) });
   const bonus = number(actor.system.skills?.spellcraft?.total);
-  const roll = await (new Roll(`1d20 + (${bonus + defensivePenalty})`, actor.getRollData())).evaluate();
+  const roll = await (new Roll(`1d20 + (${bonus + defensivePenalty - amplificationPenalty})`, actor.getRollData())).evaluate();
   const checkTotal = roll.total;
   const { tier, effects } = effectsForTier(system.automation, roll.total);
   const minimumDC = number(system.automation.minimumDC);
@@ -182,17 +220,39 @@ async function showSpellCard(item, actor = null) {
   if (castSucceeded && effects.length) {
     if (targets.length) {
       for (const { actor: target } of targets) {
-        for (const effect of effects) await applySpellEffect(effect, target, actor, item, checkTotal, results);
+        const addle = target.effects.find(active => active.getFlag("last-arc-analogue", "addleEffect")?.casterActorId === actor.id);
+        for (const effect of effects) await applySpellEffect(effect, target, actor, item, checkTotal + (addle ? 5 : 0), results, amplificationPenalty * 2);
+        if (addle && target.effects.has(addle.id)) await target.deleteEmbeddedDocuments("ActiveEffect", [addle.id]);
       }
     } else {
       // A spell can be rolled before choosing a token. Damage is still rolled
       // from the Spellcraft tier, while target defence and damage reduction
       // remain unapplied until the GM has a target to resolve against.
       for (const effect of effects.filter(entry => entry.type === "damage")) {
-        const formula = String(effect.formula).replaceAll("@level", String(number(actor.system.details.level)));
+        const baseFormula = String(effect.formula).replaceAll("@level", String(number(actor.system.details.level)));
+        const formula = amplificationPenalty ? `(${baseFormula}) + ${amplificationPenalty * 2}` : baseFormula;
         const damageRoll = await (new Roll(formula, { ...actor.getRollData(), level: actor.system.details.level })).evaluate();
         results.push(`${item.name}: ${formula} = ${damageRoll.total} ${game.i18n.localize("LA.DamageRolledUnapplied")}`);
         await damageRoll.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${escapeHTML(item.name)} — ${game.i18n.localize("LA.DamageRolledUnapplied")}` });
+      }
+    }
+  }
+  if (targets.length && results.some(result => /\d+\s+(?:fire|cold|electric|dark|holy|damage)/i.test(result))) {
+    const classes = actor.items.filter(entry => entry.type === "advanced-class");
+    const elementalDamage = effects.some(effect => effect.type === "damage" && ["fire", "cold", "electric", "dark", "holy"].includes(String(effect.damageType ?? "").toLowerCase()));
+    const magicalDamage = effects.some(effect => effect.type === "damage");
+    for (const entry of classes) {
+      const classLevel = number(entry.system.classLevel);
+      const featureNames = new Set((entry.system.classFeatures ?? []).map(feature => feature.name));
+      if (classLevel >= 2 && elementalDamage && featureNames.has("Arcane Acumen")) {
+        const mp = actor.system.resources.mp;
+        const gain = Math.min(Math.floor(classLevel / 2), Math.max(0, number(mp.max) - number(mp.value)));
+        if (gain) { await actor.update({ "system.resources.mp.value": number(mp.value) + gain }); results.push(`Arcane Acumen: +${gain} MP`); }
+      }
+      if (classLevel >= 2 && magicalDamage && featureNames.has("Soul Eater")) {
+        const hp = actor.system.resources.hp;
+        const gain = Math.min(Math.floor(classLevel / 2), Math.max(0, number(hp.max) - number(hp.value)));
+        if (gain) { await actor.update({ "system.resources.hp.value": number(hp.value) + gain }); results.push(`Soul Eater: +${gain} HP`); }
       }
     }
   }
@@ -204,7 +264,9 @@ async function showSpellCard(item, actor = null) {
       : hasAutomatedEffects ? `<p>${game.i18n.localize("LA.SpellNoEffectApplied")}</p>`
         : `<p>${game.i18n.localize("LA.SpellManualAdjudication")}</p>`;
   const meleeHint = threatsCount && !defensivePenalty ? `<p>${game.i18n.format("LA.SpellMeleeCounterattackHint", { count: threatsCount })}</p>` : "";
-  const content = `${header}<p><b>${game.i18n.localize("LA.ManaSpent")}:</b> ${number(system.mpCost)} MP · <b>${game.i18n.localize("LA.Targets")}:</b> ${targetLabel}</p><p class="la-result ${castSucceeded ? "success" : "failure"}">${tierLabel} (${roll.total}; ${game.i18n.localize("LA.Spellcraft")} ${signed(defensivePenalty)})</p>${meleeHint}${effectsHtml}`;
+  const totalPenalty = defensivePenalty - amplificationPenalty;
+  const amplificationNote = amplificationPenalty ? `<p>${game.i18n.localize("LA.Amplification")}: ${signed(-amplificationPenalty)} ${game.i18n.localize("LA.Spellcraft")}; +${amplificationPenalty * 2} ${game.i18n.localize("LA.Damage")}</p>` : "";
+  const content = `${header}<p><b>${game.i18n.localize("LA.ManaSpent")}:</b> ${number(system.mpCost)} MP · <b>${game.i18n.localize("LA.Targets")}:</b> ${targetLabel}</p><p class="la-result ${castSucceeded ? "success" : "failure"}">${tierLabel} (${roll.total}; ${game.i18n.localize("LA.Spellcraft")} ${signed(totalPenalty)})</p>${classCastingNote}${amplificationNote}${meleeHint}${effectsHtml}`;
   return ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content });
 }
 

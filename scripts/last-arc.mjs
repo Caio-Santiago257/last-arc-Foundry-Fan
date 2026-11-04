@@ -209,13 +209,16 @@ class LastArcActor extends Actor {
       const attribute = { fort: "vit", ref: "agi", will: "mnd" }[defence];
       const record = system.defences?.[defence] ?? {};
       const classBonus = Math.max(0, ...classItems.map(item => safeNumber(item.system.defenceBonuses?.[defence]) + safeNumber(item.system.selectedEffects?.defenceBonuses?.[defence])));
+      const attributeModifier = defence === "ref" && activeClasses.some(item => ["Divine Benison", "Dark Pact"].some(name => item.system.classFeatures?.some(feature => feature.name === name)))
+        ? Math.max(system.attributes.agi.modifier, system.attributes.mnd.modifier)
+        : system.attributes[attribute].modifier;
       system.defences ??= {};
       system.defences[defence] = {
         ...record,
         base: 10,
-        attributeMod: system.attributes[attribute].modifier,
+        attributeMod: attributeModifier,
         classBonus,
-        total: 10 + (defence === "ref" ? Math.min(system.attributes[attribute].modifier, armourTotals.maxAgilityBonus) : system.attributes[attribute].modifier) + classBonus + (defence === "ref" ? armourTotals.reflexBonus : 0) + safeNumber(system.details.racialEffects?.defenceBonuses?.[defence]) + technickDefences[defence] + performanceDefenceBonuses[defence] + gearDefenceBonuses[defence] + (defence === "ref" && system.combat.emptyHands && !system.combat.flatFooted ? brawlerBonus : 0) + level + safeNumber(record.misc)
+        total: 10 + (defence === "ref" ? Math.min(attributeModifier, armourTotals.maxAgilityBonus) : attributeModifier) + classBonus + (defence === "ref" ? armourTotals.reflexBonus : 0) + safeNumber(system.details.racialEffects?.defenceBonuses?.[defence]) + technickDefences[defence] + performanceDefenceBonuses[defence] + gearDefenceBonuses[defence] + (defence === "ref" && system.combat.emptyHands && !system.combat.flatFooted ? brawlerBonus : 0) + level + safeNumber(record.misc)
       };
     }
     const hp = system.resources?.hp ?? {};
@@ -286,6 +289,7 @@ class LastArcItem extends Item {
     const actor = this.parent;
     if (this.type === "spell") return rollSpell(this);
     if (this.type === "performance") return rollPerformance(this);
+    if (this.type === "talent" && actor) return this.rollTalent(actor);
     let formula = this.system.damage?.formula || this.system.roll?.formula;
     const title = this.name;
     let damageTitle = title;
@@ -337,6 +341,47 @@ class LastArcItem extends Item {
     const details = [this.system.description, this.system.specialRules].filter(Boolean).map(text => `<p>${foundry.utils.escapeHTML(text)}</p>`).join("");
     await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content: `<h3>${foundry.utils.escapeHTML(title)}</h3>${details}` });
     return null;
+  }
+
+  async rollTalent(actor) {
+    const target = [...(game.user?.targets ?? [])][0]?.actor;
+    const name = this.name.toLowerCase();
+    if (/^abyssal drain [i]+$/.test(name) || name === "mana tap") {
+      if (!target) { ui.notifications.warn(game.i18n.localize("LA.SelectTalentTarget")); return null; }
+      const skill = safeNumber(actor.system.skills?.spellcraft?.total);
+      const check = await (new Roll(`1d20 + (${skill})`, actor.getRollData())).evaluate();
+      const defence = name === "mana tap" ? "will" : "fort";
+      const defenceTotal = safeNumber(target.system.defences?.[defence]?.total, 10);
+      const success = check.total > defenceTotal;
+      const cost = name.startsWith("abyssal drain") ? Math.ceil(safeNumber(actor.system.resources.mp.max) / 4) : 0;
+      if (cost && safeNumber(actor.system.resources.mp.value) < cost) { ui.notifications.warn(game.i18n.localize("LA.NotEnoughMana")); return null; }
+      if (cost) await actor.update({ "system.resources.mp.value": safeNumber(actor.system.resources.mp.value) - cost });
+      await check.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${foundry.utils.escapeHTML(this.name)} — Spellcraft vs ${game.i18n.localize(defence === "fort" ? "LA.Fortitude" : "LA.Will")} ${defenceTotal}` });
+      if (name.startsWith("abyssal drain")) {
+        const formula = name.endsWith("ii") ? "8d6" : "4d6";
+        const damage = await (new Roll(formula, actor.getRollData())).evaluate();
+        const rolledDamage = Math.floor(damage.total);
+        const amount = success ? rolledDamage : Math.floor(rolledDamage / 2);
+        await damage.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${foundry.utils.escapeHTML(this.name)} — ${foundry.utils.escapeHTML(target.name)} (${success ? rolledDamage : `${game.i18n.localize("LA.HalfDamage")}: ${amount}`})` });
+        const applied = await target.applyDamage(amount, { type: "dark" });
+        const hp = actor.system.resources.hp;
+        const healed = Math.min(applied, Math.max(0, safeNumber(hp.max) - safeNumber(hp.value)));
+        await actor.update({ "system.resources.hp.value": safeNumber(hp.value) + healed });
+        await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content: `<p>${game.i18n.localize("LA.Healing")}: ${healed} HP (${safeNumber(hp.value) + healed}/${safeNumber(hp.max)}).</p>` });
+        return damage;
+      }
+      if (success) {
+        const drain = await (new Roll("4d6", actor.getRollData())).evaluate();
+        const lost = Math.min(safeNumber(target.system.resources.mp.value), drain.total);
+        await drain.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${foundry.utils.escapeHTML(this.name)} — MP drained` });
+        await target.update({ "system.resources.mp.value": safeNumber(target.system.resources.mp.value) - lost });
+        await actor.update({ "system.resources.mp.value": Math.min(safeNumber(actor.system.resources.mp.max), safeNumber(actor.system.resources.mp.value) + lost) });
+        return drain;
+      }
+      return check;
+    }
+    const detail = [this.system.description, this.system.prerequisites ? `${game.i18n.localize("LA.Requirements")}: ${this.system.prerequisites}` : ""].filter(Boolean).map(text => `<p>${foundry.utils.escapeHTML(text)}</p>`).join("");
+    return ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content: `<h3>${foundry.utils.escapeHTML(this.name)}</h3>${detail}` });
   }
 }
 
@@ -399,11 +444,19 @@ class LastArcActorSheet extends ActorSheet {
     const xpRequired = LEVEL_XP[nextLevel];
     if (!xpRequired || safeNumber(this.actor.system.details.xp) < xpRequired) return;
 
-    const classes = this.actor.items.filter(item => ["class", "advanced-class"].includes(item.type) && safeNumber(item.system.classLevel) > 0);
-    if (!classes.length) return ui.notifications.error(game.i18n.localize("LA.NoLevelClass"));
+    const ownedClasses = this.actor.items.filter(item => ["class", "advanced-class"].includes(item.type) && safeNumber(item.system.classLevel) > 0);
+    const classes = ownedClasses.filter(item => ["class", "advanced-class"].includes(item.type)
+      && (item.type !== "advanced-class" || safeNumber(item.system.classLevel) < 10));
+    if (!ownedClasses.length) return ui.notifications.error(game.i18n.localize("LA.NoLevelClass"));
     const classPack = game.packs.get("last-arc-analogue.classes");
     const ownedClassNames = new Set(classes.filter(item => item.type === "class").map(item => item.name));
-    const availableClasses = classPack ? (await classPack.getDocuments()).filter(item => !ownedClassNames.has(item.name)) : [];
+    const advancedPack = game.packs.get("last-arc-analogue.advanced-classes");
+    const baseAvailable = classPack ? (await classPack.getDocuments()).filter(item => !ownedClassNames.has(item.name)) : [];
+    const advancedAvailable = nextLevel >= 8 && advancedPack ? (await advancedPack.getDocuments()).filter(item =>
+      !this.actor.items.some(owned => owned.type === "advanced-class" && owned.name === item.name)
+      && this._meetsAdvancedClassPrerequisites(item, nextLevel)
+    ) : [];
+    const availableClasses = [...baseAvailable, ...advancedAvailable];
     const classChoices = [...classes.map(item => ({ item, isNew: false })), ...availableClasses.map(item => ({ item, isNew: true }))];
     const selectedClass = classChoices.length === 1 ? classChoices[0] : await this._chooseLevelClass(classes, availableClasses);
     if (!selectedClass) return;
@@ -455,6 +508,26 @@ class LastArcActorSheet extends ActorSheet {
     for (const technick of newTechnicks) await this._grantTechnick(technick);
     if (attributeIncreases?.includes("int")) await this._learnOpenPerformanceSlots();
     ui.notifications.info(game.i18n.format("LA.LevelUpComplete", { level: nextLevel }));
+  }
+
+  _meetsAdvancedClassPrerequisites(item, characterLevel = safeNumber(this.actor.system.details.level, 1)) {
+    const requirements = item.system ?? {};
+    if (characterLevel < safeNumber(requirements.minimumCharacterLevel, 7) + 1) return false;
+    if ((requirements.trainedSkills ?? []).some(key => !this.actor.system.skills[key]?.trained)) return false;
+    const known = values => new Set(values.map(value => String(value).normalize("NFKC").toLowerCase().replace(/\s+/g, " ").trim()));
+    const techItems = this.actor.items.filter(entry => entry.type === "technick");
+    const technicks = known(techItems.flatMap(entry => [entry.name, ...(entry.system.selectedWeaponGroup ? [`Weapon Proficiency (${entry.system.selectedWeaponGroup})`] : []), ...(entry.system.selectedSkill ? [`Skill Focus (${entry.system.selectedSkill})`] : [])]));
+    if ((requirements.requiredTechnickGroups ?? []).some(group => !group.some(name => technicks.has(name.toLowerCase())))) return false;
+    const talents = this.actor.items.filter(entry => entry.type === "talent");
+    const talentNames = known(talents.map(entry => entry.name));
+    const usedTalents = new Set();
+    for (const rule of requirements.requiredTalentGroups ?? []) {
+      const candidates = talents.filter(talent => !usedTalents.has(talent.id) && (rule.trees?.includes(talent.system.tree) || rule.names?.some(name => talentNames.has(name.toLowerCase()) && name.toLowerCase() === talent.name.toLowerCase())));
+      const needed = safeNumber(rule.count, 1);
+      if (candidates.length < needed) return false;
+      for (const talent of candidates.slice(0, needed)) usedTalents.add(talent.id);
+    }
+    return true;
   }
 
   async _chooseLevelClass(classes, availableClasses) {
@@ -810,24 +883,52 @@ class LastArcActorSheet extends ActorSheet {
       ui.notifications.warn(`${itemData.name}: add its progression, defence, HP/MP, and skills to the compendium item before applying it.`);
       return false;
     }
+    if (itemData.type === "advanced-class") {
+      const effectiveLevel = levelUp ? safeNumber(this.actor.system.details.level, 1) + 1 : safeNumber(this.actor.system.details.level, 1);
+      if (!this._meetsAdvancedClassPrerequisites(itemData, effectiveLevel)) {
+        ui.notifications.warn(game.i18n.format("LA.AdvancedClassPrerequisiteFailed", { name: foundry.utils.escapeHTML(itemData.name), requirements: foundry.utils.escapeHTML(itemData.system.prerequisiteSummary ?? "See the class entry for its requirements.") }));
+        return false;
+      }
+    }
     const choices = levelUp
       ? { selectedChoices: itemData.system.selectedChoices ?? [], effects: itemData.system.selectedEffects ?? {} }
       : await this._chooseItemOption(itemData, itemData.type);
     if (choices === null) return false;
     const selectedSubclass = choices.selectedChoices?.[0]?.value ?? itemData.system.selectedSubclass ?? "";
+    if (itemData.type === "advanced-class") {
+      const pack = game.packs.get("last-arc-analogue.advanced-classes");
+      const canonical = pack && (await pack.getDocuments()).find(entry => entry.name === itemData.name);
+      if (canonical) {
+        for (const [key, value] of Object.entries(canonical.system)) {
+          const current = itemData.system[key];
+          if (current === undefined || current === null || current === "" || Array.isArray(current) && !current.length) itemData.system[key] = foundry.utils.deepClone(value);
+        }
+      }
+    }
     itemData.system.talentTrees ??= CLASS_TALENT_TREES[itemData.name] ?? [];
     const existing = this.actor.items.find(item => item.type === itemData.type && item.name === itemData.name && (item.system.selectedSubclass ?? "") === selectedSubclass);
     const oldMaxHP = safeNumber(this.actor.system.resources.hp.max);
     const oldMaxMP = safeNumber(this.actor.system.resources.mp.max);
     if (existing) {
       const nextLevel = safeNumber(existing.system.classLevel, 1) + 1;
-      const classTrees = existing.system.talentTrees?.length ? existing.system.talentTrees : CLASS_TALENT_TREES[existing.name] ?? [];
+      const classTrees = existing.system.talentTrees?.length ? existing.system.talentTrees : itemData.system.talentTrees?.length ? itemData.system.talentTrees : CLASS_TALENT_TREES[existing.name] ?? [];
+      const talentLevels = existing.system.talentLevels?.length ? existing.system.talentLevels : itemData.system.talentLevels ?? [];
       let talentSelection = null;
-      if ((existing.system.talentLevels ?? []).includes(nextLevel)) talentSelection = await this._chooseClassTalent(existing);
-      if ((existing.system.talentLevels ?? []).includes(nextLevel) && classTrees.length && !talentSelection) return false;
+      if (talentLevels.includes(nextLevel)) talentSelection = await this._chooseClassTalent({ ...existing, system: { ...existing.system, talentTrees: classTrees } });
+      if (talentLevels.includes(nextLevel) && classTrees.length && !talentSelection) return false;
       const selectedTrees = [...new Set([...(existing.system.selectedTalentTrees ?? []), ...(talentSelection ? [talentSelection.tree] : [])])];
-      await existing.update({ "system.classLevel": nextLevel, "system.talentTrees": classTrees, "system.selectedTalentTrees": selectedTrees });
+      await existing.update({
+        "system.classLevel": nextLevel,
+        "system.talentTrees": classTrees,
+        "system.talentLevels": talentLevels,
+        "system.classFeatures": existing.system.classFeatures?.length ? existing.system.classFeatures : itemData.system.classFeatures ?? [],
+        "system.hpPerLevel": safeNumber(existing.system.hpPerLevel) || safeNumber(itemData.system.hpPerLevel),
+        "system.mpPerLevel": safeNumber(existing.system.mpPerLevel) || safeNumber(itemData.system.mpPerLevel),
+        "system.defenceBonuses": Object.keys(existing.system.defenceBonuses ?? {}).length ? existing.system.defenceBonuses : itemData.system.defenceBonuses ?? {},
+        "system.selectedTalentTrees": selectedTrees
+      });
       if (talentSelection) await this._createTalentItem(talentSelection.talent, existing);
+      await this._grantClassFeatures(existing, nextLevel);
       await this._recalculateClassResources(oldMaxHP, oldMaxMP);
       return existing;
     }
@@ -868,14 +969,28 @@ class LastArcActorSheet extends ActorSheet {
     const created = await this.actor.createEmbeddedDocuments("Item", [itemData]);
     if (trainedSkills.length) await this.actor.update(Object.fromEntries(trainedSkills.map(key => [`system.skills.${key}.trained`, true])));
     if (talentSelection) await this._createTalentItem(talentSelection.talent, created[0]);
+    await this._grantClassFeatures(created[0], safeNumber(itemData.system.classLevel, 1));
     await this._recalculateClassResources(oldMaxHP, oldMaxMP);
     for (const technick of awardedTechnicks) await this._grantTechnick(technick);
     return created;
   }
 
   async _chooseClassTalent(classItem) {
-    const trees = classItem.system.talentTrees?.length ? classItem.system.talentTrees : CLASS_TALENT_TREES[classItem.name] ?? [];
-    if (!trees.length) return null;
+    const pack = game.packs.get("last-arc-analogue.talents");
+    if (!pack) {
+      ui.notifications.error(game.i18n.localize("LA.TalentPackUnavailable"));
+      return null;
+    }
+    const documents = await pack.getDocuments();
+    const ownedNames = new Set(this.actor.items.filter(item => item.type === "talent" && !item.system.repeatable).map(item => item.name));
+    const allTrees = classItem.system.talentTrees?.length ? classItem.system.talentTrees : CLASS_TALENT_TREES[classItem.name] ?? [];
+    const trees = allTrees.filter(tree => documents.some(item => item.system.tree === tree
+      && (item.system.repeatable || !ownedNames.has(item.name))
+      && this._meetsTalentPrerequisites(item)));
+    if (!trees.length) {
+      ui.notifications.warn(game.i18n.localize("LA.NoEligibleClassTalents"));
+      return null;
+    }
     const tree = await new Promise(resolve => new Dialog({
       title: game.i18n.localize("LA.SelectTalentTree"),
       content: `<form><p>${game.i18n.format("LA.SelectTalentTreeHint", { className: foundry.utils.escapeHTML(classItem.name) })}</p><select name="tree">${trees.map((name, index) => `<option value="${index}">${foundry.utils.escapeHTML(name)}</option>`).join("")}</select></form>`,
@@ -886,13 +1001,9 @@ class LastArcActorSheet extends ActorSheet {
       default: "choose", close: () => resolve(null)
     }).render(true));
     if (!tree) return null;
-    const pack = game.packs.get("last-arc-analogue.talents");
-    if (!pack) {
-      ui.notifications.error(game.i18n.localize("LA.TalentPackUnavailable"));
-      return null;
-    }
-    const ownedNames = new Set(this.actor.items.filter(item => item.type === "talent" && !item.system.repeatable).map(item => item.name));
-    const talents = (await pack.getDocuments()).filter(item => item.system.className === classItem.name && item.system.tree === tree && (item.system.repeatable || !ownedNames.has(item.name)));
+    const talents = documents.filter(item => item.system.tree === tree
+      && (item.system.repeatable || !ownedNames.has(item.name))
+      && this._meetsTalentPrerequisites(item));
     if (!talents.length) {
       ui.notifications.error(game.i18n.format("LA.NoTalentsForTree", { tree: foundry.utils.escapeHTML(tree) }));
       return null;
@@ -912,6 +1023,20 @@ class LastArcActorSheet extends ActorSheet {
     return talent ? { tree, talent } : null;
   }
 
+  _meetsTalentPrerequisites(item) {
+    const raw = String(item.system.prerequisites ?? "").trim();
+    if (!raw || /^(?:see the rulebook|see page)\b/i.test(raw) || /^none$/i.test(raw)) return true;
+    const normalize = value => value.normalize("NFKC").toLowerCase().replace(/\s+/g, " ").trim();
+    const known = new Set(this.actor.items.filter(entry => ["talent", "technick"].includes(entry.type)).flatMap(entry => [entry.name, ...(entry.system.selectedWeaponGroup ? [`Weapon Proficiency (${entry.system.selectedWeaponGroup})`] : []), ...(entry.system.selectedSkill ? [`Skill Focus (${entry.system.selectedSkill})`] : [])]).map(normalize));
+    const trainedSkillNames = { "perform dance": "perform", "perform instrument": "perform", "perform oratory": "perform", "lore arcane": "lore-terrestrial", "lore mystic": "lore-mystic", "lore occult": "lore-occult", "lore terrestrial": "lore-terrestrial" };
+    const parts = raw.replace(/\bTrained in\s+/gi, "trained:").split(/,|\band\b/i).map(value => value.trim()).filter(Boolean);
+    return parts.every(part => {
+      const trained = part.match(/^trained:\s*(.*)$/i);
+      if (trained) return Boolean(this.actor.system.skills[trainedSkillNames[normalize(trained[1].replace(/[()]/g, ""))]]?.trained);
+      return known.has(normalize(part));
+    });
+  }
+
   async _createTalentItem(itemData, classItem) {
     delete itemData._id;
     delete itemData.folder;
@@ -922,6 +1047,19 @@ class LastArcActorSheet extends ActorSheet {
     itemData.flags["last-arc-analogue"] ??= {};
     itemData.flags["last-arc-analogue"].classItemId = classItem.id;
     return this.actor.createEmbeddedDocuments("Item", [itemData]);
+  }
+
+  async _grantClassFeatures(classItem, classLevel) {
+    const features = (classItem.system.classFeatures ?? []).filter(feature => safeNumber(feature.level, 1) <= classLevel);
+    const existing = new Set(this.actor.items.filter(item => item.type === "feature" && item.flags?.["last-arc-analogue"]?.classItemId === classItem.id).map(item => item.flags["last-arc-analogue"].featureKey));
+    const rows = features.filter(feature => !existing.has(`${feature.level}:${feature.name}`)).map(feature => ({
+      name: `${classItem.name}: ${feature.name}`,
+      type: "feature",
+      img: classItem.img || "icons/svg/item-bag.svg",
+      system: { category: "Class Feature", sourceClass: classItem.name, classLevel: feature.level, description: feature.description, automation: feature.automation ?? {} },
+      flags: { "last-arc-analogue": { classItemId: classItem.id, featureKey: `${feature.level}:${feature.name}`, advancedClassFeature: true } }
+    }));
+    if (rows.length) await this.actor.createEmbeddedDocuments("Item", rows);
   }
 
   async _recalculateClassResources(oldMaxHP, oldMaxMP) {

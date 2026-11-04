@@ -1,6 +1,6 @@
 # Last Arc: Tactics Analogue for Foundry VTT
 
-Unofficial Foundry VTT system framework for Last Arc: Tactics Analogue. This release provides structured race, class, Technick, Performance, and Magick compendium records with automation for core character calculations and supported effects. It does not redistribute artwork or verbatim rulebook descriptions.
+Unofficial Foundry VTT system framework for Last Arc: Tactics Analogue. This release provides structured race, class, Technick, Performance, Magick, and advanced-class talent records with automation for character calculations and supported effects. The repository includes rule text data and does not redistribute rulebook artwork.
 
 ## Install
 
@@ -58,6 +58,8 @@ Version 0.2.14 lets players assign the six generated attribute values to any att
 Version 0.2.15 leaves all attribute assignment selectors empty so players choose every value themselves, and posts each 2d6 roll with its paired generated values to chat before assignment.
 
 Version 0.2.16 capitalizes the English Ranged skill label.
+
+Version 0.2.17 adds requirements, defence and HP/MP progression, feature references, level tables, and permitted talent trees for all 18 advanced classes. Level-up offers eligible advanced classes when advancing to character level 8, then prompts for a tree and an eligible talent at the new class's first level and later talent levels. The talents pack includes all 156 advanced-class-tree talents with descriptions and prerequisites. Talent rolls include Abyssal Drain I/II and Mana Tap; Magick casting supports Amplification and Addle, and class passives with direct derived effects include the Mind-based Reflex substitution, Arcane Acumen, and Soul Eater. Other situational talents and encounter-only features remain described in the item or Feature entry for manual resolution.
 
 ## Attribution and status
 

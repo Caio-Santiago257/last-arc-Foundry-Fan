@@ -21,6 +21,14 @@
         {{#if isArmor}}<label>Armor type<input name="system.armorType" value="{{system.armorType}}"></label><label>Reflex bonus<input type="number" name="system.reflexBonus" value="{{system.reflexBonus}}"></label><label>{{localize "LA.DamageReduction"}}<input type="number" name="system.damageReduction" value="{{system.damageReduction}}"></label><label>Max Agility bonus<input type="number" name="system.maxAgilityBonus" value="{{system.maxAgilityBonus}}"></label><label>Physical DR<input type="number" name="system.physicalDamageReduction" value="{{system.physicalDamageReduction}}"></label><label>Elemental DR<input type="number" name="system.elementalDamageReduction" value="{{system.elementalDamageReduction}}"></label>{{/if}}
         <label class="la-item-special">Special rules<textarea name="system.specialRules">{{system.specialRules}}</textarea></label>
       </section>
+      {{#if isClass}}<section class="la-panel la-class-progression"><h2>{{localize "LA.AdvancedClassProgression"}}</h2>
+        {{#if system.requirementText}}<p><strong>{{localize "LA.Requirements"}}:</strong> {{system.requirementText}}</p>{{/if}}
+        <p>{{localize "LA.ClassTreeChoices"}}: {{#each system.talentTrees as |tree|}}{{tree}}{{#unless @last}}, {{/unless}}{{/each}}</p>
+        {{#if system.specialRequirement}}<p><strong>{{localize "LA.SpecialRequirement"}}:</strong> {{system.specialRequirement}}</p>{{/if}}
+        {{#if system.classFeatures}}<ul>{{#each system.classFeatures as |feature|}}<li><strong>{{localize "LA.ClassLevel"}} {{feature.level}} · {{feature.name}}:</strong> {{feature.description}}</li>{{/each}}</ul>{{/if}}
+        {{#if system.featureReference}}<p class="la-class-feature-reference">{{system.featureReference}}</p>{{/if}}
+        {{#if system.levelProgression}}<table class="la-class-progression-table"><thead><tr><th>{{localize "LA.ClassLevel"}}</th><th>{{localize "LA.ClassFeatures"}}</th></tr></thead><tbody>{{#each system.levelProgression as |level|}}<tr><td>{{level.level}}</td><td>{{level.features}}</td></tr>{{/each}}</tbody></table>{{/if}}
+      </section>{{/if}}
       {{#if isSpell}}<section class="la-panel"><h2>{{localize "LA.Magick"}}</h2><div class="la-item-fields">
         <label>{{localize "LA.SpellSchool"}}<select name="system.school"><option value="Black Magick" {{#if (eq system.school "Black Magick")}}selected{{/if}}>Black Magick</option><option value="Blue Magick" {{#if (eq system.school "Blue Magick")}}selected{{/if}}>Blue Magick</option><option value="Green Magick" {{#if (eq system.school "Green Magick")}}selected{{/if}}>Green Magick</option><option value="Red Magick" {{#if (eq system.school "Red Magick")}}selected{{/if}}>Red Magick</option><option value="White Magick" {{#if (eq system.school "White Magick")}}selected{{/if}}>White Magick</option></select></label>
         <label>{{localize "LA.ManaCost"}}<input name="system.mpCost" type="number" min="0" value="{{system.mpCost}}"></label>
