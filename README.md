@@ -57,6 +57,8 @@ Version 0.2.14 lets players assign the six generated attribute values to any att
 
 Version 0.2.15 leaves all attribute assignment selectors empty so players choose every value themselves, and posts each 2d6 roll with its paired generated values to chat before assignment.
 
+Version 0.2.16 capitalizes the English Ranged skill label.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork. The system code is provided without an added license until the repository owner chooses one.
