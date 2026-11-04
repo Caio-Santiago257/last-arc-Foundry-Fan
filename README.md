@@ -65,6 +65,8 @@ Version 0.2.18 refreshes advanced-class data from its compendium before prerequi
 
 Version 0.2.19 grants bonus Technicks according to the selected base class's class-level progression. Character-level parity no longer triggers a Mage bonus when advancing into a new advanced class.
 
+Version 0.2.20 prompts for eligible Magicks whenever Arcane Study is learned. Each copy grants a new selection of 1 + Intelligence modifier spells (minimum 1), excluding spells already known and checking any recorded spell prerequisites.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork. The system code is provided without an added license until the repository owner chooses one.

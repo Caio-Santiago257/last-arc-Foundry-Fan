@@ -745,15 +745,22 @@ class LastArcActorSheet extends ActorSheet {
 
   async _grantTechnick(itemData) {
     let performances = [];
+    let spells = [];
     if (itemData.name === "Bardic Study") {
       const slots = Math.max(0, safeNumber(itemData.system.effects?.performanceSlotsPerCopy) * (1 + safeNumber(this.actor.system.attributes.int?.modifier)));
       performances = await this._choosePerformances(slots);
       if (!performances) return null;
     }
+    if (itemData.name === "Arcane Study") {
+      const slots = Math.max(1, safeNumber(itemData.system.effects?.spellSlotsPerCopy, 1) * (1 + safeNumber(this.actor.system.attributes.int?.modifier)));
+      spells = await this._chooseSpells(slots);
+      if (!spells) return null;
+    }
     const oldMaxHP = safeNumber(this.actor.system.resources.hp.max);
     const oldMaxMP = safeNumber(this.actor.system.resources.mp.max);
     const [created] = await this.actor.createEmbeddedDocuments("Item", [itemData]);
     if (performances.length) await this.actor.createEmbeddedDocuments("Item", performances.map(item => item.toObject()));
+    if (spells.length) await this.actor.createEmbeddedDocuments("Item", spells.map(item => item.toObject()));
     if (itemData.system.selectedSkill && itemData.system.choice?.type === "classSkillTraining") {
       await this.actor.update({ [`system.skills.${itemData.system.selectedSkill}.trained`]: true });
     }
@@ -763,6 +770,68 @@ class LastArcActorSheet extends ActorSheet {
     }
     await this._recalculateClassResources(oldMaxHP, oldMaxMP);
     return created;
+  }
+
+  _meetsSpellLearningPrerequisites(spell) {
+    const requirements = spell.system.prerequisites ?? {};
+    const level = safeNumber(this.actor.system.details.level, 1);
+    if (level < safeNumber(requirements.characterLevel)) return false;
+    for (const [attribute, minimum] of Object.entries(requirements.attributes ?? {})) {
+      if (safeNumber(this.actor.system.attributes[attribute]?.score) < safeNumber(minimum)) return false;
+    }
+    for (const skill of requirements.skills ?? []) if (!this.actor.system.skills[skill]?.trained) return false;
+    const known = new Set(this.actor.items.filter(item => ["technick", "spell"].includes(item.type)).map(item => item.name.toLowerCase()));
+    for (const technick of requirements.technicks ?? []) if (!known.has(String(technick).toLowerCase())) return false;
+    if (requirements.classes?.length) {
+      const classNames = new Set(this.actor.items.filter(item => ["class", "advanced-class"].includes(item.type)).map(item => item.name.toLowerCase()));
+      if (!requirements.classes.some(name => classNames.has(String(name).toLowerCase()))) return false;
+    }
+    if (requirements.schools?.length && !requirements.schools.some(school => String(school).toLowerCase() === String(spell.system.school ?? "").toLowerCase())) return false;
+    return true;
+  }
+
+  async _chooseSpells(count) {
+    const required = Math.max(1, Math.floor(safeNumber(count, 1)));
+    const packNames = ["magick-black", "magick-blue", "magick-green", "magick-red", "magick-white"];
+    const packs = packNames.map(name => game.packs.get(`last-arc-analogue.${name}`)).filter(Boolean);
+    if (!packs.length) {
+      ui.notifications.error(game.i18n.localize("LA.MagickPacksUnavailable"));
+      return null;
+    }
+    const documents = (await Promise.all(packs.map(pack => pack.getDocuments()))).flat();
+    const known = new Set(this.actor.items.filter(item => item.type === "spell").map(item => item.name.toLowerCase()));
+    const choices = documents.filter(item => !known.has(item.name.toLowerCase()) && this._meetsSpellLearningPrerequisites(item));
+    if (choices.length < required) {
+      ui.notifications.error(game.i18n.format("LA.NotEnoughLearnableSpells", { required, available: choices.length }));
+      return null;
+    }
+    const rows = choices.map((item, index) => {
+      const description = foundry.utils.escapeHTML(item.system.description ?? "");
+      const detail = `${foundry.utils.escapeHTML(item.system.school ?? "")} · ${safeNumber(item.system.mpCost)} MP`;
+      const requirements = item.system.prerequisites?.summary ?? "";
+      return `<label class="la-choice-row"><input type="checkbox" name="spell" value="${index}"><span><strong>${foundry.utils.escapeHTML(item.name)}</strong><small>${detail}${requirements ? ` · ${game.i18n.localize("LA.Requirements")}: ${foundry.utils.escapeHTML(requirements)}` : ""}</small><small>${description}</small></span></label>`;
+    }).join("");
+    const selected = await new Promise(resolve => new Dialog({
+      title: game.i18n.localize("LA.LearnMagicks"),
+      content: `<form class="la-spell-choice-form"><p>${game.i18n.format("LA.SelectMagicksHint", { count: required })}</p><p class="la-spell-choice-count">${game.i18n.format("LA.SelectedMagicksCount", { selected: 0, count: required })}</p><fieldset>${rows}</fieldset></form>`,
+      buttons: {
+        choose: { label: game.i18n.localize("LA.Choose"), callback: html => {
+          const checked = html.find('input[name="spell"]:checked').map((_, input) => Number(input.value)).get();
+          if (checked.length !== required) {
+            ui.notifications.warn(game.i18n.format("LA.SelectMagicksError", { required, selected: checked.length }));
+            resolve(null);
+          } else resolve(checked.map(index => choices[index]).filter(Boolean));
+        } },
+        cancel: { label: game.i18n.localize("LA.Cancel"), callback: () => resolve(null) }
+      },
+      default: "choose", close: () => resolve(null),
+      render: html => html.find('input[name="spell"]').on("change", event => {
+        if (html.find('input[name="spell"]:checked').length > required) event.currentTarget.checked = false;
+        const current = html.find('input[name="spell"]:checked').length;
+        html.find(".la-spell-choice-count").text(game.i18n.format("LA.SelectedMagicksCount", { selected: current, count: required }));
+      })
+    }).render(true));
+    return selected;
   }
 
   async _startingTechnickData(names = [], classItem, projectedTrainedSkills = []) {
