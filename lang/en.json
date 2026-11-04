@@ -107,6 +107,12 @@
     "Failure": "Failure",
     "Unaspected": "unaspected",
     "Ranged": "ranged",
+    "OneHanded": "1-Handed",
+    "TwoHanded": "2-Handed",
+    "LightWeapon": "Light Weapon",
+    "Unarmed": "Unarmed",
+    "WeaponSkill": "Attack skill",
+    "WeaponBonus": "Weapon bonus",
     "Melee": "melee",
     "RangedDamage": "ranged weapon damage",
     "MeleeDamage": "melee weapon damage",
@@ -182,7 +188,8 @@
       "crossbows": "Crossbows",
       "knives": "Knives",
       "polearms": "Polearms",
-      "swords": "Swords"
+      "swords": "Swords",
+      "staves": "Staves"
     },
     "ItemCategory": "Category",
     "SkillBonuses": "Class skill bonuses",
@@ -286,6 +293,11 @@
     "TalentSummary": "Talent summary",
     "TalentPrerequisiteHint": "Check the book for exact prerequisites and rules. The chosen talent will be added to the Features tab.",
     "TalentPackUnavailable": "The talent compendium is unavailable. Reinstall or update the system and try again.",
-    "NoTalentsForTree": "No talent entries are registered for the {tree} tree. Update the talent compendium."
+    "NoTalentsForTree": "No talent entries are registered for the {tree} tree. Update the talent compendium.",
+    "Equipped": "Equipped",
+    "GearResistances": "Resistances from equipped gear",
+    "GearImmunities": "Immunities from equipped gear",
+    "ShieldBlock": "Shield block",
+    "BlockPenalty": "cumulative block penalty"
   }
 }

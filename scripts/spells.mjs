@@ -49,9 +49,17 @@ function durationData(effect) {
   return rounds > 0 ? { rounds } : {};
 }
 
-async function applyCondition(target, caster, spell, condition, rounds = 0, changes = []) {
+async function applyCondition(target, caster, spell, condition, rounds = 0, changes = [], { checkImmunity = true } = {}) {
   if (!target?.createEmbeddedDocuments) return;
   const status = String(condition ?? "effect");
+  const normalizedStatus = status.toLowerCase().replace(/[ _-]/g, "");
+  const immunities = [target.system.combat?.immunities, target.system.combat?.equipmentImmunities]
+    .flatMap(value => Array.isArray(value) ? value : String(value ?? "").split(/[,;\n]+/))
+    .map(value => String(value).trim().toLowerCase().replace(/[ _-]/g, "")).filter(Boolean);
+  const statusImmune = checkImmunity && target.system.combat?.equipmentAllStatusImmunities && !["curse", "curses"].includes(normalizedStatus);
+  const mindEffectImmune = checkImmunity && target.system.combat?.equipmentMindEffectImmunity
+    && ["charm", "charmed", "confusion", "confused", "fear", "muddle", "sleep"].includes(normalizedStatus);
+  if (statusImmune || mindEffectImmune || (checkImmunity && (immunities.includes("all") || immunities.includes(normalizedStatus) || (normalizedStatus === "cursed" && immunities.includes("curse"))))) return false;
   const existing = target.effects.find(effect => effect.getFlag("last-arc-analogue", "spellName") === spell.name && effect.getFlag("last-arc-analogue", "condition") === status);
   if (existing) await existing.delete();
   await target.createEmbeddedDocuments("ActiveEffect", [{
@@ -64,6 +72,7 @@ async function applyCondition(target, caster, spell, condition, rounds = 0, chan
     statuses: [status],
     flags: { "last-arc-analogue": { spell: true, dispellable: /may be dispelled/i.test(spell.system.specialRules ?? ""), spellName: spell.name, condition: status } }
   }]);
+  return true;
 }
 
 async function applySpellEffect(effect, target, caster, spell, checkTotal, results) {
@@ -105,10 +114,10 @@ async function applySpellEffect(effect, target, caster, spell, checkTotal, resul
     results.push(`${target.name}: +${value - number(hp.value)} HP`);
   } else if (effect.type === "condition") {
     if (effect.defence && hasFailure) return;
-    await applyCondition(target, caster, spell, effect.status, effect.durationRounds, effect.changes ?? []);
-    results.push(`${target.name}: ${effect.status}`);
+    const applied = await applyCondition(target, caster, spell, effect.status, effect.durationRounds, effect.changes ?? []);
+    results.push(`${target.name}: ${applied ? effect.status : `immune to ${effect.status}`}`);
   } else if (effect.type === "change") {
-    await applyCondition(target, caster, spell, effect.label ?? "bonus", effect.durationRounds, [{ key: effect.key, mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: effect.value }]);
+    await applyCondition(target, caster, spell, effect.label ?? "bonus", effect.durationRounds, [{ key: effect.key, mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: effect.value }], { checkImmunity: false });
     results.push(`${target.name}: ${effect.label ?? "bonus"} ${effect.value >= 0 ? "+" : ""}${effect.value}`);
   } else if (effect.type === "dispel") {
     const targetWill = number(target.system.defences?.will?.total, 10) - (target === caster ? 5 : 0);

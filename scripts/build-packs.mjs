@@ -10,6 +10,16 @@ await mkdir(outputDir, { recursive: true });
 
 const { SPELLS } = await import("./spell-catalog.mjs");
 const { PERFORMANCES } = await import("./performance-catalog.mjs");
+const EQUIPAGE_PACKS = {
+  "Axes": "equipage-axes", "Bludgeons": "equipage-bludgeons", "Knives": "equipage-knives", "Polearms": "equipage-polearms",
+  "Swords": "equipage-swords", "Bows": "equipage-bows", "Crossbows": "equipage-crossbows", "Staves": "equipage-staves",
+  "Shields": "equipage-shields", "Light Armour": "equipage-light-armour", "Heavy Armour": "equipage-heavy-armour",
+  "Mystic Armour": "equipage-mystic-armour", "Bardic Instruments": "equipage-instruments", "Accessories": "equipage-accessories",
+  "Consumables": "equipage-consumables", "Poisons": "equipage-poisons", "Ammunition": "equipage-ammunition",
+  "Black Magick Scrolls": "equipage-scrolls-black", "Blue Magick Scrolls": "equipage-scrolls-blue", "Green Magick Scrolls": "equipage-scrolls-green",
+  "Red Magick Scrolls": "equipage-scrolls-red", "White Magick Scrolls": "equipage-scrolls-white", "Orchestral Scores": "equipage-scores",
+  "Adventuring Gear": "equipage-adventuring-gear", "Prosthetics": "equipage-prosthetics", "Mounts": "equipage-mounts", "Crafting Resources": "equipage-resources"
+};
 const schoolPacks = new Map([
   ["Black Magick", "magick-black"], ["Blue Magick", "magick-blue"], ["Green Magick", "magick-green"],
   ["Red Magick", "magick-red"], ["White Magick", "magick-white"]
@@ -28,6 +38,14 @@ for (const file of await readdir(sourceDir)) {
   const packName = file.slice(0, -5);
   if (packName === "spells") continue;
   const raw = JSON.parse(await readFile(join(sourceDir, file), "utf8"));
+  if (packName === "equipage") {
+    for (const [category, pack] of Object.entries(EQUIPAGE_PACKS)) {
+      const rows = raw.filter(entry => entry.system?.category === category).map(entry => makePackRow(pack, entry));
+      await writeFile(join(outputDir, `${pack}.db`), rows.map(row => JSON.stringify(row)).join("\n") + (rows.length ? "\n" : ""), "utf8");
+      console.log(`${pack}: ${rows.length} documents`);
+    }
+    continue;
+  }
   const rows = raw.map(entry => makePackRow(packName, entry));
   await writeFile(join(outputDir, `${packName}.db`), rows.map(row => JSON.stringify(row)).join("\n") + (rows.length ? "\n" : ""), "utf8");
   console.log(`${packName}: ${rows.length} documents`);

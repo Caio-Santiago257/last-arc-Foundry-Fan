@@ -107,6 +107,12 @@
     "Failure": "Falha",
     "Unaspected": "não tipado",
     "Ranged": "à distância",
+    "OneHanded": "1-Handed",
+    "TwoHanded": "2-Handed",
+    "LightWeapon": "Light Weapon",
+    "Unarmed": "Unarmed",
+    "WeaponSkill": "Perícia de ataque",
+    "WeaponBonus": "Bônus da arma",
     "Melee": "corpo a corpo",
     "RangedDamage": "dano de armas à distância",
     "MeleeDamage": "dano de armas corpo a corpo",
@@ -182,7 +188,8 @@
       "crossbows": "Bestas",
       "knives": "Facas",
       "polearms": "Armas de haste",
-      "swords": "Espadas"
+      "swords": "Espadas",
+      "staves": "Cajados"
     },
     "ItemCategory": "Categoria",
     "SkillBonuses": "Bônus de classe nas perícias",
@@ -286,6 +293,11 @@
     "TalentSummary": "Resumo do talento",
     "TalentPrerequisiteHint": "Confira os pré-requisitos e detalhes exatos no livro. O talento escolhido será adicionado à aba Características.",
     "TalentPackUnavailable": "O compêndio de talentos não está disponível. Reinstale ou atualize o sistema e tente novamente.",
-    "NoTalentsForTree": "Não há talentos cadastrados para a árvore {tree}. Atualize o compêndio de talentos."
+    "NoTalentsForTree": "Não há talentos cadastrados para a árvore {tree}. Atualize o compêndio de talentos.",
+    "Equipped": "Equipado",
+    "GearResistances": "Resistências do equipamento vestido",
+    "GearImmunities": "Imunidades do equipamento vestido",
+    "ShieldBlock": "Bloqueio com escudo",
+    "BlockPenalty": "penalidade cumulativa de bloqueio"
   }
 }

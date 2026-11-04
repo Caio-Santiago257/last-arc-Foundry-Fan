@@ -25,6 +25,7 @@
           <button type="button" class="item-delete la-icon-button" title="{{localize 'LA.Delete'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
           <small class="la-feature-description">{{item.system.description}}</small>
         {{else}}
+          {{#if (or (eq item.type "armor") item.system.equippable)}}<label class="la-item-equipped"><input type="checkbox" data-item-equipped data-item-id="{{item.id}}" {{checked item.system.equipped}}>{{localize "LA.Equipped"}}</label>{{/if}}
           {{#if (eq item.type "class")}}
             <button type="button" class="item-edit la-link">{{item.name}} · {{item.system.classLevel}} {{localize "LA.ClassLevels"}}</button>
             <button type="button" class="item-delete la-icon-button" title="{{localize 'LA.Delete'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>

@@ -2,39 +2,389 @@
   "id": "last-arc-analogue",
   "title": "Last Arc: Tactics Analogue (Fan System)",
   "description": "Community-built Foundry VTT system framework for Last Arc: Tactics Analogue.",
-  "version": "0.2.12",
-  "compatibility": { "minimum": 12, "verified": 13 },
-  "authors": [{ "name": "Caio Santiago" }],
-  "esmodules": ["scripts/last-arc.mjs"],
-  "styles": ["styles/last-arc.css"],
-  "languages": [{ "lang": "pt-BR", "name": "Português (Brasil)", "path": "lang/pt-BR.json" }, { "lang": "en", "name": "English", "path": "lang/en.json" }],
+  "version": "0.2.13",
+  "compatibility": {
+    "minimum": 12,
+    "verified": 13
+  },
+  "authors": [
+    {
+      "name": "Caio Santiago"
+    }
+  ],
+  "esmodules": [
+    "scripts/last-arc.mjs"
+  ],
+  "styles": [
+    "styles/last-arc.css"
+  ],
+  "languages": [
+    {
+      "lang": "pt-BR",
+      "name": "Português (Brasil)",
+      "path": "lang/pt-BR.json"
+    },
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
   "packs": [
-    { "name": "races", "label": "Raças", "path": "packs/races.db", "type": "Item", "system": "last-arc-analogue" },
-    { "name": "classes", "label": "Classes Base", "path": "packs/classes.db", "type": "Item", "system": "last-arc-analogue" },
-    { "name": "advanced-classes", "label": "Classes Avançadas", "path": "packs/advanced-classes.db", "type": "Item", "system": "last-arc-analogue" },
-    { "name": "talents", "label": "Talentos", "path": "packs/talents.db", "type": "Item", "system": "last-arc-analogue" },
-    { "name": "technicks", "label": "Technicks", "path": "packs/technicks.db", "type": "Item", "system": "last-arc-analogue" },
-    { "name": "performances", "label": "Performances", "path": "packs/performances.db", "type": "Item", "system": "last-arc-analogue" },
-    { "name": "magick-black", "label": "Black Magick", "path": "packs/magick-black.db", "type": "Item", "system": "last-arc-analogue" },
-    { "name": "magick-blue", "label": "Blue Magick", "path": "packs/magick-blue.db", "type": "Item", "system": "last-arc-analogue" },
-    { "name": "magick-green", "label": "Green Magick", "path": "packs/magick-green.db", "type": "Item", "system": "last-arc-analogue" },
-    { "name": "magick-red", "label": "Red Magick", "path": "packs/magick-red.db", "type": "Item", "system": "last-arc-analogue" },
-    { "name": "magick-white", "label": "White Magick", "path": "packs/magick-white.db", "type": "Item", "system": "last-arc-analogue" },
-    { "name": "equipment", "label": "Equipamento", "path": "packs/equipment.db", "type": "Item", "system": "last-arc-analogue" }
+    {
+      "name": "races",
+      "label": "Raças",
+      "path": "packs/races.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "classes",
+      "label": "Classes Base",
+      "path": "packs/classes.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "advanced-classes",
+      "label": "Classes Avançadas",
+      "path": "packs/advanced-classes.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "talents",
+      "label": "Talentos",
+      "path": "packs/talents.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "technicks",
+      "label": "Technicks",
+      "path": "packs/technicks.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "performances",
+      "label": "Performances",
+      "path": "packs/performances.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "magick-black",
+      "label": "Black Magick",
+      "path": "packs/magick-black.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "magick-blue",
+      "label": "Blue Magick",
+      "path": "packs/magick-blue.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "magick-green",
+      "label": "Green Magick",
+      "path": "packs/magick-green.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "magick-red",
+      "label": "Red Magick",
+      "path": "packs/magick-red.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "magick-white",
+      "label": "White Magick",
+      "path": "packs/magick-white.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-axes",
+      "label": "Equipage — Axes",
+      "path": "packs/equipage-axes.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-bludgeons",
+      "label": "Equipage — Bludgeons",
+      "path": "packs/equipage-bludgeons.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-knives",
+      "label": "Equipage — Knives",
+      "path": "packs/equipage-knives.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-polearms",
+      "label": "Equipage — Polearms",
+      "path": "packs/equipage-polearms.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-swords",
+      "label": "Equipage — Swords",
+      "path": "packs/equipage-swords.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-bows",
+      "label": "Equipage — Bows",
+      "path": "packs/equipage-bows.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-crossbows",
+      "label": "Equipage — Crossbows",
+      "path": "packs/equipage-crossbows.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-staves",
+      "label": "Equipage — Staves",
+      "path": "packs/equipage-staves.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-shields",
+      "label": "Equipage — Shields",
+      "path": "packs/equipage-shields.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-light-armour",
+      "label": "Equipage — Light Armour",
+      "path": "packs/equipage-light-armour.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-heavy-armour",
+      "label": "Equipage — Heavy Armour",
+      "path": "packs/equipage-heavy-armour.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-mystic-armour",
+      "label": "Equipage — Mystic Armour",
+      "path": "packs/equipage-mystic-armour.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-instruments",
+      "label": "Equipage — Bardic Instruments",
+      "path": "packs/equipage-instruments.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-accessories",
+      "label": "Equipage — Accessories",
+      "path": "packs/equipage-accessories.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-consumables",
+      "label": "Equipage — Consumables",
+      "path": "packs/equipage-consumables.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-poisons",
+      "label": "Equipage — Poisons",
+      "path": "packs/equipage-poisons.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-ammunition",
+      "label": "Equipage — Ammunition",
+      "path": "packs/equipage-ammunition.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-scrolls-black",
+      "label": "Equipage — Black Magick Scrolls",
+      "path": "packs/equipage-scrolls-black.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-scrolls-blue",
+      "label": "Equipage — Blue Magick Scrolls",
+      "path": "packs/equipage-scrolls-blue.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-scrolls-green",
+      "label": "Equipage — Green Magick Scrolls",
+      "path": "packs/equipage-scrolls-green.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-scrolls-red",
+      "label": "Equipage — Red Magick Scrolls",
+      "path": "packs/equipage-scrolls-red.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-scrolls-white",
+      "label": "Equipage — White Magick Scrolls",
+      "path": "packs/equipage-scrolls-white.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-scores",
+      "label": "Equipage — Orchestral Scores",
+      "path": "packs/equipage-scores.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-adventuring-gear",
+      "label": "Equipage — Adventuring Gear",
+      "path": "packs/equipage-adventuring-gear.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-prosthetics",
+      "label": "Equipage — Prosthetics",
+      "path": "packs/equipage-prosthetics.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-mounts",
+      "label": "Equipage — Mounts",
+      "path": "packs/equipage-mounts.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "equipage-resources",
+      "label": "Equipage — Crafting Resources",
+      "path": "packs/equipage-resources.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    }
   ],
   "packFolders": [
-    { "name": "Magick", "sorting": "a", "color": "#7a3f78", "packs": ["magick-black", "magick-blue", "magick-green", "magick-red", "magick-white"], "folders": [] },
-    { "name": "Performances", "sorting": "a", "color": "#a77b37", "packs": ["performances"], "folders": [] }
+    {
+      "name": "Magick",
+      "sorting": "a",
+      "color": "#7a3f78",
+      "packs": [
+        "magick-black",
+        "magick-blue",
+        "magick-green",
+        "magick-red",
+        "magick-white"
+      ],
+      "folders": []
+    },
+    {
+      "name": "Performances",
+      "sorting": "a",
+      "color": "#a77b37",
+      "packs": [
+        "performances"
+      ],
+      "folders": []
+    },
+    {
+      "name": "Equipage",
+      "sorting": "a",
+      "color": "#6f4c2f",
+      "packs": [
+        "equipage-axes",
+        "equipage-bludgeons",
+        "equipage-knives",
+        "equipage-polearms",
+        "equipage-swords",
+        "equipage-bows",
+        "equipage-crossbows",
+        "equipage-staves",
+        "equipage-shields",
+        "equipage-light-armour",
+        "equipage-heavy-armour",
+        "equipage-mystic-armour",
+        "equipage-instruments",
+        "equipage-accessories",
+        "equipage-consumables",
+        "equipage-poisons",
+        "equipage-ammunition",
+        "equipage-scrolls-black",
+        "equipage-scrolls-blue",
+        "equipage-scrolls-green",
+        "equipage-scrolls-red",
+        "equipage-scrolls-white",
+        "equipage-scores",
+        "equipage-adventuring-gear",
+        "equipage-prosthetics",
+        "equipage-mounts",
+        "equipage-resources"
+      ],
+      "folders": []
+    }
   ],
   "documentTypes": {
-    "Actor": { "character": {}, "npc": {} },
-    "Item": { "race": {}, "class": {}, "advanced-class": {}, "spell": {}, "performance": {}, "talent": {}, "technick": {}, "weapon": {}, "armor": {}, "equipment": {}, "feature": {}, "other": {} }
+    "Actor": {
+      "character": {},
+      "npc": {}
+    },
+    "Item": {
+      "race": {},
+      "class": {},
+      "advanced-class": {},
+      "spell": {},
+      "performance": {},
+      "talent": {},
+      "technick": {},
+      "weapon": {},
+      "armor": {},
+      "equipment": {},
+      "feature": {},
+      "other": {}
+    }
   },
   "initiative": "1d20 + @system.initiative.total",
-  "grid": { "distance": 1, "units": "squares" },
+  "grid": {
+    "distance": 1,
+    "units": "squares"
+  },
   "primaryTokenAttribute": "resources.hp",
   "secondaryTokenAttribute": "resources.mp",
   "url": "https://github.com/Caio-Santiago257/last-arc-Foundry-Fan",
   "manifest": "https://raw.githubusercontent.com/Caio-Santiago257/last-arc-Foundry-Fan/main/system.json",
-  "download": "https://raw.githubusercontent.com/Caio-Santiago257/last-arc-Foundry-Fan/main/releases/last-arc-analogue-v0.2.12.zip"
+  "download": "https://raw.githubusercontent.com/Caio-Santiago257/last-arc-Foundry-Fan/main/releases/last-arc-analogue-v0.2.13.zip"
 }
