@@ -267,14 +267,19 @@ class LastArcActorSheet extends ActorSheet {
       if (!startingTechnick) return;
       newTechnicks.push(startingTechnick);
     }
-    if (nextLevel > 1 && nextLevel % 2 === 1) {
-      const technick = await this._chooseTechnick({ classItem: selectedClass.item, characterLevel: nextLevel, projectedAttributes, priorSelections: newTechnicks });
-      if (!technick) return;
-      newTechnicks.push(technick);
-    }
     const bonusLevels = selectedClass.item.system.bonusTechnickLevels ?? [];
-    if (!selectedClass.isNew && selectedClass.item.type === "class" && bonusLevels.map(Number).includes(nextClassLevel)) {
-      const technick = await this._chooseTechnick({ bonusTechnicks: selectedClass.item.system.bonusTechnicks ?? [], classItem: selectedClass.item, characterLevel: nextLevel, projectedAttributes, priorSelections: newTechnicks });
+    const earnsTechnick = nextLevel === 1 || nextLevel % 2 === 0;
+    if (earnsTechnick) {
+      const hasClassBonus = !selectedClass.isNew
+        && selectedClass.item.type === "class"
+        && bonusLevels.map(Number).includes(nextClassLevel);
+      const technick = await this._chooseTechnick({
+        ...(hasClassBonus ? { bonusTechnicks: selectedClass.item.system.bonusTechnicks ?? [] } : {}),
+        classItem: selectedClass.item,
+        characterLevel: nextLevel,
+        projectedAttributes,
+        priorSelections: newTechnicks
+      });
       if (!technick) return;
       newTechnicks.push(technick);
     }
@@ -622,7 +627,7 @@ class LastArcActorSheet extends ActorSheet {
         if (!startingChoice) return false;
         awardedTechnicks.push(startingChoice);
       }
-      if (classes.length === 0 || (newCharacterLevel > 1 && newCharacterLevel % 2 === 1)) {
+      if (newCharacterLevel === 1 || newCharacterLevel % 2 === 0) {
         const generalChoice = await this._chooseTechnick({ classItem: itemData, characterLevel: newCharacterLevel, projectedTrainedSkills: trainedSkills, priorSelections: awardedTechnicks });
         if (!generalChoice) return false;
         awardedTechnicks.push(generalChoice);
