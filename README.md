@@ -69,6 +69,8 @@ Version 0.2.20 prompts for eligible Magicks whenever Arcane Study is learned. Ea
 
 Version 0.2.21 adds the six High Arcana to a dedicated Magick compendium. Archmage class levels 6 through 10 each grant one previously unlearned option. Spell casting can activate one owned High Arcana at a time, doubles its MP cost, and applies supported effects including doubled Intensified Spell damage dice, Distant Spell range, Lingering Spell tracked duration, and Multi-Spell target limits.
 
+Version 0.2.22 keeps race names on one row in the item list and widens the XP fields so six-digit totals remain readable. Mage's starting Arcane Study plus a separately chosen level-1 repeatable copy remain allowed.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork. The system code is provided without an added license until the repository owner chooses one.

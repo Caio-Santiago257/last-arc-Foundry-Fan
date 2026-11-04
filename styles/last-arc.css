@@ -5,7 +5,7 @@
 }
 .last-arc .window-content { padding: 0; background: var(--la-paper); }
 .la-sheet { min-height: 100%; background-color: var(--la-paper); background-image: radial-gradient(ellipse at 50% 0,rgba(255,255,255,.42),transparent 68%); }
-.la-header { display: grid; grid-template-columns: 92px minmax(0,1fr) 132px; gap: 15px; padding: 15px 18px 13px; border-bottom: 3px double var(--la-gold); align-items: stretch; }
+.la-header { display: grid; grid-template-columns: 92px minmax(0,1fr) 176px; gap: 15px; padding: 15px 18px 13px; border-bottom: 3px double var(--la-gold); align-items: stretch; }
 .la-portrait { width: 92px; height: 105px; border: 1px solid var(--la-gold); padding: 4px; background: #e4d7be; }
 .la-portrait img { width: 100%; height: 100%; object-fit: cover; border: 1px solid var(--la-line); cursor: pointer; }
 .la-name { width: 100%; border: 0 !important; border-bottom: 1px solid var(--la-gold) !important; border-radius: 0 !important; background: transparent !important; color: var(--la-ink); font: 700 25px Georgia,serif; box-shadow: none !important; }
@@ -15,8 +15,8 @@
 .la-level-card { display: grid; grid-template-columns: 1fr; align-content: start; text-align: center; border: 1px solid var(--la-gold); padding: 8px; background: rgba(255,255,255,.3); }
 .la-level-card>input { font: bold 27px Georgia,serif; text-align: center; height: 34px; }
 .la-level-card small { margin-top: 5px; color: var(--la-muted); font: 700 9px Arial,sans-serif; letter-spacing: .08em; text-transform: uppercase; }
-.la-xp { display: flex; align-items: center; gap: 5px; }
-.la-xp input { width: 42px !important; min-width: 0; text-align: center; }
+.la-xp { display: grid; grid-template-columns: minmax(0,1fr) auto minmax(0,1fr) auto; align-items: center; gap: 4px; }
+.la-xp input { width: 100% !important; min-width: 0; padding: 0 2px; text-align: center; font-size: 12px; }
 .la-xp input[readonly] { color: var(--la-muted); }
 .la-level-up { width: 20px; height: 20px; padding: 0; border: 1px solid var(--la-gold); border-radius: 50%; background: #efe3ce; color: var(--la-accent); font-size: 10px; cursor: pointer; }
 .la-level-up:hover { background: var(--la-accent); color: #fff8e9; }
@@ -53,6 +53,9 @@
 .la-primary-button { padding: 8px 12px; background: var(--la-accent); color: #fff8e9; }
 .la-weapon-row,.la-item-row { display: grid; grid-template-columns: 32px minmax(90px,1.5fr) repeat(2,minmax(60px,1fr)) 24px; gap: 8px; align-items: center; padding: 6px 3px; border-bottom: 1px solid #e6dccb; }
 .la-item-row { grid-template-columns: 32px minmax(90px,1.4fr) minmax(70px,1fr) minmax(50px,.7fr) 24px; }
+.la-item-row.la-race-row { grid-template-columns: minmax(0,1fr) 24px; gap: 8px; align-items: center; }
+.la-race-row .item-edit { grid-column: 1; grid-row: 1; width: 100%; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: left; }
+.la-race-row .item-delete { grid-column: 2; grid-row: 1; }
 .la-item-row.la-equipped-row { grid-template-columns: 20px 28px minmax(120px,1.5fr) minmax(60px,.8fr) minmax(45px,.5fr) 22px; gap: 6px; }
 .la-item-equipped { display: flex; align-items: center; justify-content: center; width: 20px; margin: 0; padding: 0; cursor: pointer; }
 .la-item-equipped input { width: 14px; height: 14px; margin: 0; accent-color: var(--la-accent); }
@@ -148,4 +151,4 @@
 .la-talent-choice-form select { width: 100%; }
 .la-talent-preview { margin: 12px 0; min-height: 70px; white-space: normal; font: 14px/1.5 Georgia,serif; }
 .la-result.success { color: #28643e; font-weight: 700; }.la-result.failure { color: #922f29; font-weight: 700; }
-@media (max-width: 760px) { .la-header { grid-template-columns: 65px 1fr 85px; gap: 8px; padding: 10px; }.la-portrait { width: 65px; height: 82px; }.la-identity-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }.la-overview-grid { grid-template-columns: 1fr; }.la-body { padding: 8px; }.la-skill-table { overflow-x: auto; }.la-skill-header,.la-skill-row { min-width: 590px; }.la-tabs { overflow-x: auto; }.la-tabs .item { white-space: nowrap; padding: 7px; } }
+@media (max-width: 760px) { .la-header { grid-template-columns: 65px minmax(0,1fr) 156px; gap: 8px; padding: 10px; }.la-level-card { padding: 5px; }.la-portrait { width: 65px; height: 82px; }.la-identity-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }.la-overview-grid { grid-template-columns: 1fr; }.la-body { padding: 8px; }.la-skill-table { overflow-x: auto; }.la-skill-header,.la-skill-row { min-width: 590px; }.la-tabs { overflow-x: auto; }.la-tabs .item { white-space: nowrap; padding: 7px; } }
