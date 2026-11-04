@@ -2,7 +2,7 @@
   "id": "last-arc-analogue",
   "title": "Last Arc: Tactics Analogue (Fan System)",
   "description": "Community-built Foundry VTT system framework for Last Arc: Tactics Analogue.",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "compatibility": { "minimum": 12, "verified": 13 },
   "authors": [{ "name": "Caio Santiago" }],
   "esmodules": ["scripts/last-arc.mjs"],
