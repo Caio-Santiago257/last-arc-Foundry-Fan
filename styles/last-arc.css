@@ -53,6 +53,9 @@
 .la-primary-button { padding: 8px 12px; background: var(--la-accent); color: #fff8e9; }
 .la-weapon-row,.la-item-row { display: grid; grid-template-columns: 32px minmax(90px,1.5fr) repeat(2,minmax(60px,1fr)) 24px; gap: 8px; align-items: center; padding: 6px 3px; border-bottom: 1px solid #e6dccb; }
 .la-item-row { grid-template-columns: 32px minmax(90px,1.4fr) minmax(70px,1fr) minmax(50px,.7fr) 24px; }
+.la-item-row.la-equipped-row { grid-template-columns: 20px 28px minmax(120px,1.5fr) minmax(60px,.8fr) minmax(45px,.5fr) 22px; gap: 6px; }
+.la-item-equipped { display: flex; align-items: center; justify-content: center; width: 20px; margin: 0; padding: 0; cursor: pointer; }
+.la-item-equipped input { width: 14px; height: 14px; margin: 0; accent-color: var(--la-accent); }
 .la-item-row.la-technick-row { grid-template-columns: minmax(0,1fr) 24px; }
 .la-item-row.la-spell-row { grid-template-columns: 28px minmax(100px,1fr) minmax(120px,1.2fr) 55px 24px; }
 .la-spell-description { grid-column: 2 / -1; color: var(--la-muted); font: 11px/1.4 Arial,sans-serif; }
@@ -64,6 +67,9 @@
 .la-choice-row strong { color: var(--la-accent); font: 700 12px Georgia,serif; }
 .la-choice-row small { color: var(--la-ink); font: 10px/1.35 Arial,sans-serif; }
 .la-performance-choice-count { font-weight: 700; }
+.la-attribute-assignment-form fieldset { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 7px 12px; padding: 7px; border: 1px solid var(--la-line); }
+.la-attribute-assignment-choice { display: grid; grid-template-columns: minmax(75px,1fr) minmax(100px,1.2fr); gap: 8px; align-items: center; color: var(--la-ink); font: 700 12px Georgia,serif; }
+.la-attribute-assignment-choice select { min-width: 0; height: 29px; padding: 3px 5px; }
 .la-performance-tiers { padding-left: 22px; }
 .la-performance-tiers li { margin: 4px 0; line-height: 1.4; }
 .la-active-effect { display: grid; grid-template-columns: 34px minmax(0,1fr) 24px; gap: 10px; align-items: start; padding: 8px 3px; border-bottom: 1px solid #e6dccb; }

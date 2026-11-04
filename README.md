@@ -53,6 +53,8 @@ Version 0.2.12 fixes performance rolls by consistently using active scene Token 
 
 Version 0.2.13 adds the Equipage compendium folder and all 495 core equipment records in 27 category packs; weapon skill rows and weapon attack/damage calculations; equippable armour/accessories; armour Reflex, damage reduction, Agility caps, and proficiency penalties; and supported equipped-item bonuses. Conditional and target-specific item qualities remain visible in the item rules for manual adjudication.
 
+Version 0.2.14 lets players assign the six generated attribute values to any attribute without reusing a value, and fixes the inventory row layout and size of the equipped toggle.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork. The system code is provided without an added license until the repository owner chooses one.
