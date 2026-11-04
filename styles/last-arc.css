@@ -54,6 +54,10 @@
 .la-weapon-row,.la-item-row { display: grid; grid-template-columns: 32px minmax(90px,1.5fr) repeat(2,minmax(60px,1fr)) 24px; gap: 8px; align-items: center; padding: 6px 3px; border-bottom: 1px solid #e6dccb; }
 .la-item-row { grid-template-columns: 32px minmax(90px,1.4fr) minmax(70px,1fr) minmax(50px,.7fr) 24px; }
 .la-item-row.la-technick-row { grid-template-columns: minmax(0,1fr) 24px; }
+.la-item-row.la-spell-row { grid-template-columns: 28px minmax(100px,1fr) minmax(120px,1.2fr) 55px 24px; }
+.la-spell-description { grid-column: 2 / -1; color: var(--la-muted); font: 11px/1.4 Arial,sans-serif; }
+.la-spell-special { display: grid; gap: 4px; margin-top: 10px; color: var(--la-muted); font: 700 9px Arial,sans-serif; text-transform: uppercase; }
+.la-spell-special textarea { min-height: 72px; color: var(--la-ink); font: 11px/1.4 Consolas,monospace; text-transform: none; }
 .la-item-tech-description { grid-column: 1 / -1; color: var(--la-muted); font: 11px/1.4 Arial,sans-serif; }
 .la-technick-choice-form fieldset { display: grid; gap: 5px; max-height: 58vh; overflow-y: auto; padding: 4px; border: 0; }
 .la-technick-choice { display: grid; grid-template-columns: 18px minmax(0,1fr); gap: 8px; align-items: start; padding: 7px; border: 1px solid var(--la-line); background: var(--la-card); cursor: pointer; }

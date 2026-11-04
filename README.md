@@ -1,6 +1,6 @@
 # Last Arc: Tactics Analogue for Foundry VTT
 
-Unofficial Foundry VTT system framework for Last Arc: Tactics Analogue. This release provides structured race and base-class compendium records and automation for core character calculations. It does not redistribute the book's talent, technick, spell, equipment, monster, or class-feature text.
+Unofficial Foundry VTT system framework for Last Arc: Tactics Analogue. This release provides structured race, class, Technick, and Magick compendium records with automation for core character calculations and supported spell effects. It does not redistribute artwork or verbatim rulebook descriptions.
 
 ## Install
 
@@ -15,15 +15,16 @@ Alternatively, download the ZIP, extract its `last-arc-analogue` folder into Fou
 - Character and NPC sheets with attributes, skills, defences, combat resources, weapons, features, spell/technick lists, inventory, and biography.
 - Attribute modifiers, level-scaled skill/defence values, class bonuses, passive Perception, and class initiative dice (including the combat tracker).
 - Chat rolls for attributes, skills, initiative, weapon attacks, and item damage formulas; HP/MP controls, damage application, and inventory bulk.
-- Compendium packs for races, base classes, advanced classes, talents, technicks, spells, and equipment. Race and base-class records include structured automation. The base-class talent pack contains 100 concise summaries organized into the 25 base-class trees. Advanced-class records are configurable shells until their progression data is entered.
+- Compendium packs for races, base classes, advanced classes, talents, Technicks, Magick, and equipment. Magick is split into Black, Blue, Green, Red, and White schools. The Magick pack includes all 76 spells from the core spell list, with MP cost, action, target, summarized special rules, Spellcraft thresholds, and structured effects where supported.
 - Dragging a race applies ability adjustments, caps, speed, senses, languages, and configured choice effects. Each racial trait is added to the character as a separate Feature with a concise rules summary; replacing a race removes only the race-generated Features. Dragging a base class opens a checkbox picker that shows the required trained-skill count and explains any mismatch, then calculates class level, HP, MP, defences, and initiative.
 - After trained skills, the class flow prompts for a talent tree and a talent from that tree. Each later odd class level repeats the tree/talent choice. The chosen class appears in the sheet header and selected trees are listed on the class entry. Talent descriptions are short summaries; usage limits, prerequisites, and conditional effects still require the book.
-- The Technicks compendium contains 67 rule summaries with structured prerequisites. Level-up offers general Technicks at odd character levels and class-restricted bonus Technicks at even base-class levels; ineligible choices are hidden. Passive effects such as HP Up, MP Up, Defence Up, Improved Initiative, Skill Focus, and Weapon Proficiency are automated.
+- The Technicks compendium contains 67 rule summaries with structured prerequisites. Level-up offers general Technicks at level 1 and even character levels; ineligible choices are hidden. Passive effects such as HP Up, MP Up, Defence Up, Improved Initiative, Skill Focus, and Weapon Proficiency are automated.
+- Clicking a Magick item rolls Spellcraft, spends MP, selects the highest reached threshold, resolves supported damage, healing, conditions, defence/skill changes, and dispels, and posts a chat result. Marked targets drive targeted and area effects; self-target spells default to the caster when nothing is selected.
 - Core Foundry SVG icons for the D20 control and skill/item icons. Portuguese (Brazil) and English labels.
 
 The book models advancement with advanced classes and talent trees; it does not define a generic subclass item type. Configured choice groups prompt for selections such as race options.
 
-The item descriptions are concise rules summaries. Use a rulebook copy the GM is authorized to use for exact wording and for situational effects not automated by the sheet. Spells, equipment, and detailed advanced-class progressions still need campaign data. This is an initial playable framework, not a complete rules implementation. The printed character sheet appears on pages 378–379 of the supplied v0.3 Rules Cyclopedia (PDF pages 379–380); this sheet follows its information architecture with an original web layout.
+The item descriptions are concise rules summaries. Use a rulebook copy the GM is authorized to use for exact wording and for situational effects not automated by the sheet. Some Magick effects require positioning, movement, objects, multi-target chain selection, persistent damage timing, or Break Gauge changes and are reported for GM adjudication rather than applied automatically. This is an initial playable framework, not a complete rules implementation. The printed character sheet appears on pages 378–379 of the supplied v0.3 Rules Cyclopedia (PDF pages 379–380); this sheet follows its information architecture with an original web layout.
 
 ## Development
 
@@ -38,6 +39,8 @@ Version 0.2.5 adds 67 Technicks, structured prerequisite checks, class bonus lis
 Version 0.2.6 corrects Technick advancement so characters receive their level-up choice at level 1 and even character levels, using the class bonus list when the class progression grants one.
 
 Version 0.2.7 publishes a package ZIP under the system ID and points the updater to that versioned archive instead of GitHub's repository snapshot ZIP.
+
+Version 0.2.8 adds the complete 76-spell Magick catalogue in five school packs, Spellcraft rolls, MP spending, tier checks, and supported target effect automation.
 
 ## Attribution and status
 

@@ -1,3 +1,5 @@
+import { rollSpell } from "./spells.mjs";
+
 const ATTRIBUTES = ["str", "vit", "agi", "int", "mnd", "cha"];
 const LEVEL_XP = [0, 0, 1000, 3000, 6000, 10000, 15000, 21000, 28000, 36000, 45000, 55000, 66000, 78000, 91000, 105000, 120000, 136000, 153000, 171000, 190000];
 const WEAPON_GROUPS = ["axes", "bows", "bludgeons", "crossbows", "knives", "polearms", "swords"];
@@ -71,6 +73,8 @@ class LastArcActor extends Actor {
     system.resources ??= {};
     system.details ??= {};
     system.combat ??= {};
+    system.combat.physicalDamageReduction ??= 0;
+    system.combat.elementalDamageReduction ??= 0;
     for (const key of ATTRIBUTES) system.attributes[key] ??= { score: 10 };
     const classItems = this.items.filter(item => ["class", "advanced-class"].includes(item.type));
     const raceItem = this.items.find(item => item.type === "race");
@@ -156,7 +160,10 @@ class LastArcActor extends Actor {
 
   async applyDamage(amount, { type = "unaspected", bypassDR = false } = {}) {
     const damage = Math.max(0, Math.floor(safeNumber(amount)));
-    const dr = bypassDR ? 0 : Math.max(0, safeNumber(this.system.combat?.damageReduction));
+    const kind = String(type).toLowerCase();
+    const physicalDR = ["physical", "blunt", "piercing", "slashing"].includes(kind) ? safeNumber(this.system.combat?.physicalDamageReduction) : 0;
+    const elementalDR = ["fire", "cold", "electric"].includes(kind) ? safeNumber(this.system.combat?.elementalDamageReduction) : 0;
+    const dr = bypassDR ? 0 : Math.max(0, safeNumber(this.system.combat?.damageReduction) + physicalDR + elementalDR);
     const applied = Math.max(0, damage - dr);
     const hp = this.system.resources.hp;
     await this.update({ "system.resources.hp.value": Math.max(0, hp.value - applied) });
@@ -168,6 +175,7 @@ class LastArcActor extends Actor {
 class LastArcItem extends Item {
   async roll() {
     const actor = this.parent;
+    if (this.type === "spell") return rollSpell(this);
     let formula = this.system.damage?.formula || this.system.roll?.formula;
     const title = this.name;
     let damageTitle = title;
@@ -880,6 +888,7 @@ class LastArcItemSheet extends ItemSheet {
     context.system.classSkillsText = Array.isArray(context.system.classSkills) ? context.system.classSkills.join("\n") : "";
     context.system.traitsText = Array.isArray(context.system.traits) ? context.system.traits.join("\n") : "";
     context.system.choiceGroupsText = JSON.stringify(context.system.choiceGroups ?? [], null, 2);
+    context.system.automationText = JSON.stringify(context.system.automation ?? {}, null, 2);
     context.raceTraits = (context.system.traits ?? []).map(trait => {
       const [name, ...detail] = String(trait).split(":");
       return { name: detail.length ? name.trim() : "", description: detail.length ? detail.join(":").trim() : name.trim() };
@@ -894,6 +903,7 @@ class LastArcItemSheet extends ItemSheet {
     context.system.selectedWeaponGroupLabel ??= context.system.selectedWeaponGroup ? game.i18n.localize(`LA.WeaponGroup.${context.system.selectedWeaponGroup}`) : "";
     context.technickPrerequisiteText = formatTechnickPrerequisites(context.system);
     context.isTalent = this.item.type === "talent";
+    context.isSpell = this.item.type === "spell";
     context.isNonRollable = ["race", "class", "advanced-class", "feature", "talent", "technick"].includes(this.item.type);
     return context;
   }
@@ -907,13 +917,19 @@ class LastArcItemSheet extends ItemSheet {
     const skillsText = itemSystem.classSkillsText ?? "";
     const traitsText = itemSystem.traitsText ?? "";
     const choicesText = itemSystem.choiceGroupsText ?? "[]";
+    const automationText = itemSystem.automationText;
     delete itemSystem.classSkillsText;
     delete itemSystem.traitsText;
     delete itemSystem.choiceGroupsText;
+    delete itemSystem.automationText;
     if (skillsText) itemSystem.classSkills = skillsText.split(/[,\n]/).map(key => key.trim()).filter(key => SKILLS[key]);
     itemSystem.traits = traitsText.split(/\n/).map(line => line.trim()).filter(Boolean);
     try { itemSystem.choiceGroups = JSON.parse(choicesText || "[]"); }
     catch { return ui.notifications.error(game.i18n.localize("LA.InvalidChoiceJSON")); }
+    if (automationText !== undefined) {
+      try { itemSystem.automation = JSON.parse(automationText || "{}"); }
+      catch { return ui.notifications.error(game.i18n.localize("LA.InvalidSpellAutomationJSON")); }
+    }
     return this.item.update(data);
   }
 }

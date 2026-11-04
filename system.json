@@ -2,7 +2,7 @@
   "id": "last-arc-analogue",
   "title": "Last Arc: Tactics Analogue (Fan System)",
   "description": "Community-built Foundry VTT system framework for Last Arc: Tactics Analogue.",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "compatibility": { "minimum": 12, "verified": 13 },
   "authors": [{ "name": "Caio Santiago" }],
   "esmodules": ["scripts/last-arc.mjs"],
@@ -14,8 +14,15 @@
     { "name": "advanced-classes", "label": "Classes Avançadas", "path": "packs/advanced-classes.db", "type": "Item", "system": "last-arc-analogue" },
     { "name": "talents", "label": "Talentos", "path": "packs/talents.db", "type": "Item", "system": "last-arc-analogue" },
     { "name": "technicks", "label": "Technicks", "path": "packs/technicks.db", "type": "Item", "system": "last-arc-analogue" },
-    { "name": "spells", "label": "Magias", "path": "packs/spells.db", "type": "Item", "system": "last-arc-analogue" },
+    { "name": "magick-black", "label": "Black Magick", "path": "packs/magick-black.db", "type": "Item", "system": "last-arc-analogue" },
+    { "name": "magick-blue", "label": "Blue Magick", "path": "packs/magick-blue.db", "type": "Item", "system": "last-arc-analogue" },
+    { "name": "magick-green", "label": "Green Magick", "path": "packs/magick-green.db", "type": "Item", "system": "last-arc-analogue" },
+    { "name": "magick-red", "label": "Red Magick", "path": "packs/magick-red.db", "type": "Item", "system": "last-arc-analogue" },
+    { "name": "magick-white", "label": "White Magick", "path": "packs/magick-white.db", "type": "Item", "system": "last-arc-analogue" },
     { "name": "equipment", "label": "Equipamento", "path": "packs/equipment.db", "type": "Item", "system": "last-arc-analogue" }
+  ],
+  "packFolders": [
+    { "name": "Magick", "sorting": "a", "color": "#7a3f78", "packs": ["magick-black", "magick-blue", "magick-green", "magick-red", "magick-white"], "folders": [] }
   ],
   "documentTypes": {
     "Actor": { "character": {}, "npc": {} },
@@ -27,5 +34,5 @@
   "secondaryTokenAttribute": "resources.mp",
   "url": "https://github.com/Caio-Santiago257/last-arc-Foundry-Fan",
   "manifest": "https://raw.githubusercontent.com/Caio-Santiago257/last-arc-Foundry-Fan/main/system.json",
-  "download": "https://raw.githubusercontent.com/Caio-Santiago257/last-arc-Foundry-Fan/main/releases/last-arc-analogue-v0.2.7.zip"
+  "download": "https://raw.githubusercontent.com/Caio-Santiago257/last-arc-Foundry-Fan/main/releases/last-arc-analogue-v0.2.8.zip"
 }
