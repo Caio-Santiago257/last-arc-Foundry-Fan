@@ -1,3 +1,5 @@
+import { postDamageRoll } from "./damage-chat.mjs";
+
 const escapeHTML = value => foundry.utils.escapeHTML(String(value ?? ""));
 const number = (value, fallback = 0) => Number.isFinite(Number(value)) ? Number(value) : fallback;
 const signature = item => item.system.automation ?? {};
@@ -147,23 +149,19 @@ function effectSummary(effect) {
   return game.i18n.localize("LA.PerformanceEffectSummary");
 }
 
-async function applyPerformanceEffect(effect, target, performer, performance, performTotal, side) {
+async function applyPerformanceEffect(effect, target, performer, performance, performTotal, side, targetToken = null) {
   if (effect.resistBy && performTotal <= defenceTotal(target, effect.resistBy)) return { resisted: true };
 
   if (["damage", "mpDamage"].includes(effect.type)) {
     const roll = await (new Roll(effect.formula, { ...performer.getRollData(), level: performer.system.details.level })).evaluate();
-    await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: performer }), flavor: `${escapeHTML(performance.name)} — ${escapeHTML(target.name)} (${escapeHTML(effect.formula)})` });
+    const damage = Math.max(0, Math.floor(roll.total));
+    await postDamageRoll(roll, { speaker: ChatMessage.getSpeaker({ actor: performer }), flavor: `${escapeHTML(performance.name)} — ${escapeHTML(target.name)} (${escapeHTML(effect.formula)})`, amount: damage, resource: effect.type === "mpDamage" ? "mp" : "hp", targetTokens: [targetToken].filter(Boolean) });
     if (effect.type === "damage") {
-      const applied = await target.applyDamage(roll.total, { type: "unaspected" });
       await addPerformanceImmunity(target, performer, performance, side);
-      return { result: `${target.name}: ${applied} ${game.i18n.localize("LA.Damage")}` };
+      return { result: `${target.name}: ${damage} ${game.i18n.localize("LA.DamageRolledUnapplied")}` };
     }
-    const mp = target.system.resources?.mp ?? { value: 0, max: 0 };
-    const lost = Math.min(number(mp.value), Math.max(0, Math.floor(roll.total)));
-    await target.update({ "system.resources.mp.value": number(mp.value) - lost });
     await addPerformanceImmunity(target, performer, performance, side);
-    await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: performer }), content: `<p><strong>${escapeHTML(target.name)}:</strong> ${lost} MP ${game.i18n.localize("LA.Lost")} (${number(mp.value) - lost}/${mp.max}).</p>` });
-    return { result: `${target.name}: ${lost} MP ${game.i18n.localize("LA.Lost")}` };
+    return { result: `${target.name}: ${damage} MP ${game.i18n.localize("LA.DamageRolledUnapplied")}` };
   }
 
   const bonuses = conditionBonuses(effect);
@@ -271,7 +269,7 @@ async function perform(item, performer) {
         continue;
       }
       for (const effect of effects) {
-        const result = await applyPerformanceEffect(effect, target, performer, item, check.total, side);
+        const result = await applyPerformanceEffect(effect, target, performer, item, check.total, side, token);
         if (result.resisted) results.push(`${target.name}: ${game.i18n.localize("LA.PerformanceResisted")}`);
         else if (result.result) { results.push(result.result); if (side === "enemy") affectedEnemy = true; }
       }

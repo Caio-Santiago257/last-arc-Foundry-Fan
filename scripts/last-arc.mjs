@@ -1,5 +1,6 @@
 import { rollSpell } from "./spells.mjs";
 import { rollPerformance } from "./performances.mjs";
+import { DAMAGE_TYPES, postDamageRoll, registerDamageChatControls } from "./damage-chat.mjs";
 
 const ATTRIBUTES = ["str", "vit", "agi", "int", "mnd", "cha"];
 const LEVEL_XP = [0, 0, 1000, 3000, 6000, 10000, 15000, 21000, 28000, 36000, 45000, 55000, 66000, 78000, 91000, 105000, 120000, 136000, 153000, 171000, 190000];
@@ -45,6 +46,14 @@ function armourPenaltyForSkill(key, attribute, penalty) {
 
 function signed(value) { return `${value >= 0 ? "+" : ""}${value}`; }
 
+function itemDamageType(item) {
+  const type = String(item.system.damage?.type ?? item.system.damageType ?? "unaspected");
+  if (!/^see text$/i.test(type)) return type;
+  const choice = String(item.system.specialRules ?? "").match(/your choice of ([^.]+?)(?: damage|\.|$)/i)?.[1] ?? "";
+  const options = DAMAGE_TYPES.map(entry => entry.value).filter(value => new RegExp(`\\b${value}\\b`, "i").test(choice));
+  return options.length ? options.join(" or ") : "unaspected";
+}
+
 function formatTechnickPrerequisites(system = {}) {
   const requirements = system.prerequisites ?? {};
   const parts = [];
@@ -78,6 +87,7 @@ function describePerformanceEffect(effect = {}) {
 }
 
 Hooks.once("init", () => {
+  registerDamageChatControls();
   CONFIG.Actor.documentClass = LastArcActor;
   CONFIG.Item.documentClass = LastArcItem;
   CONFIG.Combatant.documentClass = LastArcCombatant;
@@ -465,7 +475,7 @@ class LastArcItem extends Item {
     }
     if (formula) {
       const roll = await (new Roll(formula, actor?.getRollData?.() ?? {})).evaluate();
-      await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: damageTitle });
+      await postDamageRoll(roll, { speaker: ChatMessage.getSpeaker({ actor }), flavor: damageTitle, type: itemDamageType(this) });
       return roll;
     }
     const details = [this.system.description, this.system.specialRules].filter(Boolean).map(text => `<p>${foundry.utils.escapeHTML(text)}</p>`).join("");
@@ -474,7 +484,8 @@ class LastArcItem extends Item {
   }
 
   async rollTalent(actor) {
-    const target = [...(game.user?.targets ?? [])][0]?.actor;
+    const targetToken = [...(game.user?.targets ?? [])][0] ?? null;
+    const target = targetToken?.actor;
     const name = this.name.toLowerCase();
     if (/^abyssal drain [i]+$/.test(name) || name === "mana tap") {
       if (!target) { ui.notifications.warn(game.i18n.localize("LA.SelectTalentTarget")); return null; }
@@ -492,20 +503,20 @@ class LastArcItem extends Item {
         const damage = await (new Roll(formula, actor.getRollData())).evaluate();
         const rolledDamage = Math.floor(damage.total);
         const amount = success ? rolledDamage : Math.floor(rolledDamage / 2);
-        await damage.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${foundry.utils.escapeHTML(this.name)} — ${foundry.utils.escapeHTML(target.name)} (${success ? rolledDamage : `${game.i18n.localize("LA.HalfDamage")}: ${amount}`})` });
-        const applied = await target.applyDamage(amount, { type: "dark" });
-        const hp = actor.system.resources.hp;
-        const healed = Math.min(applied, Math.max(0, safeNumber(hp.max) - safeNumber(hp.value)));
-        await actor.applyHealing(healed);
-        await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content: `<p>${game.i18n.localize("LA.Healing")}: ${healed} HP (${safeNumber(hp.value) + healed}/${safeNumber(hp.max)}).</p>` });
+        await postDamageRoll(damage, {
+          speaker: ChatMessage.getSpeaker({ actor }),
+          flavor: `${foundry.utils.escapeHTML(this.name)} — ${foundry.utils.escapeHTML(target.name)} (${success ? rolledDamage : `${game.i18n.localize("LA.HalfDamage")}: ${amount}`})`,
+          amount,
+          type: "dark",
+          targetTokens: [targetToken],
+          onApply: { healActorUuid: actor.uuid, healMultiplier: 1 }
+        });
         return damage;
       }
       if (success) {
         const drain = await (new Roll("4d6", actor.getRollData())).evaluate();
         const lost = Math.min(safeNumber(target.system.resources.mp.value), drain.total);
-        await drain.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${foundry.utils.escapeHTML(this.name)} — MP drained` });
-        await target.update({ "system.resources.mp.value": safeNumber(target.system.resources.mp.value) - lost });
-        await actor.update({ "system.resources.mp.value": Math.min(safeNumber(actor.system.resources.mp.max), safeNumber(actor.system.resources.mp.value) + lost) });
+        await postDamageRoll(drain, { speaker: ChatMessage.getSpeaker({ actor }), flavor: `${foundry.utils.escapeHTML(this.name)} — MP drained`, amount: lost, resource: "mp", targetTokens: [targetToken], onApply: { restoreMPActorUuid: actor.uuid, mpMultiplier: 1 } });
         return drain;
       }
       return check;
@@ -1537,7 +1548,13 @@ class LastArcActorSheet extends ActorSheet {
   }
   async _onApplyDamage(event) {
     event.preventDefault();
-    const amount = await new Promise(resolve => new Dialog({ title: game.i18n.localize("LA.ApplyDamage"), content: `<form><label>${game.i18n.localize("LA.Damage")}<input type="number" name="damage" min="0" value="0"></label><label>${game.i18n.localize("LA.DamageType")}<input name="damageType" value="unaspected"></label></form>`, buttons: { apply: { label: game.i18n.localize("LA.ApplyDamage"), callback: html => resolve({ amount: html.find("[name=damage]").val(), type: html.find("[name=damageType]").val() }) }, cancel: { label: "×", callback: () => resolve(null) } }, default: "apply", close: () => resolve(null) }).render(true));
+    const damageTypes = DAMAGE_TYPES.map(type => `<option value="${type.value}" ${type.value === "unaspected" ? "selected" : ""}>${game.i18n.localize(type.label)}</option>`).join("");
+    const amount = await new Promise(resolve => new Dialog({
+      title: game.i18n.localize("LA.ApplyDamage"),
+      content: `<form class="la-apply-damage-dialog"><label>${game.i18n.localize("LA.Damage")}<input type="number" name="damage" min="0" value="0"></label><label>${game.i18n.localize("LA.DamageType")}<select name="damageType">${damageTypes}</select></label></form>`,
+      buttons: { apply: { label: game.i18n.localize("LA.ApplyDamage"), callback: html => resolve({ amount: html.find("[name=damage]").val(), type: html.find("[name=damageType]").val() }) }, cancel: { label: game.i18n.localize("LA.Cancel"), callback: () => resolve(null) } },
+      default: "apply", close: () => resolve(null)
+    }).render(true));
     if (amount) await this.actor.applyDamage(amount.amount, { type: amount.type });
   }
   async _onRest(event) {

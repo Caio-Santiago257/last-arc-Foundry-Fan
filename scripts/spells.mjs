@@ -1,3 +1,5 @@
+import { postDamageRoll } from "./damage-chat.mjs";
+
 const STATUS_ICONS = {
   blinded: "icons/svg/blind.svg", silenced: "icons/svg/deaf.svg", petrified: "icons/svg/stone.svg",
   zombified: "icons/svg/skull.svg", diseased: "icons/svg/biohazard.svg", paralysed: "icons/svg/paralysis.svg",
@@ -129,7 +131,7 @@ async function applyCondition(target, caster, spell, condition, rounds = 0, chan
   return true;
 }
 
-async function applySpellEffect(effect, target, caster, spell, checkTotal, results, damageBonus = 0, highArcana = "") {
+async function applySpellEffect(effect, target, caster, spell, checkTotal, results, damageBonus = 0, highArcana = "", targetToken = null, damageRider = null) {
   const cancelsSpell = { Inertia: "Haste", Gravity: "Levitation" }[spell.name];
   if (effect.type === "condition" && cancelsSpell) {
     const active = target.effects.filter(entry => entry.getFlag("last-arc-analogue", "spellName") === cancelsSpell);
@@ -162,13 +164,17 @@ async function applySpellEffect(effect, target, caster, spell, checkTotal, resul
     const baseFormula = spellDamageFormula(effect.formula, caster, highArcana === "intensifiedSpell");
     const formula = damageBonus ? `(${baseFormula}) + ${damageBonus}` : baseFormula;
     const damageRoll = await (new Roll(formula, { ...caster.getRollData(), level: caster.system.details.level })).evaluate();
-    await damageRoll.toMessage({
-      speaker: ChatMessage.getSpeaker({ actor: caster }),
-      flavor: `${escapeHTML(spell.name)} — ${escapeHTML(target.name)} (${escapeHTML(formula)})`
-    });
     const amount = Math.max(0, Math.floor(hasFailure && effect.halfOnFailure ? damageRoll.total / 2 : damageRoll.total));
-    const applied = await target.applyDamage(amount, { type: effect.damageType ?? "unaspected", bypassDR: Boolean(effect.bypassDR) });
-    results.push(`${target.name}: ${applied} ${effect.damageType ?? "damage"}${hasFailure ? ` (${game.i18n.localize("LA.SpellDefenceMiss")})` : ""}`);
+    await postDamageRoll(damageRoll, {
+      speaker: ChatMessage.getSpeaker({ actor: caster }),
+      flavor: `${escapeHTML(spell.name)} — ${escapeHTML(target.name)} (${escapeHTML(formula)})`,
+      amount,
+      type: effect.damageType ?? "unaspected",
+      bypassDR: Boolean(effect.bypassDR),
+      targetTokens: [targetToken].filter(Boolean),
+      onApply: damageRider?.(effect) ?? null
+    });
+    results.push(`${target.name}: ${amount} ${effect.damageType ?? "damage"} (${game.i18n.localize("LA.DamageAwaitingApplication")})${hasFailure ? ` (${game.i18n.localize("LA.SpellDefenceMiss")})` : ""}`);
   } else if (effect.type === "heal") {
     const formula = String(effect.formula).replaceAll("@level", String(number(caster.system.details.level)));
     const healingRoll = await (new Roll(formula, caster.getRollData())).evaluate();
@@ -288,13 +294,33 @@ async function showSpellCard(item, actor = null) {
   const minimumDC = number(system.automation.minimumDC);
   const castSucceeded = roll.total >= minimumDC;
   const results = [];
+  const classesWithSoulEater = actor.items.filter(entry => entry.type === "advanced-class"
+    && number(entry.system.classLevel) >= 2
+    && (entry.system.classFeatures ?? []).some(feature => feature.name === "Soul Eater"));
+  const classesWithArcaneAcumen = actor.items.filter(entry => entry.type === "advanced-class"
+    && number(entry.system.classLevel) >= 2
+    && (entry.system.classFeatures ?? []).some(feature => feature.name === "Arcane Acumen"));
+  const castHasDamage = effects.some(effect => effect.type === "damage");
+  const castHasElementalDamage = effects.some(effect => effect.type === "damage" && ["fire", "cold", "electric", "dark", "holy"].includes(String(effect.damageType ?? "").toLowerCase()));
+  let damageRidersAssigned = false;
+  const getDamageRider = effect => {
+    if (damageRidersAssigned || effect.type !== "damage") return null;
+    const healPerDamage = castHasDamage ? classesWithSoulEater.reduce((sum, entry) => sum + Math.floor(number(entry.system.classLevel) / 2), 0) : 0;
+    const mpPerDamage = castHasElementalDamage ? classesWithArcaneAcumen.reduce((sum, entry) => sum + Math.floor(number(entry.system.classLevel) / 2), 0) : 0;
+    if (!healPerDamage && !mpPerDamage) return null;
+    damageRidersAssigned = true;
+    return {
+      ...(healPerDamage ? { healActorUuid: actor.uuid, healPerDamage } : {}),
+      ...(mpPerDamage ? { restoreMPActorUuid: actor.uuid, mpPerDamage } : {})
+    };
+  };
 
   await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${game.i18n.localize("LA.SpellcraftCheck")}: ${escapeHTML(item.name)} (${escapeHTML(system.school)})` });
   if (castSucceeded && effects.length) {
     if (targets.length) {
-      for (const { actor: target } of targets) {
+      for (const { actor: target, token } of targets) {
         const addle = target.effects.find(active => active.getFlag("last-arc-analogue", "addleEffect")?.casterActorId === actor.id);
-        for (const effect of effects) await applySpellEffect(effect, target, actor, item, checkTotal + (addle ? 5 : 0), results, amplificationPenalty * 2, selectedHighArcana);
+        for (const effect of effects) await applySpellEffect(effect, target, actor, item, checkTotal + (addle ? 5 : 0), results, amplificationPenalty * 2, selectedHighArcana, token, getDamageRider);
         if (addle && target.effects.has(addle.id)) await target.deleteEmbeddedDocuments("ActiveEffect", [addle.id]);
       }
     } else {
@@ -306,26 +332,7 @@ async function showSpellCard(item, actor = null) {
         const formula = amplificationPenalty ? `(${baseFormula}) + ${amplificationPenalty * 2}` : baseFormula;
         const damageRoll = await (new Roll(formula, { ...actor.getRollData(), level: actor.system.details.level })).evaluate();
         results.push(`${item.name}: ${formula} = ${damageRoll.total} ${game.i18n.localize("LA.DamageRolledUnapplied")}`);
-        await damageRoll.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${escapeHTML(item.name)} — ${game.i18n.localize("LA.DamageRolledUnapplied")}` });
-      }
-    }
-  }
-  if (targets.length && results.some(result => /\d+\s+(?:fire|cold|electric|dark|holy|damage)/i.test(result))) {
-    const classes = actor.items.filter(entry => entry.type === "advanced-class");
-    const elementalDamage = effects.some(effect => effect.type === "damage" && ["fire", "cold", "electric", "dark", "holy"].includes(String(effect.damageType ?? "").toLowerCase()));
-    const magicalDamage = effects.some(effect => effect.type === "damage");
-    for (const entry of classes) {
-      const classLevel = number(entry.system.classLevel);
-      const featureNames = new Set((entry.system.classFeatures ?? []).map(feature => feature.name));
-      if (classLevel >= 2 && elementalDamage && featureNames.has("Arcane Acumen")) {
-        const mp = actor.system.resources.mp;
-        const gain = Math.min(Math.floor(classLevel / 2), Math.max(0, number(mp.max) - number(mp.value)));
-        if (gain) { await actor.update({ "system.resources.mp.value": number(mp.value) + gain }); results.push(`Arcane Acumen: +${gain} MP`); }
-      }
-      if (classLevel >= 2 && magicalDamage && featureNames.has("Soul Eater")) {
-        const hp = actor.system.resources.hp;
-        const gain = Math.min(Math.floor(classLevel / 2), Math.max(0, number(hp.max) - number(hp.value)));
-        if (gain) { if (typeof actor.applyHealing === "function") await actor.applyHealing(gain); else await actor.update({ "system.resources.hp.value": number(hp.value) + gain, "system.combat.persistentHpRecovery": false }); results.push(`Soul Eater: +${gain} HP`); }
+        await postDamageRoll(damageRoll, { speaker: ChatMessage.getSpeaker({ actor }), flavor: `${escapeHTML(item.name)} — ${game.i18n.localize("LA.DamageRolledUnapplied")}`, type: effect.damageType ?? "unaspected", onApply: getDamageRider(effect) });
       }
     }
   }

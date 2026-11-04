@@ -76,6 +76,8 @@ Version 0.2.23 sizes Add Item controls to their labels and keeps them beside the
 
 Version 0.2.24 adds the Break Threshold formula and a visual Break Gauge with automatic damage-triggered steps and roll/defence penalties; Second Wind, rest and recovery, unconsciousness checks, death prevention with Hero Points, and the Injury and Dismemberment table. Injury penalties affect checks, movement, and carrying capacity; the Combat tab now includes compact state and recovery controls.
 
+Version 0.2.25 adds a localized damage-type selector to manual Apply Damage and a chat Apply Damage action for weapon, Magick, Technick/talent, and Performance damage rolls. Chat damage uses the recorded roll amount and target, applies HP damage through the shared resistance/DR and Break Gauge routine, supports MP damage and damage-type choices, and resolves attached healing or MP-drain riders after application.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork. The system code is provided without an added license until the repository owner chooses one.

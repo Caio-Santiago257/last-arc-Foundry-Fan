@@ -306,7 +306,7 @@
     "SpellDefenceMiss": "defence not beaten; half damage",
     "SpellNoEffect": "The Spellcraft check did not reach this spell's first effect threshold.",
     "SpellNoEffectApplied": "The check succeeded, but no listed effect was applied to the selected target(s).",
-    "DamageRolledUnapplied": "damage rolled (not applied; no target selected)",
+    "DamageRolledUnapplied": "damage rolled; waiting for chat application",
     "ItemRollFailed": "The item could not be rolled. See the browser console for details.",
     "SpellNoTargetApplication": "no target selected; target-dependent effects are not applied",
     "SpellManualAdjudication": "Read the special rules and resolve any positional or table-dependent effects with the GM.",
@@ -393,6 +393,20 @@
     "GMOnlyInjuryCare": "Only the GM can record intensive care and resolve persistent injuries.",
     "ResolveInjury": "Resolve injury",
     "ResolveInjuryHint": "Confirm that the required intensive care was provided. Severed limbs are not restored without a prosthetic.",
-    "Used": "used"
+    "Used": "used",
+    "DamageBlunt": "Blunt",
+    "DamagePiercing": "Piercing",
+    "DamageSlashing": "Slashing",
+    "DamageFire": "Fire",
+    "DamageCold": "Cold",
+    "DamageElectric": "Electric",
+    "DamageDark": "Dark",
+    "DamageHoly": "Holy",
+    "DamageUnaspected": "Unaspected",
+    "ChooseDamageType": "Choose damage type",
+    "SelectDamageTarget": "Select or target at least one token before applying damage.",
+    "NoActiveGMForDamage": "No GM is connected to apply damage to this token. Ask the GM to use Apply Damage.",
+    "ChatDamageApplyFailed": "Could not apply damage from this chat message. Check the browser console for details.",
+    "DamageAwaitingApplication": "waiting for application from chat"
   }
 }

@@ -306,7 +306,7 @@
     "SpellDefenceMiss": "defesa não superada; dano pela metade",
     "SpellNoEffect": "O teste de Spellcraft não alcançou a primeira faixa de efeito desta Magick.",
     "SpellNoEffectApplied": "O teste foi bem-sucedido, mas nenhum efeito listado foi aplicado aos alvos selecionados.",
-    "DamageRolledUnapplied": "dano rolado (não aplicado; nenhum alvo selecionado)",
+    "DamageRolledUnapplied": "dano rolado; aguardando aplicação pelo chat",
     "ItemRollFailed": "Não foi possível rolar este item. Consulte o console do navegador para ver os detalhes.",
     "SpellNoTargetApplication": "nenhum alvo selecionado; efeitos que dependem do alvo não foram aplicados",
     "SpellManualAdjudication": "Consulte as regras especiais e resolva com o mestre os efeitos posicionais ou dependentes da mesa.",
@@ -393,6 +393,20 @@
     "GMOnlyInjuryCare": "Somente o Mestre pode registrar cuidados intensivos e resolver lesões persistentes.",
     "ResolveInjury": "Resolver lesão",
     "ResolveInjuryHint": "Confirme que os cuidados intensivos necessários foram realizados. Membros amputados não são restaurados sem prótese.",
-    "Used": "usado"
+    "Used": "usado",
+    "DamageBlunt": "Contundente (blunt)",
+    "DamagePiercing": "Perfurante (piercing)",
+    "DamageSlashing": "Cortante (slashing)",
+    "DamageFire": "Fogo",
+    "DamageCold": "Frio",
+    "DamageElectric": "Elétrico",
+    "DamageDark": "Sombrio (dark)",
+    "DamageHoly": "Sagrado (holy)",
+    "DamageUnaspected": "Não elementar (unaspected)",
+    "ChooseDamageType": "Escolha o tipo de dano",
+    "SelectDamageTarget": "Selecione ou escolha como alvo pelo menos um token antes de aplicar o dano.",
+    "NoActiveGMForDamage": "Nenhum Mestre está conectado para aplicar dano a este token. Peça ao Mestre para usar Aplicar dano.",
+    "ChatDamageApplyFailed": "Não foi possível aplicar o dano desta mensagem. Veja o console do navegador para detalhes.",
+    "DamageAwaitingApplication": "aguardando aplicação pelo chat"
   }
 }
