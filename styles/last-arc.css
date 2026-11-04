@@ -47,8 +47,9 @@
 .la-stat-tiles label { display: grid; gap: 3px; padding: 6px 7px; border: 1px solid #e1d3be; background: rgba(255,255,255,.32); }
 .la-inline-roll { border: 0; background: transparent; color: var(--la-accent); font: bold 17px Georgia,serif; cursor: pointer; }
 .la-wide-field { display: grid; gap: 3px; }
-.la-section-heading { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-.la-section-heading h2 { margin-right: auto; }
+.la-section-heading { display: flex; justify-content: flex-start; align-items: center; gap: 9px; margin-bottom: 10px; }
+.la-section-heading h2 { flex: 0 0 auto; margin: 0; padding: 0 0 6px; white-space: nowrap; }
+.la-section-heading .la-add { flex: 0 0 auto; width: auto !important; min-width: 0; margin: 0 0 5px; padding: 4px 8px; white-space: nowrap; }
 .la-add,.la-primary-button { padding: 5px 9px; border: 1px solid var(--la-gold); border-radius: 2px; background: #efe3ce; color: var(--la-accent); font: 700 10px Arial,sans-serif; cursor: pointer; }
 .la-primary-button { padding: 8px 12px; background: var(--la-accent); color: #fff8e9; }
 .la-weapon-row,.la-item-row { display: grid; grid-template-columns: 32px minmax(90px,1.5fr) repeat(2,minmax(60px,1fr)) 24px; gap: 8px; align-items: center; padding: 6px 3px; border-bottom: 1px solid #e6dccb; }

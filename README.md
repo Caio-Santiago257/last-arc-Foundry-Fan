@@ -71,6 +71,8 @@ Version 0.2.21 adds the six High Arcana to a dedicated Magick compendium. Archma
 
 Version 0.2.22 keeps race names on one row in the item list and widens the XP fields so six-digit totals remain readable. Mage's starting Arcane Study plus a separately chosen level-1 repeatable copy remain allowed.
 
+Version 0.2.23 sizes Add Item controls to their labels and keeps them beside the section headings, reducing visual clutter across the character sheet.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork. The system code is provided without an added license until the repository owner chooses one.

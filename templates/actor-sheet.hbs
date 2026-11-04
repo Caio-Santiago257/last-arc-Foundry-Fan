@@ -43,7 +43,7 @@
         </section>
       </div>
       <section class="la-panel la-weapons">
-        <div class="la-section-heading"><h2>{{localize "LA.Attack"}}</h2><button type="button" class="item-create la-add" data-type="weapon">＋ {{localize "LA.AddItem"}}</button></div>
+        <div class="la-section-heading"><h2>{{localize "LA.Attack"}}</h2><button type="button" class="item-create la-add" data-type="weapon">{{localize "LA.AddItem"}}</button></div>
         <div class="la-weapon-list">{{#each itemGroups as |group|}}{{#if (eq group.type "weapon")}}{{#each group.items as |item|}}<div class="item la-weapon-row" data-item-id="{{item.id}}"><button type="button" class="item-roll la-die" title="{{localize 'LA.Roll'}}"><i class="fas fa-dice-d20" aria-hidden="true"></i></button><button type="button" class="item-edit la-link"><i class="fas fa-crosshairs" aria-hidden="true"></i> {{item.name}}</button><span>{{item.system.range}}</span><span>{{item.system.damage.formula}}</span><button type="button" class="item-delete la-icon-button" title="{{localize 'LA.Delete'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button></div>{{/each}}{{/if}}{{/each}}</div>
       </section>
     </div>
@@ -64,13 +64,13 @@
 
     <div class="tab" data-group="primary" data-tab="features">
       {{#each itemGroups as |group|}}{{#if (or (eq group.type "race") (eq group.type "class") (eq group.type "advanced-class") (eq group.type "feature") (eq group.type "talent"))}}
-      <section class="la-panel la-item-section"><div class="la-section-heading"><h2>{{group.label}}</h2>{{#unless (eq group.type "performance")}}<button type="button" class="item-create la-add" data-type="{{group.type}}">＋ {{localize "LA.AddItem"}}</button>{{/unless}}</div>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}</section>{{/if}}{{/each}}
+      <section class="la-panel la-item-section"><div class="la-section-heading"><h2>{{group.label}}</h2>{{#unless (eq group.type "performance")}}<button type="button" class="item-create la-add" data-type="{{group.type}}">{{localize "LA.AddItem"}}</button>{{/unless}}</div>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}</section>{{/if}}{{/each}}
     </div>
 
     <div class="tab" data-group="primary" data-tab="spells">
       {{#if (or system.details.additionalSpellSlots system.details.additionalPerformanceSlots)}}<section class="la-panel la-technick-summary">{{#if system.details.additionalSpellSlots}}<span>{{localize "LA.AdditionalSpellSlots"}}: +{{system.details.additionalSpellSlots}}</span>{{/if}}{{#if system.details.additionalPerformanceSlots}}<span>{{localize "LA.AdditionalPerformanceSlots"}}: +{{system.details.additionalPerformanceSlots}}</span>{{/if}}</section>{{/if}}
       {{#each itemGroups as |group|}}{{#if (or (eq group.type "spell") (eq group.type "technick") (eq group.type "performance"))}}
-      <section class="la-panel la-item-section"><div class="la-section-heading"><h2>{{group.label}}</h2><button type="button" class="item-create la-add" data-type="{{group.type}}">＋ {{localize "LA.AddItem"}}</button></div>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}</section>{{/if}}{{/each}}
+      <section class="la-panel la-item-section"><div class="la-section-heading"><h2>{{group.label}}</h2><button type="button" class="item-create la-add" data-type="{{group.type}}">{{localize "LA.AddItem"}}</button></div>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}</section>{{/if}}{{/each}}
     </div>
 
     <div class="tab" data-group="primary" data-tab="effects">
@@ -84,7 +84,7 @@
     </div>
 
     <div class="tab" data-group="primary" data-tab="inventory">
-      <section class="la-panel"><div class="la-section-heading"><h2>{{localize "LA.Inventory"}}</h2><button type="button" class="item-create la-add" data-type="equipment">＋ {{localize "LA.AddItem"}}</button></div><div class="la-inventory-meta"><label>{{localize "LA.Gold"}}<input type="number" name="system.inventory.gold" value="{{system.inventory.gold}}"></label><span>{{localize "LA.Bulk"}}: <b>{{system.inventoryBulk}}</b> / {{system.inventory.maxBulk}} <small>({{localize "LA.Overencumbered"}} {{system.inventory.overBulk}})</small></span></div>
+      <section class="la-panel"><div class="la-section-heading"><h2>{{localize "LA.Inventory"}}</h2><button type="button" class="item-create la-add" data-type="equipment">{{localize "LA.AddItem"}}</button></div><div class="la-inventory-meta"><label>{{localize "LA.Gold"}}<input type="number" name="system.inventory.gold" value="{{system.inventory.gold}}"></label><span>{{localize "LA.Bulk"}}: <b>{{system.inventoryBulk}}</b> / {{system.inventory.maxBulk}} <small>({{localize "LA.Overencumbered"}} {{system.inventory.overBulk}})</small></span></div>
       {{#each itemGroups as |group|}}{{#if (or (eq group.type "equipment") (eq group.type "armor") (eq group.type "other"))}}<h3 class="la-subheading">{{group.label}}</h3>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}{{/if}}{{/each}}
       </section>
     </div>
