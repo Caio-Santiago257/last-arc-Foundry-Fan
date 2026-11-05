@@ -14,7 +14,16 @@
     <div class="la-npc-xp"><small>XP</small><strong>{{system.adversary.xp}}</strong><small>Level {{system.adversary.level}}</small></div>
   </header>
 
-  <div class="la-npc-body">
+  <nav class="sheet-tabs la-tabs" data-group="primary" aria-label="{{localize 'LA.NPCSheet'}}">
+    <a class="item" data-tab="overview" title="{{localize 'LA.Overview'}}" aria-label="{{localize 'LA.Overview'}}"><i class="fas fa-user-shield" aria-hidden="true"></i><span>{{localize "LA.Overview"}}</span></a>
+    <a class="item" data-tab="actions" title="{{localize 'LA.Attack'}}" aria-label="{{localize 'LA.Attack'}}"><i class="fas fa-crosshairs" aria-hidden="true"></i><span>{{localize "LA.Attack"}}</span></a>
+    <a class="item" data-tab="effects" title="{{localize 'LA.StatusEffects'}}" aria-label="{{localize 'LA.StatusEffects'}}"><i class="fas fa-bolt" aria-hidden="true"></i><span>{{localize "LA.StatusEffects"}}</span></a>
+    <a class="item" data-tab="inventory" title="{{localize 'LA.Inventory'}}" aria-label="{{localize 'LA.Inventory'}}"><i class="fas fa-suitcase" aria-hidden="true"></i><span>{{localize "LA.Inventory"}}</span></a>
+    <a class="item" data-tab="biography" title="{{localize 'LA.Description'}}" aria-label="{{localize 'LA.Description'}}"><i class="fas fa-feather-alt" aria-hidden="true"></i><span>{{localize "LA.Description"}}</span></a>
+  </nav>
+
+  <section class="sheet-body la-body la-npc-body">
+    <div class="tab" data-group="primary" data-tab="overview">
     <section class="la-panel la-npc-resource-grid">
       <div class="la-resource-card hp"><label>{{localize "LA.Health"}}</label><div><button type="button" class="resource-control" data-resource="resources.hp" data-delta="-1">−</button><input type="number" name="system.resources.hp.value" value="{{system.resources.hp.value}}"><span>/</span><input type="number" name="system.resources.hp.max" value="{{system.resources.hp.max}}"><button type="button" class="resource-control" data-resource="resources.hp" data-delta="1">+</button></div></div>
       <div class="la-resource-card mp"><label>{{localize "LA.Mana"}}</label><div><button type="button" class="resource-control" data-resource="resources.mp" data-delta="-1">−</button><input type="number" name="system.resources.mp.value" value="{{system.resources.mp.value}}"><span>/</span><input type="number" name="system.resources.mp.max" value="{{system.resources.mp.max}}"><button type="button" class="resource-control" data-resource="resources.mp" data-delta="1">+</button></div></div>
@@ -37,6 +46,10 @@
       <div><b>{{localize "LA.Vulnerabilities"}}</b><span>{{#if system.adversary.weaknesses.length}}{{#each system.adversary.weaknesses as |entry|}}{{entry}}{{#unless @last}}, {{/unless}}{{/each}}{{else}}—{{/if}}</span></div>
     </section>
 
+    <section class="la-panel la-npc-damage"><button type="button" class="apply-damage la-primary-button">{{localize "LA.ApplyDamage"}}</button></section>
+    </div>
+
+    <div class="tab" data-group="primary" data-tab="actions">
     <section class="la-panel la-npc-actions"><div class="la-section-heading"><h2>{{localize "LA.Attack"}}</h2></div>
       {{#each itemGroups as |group|}}{{#if (eq group.type "weapon")}}{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}{{/if}}{{/each}}
       {{#each itemGroups as |group|}}{{#if (eq group.type "spell")}}<h3 class="la-subheading">{{localize "LA.Spells"}}</h3>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}{{/if}}{{/each}}
@@ -45,18 +58,24 @@
 
     {{#if npcSkills.length}}<section class="la-panel"><h2>{{localize "LA.Skills"}}</h2><div class="la-npc-skills">{{#each npcSkills as |skill|}}<button type="button" class="rollable la-npc-skill-roll" data-roll="npc-skill" data-label="{{skill.label}}" data-bonus="{{skill.value}}" title="{{localize 'LA.RollSkill'}}"><span>{{skill.label}}</span><b>{{skill.value}}</b></button>{{/each}}</div></section>{{/if}}
 
-    <section class="la-panel la-status-panel"><h2>{{localize "LA.StatusEffects"}}</h2><p class="la-npc-muted">{{localize "LA.StatusEffectsHint"}}</p><div class="la-status-controls"><select name="ruleStatus"><option value="">{{localize "LA.ChooseStatus"}}</option>{{#each ruleStatusOptions as |status|}}<option value="{{status.id}}">{{status.label}}</option>{{/each}}</select><button type="button" class="la-apply-status la-add">{{localize "LA.ApplyStatus"}}</button></div>{{#if activeEffects.length}}<div class="la-npc-active-effects">{{#each activeEffects as |effect|}}<div class="la-active-effect" data-effect-id="{{effect.id}}"><img src="{{effect.img}}" alt=""><div><strong>{{effect.name}}</strong>{{#if effect.description}}<small>{{effect.description}}</small>{{/if}}</div><button type="button" class="active-effect-delete la-icon-button" title="{{localize 'LA.RemoveEffect'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button></div>{{/each}}</div>{{/if}}</section>
-
     {{#each itemGroups as |group|}}{{#if (or (eq group.type "feature") (eq group.type "talent") (eq group.type "technick"))}}<section class="la-panel la-npc-actions"><h2>{{group.label}}</h2>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}</section>{{/if}}{{/each}}
+    </div>
 
+    <div class="tab" data-group="primary" data-tab="effects">
+    <section class="la-panel la-status-panel"><h2>{{localize "LA.StatusEffects"}}</h2><p class="la-npc-muted">{{localize "LA.StatusEffectsHint"}}</p><div class="la-status-controls"><select name="ruleStatus"><option value="">{{localize "LA.ChooseStatus"}}</option>{{#each ruleStatusOptions as |status|}}<option value="{{status.id}}">{{status.label}}</option>{{/each}}</select><button type="button" class="la-apply-status la-add">{{localize "LA.ApplyStatus"}}</button></div>{{#if activeEffects.length}}<div class="la-npc-active-effects">{{#each activeEffects as |effect|}}<div class="la-active-effect" data-effect-id="{{effect.id}}"><img src="{{effect.img}}" alt=""><div><strong>{{effect.name}}</strong>{{#if effect.description}}<small>{{effect.description}}</small>{{/if}}</div><button type="button" class="active-effect-delete la-icon-button" title="{{localize 'LA.RemoveEffect'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button></div>{{/each}}</div>{{/if}}</section>
+    </div>
+
+    <div class="tab" data-group="primary" data-tab="inventory">
     <section class="la-panel la-npc-inventory"><h2>{{localize "LA.Inventory"}}</h2>
       {{#if system.adversary.equipped}}<p><b>Equipped:</b> {{system.adversary.equipped}}</p>{{/if}}
       {{#if system.adversary.loot}}<p><b>Loot:</b> {{system.adversary.loot}}</p>{{/if}}
       {{#if system.adversary.steal}}<p><b>Steal:</b> {{system.adversary.steal}}</p>{{/if}}
       <div class="la-npc-embedded-gear">{{#each itemGroups as |group|}}{{#if (or (eq group.type "equipment") (eq group.type "armor") (eq group.type "other"))}}{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}{{/if}}{{/each}}</div>
     </section>
+    </div>
 
+    <div class="tab" data-group="primary" data-tab="biography">
     {{#if system.adversary.description}}<section class="la-panel"><h2>{{localize "LA.Description"}}</h2><p class="la-npc-description">{{system.adversary.description}}</p></section>{{/if}}
-    <section class="la-panel la-npc-damage"><button type="button" class="apply-damage la-primary-button">{{localize "LA.ApplyDamage"}}</button></section>
-  </div>
+    </div>
+  </section>
 </form>

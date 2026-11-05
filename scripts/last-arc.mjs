@@ -446,6 +446,11 @@ function describePerformanceEffect(effect = {}) {
 }
 
 Hooks.once("init", () => {
+  Hooks.on("renderApplicationV1", (application, html, data) => {
+    if (!(application instanceof Dialog) || !(data?.lastArcTheme || application.data?.lastArcTheme)) return;
+    html.addClass("last-arc-dialog-content");
+    html.closest(".window-app").addClass("last-arc-dialog");
+  });
   registerDamageChatControls();
   registerRuleStatusEffects();
   Hooks.on("renderChatMessage", (_message, html) => applyImageFallbacks(html));
@@ -748,6 +753,7 @@ class LastArcActor extends Actor {
     let savedByHeroPoint = false;
     if (lethal && this.type === "character" && safeNumber(this.system.resources.heroPoints?.value) > 0) {
       const spend = await Dialog.confirm({
+        lastArcTheme: true,
         title: game.i18n.localize("LA.DeathPrevented"),
         content: `<p>${game.i18n.localize("LA.SpendHeroPointForDeath")}</p>`,
         yes: () => true, no: () => false, defaultYes: false
@@ -1223,6 +1229,7 @@ class LastArcActorSheet extends ActorSheet {
       ...availableClasses.map((item, index) => `<option value="new-${index}">${game.i18n.format("LA.StartClassOption", { name: foundry.utils.escapeHTML(item.name) })}</option>`)
     ].join("");
     return new Promise(resolve => new Dialog({
+      lastArcTheme: true,
       title: game.i18n.localize("LA.SelectLevelClass"),
       content: `<form><p>${game.i18n.localize("LA.SelectLevelClassHint")}</p><select name="class">${options}</select></form>`,
       buttons: {
@@ -1244,6 +1251,7 @@ class LastArcActorSheet extends ActorSheet {
     if (!documents.length) { ui.notifications.warn(game.i18n.localize("LA.NoMoreAeons")); return null; }
     const options = documents.map(entry => `<option value="${foundry.utils.escapeHTML(entry.system.aeon.aeonId)}">${foundry.utils.escapeHTML(entry.system.aeon.name)} — ${foundry.utils.escapeHTML(entry.system.aeon.epithet)}</option>`).join("");
     return new Promise(resolve => new Dialog({
+      lastArcTheme: true,
       title: game.i18n.localize("LA.SelectAeon"),
       content: `<form><p>${game.i18n.localize("LA.SelectAeonHint")}</p><label>${game.i18n.localize("LA.Aeon")}<select name="aeon">${options}</select></label></form>`,
       buttons: { choose: { label: game.i18n.localize("LA.Choose"), callback: html => resolve(String(html.find('[name="aeon"]').val() ?? "")) }, cancel: { label: game.i18n.localize("LA.Cancel"), callback: () => resolve(null) } },
@@ -1366,6 +1374,7 @@ class LastArcActorSheet extends ActorSheet {
   async _chooseAttributeIncreases() {
     const options = ATTRIBUTES.map(key => `<option value="${key}">${game.i18n.localize(ATTRIBUTE_LABELS[key])}</option>`).join("");
     return new Promise(resolve => new Dialog({
+      lastArcTheme: true,
       title: game.i18n.localize("LA.SelectAttributeIncrease"),
       content: `<form><p>${game.i18n.localize("LA.AttributeIncreaseHint")}</p><label>${game.i18n.localize("LA.AttributeIncreaseOne")}<select name="first">${options}</select></label><label>${game.i18n.localize("LA.AttributeIncreaseTwo")}<select name="second">${options}</select></label></form>`,
       buttons: {
@@ -1400,6 +1409,7 @@ class LastArcActorSheet extends ActorSheet {
       return `<label class="la-technick-choice"><input type="checkbox" name="technick" value="${index}"><span><strong>${foundry.utils.escapeHTML(item.name)}</strong><small>${foundry.utils.escapeHTML(item.system.description ?? "")}</small>${requirements ? `<small class="la-technick-requirement">${game.i18n.localize("LA.Requirements")}: ${foundry.utils.escapeHTML(requirements)}</small>` : ""}</span></label>`;
     }).join("");
     const selection = await new Promise(resolve => new Dialog({
+      lastArcTheme: true,
       title: game.i18n.localize("LA.SelectTechnick"),
       content: `<form class="la-technick-choice-form"><p>${game.i18n.localize(bonusNames ? "LA.SelectClassBonusTechnickHint" : "LA.SelectTechnickHint")}</p><fieldset>${rows}</fieldset></form>`,
       buttons: {
@@ -1440,6 +1450,7 @@ class LastArcActorSheet extends ActorSheet {
     }
     const rows = choices.map((item, index) => `<label class="la-choice-row"><input type="checkbox" name="performance" value="${index}"><span><strong>${foundry.utils.escapeHTML(item.name)}</strong><small>${foundry.utils.escapeHTML(item.system.description ?? "")}</small></span></label>`).join("");
     const selected = await new Promise(resolve => new Dialog({
+      lastArcTheme: true,
       title: game.i18n.localize("LA.LearnPerformances"),
       content: `<form class="la-performance-choice-form"><p>${game.i18n.format("LA.SelectPerformancesHint", { count: required })}</p><p class="la-performance-choice-count">${game.i18n.format("LA.SelectedPerformancesCount", { selected: 0, count: required })}</p><fieldset>${rows}</fieldset></form>`,
       buttons: {
@@ -1491,6 +1502,7 @@ class LastArcActorSheet extends ActorSheet {
       }
       const options = choices.map((key, index) => `<option value="${index}">${game.i18n.localize(SKILL_LABELS[key] ?? `LA.WeaponGroup.${key}`)}</option>`).join("");
       const chosen = await new Promise(resolve => new Dialog({
+      lastArcTheme: true,
         title: game.i18n.localize("LA.TechnickChoice"),
         content: `<form><label>${game.i18n.localize(choiceType === "weaponGroup" ? "LA.WeaponGroupChoice" : "LA.SkillChoice")}<select name="choice">${options}</select></label></form>`,
         buttons: {
@@ -1512,6 +1524,7 @@ class LastArcActorSheet extends ActorSheet {
       const intelligence = safeNumber(projectedAttributes.int, this.actor.system.attributes.int.score);
       const count = Math.max(1, 1 + Math.floor((intelligence - 10) / 2));
       const names = await new Promise(resolve => new Dialog({
+      lastArcTheme: true,
         title: game.i18n.localize("LA.TechnickChoice"),
         content: `<form><p>${game.i18n.format("LA.EnterLanguagesHint", { count })}</p><input name="languages" type="text"></form>`,
         buttons: {
@@ -1626,6 +1639,7 @@ class LastArcActorSheet extends ActorSheet {
       return `<label class="la-choice-row"><input type="checkbox" name="spell" value="${index}"><span><strong>${foundry.utils.escapeHTML(item.name)}</strong><small>${detail}${requirements ? ` · ${game.i18n.localize("LA.Requirements")}: ${foundry.utils.escapeHTML(requirements)}` : ""}</small><small>${description}</small></span></label>`;
     }).join("");
     const selected = await new Promise(resolve => new Dialog({
+      lastArcTheme: true,
       title: game.i18n.localize("LA.LearnMagicks"),
       content: `<form class="la-spell-choice-form"><p>${game.i18n.format("LA.SelectMagicksHint", { count: required })}</p><p class="la-spell-choice-count">${game.i18n.format("LA.SelectedMagicksCount", { selected: 0, count: required })}</p><fieldset>${rows}</fieldset></form>`,
       buttons: {
@@ -1716,7 +1730,7 @@ class LastArcActorSheet extends ActorSheet {
     const currentRace = this.actor.items.find(item => item.type === "race");
     const oldRaceFeatures = this.actor.items.filter(item => item.type === "feature" && item.flags?.["last-arc-analogue"]?.racialFeature);
     const prior = this.actor.system.details.raceAdjustments ?? {};
-    if (currentRace && !(await Dialog.confirm({ title: game.i18n.localize("LA.ReplaceRace"), content: game.i18n.localize("LA.ReplaceRacePrompt") }))) return false;
+    if (currentRace && !(await Dialog.confirm({ lastArcTheme: true, title: game.i18n.localize("LA.ReplaceRace"), content: game.i18n.localize("LA.ReplaceRacePrompt") }))) return false;
     const update = {};
     const oldHP = safeNumber(this.actor.system.resources.hp.max);
     const oldMP = safeNumber(this.actor.system.resources.mp.max);
@@ -1918,6 +1932,7 @@ class LastArcActorSheet extends ActorSheet {
       return null;
     }
     const tree = await new Promise(resolve => new Dialog({
+      lastArcTheme: true,
       title: game.i18n.localize("LA.SelectTalentTree"),
       content: `<form><p>${game.i18n.format("LA.SelectTalentTreeHint", { className: foundry.utils.escapeHTML(classItem.name) })}</p><select name="tree">${trees.map((name, index) => `<option value="${index}">${foundry.utils.escapeHTML(name)}</option>`).join("")}</select></form>`,
       buttons: {
@@ -1937,6 +1952,7 @@ class LastArcActorSheet extends ActorSheet {
     const descriptions = talents.map(item => foundry.utils.escapeHTML(item.system.description ?? ""));
     const options = talents.map((item, index) => `<option value="${index}" data-description="${descriptions[index]}">${foundry.utils.escapeHTML(item.name)}</option>`).join("");
     const talent = await new Promise(resolve => new Dialog({
+      lastArcTheme: true,
       title: game.i18n.format("LA.SelectTalent", { tree: foundry.utils.escapeHTML(tree) }),
       content: `<form class="la-talent-choice-form"><label>${game.i18n.localize("LA.Talent")}<select name="talent">${options}</select></label><p class="la-talent-preview">${descriptions[0]}</p><p class="la-hint">${game.i18n.localize("LA.TalentPrerequisiteHint")}</p></form>`,
       buttons: {
@@ -1967,6 +1983,7 @@ class LastArcActorSheet extends ActorSheet {
     const choices = options.map((item, index) => `<option value="${index}">${foundry.utils.escapeHTML(item.name)}</option>`).join("");
     const descriptions = options.map(item => foundry.utils.escapeHTML(item.system.description ?? ""));
     const selected = await new Promise(resolve => new Dialog({
+      lastArcTheme: true,
       title: game.i18n.localize("LA.SelectHighArcana"),
       content: `<form class="la-talent-choice-form"><p>${game.i18n.localize("LA.SelectHighArcanaHint")}</p><label>${game.i18n.localize("LA.HighArcana")}<select name="highArcana">${choices}</select></label><p class="la-talent-preview">${descriptions[0]}</p></form>`,
       buttons: {
@@ -2094,6 +2111,7 @@ class LastArcActorSheet extends ActorSheet {
     }
     const options = available.map(key => `<label class="la-skill-choice"><input type="checkbox" name="skills" value="${foundry.utils.escapeHTML(key)}"><span>${game.i18n.localize(SKILL_LABELS[key])}</span></label>`).join("");
     return new Promise(resolve => new Dialog({
+      lastArcTheme: true,
       title: game.i18n.localize("LA.SelectTrainedSkills"),
       content: `<form class="la-skill-choice-form"><p>${game.i18n.format("LA.SelectTrainedSkillsHint", { count: required })}</p><p class="la-skill-choice-count">${game.i18n.format("LA.SelectedSkillsCount", { selected: 0, count: required })}</p><fieldset>${options}</fieldset></form>`,
       buttons: {
@@ -2126,6 +2144,7 @@ class LastArcActorSheet extends ActorSheet {
       const answer = await new Promise(resolve => {
         const options = (group.options ?? []).map((option, index) => `<option value="${index}">${foundry.utils.escapeHTML(option.name ?? option)}</option>`).join("");
         new Dialog({
+      lastArcTheme: true,
           title: group.label ?? game.i18n.localize(kind === "race" ? "LA.ChooseTraitOption" : "LA.ChooseSubclass"),
           content: `<form><label>${foundry.utils.escapeHTML(group.label ?? "") }<select name="choice">${options}</select></label></form>`,
           buttons: {
@@ -2200,7 +2219,7 @@ class LastArcActorSheet extends ActorSheet {
   async _onItemDelete(event) {
     const row = event.currentTarget.closest(".item");
     const item = this.actor.items.get(row.dataset.itemId);
-    if (item && await Dialog.confirm({ title: game.i18n.localize("LA.Delete"), content: game.i18n.localize("LA.ConfirmDelete") })) {
+    if (item && await Dialog.confirm({ lastArcTheme: true, title: game.i18n.localize("LA.Delete"), content: game.i18n.localize("LA.ConfirmDelete") })) {
       const oldMaxHP = safeNumber(this.actor.system.resources.hp.max);
       const oldMaxMP = safeNumber(this.actor.system.resources.mp.max);
       await item.delete();
@@ -2222,6 +2241,7 @@ class LastArcActorSheet extends ActorSheet {
     event.preventDefault();
     const damageTypes = DAMAGE_TYPES.map(type => `<option value="${type.value}" ${type.value === "unaspected" ? "selected" : ""}>${game.i18n.localize(type.label)}</option>`).join("");
     const amount = await new Promise(resolve => new Dialog({
+      lastArcTheme: true,
       title: game.i18n.localize("LA.ApplyDamage"),
       content: `<form class="la-apply-damage-dialog"><label>${game.i18n.localize("LA.Damage")}<input type="number" name="damage" min="0" value="0"></label><label>${game.i18n.localize("LA.DamageType")}<select name="damageType">${damageTypes}</select></label></form>`,
       buttons: { apply: { label: game.i18n.localize("LA.ApplyDamage"), callback: html => resolve({ amount: html.find("[name=damage]").val(), type: html.find("[name=damageType]").val() }) }, cancel: { label: game.i18n.localize("LA.Cancel"), callback: () => resolve(null) } },
@@ -2253,6 +2273,7 @@ class LastArcActorSheet extends ActorSheet {
       return `<fieldset class="la-protection-config-group"><legend>${foundry.utils.escapeHTML(category.label)}</legend><div class="la-protection-options">${makeOptions(category.key, category.types, selected)}</div><label class="la-protection-special">${game.i18n.localize("LA.SpecialValues")}<input type="text" name="${category.key}-special" value="${foundry.utils.escapeHTML(custom)}" placeholder="${game.i18n.localize("LA.SpecialValuesHint")}"><small>${game.i18n.localize("LA.SpecialValuesHint")}</small></label></fieldset>`;
     }).join("");
     const result = await new Promise(resolve => new Dialog({
+      lastArcTheme: true,
       title: game.i18n.localize("LA.ConfigureProtections"),
       content: `<form class="la-protection-config"><p>${game.i18n.localize("LA.ConfigureProtectionsHint")}</p><div class="la-protection-config-grid">${fields}</div></form>`,
       buttons: {
@@ -2274,6 +2295,7 @@ class LastArcActorSheet extends ActorSheet {
   async _onRest(event) {
     event.preventDefault();
     const result = await new Promise(resolve => new Dialog({
+      lastArcTheme: true,
       title: game.i18n.localize("LA.RestAndRecovery"),
       content: `<form><label>${game.i18n.localize("LA.HoursRested")}<input type="number" name="hours" min="1" max="24" value="8"></label><label class="checkbox"><input type="checkbox" name="comfortable"> ${game.i18n.localize("LA.RestComfortHint")}</label></form>`,
       buttons: { rest: { label: game.i18n.localize("LA.Rest"), callback: html => resolve({ hours: html.find('[name="hours"]').val(), comfortable: html.find('[name="comfortable"]').prop("checked") }) }, cancel: { label: game.i18n.localize("LA.Cancel"), callback: () => resolve(null) } },
@@ -2283,7 +2305,7 @@ class LastArcActorSheet extends ActorSheet {
   }
   async _onWakeCheck(event) {
     event.preventDefault();
-    if (!await Dialog.confirm({ title: game.i18n.localize("LA.RegainConsciousness"), content: `<p>${game.i18n.localize("LA.RegainConsciousnessHint")}</p>` })) return;
+    if (!await Dialog.confirm({ lastArcTheme: true, title: game.i18n.localize("LA.RegainConsciousness"), content: `<p>${game.i18n.localize("LA.RegainConsciousnessHint")}</p>` })) return;
     const roll = await (new Roll(`1d20 + (${safeNumber(this.actor.system.attributes.vit.modifier)})`, this.actor.getRollData())).evaluate();
     const natural = roll.dice[0]?.results?.[0]?.result;
     const success = roll.total >= 10;
@@ -2304,7 +2326,7 @@ class LastArcActorSheet extends ActorSheet {
     const id = event.currentTarget.closest("[data-injury-id]")?.dataset.injuryId;
     const injuries = (this.actor.system.combat.injuries ?? []).filter(injury => injury.id !== id);
     if (injuries.length === (this.actor.system.combat.injuries ?? []).length) return;
-    if (await Dialog.confirm({ title: game.i18n.localize("LA.ResolveInjury"), content: `<p>${game.i18n.localize("LA.ResolveInjuryHint")}</p>` })) await this.actor.update({ "system.combat.injuries": injuries });
+    if (await Dialog.confirm({ lastArcTheme: true, title: game.i18n.localize("LA.ResolveInjury"), content: `<p>${game.i18n.localize("LA.ResolveInjuryHint")}</p>` })) await this.actor.update({ "system.combat.injuries": injuries });
   }
   async _onResourceControl(event) {
     const el = event.currentTarget;
@@ -2331,6 +2353,7 @@ class LastArcActorSheet extends ActorSheet {
     }
     const choices = ATTRIBUTES.map(key => `<label class="la-attribute-assignment-choice"><span>${game.i18n.localize(ATTRIBUTE_LABELS[key])}</span><select name="attribute-${key}" required><option value="" selected disabled>—</option>${values.map((value, valueIndex) => `<option value="${valueIndex}">${valueIndex + 1}. ${value}</option>`).join("")}</select></label>`).join("");
     const assignment = await new Promise(resolve => new Dialog({
+      lastArcTheme: true,
       title: game.i18n.localize("LA.AssignAttributes"),
       content: `<form class="la-attribute-assignment-form"><p>${game.i18n.localize("LA.AssignAttributesHint")}</p><fieldset>${choices}</fieldset></form>`,
       buttons: {

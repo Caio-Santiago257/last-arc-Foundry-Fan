@@ -12,7 +12,7 @@ Alternatively, download the ZIP, extract its `last-arc-analogue` folder into Fou
 
 ## Included
 
-- Character and NPC sheets with attributes, skills, defences, combat resources, weapons, features, spell/technick lists, inventory, and biography. Player sheets use a portrait-led header, compact hover-expanding icon navigation, and a dedicated configuration dialog for damage resistance, immunity, vulnerabilities, and condition immunity.
+- Character and NPC sheets with attributes, skills, defences, combat resources, weapons, features, spell/technick lists, inventory, and biography. Player sheets use a portrait-led header, compact icon navigation with tooltips, and a dedicated configuration dialog for damage resistance, immunity, vulnerabilities, and condition immunity.
 - Break Threshold is derived from Fortitude Defence, Technick/equipment and miscellaneous bonuses, and creature size. Damage that exceeds it moves a character down the Break Gauge; gauge penalties affect defences, attacks, skills, and attribute checks. The sheet tracks unconsciousness, persistent injuries, limb loss, Second Wind, recovery actions, consciousness checks, and rest-based HP/MP recovery.
 - Attribute modifiers, level-scaled skill/defence values, class bonuses, passive Perception, and class initiative dice (including the combat tracker).
 - Chat rolls for attributes, skills, initiative, weapon attacks, and item damage formulas; HP/MP controls, damage application, and inventory bulk.
@@ -33,6 +33,8 @@ The item descriptions are concise rules summaries. Use a rulebook copy the GM is
 ## Development
 
 Version 0.2.45 gives Equipage weapons distinct Foundry Core Data artwork by weapon name and group, uses core icons for armour and other equipment categories, and assigns varied core icons to Last Resort relics.
+
+Version 0.2.46 introduces the Arcane Crimson sheet design system across player, NPC/creature, Aeon, item, chat and dialog surfaces. Player attributes use a compact JRPG stat-tile layout; NPC sheets gain Overview, Actions, Effects, Inventory and Biography pages; Aeon and item navigation share the same icon treatment. The changes preserve existing data fields and roll controls.
 
 Version 0.2.44 fixes the item-sheet tab controller so Details and Description are interactive in Foundry VTT 13. Item descriptions now have a readable presentation with action, target, cost, prerequisites, special rules, and existing check-tier effects; editing the description remains available in a collapsed field.
 
