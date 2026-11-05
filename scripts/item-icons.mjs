@@ -48,6 +48,78 @@ const EQUIPMENT_ICONS = {
   crossbow:"MCH/Drill.webp", polearm:"DRG/True_Thrust.webp", staff:"BLM/Blizzard.webp", shield:"PLD/Sheltron.webp", armour:"PLD/Sentinel.webp", armor:"PLD/Sentinel.webp",
   potion:"items/Potion_icon1.webp", elixir:"items/Elixir_icon1.webp", ether:"items/Ether_icon2.webp", scroll:"items/120px-Clay_Tablet_Icon.webp", mount:"Mounts&Minions/Company_Chocobo_Mount.webp"
 };
+// Core Foundry art paths. These are served by Foundry itself, so they are not
+// copied into the system package and remain portable across Foundry installs.
+const CORE_WEAPON_BY_NAME = [
+  [/greatsword|great sword|claymore/i, "icons/weapons/swords/greatsword-crossguard-steel.webp"],
+  [/scimitar|curved sword/i, "icons/weapons/swords/scimitar-worn-blue.webp"],
+  [/rapier/i, "icons/weapons/swords/sword-guard-bronze.webp"],
+  [/shortsword|short sword/i, "icons/weapons/swords/sword-guard-worn-purple.webp"],
+  [/katana/i, "icons/weapons/swords/sword-katana.webp"],
+  [/sword|blade/i, "icons/weapons/swords/sword-broad-blue.webp"],
+  [/greataxe|great axe|battleaxe|battle axe/i, "icons/weapons/axes/axe-battle-black.webp"],
+  [/hatchet|handaxe|hand axe|francisca/i, "icons/weapons/axes/axe-battle-black.webp"],
+  [/axe|chopper|tabar/i, "icons/weapons/axes/axe-battle-black.webp"],
+  [/dagger|knife|kris|dirk/i, "icons/weapons/daggers/dagger-straight-blue.webp"],
+  [/crossbow|slingbow/i, "icons/weapons/crossbows/crossbow-loaded-black.webp"],
+  [/short bow/i, "icons/weapons/bows/shortbow-recurve.webp"],
+  [/bow/i, "icons/weapons/bows/longbow-recurve-brown.webp"],
+  [/glaive/i, "icons/weapons/polearms/glaive-simple.webp"],
+  [/halberd|poleaxe/i, "icons/weapons/polearms/halberd-engraved-black.webp"],
+  [/javelin/i, "icons/weapons/polearms/javelin.webp"],
+  [/spear|pike|lance|trident|fork/i, "icons/weapons/polearms/spear-flared-green.webp"],
+  [/quarterstaff|staff|wand/i, "icons/weapons/staves/staff-simple.webp"],
+  [/hammer|pick/i, "icons/weapons/hammers/shorthammer-double-stone-engraved.webp"],
+  [/mace|club|bludgeon|maul/i, "icons/weapons/maces/mace-flanged-steel.webp"],
+  [/whip/i, "icons/sundries/survival/leather-strap-brown.webp"]
+];
+const CORE_WEAPON_BY_GROUP = {
+  axes: "icons/weapons/axes/axe-battle-black.webp",
+  bludgeons: "icons/weapons/clubs/club-banded-brown.webp",
+  knives: "icons/weapons/daggers/dagger-straight-blue.webp",
+  polearms: "icons/weapons/polearms/spear-flared-green.webp",
+  swords: "icons/weapons/swords/sword-guard-worn-purple.webp",
+  bows: "icons/weapons/bows/longbow-recurve-brown.webp",
+  crossbows: "icons/weapons/crossbows/crossbow-loaded-black.webp",
+  staves: "icons/weapons/staves/staff-simple.webp"
+};
+const CORE_RELIC_ICONS = {
+  "academic's memoire": "icons/svg/book.svg", "dancer's memoire": "icons/svg/music.svg",
+  "mediator's memoire": "icons/svg/book.svg", "minstrel's memoire": "icons/svg/music.svg",
+  "animism writ": "icons/svg/book.svg", "clerical writ": "icons/svg/holy-symbol.svg",
+  "devout writ": "icons/svg/holy-symbol.svg", "occult writ": "icons/svg/aura.svg",
+  "arcanist's enchiridion": "icons/svg/book.svg", "conjurer's enchiridion": "icons/svg/aura.svg",
+  "elementalist's enchiridion": "icons/svg/aura.svg", "illusionist's enchiridion": "icons/svg/target.svg",
+  "archer's report": "icons/weapons/ammunition/arrows-bodkin-yellow-red.webp",
+  "hunter's report": "icons/svg/target.svg", "scout's report": "icons/svg/aura.svg",
+  "tamer's report": "icons/svg/claw.svg", "charlatan's memorandum": "icons/svg/book.svg",
+  "cutthroat's memorandum": "icons/weapons/daggers/dagger-straight-blue.webp",
+  "footpad's memorandum": "icons/svg/aura.svg", "saboteur's memorandum": "icons/svg/item-bag.svg",
+  "thief's memorandum": "icons/svg/target.svg", "barbaric treatise": "icons/weapons/axes/axe-battle-black.webp",
+  "defensive treatise": "icons/svg/shield.svg", "fighting treatise": "icons/weapons/swords/sword-broad-blue.webp",
+  "uhlan's treatise": "icons/weapons/polearms/spear-flared-green.webp",
+  "antique music box": "icons/svg/music.svg", "petrified dragon egg": "icons/svg/claw.svg",
+  "starsteel fragment": "icons/svg/d20-grey.svg", "ancient faestone": "icons/svg/aura.svg",
+  "seeing stone": "icons/svg/target.svg", "cursed soulstone": "icons/svg/skull.svg",
+  "glorious medal": "icons/svg/holy-symbol.svg", "black planchette": "icons/svg/aura.svg",
+  "cleansed soulstone": "icons/svg/holy-symbol.svg", "black bag": "icons/svg/item-bag.svg",
+  "bottled lightning": "icons/svg/aura.svg", "quicksilver trinket": "icons/svg/aura.svg",
+  "obsidian arrowhead": "icons/weapons/ammunition/arrows-bodkin-yellow-red.webp",
+  "antique emberbox": "icons/svg/aura.svg", "prism stone": "icons/svg/aura.svg",
+  "missing music": "icons/svg/music.svg", "corrupted testament": "icons/svg/book.svg",
+  "obsidian skull": "icons/svg/skull.svg", "tainted grail": "icons/svg/holy-symbol.svg",
+  "moonstone effigy": "icons/svg/aura.svg"
+};
+const CORE_CATEGORY_ICONS = {
+  "bardic instruments": "icons/svg/music.svg", "orchestral scores": "icons/svg/book.svg",
+  "black magick scrolls": "icons/svg/book.svg", "blue magick scrolls": "icons/svg/book.svg",
+  "green magick scrolls": "icons/svg/book.svg", "red magick scrolls": "icons/svg/book.svg",
+  "white magick scrolls": "icons/svg/book.svg", poisons: "icons/svg/biohazard.svg",
+  ammunition: "icons/svg/target.svg", mounts: "icons/svg/claw.svg",
+  prosthetics: "icons/svg/item-bag.svg", consumables: "icons/svg/item-bag.svg",
+  accessories: "icons/svg/holy-symbol.svg", "crafting resources": "icons/svg/item-bag.svg",
+  "adventuring gear": "icons/svg/item-bag.svg"
+};
 
 const fileSet = new Set(ASSET_ICON_FILES);
 function asset(path) { return fileSet.has(path) ? `${ROOT}${encodeURI(path)}` : "icons/svg/aura.svg"; }
@@ -82,6 +154,7 @@ function nearestAsset(text, preferredFolders = []) {
 /** Map rule items to locally bundled, authored artwork; invalid legacy paths fall back safely. */
 export function resolveItemIcon(item = {}, packName = "") {
   const existing = item.img;
+  if (existing?.startsWith("icons/weapons/") || existing?.startsWith("icons/equipment/")) return existing;
   if (existing && !GENERIC_IMAGES.has(existing) && !existing.startsWith("icons/") && !existing.startsWith("systems/last-arc-analogue/")) return existing;
   const type = typeOf(item, packName);
   const name = String(item.name ?? "").trim();
@@ -91,17 +164,30 @@ export function resolveItemIcon(item = {}, packName = "") {
     for (const [key, icon] of Object.entries(CLASS_ICONS)) if (text.includes(key)) return asset(icon);
     return asset("JOB_ICONS/Astrologian.webp");
   }
+  if (type === "armor") {
+    if (/shield|pelta|targe|buckler/i.test(text)) return "icons/svg/shield.svg";
+    return "icons/equipment/chest/breastplate-collared-steel-grey.webp";
+  }
+  if (type === "equipment" || packName.includes("equipage")) {
+    const category = String(item.system?.category ?? "").toLowerCase();
+    if (CORE_CATEGORY_ICONS[category]) return CORE_CATEGORY_ICONS[category];
+    for (const [pattern, icon] of CORE_WEAPON_BY_NAME) if (pattern.test(name)) return icon;
+    return "icons/svg/item-bag.svg";
+  }
   if (type === "performance" || /bardic|performance|score/.test(text)) return nearestAsset(text, ["BRD", "ROLE-HEALER"]);
   if (["technick", "talent", "feature"].includes(type)) {
     for (const [key, icon] of Object.entries(TALENT_ICONS)) if (text.includes(key)) return asset(icon);
     const folders = /bard|music|perform/.test(text) ? ["BRD"] : /fire|flame|scorch|ember/.test(text) ? ["BLM", "RDM"] : /heal|cure|restore|life/.test(text) ? ["WHM", "SCH"] : /stealth|assassin|sneak|thief|dodge/.test(text) ? ["NIN"] : /shield|defen|guard|armou?r|protect/.test(text) ? ["PLD", "ROLE-TANK"] : /summon|aeon|spirit/.test(text) ? ["SMN"] : /nature|beast|druid|animal/.test(text) ? ["SMN", "SCH"] : /lightning|thunder|shock/.test(text) ? ["BLM", "RDM"] : /ice|frost|cold/.test(text) ? ["BLM"] : /arcane|spell|magick|mana|rune|eldritch/.test(text) ? ["BLM", "AST"] : ["ROLE-MELEE", "DRG", "WAR"];
     return nearestAsset(text, folders);
   }
-  if (type === "weapon" || /weapon|sword|blade|dagger|knife|axe|bow|crossbow|polearm|staff|mace/.test(text)) {
+  if (type === "weapon" || (!["equipment", "armor"].includes(type) && /weapon|sword|blade|dagger|knife|axe|bow|crossbow|polearm|staff|mace/.test(text))) {
+    for (const [pattern, icon] of CORE_WEAPON_BY_NAME) if (pattern.test(name)) return icon;
+    const groupIcon = CORE_WEAPON_BY_GROUP[String(item.system?.weaponGroup ?? "").toLowerCase()];
+    if (groupIcon) return groupIcon;
     for (const [key, icon] of Object.entries(EQUIPMENT_ICONS)) if (text.includes(key)) return asset(icon);
-    return asset("generic/auto-attack.webp");
+    return "icons/svg/sword.svg";
   }
-  if (type === "armor" || /armou?r|shield/.test(text)) return asset(EQUIPMENT_ICONS.shield);
+  if (type === "relic") return CORE_RELIC_ICONS[name.toLowerCase()] ?? "icons/svg/book.svg";
   for (const [key, icon] of Object.entries(EQUIPMENT_ICONS)) if (text.includes(key)) return asset(icon);
   if (/race|species|elf|dwarf|human|gnome|goblin/.test(text)) return asset("generic/character.webp");
   return nearestAsset(text, ["generic", "JOB_ICONS"]);

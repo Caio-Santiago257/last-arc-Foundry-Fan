@@ -32,6 +32,8 @@ The item descriptions are concise rules summaries. Use a rulebook copy the GM is
 
 ## Development
 
+Version 0.2.45 gives Equipage weapons distinct Foundry Core Data artwork by weapon name and group, uses core icons for armour and other equipment categories, and assigns varied core icons to Last Resort relics.
+
 Version 0.2.44 fixes the item-sheet tab controller so Details and Description are interactive in Foundry VTT 13. Item descriptions now have a readable presentation with action, target, cost, prerequisites, special rules, and existing check-tier effects; editing the description remains available in a collapsed field.
 
 The system package ID is `last-arc-analogue`. Edit `packs-source/*.json` and run `node scripts/build-packs.mjs` to rebuild the Foundry compendium source files. They use the legacy NeDB import format that Foundry migrates on first launch.
