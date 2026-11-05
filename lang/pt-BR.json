@@ -163,6 +163,7 @@
     "ApplyDamage": "Aplicar dano",
     "Targets": "Alvos",
     "NoTargetsSelected": "Nenhum alvo marcado",
+    "SpellAreaOutOfRange": "O centro da área precisa ficar dentro do alcance da magia ({range} quadrados). Mova o template e confirme novamente.",
     "Success": "Sucesso",
     "Failure": "Falha",
     "Unaspected": "não tipado",

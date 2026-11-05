@@ -81,14 +81,36 @@ async function chooseHighArcana(actor, spell) {
   }).render(true));
 }
 
-function targetActors(item, actor) {
+function targetActors(item, actor, { allowMultiple = false } = {}) {
   const selected = [...(game.user?.targets ?? [])].map(token => ({ actor: token.actor, token })).filter(target => target.actor);
-  if (selected.length) return selected;
+  if (selected.length) {
+    const singleTarget = /\bone (?:living )?creature\b/i.test(String(item.system.target ?? ""));
+    return singleTarget && !allowMultiple ? selected.slice(0, 1) : selected;
+  }
   if (["self", "self-or-selected"].includes(item.system.targetMode)) {
     const token = actor.getActiveTokens(false, false)[0] ?? null;
     return [{ actor, token }];
   }
   return [];
+}
+
+function addAdjacentSecondaryTargets(item, actor, targets) {
+  if (!/adjacent creatures/i.test(String(item.system.specialRules ?? "")) || !canvas?.scene) return targets;
+  const primaries = targets.filter(entry => entry.token && !entry.areaSecondary);
+  if (!primaries.length) return targets;
+  const known = new Set(targets.map(entry => entry.token?.document?.uuid ?? entry.token?.uuid).filter(Boolean));
+  const secondary = [];
+  for (const primary of primaries) {
+    for (const token of canvas.tokens.placeables) {
+      if (!token.actor) continue;
+      const key = token.document.uuid;
+      if (known.has(key) || token === primary.token) continue;
+      if (canvas.grid.measureDistance(primary.token.center, token.center) > 1) continue;
+      known.add(key);
+      secondary.push({ actor: token.actor, token, areaSecondary: true });
+    }
+  }
+  return [...targets, ...secondary];
 }
 
 export function spellAreaTemplateSpec(item) {
@@ -97,8 +119,11 @@ export function spellAreaTemplateSpec(item) {
   const combined = `${target} ${special}`;
   const cone = combined.match(/(\d+)[-\s]square\s+cone/i);
   const allTargets = target.match(/\ball\s+(enemies|creatures|allies)\s+within\s+(\d+)\s+squares?/i);
-  const nearby = /nearby creatures|adjacent creatures|area effect|light radius|radius/i.test(combined);
-  if (!cone && !allTargets && !nearby) return null;
+  const nearbyArea = /nearby creatures/i.test(target) && /radius/i.test(special);
+  const explicitArea = /\barea effect\b/i.test(special);
+  const selfAdjacent = /^adjacent creatures around you\b/i.test(target);
+  const lightRadius = /light radius/i.test(combined);
+  if (!cone && !allTargets && !nearbyArea && !explicitArea && !selfAdjacent && !lightRadius) return null;
 
   const minimumDC = number(item.system.automation?.minimumDC);
   let radiusProgression = [];
@@ -124,9 +149,10 @@ export function spellAreaTemplateSpec(item) {
   }
   let distance = cone ? Number(cone[1]) : allTargets ? Number(allTargets[2]) : radiusProgression.at(-1)?.distance ?? (/adjacent creatures/i.test(special) ? 1 : 1);
   const side = allTargets?.[1]?.toLowerCase() === "enemies" ? "enemies" : allTargets?.[1]?.toLowerCase() === "allies" ? "allies" : "all";
-  const centreOnTarget = !allTargets && !cone && /one creature|one living creature/i.test(target);
+  const range = Number(target.match(/within\s+(\d+)\s+squares?/i)?.[1] ?? 0);
+  const freePlacement = !cone && !allTargets && !selfAdjacent && !lightRadius;
   return {
-    type: cone ? "cone" : "circle", distance, radiusProgression, side, centreOnTarget,
+    type: cone ? "cone" : "circle", distance, radiusProgression, side, range, freePlacement,
     adjacentReflexHalf: /adjacent creatures take half(?: of)? (?:the )?primary damage.*(?:only )?if the check beats their Reflex Defence/i.test(special)
   };
 }
@@ -143,14 +169,12 @@ async function placeSpellAreaTemplate(item, actor, spec) {
     }
 
     const casterToken = actor.getActiveTokens(false, false)[0] ?? null;
-    const selectedOrigin = spec.centreOnTarget ? [...(game.user?.targets ?? [])][0] : null;
-    const anchorToken = selectedOrigin ?? null;
-    if (spec.type === "cone" && !casterToken) {
+    const anchorToken = spec.type === "cone" || !spec.freePlacement ? casterToken : null;
+    if ((spec.type === "cone" || !spec.freePlacement || spec.range) && !casterToken) {
       ui.notifications.warn(game.i18n.localize("LA.SpellAreaCasterTokenRequired"));
       return null;
     }
-
-    spec.primaryTargetId = selectedOrigin?.id ?? "";
+    spec.primaryTargetId = "";
     const sheet = actor.sheet;
     const wasMinimized = Boolean(sheet?._minimized);
     const priorLayer = canvas.activeLayer;
@@ -172,22 +196,20 @@ async function placeSpellAreaTemplate(item, actor, spec) {
     };
 
     const placeHint = spec.type === "cone" ? "LA.SpellAreaConePlaceHint"
-      : anchorToken ? "LA.SpellAreaTargetPlaceHint" : "LA.SpellAreaRegionPlaceHint";
+      : spec.freePlacement ? "LA.SpellAreaRegionPlaceHint" : "LA.SpellAreaTargetPlaceHint";
     ui.notifications.info(game.i18n.localize(placeHint));
     let region = null;
     try {
       region = await canvas.regions.placeRegion(placementData, {
         create: false,
         allowRotation: true,
-      attachToToken: spec.type === "cone" || Boolean(anchorToken),
+        attachToToken: Boolean(anchorToken),
         preConfirm: ({ document }) => {
-          // Cones originate from the caster. Requiring attachment here avoids
-          // silently resolving an area that was placed from a different token.
-          if (spec.type !== "cone" && !anchorToken) return true;
+          if (!anchorToken) return true;
           const attached = document.attachment?.token;
           const attachedId = typeof attached === "string" ? attached.split(".").at(-1)
             : attached?.id ?? attached?._id ?? attached?.document?.id;
-          const requiredToken = spec.type === "cone" ? casterToken : anchorToken;
+          const requiredToken = anchorToken;
           if (attachedId === requiredToken.id || attached?.uuid === requiredToken.uuid) return true;
           ui.notifications.warn(game.i18n.localize(spec.type === "cone" ? "LA.SpellAreaConeMustAttachToCaster" : "LA.SpellAreaTargetMustAttach"));
           return false;
@@ -203,9 +225,14 @@ async function placeSpellAreaTemplate(item, actor, spec) {
     if (!region) return null;
 
     const shapeData = region.shapes?.[0];
-    const origin = spec.type === "cone"
+    const origin = spec.type === "cone" || !spec.freePlacement
       ? casterToken?.center
-      : shapeData?.origin ?? shapeData?.center ?? anchorToken?.center;
+      : shapeData?.origin ?? shapeData?.center ?? region.center;
+    if (spec.freePlacement && spec.range && casterToken && origin
+      && canvas.grid.measureDistance(casterToken.center, origin) > spec.range + 0.01) {
+      ui.notifications.warn(game.i18n.format("LA.SpellAreaOutOfRange", { range: spec.range }));
+      return null;
+    }
     const candidates = canvas.tokens.placeables.filter(token => token.actor).map(token => {
       const point = token.center ?? token.getCenterPoint?.();
       if (!point || !region.testPoint({ ...point, elevation: number(token.document.elevation) })) return null;
@@ -228,9 +255,8 @@ async function placeSpellAreaTemplate(item, actor, spec) {
   const priorLayer = canvas.activeLayer;
   const sheet = actor.sheet;
   const wasMinimized = Boolean(sheet?._minimized);
-  const selectedOrigin = spec.centreOnTarget ? [...(game.user?.targets ?? [])][0] : null;
-  spec.primaryTargetId = selectedOrigin?.id ?? "";
-  const originToken = selectedOrigin ?? actor.getActiveTokens(false, false)[0] ?? null;
+  spec.primaryTargetId = "";
+  const originToken = actor.getActiveTokens(false, false)[0] ?? null;
   const center = originToken?.center ?? { x: canvas.scene.width / 2, y: canvas.scene.height / 2 };
   const id = foundry.utils.randomID();
   const createData = {
@@ -238,9 +264,9 @@ async function placeSpellAreaTemplate(item, actor, spec) {
     distance: spec.distance, angle: 53, fillColor: game.user.color,
     flags: { [SYSTEM_ID]: { spellAreaCastId: id, spellName: item.name } }
   };
-  const moveCircle = spec.type === "circle" && !spec.centreOnTarget;
+  const moveCircle = spec.type === "circle" && spec.freePlacement;
   ui.notifications.info(game.i18n.localize(spec.type === "cone"
-    ? "LA.SpellAreaConeTemplatePlaceHint" : originToken && !moveCircle ? "LA.SpellAreaTargetPlaceHint" : "LA.SpellAreaRegionPlaceHint"));
+    ? "LA.SpellAreaConeTemplatePlaceHint" : moveCircle ? "LA.SpellAreaRegionPlaceHint" : "LA.SpellAreaTargetPlaceHint"));
   if (!wasMinimized && sheet?.minimize) await sheet.minimize();
 
   let createdDocument;
@@ -285,12 +311,17 @@ async function placeSpellAreaTemplate(item, actor, spec) {
         if (nativeEvent?.button !== 0) return;
         event.preventDefault?.();
         event.stopPropagation?.();
-        if (!removePreview()) return;
         try {
           if (moveCircle) {
             const point = layer.getSnappedPoint?.({ x: document.x, y: document.y }) ?? { x: document.x, y: document.y };
             document.updateSource(point);
+            if (spec.range && originToken
+              && canvas.grid.measureDistance(originToken.center, { x: document.x, y: document.y }) > spec.range + 0.01) {
+              ui.notifications.warn(game.i18n.format("LA.SpellAreaOutOfRange", { range: spec.range }));
+              return;
+            }
           }
+          if (!removePreview()) return;
           const [placedDocument] = await canvas.scene.createEmbeddedDocuments("MeasuredTemplate", [document.toObject()]);
           resolve(placedDocument ?? null);
         } catch (error) {
@@ -490,9 +521,10 @@ async function applySpellEffect(effect, target, caster, spell, checkTotal, resul
       damageRoll = await (new Roll(formula, { ...caster.getRollData(), level: caster.system.details.level })).evaluate();
       damageRollCache?.set(effect, damageRoll);
     }
-    const areaSpell = Boolean(spell.system.automation?.areaEffect) || /area|cone|all (?:enemies|creatures)|within \d+ squares?/i.test(String(spell.system.target ?? ""));
+    const areaSpell = Boolean(spell.system.automation?.areaEffect) || Boolean(spellAreaTemplateSpec(spell));
     const fomalhautAreaHit = target.system.aeon?.aeonId === "fomalhaut" && areaSpell;
-    const areaRiderMultiplier = adjacentRider ? 0.5 : 1;
+    const adjacentDamageMultiplier = areaSecondary && /adjacent creatures/i.test(String(spell.system.specialRules ?? "")) ? 0.5 : 1;
+    const areaRiderMultiplier = adjacentRider ? 0.5 : adjacentDamageMultiplier;
     const amount = Math.max(0, Math.floor((fomalhautAreaHit ? (hasFailure ? 0 : damageRoll.total / 2) : hasFailure && effect.halfOnFailure ? damageRoll.total / 2 : damageRoll.total) * areaRiderMultiplier));
     if (damageApplications) {
       let application = damageApplications.get(effect);
@@ -601,7 +633,10 @@ async function showSpellCard(item, actor = null) {
     if (!placedArea) return null;
     areaCandidates = placedArea.candidates;
     targets = spellAreaTargets(areaCandidates, areaSpec, actor);
-  } else targets = targetActors(item, actor);
+  } else {
+    targets = targetActors(item, actor, { allowMultiple: selectedHighArcana === "multiSpell" });
+    targets = addAdjacentSecondaryTargets(item, actor, targets);
+  }
   const multiSpellLimit = 1 + Math.max(1, number(actor.system.attributes?.mnd?.modifier));
   if (selectedHighArcana === "multiSpell" && targets.length > multiSpellLimit) {
     targets = targets.slice(0, multiSpellLimit);
@@ -689,7 +724,7 @@ async function showSpellCard(item, actor = null) {
     };
   };
   const damageRollCache = new Map();
-  const damageApplications = areaSpec ? new Map() : null;
+  const damageApplications = areaSpec || targets.some(target => target.areaSecondary) ? new Map() : null;
 
   await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${game.i18n.localize("LA.SpellcraftCheck")}: ${escapeHTML(item.name)} (${escapeHTML(system.school)})` });
   if (defenceResults.length) {

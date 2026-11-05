@@ -163,6 +163,7 @@
     "ApplyDamage": "Apply damage",
     "Targets": "Targets",
     "NoTargetsSelected": "No targets marked",
+    "SpellAreaOutOfRange": "The area center must be within the spell's range ({range} squares). Move the template and confirm again.",
     "Success": "Success",
     "Failure": "Failure",
     "Unaspected": "unaspected",
