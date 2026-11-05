@@ -149,8 +149,12 @@ export function spellAreaTemplateSpec(item) {
   }
   let distance = cone ? Number(cone[1]) : allTargets ? Number(allTargets[2]) : radiusProgression.at(-1)?.distance ?? (/adjacent creatures/i.test(special) ? 1 : 1);
   const side = allTargets?.[1]?.toLowerCase() === "enemies" ? "enemies" : allTargets?.[1]?.toLowerCase() === "allies" ? "allies" : "all";
-  const range = Number(target.match(/within\s+(\d+)\s+squares?/i)?.[1] ?? 0);
-  const freePlacement = !cone && !allTargets && !selfAdjacent && !lightRadius;
+  // Area spells are placed from the cursor. Self-only effects (for example,
+  // light radii and effects explicitly centered on adjacent creatures) remain
+  // anchored to the caster. For "all enemies within X squares", X is the area
+  // radius, not a separate maximum distance for the template's center.
+  const freePlacement = !selfAdjacent && !lightRadius;
+  const range = allTargets ? 0 : Number(target.match(/within\s+(\d+)\s+squares?/i)?.[1] ?? 0);
   return {
     type: cone ? "cone" : "circle", distance, radiusProgression, side, range, freePlacement,
     adjacentReflexHalf: /adjacent creatures take half(?: of)? (?:the )?primary damage.*(?:only )?if the check beats their Reflex Defence/i.test(special)
@@ -169,8 +173,8 @@ async function placeSpellAreaTemplate(item, actor, spec) {
     }
 
     const casterToken = actor.getActiveTokens(false, false)[0] ?? null;
-    const anchorToken = spec.type === "cone" || !spec.freePlacement ? casterToken : null;
-    if ((spec.type === "cone" || !spec.freePlacement || spec.range) && !casterToken) {
+    const anchorToken = !spec.freePlacement ? casterToken : null;
+    if ((!spec.freePlacement || spec.range) && !casterToken) {
       ui.notifications.warn(game.i18n.localize("LA.SpellAreaCasterTokenRequired"));
       return null;
     }
@@ -225,9 +229,9 @@ async function placeSpellAreaTemplate(item, actor, spec) {
     if (!region) return null;
 
     const shapeData = region.shapes?.[0];
-    const origin = spec.type === "cone" || !spec.freePlacement
-      ? casterToken?.center
-      : shapeData?.origin ?? shapeData?.center ?? region.center;
+    const origin = spec.freePlacement
+      ? shapeData?.origin ?? shapeData?.center ?? region.center
+      : casterToken?.center;
     if (spec.freePlacement && spec.range && casterToken && origin
       && canvas.grid.measureDistance(casterToken.center, origin) > spec.range + 0.01) {
       ui.notifications.warn(game.i18n.format("LA.SpellAreaOutOfRange", { range: spec.range }));
@@ -264,9 +268,10 @@ async function placeSpellAreaTemplate(item, actor, spec) {
     distance: spec.distance, angle: 53, fillColor: game.user.color,
     flags: { [SYSTEM_ID]: { spellAreaCastId: id, spellName: item.name } }
   };
-  const moveCircle = spec.type === "circle" && spec.freePlacement;
+  const moveTemplate = spec.freePlacement;
   ui.notifications.info(game.i18n.localize(spec.type === "cone"
-    ? "LA.SpellAreaConeTemplatePlaceHint" : moveCircle ? "LA.SpellAreaRegionPlaceHint" : "LA.SpellAreaTargetPlaceHint"));
+    ? (moveTemplate ? "LA.SpellAreaConeFreePlaceHint" : "LA.SpellAreaConeTemplatePlaceHint")
+    : moveTemplate ? "LA.SpellAreaRegionPlaceHint" : "LA.SpellAreaTargetPlaceHint"));
   if (!wasMinimized && sheet?.minimize) await sheet.minimize();
 
   let createdDocument;
@@ -283,23 +288,24 @@ async function placeSpellAreaTemplate(item, actor, spec) {
       const removePreview = () => {
         if (finished) return false;
         finished = true;
-        canvas.stage.off("mousemove", onMove);
-        canvas.stage.off("mouseup", onConfirm);
-        canvas.app.view.oncontextmenu = priorContextMenu;
-        canvas.app.view.onwheel = priorWheel;
+        canvas.app.view.removeEventListener("pointermove", onMove, true);
+        canvas.app.view.removeEventListener("pointerdown", onPointerDown, true);
+        canvas.app.view.removeEventListener("contextmenu", onCancel, true);
+        canvas.app.view.removeEventListener("wheel", onRotate, true);
+        window.removeEventListener("keydown", onKeyDown, true);
         preview.parent?.removeChild(preview);
         preview.destroy({ children: true });
         return true;
       };
       const onMove = event => {
-        event.stopPropagation();
-        if (!moveCircle) return;
-        const point = event.data.getLocalPosition(layer);
+        if (!moveTemplate) return;
+        const point = canvas.canvasCoordinatesFromClient({ x: event.clientX, y: event.clientY });
         const snapped = layer.getSnappedPoint?.(point) ?? point;
         document.updateSource({ x: snapped.x, y: snapped.y });
         preview.refresh();
       };
       const onRotate = event => {
+        if (spec.type !== "cone") return;
         event.preventDefault();
         event.stopPropagation();
         const step = event.shiftKey ? 15 : 5;
@@ -307,14 +313,11 @@ async function placeSpellAreaTemplate(item, actor, spec) {
         preview.refresh();
       };
       const onConfirm = async event => {
-        const nativeEvent = event?.nativeEvent ?? event?.data?.originalEvent ?? event;
-        if (nativeEvent?.button !== 0) return;
-        event.preventDefault?.();
-        event.stopPropagation?.();
         try {
-          if (moveCircle) {
-            const point = layer.getSnappedPoint?.({ x: document.x, y: document.y }) ?? { x: document.x, y: document.y };
-            document.updateSource(point);
+          if (moveTemplate) {
+            const pointer = canvas.canvasCoordinatesFromClient({ x: event.clientX, y: event.clientY });
+            const point = layer.getSnappedPoint?.(pointer) ?? pointer;
+            document.updateSource({ x: point.x, y: point.y });
             if (spec.range && originToken
               && canvas.grid.measureDistance(originToken.center, { x: document.x, y: document.y }) > spec.range + 0.01) {
               ui.notifications.warn(game.i18n.format("LA.SpellAreaOutOfRange", { range: spec.range }));
@@ -328,17 +331,30 @@ async function placeSpellAreaTemplate(item, actor, spec) {
           reject(error);
         }
       };
+      const onPointerDown = event => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (event.button === 2) {
+          if (removePreview()) resolve(null);
+          return;
+        }
+        if (event.button === 0) void onConfirm(event);
+      };
       const onCancel = event => {
         event.preventDefault();
         event.stopPropagation();
         if (removePreview()) resolve(null);
       };
-      const priorContextMenu = canvas.app.view.oncontextmenu;
-      const priorWheel = canvas.app.view.onwheel;
-      canvas.stage.on("mousemove", onMove);
-      canvas.stage.on("mouseup", onConfirm);
-      canvas.app.view.oncontextmenu = onCancel;
-      canvas.app.view.onwheel = onRotate;
+      const onKeyDown = event => {
+        if (event.key !== "Escape") return;
+        event.preventDefault();
+        if (removePreview()) resolve(null);
+      };
+      canvas.app.view.addEventListener("pointermove", onMove, true);
+      canvas.app.view.addEventListener("pointerdown", onPointerDown, true);
+      canvas.app.view.addEventListener("contextmenu", onCancel, true);
+      canvas.app.view.addEventListener("wheel", onRotate, { capture: true, passive: false });
+      window.addEventListener("keydown", onKeyDown, true);
     });
   } catch (error) {
     console.error("Last Arc | Could not place spell area template", error);
