@@ -414,6 +414,15 @@ class LastArcActor extends Actor {
     system.resources ??= {};
     system.details ??= {};
     system.combat ??= {};
+    // Fresh Actors can have an empty system object because the document type
+    // schemas are intentionally permissive. Existing sheets already carry
+    // these nested values, so initialize them before any derived calculations
+    // access hp.baseMax, mp.max, or heroPoints.value.
+    system.resources.hp = { value: 0, max: 0, baseMax: 0, ...(system.resources.hp ?? {}) };
+    system.resources.mp = { value: 0, max: 0, ...(system.resources.mp ?? {}) };
+    system.resources.heroPoints = { value: 0, max: 0, ...(system.resources.heroPoints ?? {}) };
+    system.details.racialEffects ??= {};
+    system.inventory ??= {};
     system.combat.baseDamageReduction ??= safeNumber(system.combat.damageReduction);
     system.combat.baseSpeed ??= safeNumber(system.combat.speed);
     system.combat.basePhysicalDamageReduction ??= safeNumber(system.combat.physicalDamageReduction);

@@ -82,6 +82,8 @@ Version 0.2.26 adds an Aeons compendium with all eight Chapter 13 Aeons as scala
 
 Version 0.2.27 moves weapon attacks into the Combat tab below Break Gauge, applies chat damage through the shared actor damage routine even for unlinked tokens handled by the GM, adds Foundry measured-template placement for all 25 area Magicks with tier-dependent radii, and includes Scorching/Gelid/Galvanic Strike bonus dice in a separate visible elemental damage roll for melee attacks.
 
+Version 0.2.28 initializes nested HP, MP, Hero Point, racial effect, and inventory data for newly created Actors before preparing derived values, preventing fresh character sheets from failing to render when those fields have not yet been saved.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork. The system code is provided without an added license until the repository owner chooses one.
