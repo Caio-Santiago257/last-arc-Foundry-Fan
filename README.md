@@ -2,6 +2,8 @@
 
 Unofficial Foundry VTT system framework for Last Arc: Tactics Analogue. This release provides structured race, class, Technick, Performance, Magick, and advanced-class talent records with automation for character calculations and supported effects. The repository includes the system's structured rule data and user-provided FFXIV-inspired icon assets in `assets/ffxiv-icons/`.
 
+**Current stable release: 1.0.0** — Foundry VTT 13 compatible. The setup screen uses the official Last Arc cover at `assets/last-arc-background.webp`.
+
 ## Install
 
 In Foundry VTT, open **Game Settings → Manage Systems → Install System** and use this manifest URL:
@@ -115,6 +117,8 @@ Version 0.2.43 adds 51 Last Resort power entries and 45 relic items in dedicated
 Version 0.2.47 refines the Arcane Crimson contrast and surfaces. It fixes the outer Foundry sheet window retaining the legacy beige background, raises muted/auxiliary text contrast, and makes input, placeholder, select, disabled-control, modal, and item-sheet colors legible on the dark theme. No game rules or calculations change.
 
 Version 0.2.48 sorts initiative from lowest to highest, so the smallest result acts first. The combat tracker display and turn sequence use the same ascending order; tied initiatives are ordered by combatant name, and unrolled combatants remain at the end.
+
+Version 1.0.0 is the first stable release of the Last Arc: Tactics Analogue Foundry system. It adds the official system cover art to the Foundry Setup system listing using the package `media` entry with `type: "setup"`. Foundry VTT compatibility remains minimum 12 and verified 13.
 
 ## Attribution and status
 
