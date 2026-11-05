@@ -1,4 +1,5 @@
 import { postDamageRoll } from "./damage-chat.mjs";
+import { resolveItemIcon } from "./item-icons.mjs";
 
 const SYSTEM_ID = "last-arc-analogue";
 
@@ -34,6 +35,12 @@ function hasDamage(spell) {
 function hasScaledDuration(spell) {
   return [...(spell.system.automation?.tiers ?? [])].some(tier => tier.effects?.some(effect => number(effect.durationRounds) > 0))
     || (spell.system.automation?.effects ?? []).some(effect => number(effect.durationRounds) > 0);
+}
+
+function spellDescriptionCard(item, actor, mpCost, targetText, description, special) {
+  const image = escapeHTML(resolveItemIcon(item));
+  const content = `<div class="la-spell-chat-card" style="display:flex;gap:10px;align-items:flex-start"><img src="${image}" alt="" style="width:48px;height:48px;object-fit:contain;flex:0 0 48px;border:1px solid #b48b4f;border-radius:3px"><div><h3 style="margin:0 0 5px">${escapeHTML(item.name)} <small>(${mpCost} MP)</small></h3><p><b>${escapeHTML(item.system.school)}</b> · ${escapeHTML(item.system.action)}</p><p><b>${game.i18n.localize("LA.Targets")}:</b> ${escapeHTML(targetText)}</p><p>${description}</p>${special ? `<p><b>${game.i18n.localize("LA.Special")}:</b> ${special}</p>` : ""}</div></div>`;
+  return ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content });
 }
 
 function eligibleHighArcana(actor, spell) {
@@ -356,7 +363,7 @@ function effectsForTier(automation, total) {
 }
 
 function defenceResult(target, caster, defence, spell, checkTotal) {
-  if (!defence) return true;
+  if (!defence) return null;
   const targetLevel = number(target.system.details?.level);
   const casterLevel = number(caster.system.details?.level);
   const higherLevelBonus = spell.system.higherLevelDefenceBonus && targetLevel > casterLevel
@@ -367,7 +374,44 @@ function defenceResult(target, caster, defence, spell, checkTotal) {
   const ordinary = number(target.system.defences?.[key]?.total, 10) + number(target.system.combat?.performanceSpellDefenceBonuses?.[key]) + aeonRangedSpellBonus;
   const substitute = number(target.system.combat?.performanceDefenceSubstitutions?.[key]);
   const total = Math.max(ordinary, substitute) + higherLevelBonus;
-  return { success: checkTotal > total + margin, total, bonus: higherLevelBonus };
+  const threshold = total + margin;
+  return { success: checkTotal > threshold, total: threshold, defence: key, margin, bonus: higherLevelBonus, checkTotal };
+}
+
+function targetIsWillingOrFriendly(target, caster, targetToken) {
+  if (target === caster) return true;
+  const casterToken = caster.getActiveTokens(false, false)[0] ?? null;
+  if (!targetToken || !casterToken) return false;
+  return targetToken.document.disposition === casterToken.document.disposition;
+}
+
+function spellDefenceSpecifications(effect, spell, target, caster, targetToken) {
+  const specifications = effect.requiresDefences ?? (effect.defence ? [effect.defence] : []);
+  if (specifications.length) return specifications;
+  if (effect.type === "dispel") {
+    return [{ defence: "will", margin: targetIsWillingOrFriendly(target, caster, targetToken) ? -5 : 0 }];
+  }
+  if (spell.name === "Mend" && targetToken) return ["ref"];
+  if (spell.name === "Phase" && !targetIsWillingOrFriendly(target, caster, targetToken)) return ["will"];
+  if (spell.name === "Teleport" && !targetIsWillingOrFriendly(target, caster, targetToken)) return ["fort"];
+  return [];
+}
+
+function recordSpellDefence(results, loggedChecks, target, check) {
+  if (!check) return;
+  const key = typeof check === "object" ? check.defence : check;
+  const signature = `${target.uuid ?? target.id}:${key}:${check.margin ?? 0}`;
+  if (loggedChecks.has(signature)) return;
+  loggedChecks.add(signature);
+  const labels = { fort: "LA.Fortitude", ref: "LA.Reflex", will: "LA.Will" };
+  const result = game.i18n.localize(check.success ? "LA.SpellDefenceBeaten" : "LA.SpellDefenceHeld");
+  results.push(game.i18n.format("LA.SpellDefenceComparison", {
+    target: target.name,
+    check: check.checkTotal,
+    defence: game.i18n.localize(labels[key] ?? "LA.Defence"),
+    total: check.total,
+    result
+  }));
 }
 
 function durationData(effect) {
@@ -401,7 +445,7 @@ async function applyCondition(target, caster, spell, condition, rounds = 0, chan
   return true;
 }
 
-async function applySpellEffect(effect, target, caster, spell, checkTotal, results, damageBonus = 0, highArcana = "", targetToken = null, damageRider = null, { areaSecondary = false, damageRollCache = null, damageApplications = null } = {}) {
+async function applySpellEffect(effect, target, caster, spell, checkTotal, results, damageBonus = 0, highArcana = "", targetToken = null, damageRider = null, { areaSecondary = false, damageRollCache = null, damageApplications = null, loggedDefenceChecks = new Set(), defenceResults = [] } = {}) {
   const cancelsSpell = { Inertia: "Haste", Gravity: "Levitation" }[spell.name];
   if (effect.type === "condition" && cancelsSpell) {
     const active = target.effects.filter(entry => entry.getFlag("last-arc-analogue", "spellName") === cancelsSpell);
@@ -417,7 +461,9 @@ async function applySpellEffect(effect, target, caster, spell, checkTotal, resul
     results.push(`${target.name}: toad effect ended`);
     return;
   }
-  const checks = (effect.requiresDefences ?? (effect.defence ? [effect.defence] : [])).map(defence => defenceResult(target, caster, defence, spell, checkTotal));
+  const defenceSpecifications = spellDefenceSpecifications(effect, spell, target, caster, targetToken);
+  const checks = defenceSpecifications.map(defence => defenceResult(target, caster, defence, spell, checkTotal));
+  for (const check of checks) recordSpellDefence(defenceResults, loggedDefenceChecks, target, check);
   const hasFailure = checks.some(check => !check.success);
   if (hasFailure && caster.items?.some(entry => entry.type === "talent" && entry.name === "Addle")) {
     const prior = target.effects.filter(active => active.getFlag("last-arc-analogue", "addleEffect")?.casterActorId === caster.id);
@@ -431,7 +477,11 @@ async function applySpellEffect(effect, target, caster, spell, checkTotal, resul
 
   if (effect.type === "damage") {
     const adjacentRider = areaSecondary && spell.system.specialRules?.match(/adjacent creatures take half(?: of)? (?:the )?primary damage.*(?:only )?if the check beats their Reflex Defence/i);
-    if (adjacentRider && !defenceResult(target, caster, "ref", spell, checkTotal).success) return;
+    if (adjacentRider) {
+      const reflexCheck = defenceResult(target, caster, "ref", spell, checkTotal);
+      recordSpellDefence(defenceResults, loggedDefenceChecks, target, reflexCheck);
+      if (!reflexCheck.success) return;
+    }
     if (hasFailure && !effect.halfOnFailure) return;
     const baseFormula = spellDamageFormula(effect.formula, caster, highArcana === "intensifiedSpell", effect.damageType, spell.system.school);
     const formula = damageBonus ? `(${baseFormula}) + ${damageBonus}` : baseFormula;
@@ -479,7 +529,7 @@ async function applySpellEffect(effect, target, caster, spell, checkTotal, resul
     if (typeof target.applyHealing !== "function") await target.update({ "system.resources.hp.value": number(hp.value) + healed, "system.combat.persistentHpRecovery": false });
     results.push(`${target.name}: +${healed} HP`);
   } else if (effect.type === "condition") {
-    if (effect.defence && hasFailure) return;
+    if (defenceSpecifications.length && hasFailure) return;
     const rounds = number(effect.durationRounds) * (highArcana === "lingeringSpell" ? 2 : 1);
     const applied = await applyCondition(target, caster, spell, effect.status, rounds, effect.changes ?? []);
     results.push(`${target.name}: ${applied ? effect.status : `immune to ${effect.status}`}`);
@@ -497,8 +547,7 @@ async function applySpellEffect(effect, target, caster, spell, checkTotal, resul
     });
     results.push(`${target.name}: ${effect.label ?? "bonus"} ${effect.value >= 0 ? "+" : ""}${effect.value}`);
   } else if (effect.type === "dispel") {
-    const targetWill = number(target.system.defences?.will?.total, 10) - (target === caster ? 5 : 0);
-    if (checkTotal <= targetWill) return;
+    if (hasFailure) return;
     const removable = target.effects.filter(active => active.getFlag("last-arc-analogue", "dispellable"));
     if (removable.length) await target.deleteEmbeddedDocuments("ActiveEffect", removable.map(active => active.id));
     results.push(`${target.name}: ${removable.length ? `${removable.length} effect(s) dispelled` : "no dispellable effects"}`);
@@ -514,10 +563,8 @@ async function showSpellCard(item, actor = null) {
   const system = item.system;
   const description = escapeHTML(system.description).replaceAll("\n", "<br>");
   const special = escapeHTML(system.specialRules).replaceAll("\n", "<br>");
-  const damageSpell = hasDamage(item);
   if (!actor || !system.automation) {
-    const header = `<h3>${escapeHTML(item.name)} <small>(${escapeHTML(system.mpCost)} MP)</small></h3><p><b>${escapeHTML(system.school)}</b> · ${escapeHTML(system.action)}</p><p><b>${game.i18n.localize("LA.Targets")}:</b> ${escapeHTML(system.target)}</p><p>${description}</p>${special ? `<p><b>${game.i18n.localize("LA.Special")}:</b> ${special}</p>` : ""}`;
-    return ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content: header });
+    return spellDescriptionCard(item, actor, number(system.mpCost), String(system.target ?? ""), description, special);
   }
 
   const selectedHighArcana = await chooseHighArcana(actor, item);
@@ -527,10 +574,6 @@ async function showSpellCard(item, actor = null) {
   const targetText = selectedHighArcana === "distantSpell"
     ? String(system.target).replace(/(\d+)\s+(square|squares)\b/gi, (_match, distance, unit) => `${Number(distance) * 2} ${unit}`)
     : String(system.target ?? "");
-  const compactHeader = `<h3>${escapeHTML(item.name)} <small>(${mpCost} MP)</small></h3><p><b>${escapeHTML(system.school)}</b> · ${escapeHTML(system.action)}</p>`;
-  const fullHeader = `${compactHeader}<p><b>${game.i18n.localize("LA.Targets")}:</b> ${escapeHTML(targetText)}</p><p>${description}</p>${special ? `<p><b>${game.i18n.localize("LA.Special")}:</b> ${special}</p>` : ""}`;
-  const header = damageSpell ? compactHeader : fullHeader;
-
   if (number(actor.system.resources.mp.value) < mpCost) {
     ui.notifications.warn(game.i18n.format("LA.NotEnoughMP", { cost: mpCost }));
     return null;
@@ -598,6 +641,7 @@ async function showSpellCard(item, actor = null) {
     }
   }
 
+  await spellDescriptionCard(item, actor, mpCost, targetText, description, special);
   await actor.update({ "system.resources.mp.value": number(actor.system.resources.mp.value) - mpCost });
   if (actor.system.aeon?.aeonId === "fomalhaut") {
     const nextResistance = effects.find(effect => effect.type === "damage" && ["cold", "dark", "electric", "fire", "holy"].includes(String(effect.damageType).toLowerCase()))?.damageType ?? "";
@@ -611,6 +655,21 @@ async function showSpellCard(item, actor = null) {
   const minimumDC = number(system.automation.minimumDC);
   const castSucceeded = roll.total >= minimumDC;
   const results = [];
+  const defenceResults = [];
+  const loggedDefenceChecks = new Set();
+  const defenceEffects = effects.length ? effects
+    : system.automation.effects?.length ? system.automation.effects
+      : system.automation.tiers?.[0]?.effects ?? [];
+  for (const { actor: target, token } of targets) {
+    const addle = target.effects.find(active => active.getFlag("last-arc-analogue", "addleEffect")?.casterActorId === actor.id);
+    const effectiveCheck = checkTotal + (addle ? 5 : 0);
+    const checkEffects = defenceEffects.length ? defenceEffects : item.name === "Teleport" ? [{ type: "spell" }] : [];
+    for (const effect of checkEffects) {
+      for (const defence of spellDefenceSpecifications(effect, item, target, actor, token)) {
+        recordSpellDefence(defenceResults, loggedDefenceChecks, target, defenceResult(target, actor, defence, item, effectiveCheck));
+      }
+    }
+  }
   const classesWithSoulEater = actor.items.filter(entry => entry.type === "advanced-class"
     && number(entry.system.classLevel) >= 2
     && (entry.system.classFeatures ?? []).some(feature => feature.name === "Soul Eater"));
@@ -633,11 +692,15 @@ async function showSpellCard(item, actor = null) {
   const damageApplications = areaSpec ? new Map() : null;
 
   await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${game.i18n.localize("LA.SpellcraftCheck")}: ${escapeHTML(item.name)} (${escapeHTML(system.school)})` });
+  if (defenceResults.length) {
+    const comparisons = defenceResults.map(result => `<li>${escapeHTML(result)}</li>`).join("");
+    await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content: `<p><b>${game.i18n.localize("LA.SpellDefenceResults")}:</b></p><ul>${comparisons}</ul>` });
+  }
   if (castSucceeded && effects.length) {
     if (targets.length) {
       for (const { actor: target, token, areaSecondary = false } of targets) {
         const addle = target.effects.find(active => active.getFlag("last-arc-analogue", "addleEffect")?.casterActorId === actor.id);
-        for (const effect of effects) await applySpellEffect(effect, target, actor, item, checkTotal + (addle ? 5 : 0), results, amplificationPenalty * 2, selectedHighArcana, token, getDamageRider, { areaSecondary, damageRollCache, damageApplications });
+        for (const effect of effects) await applySpellEffect(effect, target, actor, item, checkTotal + (addle ? 5 : 0), results, amplificationPenalty * 2, selectedHighArcana, token, getDamageRider, { areaSecondary, damageRollCache, damageApplications, loggedDefenceChecks, defenceResults });
         if (addle && target.effects.has(addle.id)) await target.deleteEmbeddedDocuments("ActiveEffect", [addle.id]);
       }
       for (const application of damageApplications?.values() ?? []) {
@@ -693,7 +756,7 @@ async function showSpellCard(item, actor = null) {
   };
   const arcanaEffectNote = arcanaEffectNotes[selectedHighArcana] ? `<p>${arcanaEffectNotes[selectedHighArcana]}</p>` : "";
   const distantNote = selectedHighArcana === "distantSpell" ? `<p>${game.i18n.format("LA.DistantSpellApplied", { target: escapeHTML(targetText) })}</p>` : "";
-  const content = `${header}<p><b>${game.i18n.localize("LA.ManaSpent")}:</b> ${mpCost} MP · <b>${game.i18n.localize("LA.Targets")}:</b> ${targetLabel}</p><p class="la-result ${castSucceeded ? "success" : "failure"}">${tierLabel} (${roll.total}; ${game.i18n.localize("LA.Spellcraft")} ${signed(totalPenalty)})</p>${highArcanaNote}${arcanaEffectNote}${distantNote}${classCastingNote}${amplificationNote}${meleeHint}${effectsHtml}`;
+  const content = `<h3>${escapeHTML(item.name)} — ${game.i18n.localize("LA.SpellcraftCheck")}</h3><p><b>${game.i18n.localize("LA.ManaSpent")}:</b> ${mpCost} MP · <b>${game.i18n.localize("LA.Targets")}:</b> ${targetLabel}</p><p class="la-result ${castSucceeded ? "success" : "failure"}">${tierLabel} (${roll.total}; ${game.i18n.localize("LA.Spellcraft")} ${signed(totalPenalty)})</p>${highArcanaNote}${arcanaEffectNote}${distantNote}${classCastingNote}${amplificationNote}${meleeHint}${effectsHtml}`;
   return ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content });
 }
 

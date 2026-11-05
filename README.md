@@ -98,6 +98,8 @@ Version 0.2.34 fixes legacy player sheets whose saved HP maximum was masked by a
 
 Version 0.2.35 replaces item roll dice glyphs with the item's image while preserving the existing roll action. A semantic icon resolver assigns Foundry Core Data artwork to generic item images and new compendium entries, including Magicks, Technicks, talents, features, classes, weapons, armour, and equipment. Existing custom item art is preserved, and older player and NPC sheets receive resolved icons when rendered.
 
+Version 0.2.36 compares Spellcraft against each target's specific Fortitude, Reflex, or Will Defence for the Magick effects selected by the check, including area targets and composite effects that require beating multiple defences. The chat reports each distinct defence comparison, applies Phase/Teleport resistance checks, the ally Will Defence modifier for Dispel, and Reflex checks when Mend targets an attended item. It posts the illustrated Magick description before Spellcraft and damage rolls. Casting remains possible with no target selected; target-dependent effects wait for a target while the Spellcraft and damage rolls are still shown.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork. The system code is provided without an added license until the repository owner chooses one.
