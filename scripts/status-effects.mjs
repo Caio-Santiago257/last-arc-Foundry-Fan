@@ -18,6 +18,9 @@ export const RULE_STATUS_EFFECTS = [
   ["silenced", "StatusSilence", "icons/svg/deaf.svg"],
   ["sleeping", "StatusSleep", "icons/svg/sleep.svg"],
   ["slowed", "StatusSlow", "icons/svg/clockwork.svg"],
+  ["stunned", "StatusStunned", "icons/svg/downgrade.svg"],
+  ["prone", "StatusProne", "icons/svg/downgrade.svg"],
+  ["encumbered", "StatusEncumbered", "icons/svg/downgrade.svg"],
   ["toad", "StatusToad", "icons/svg/frog.svg"],
   ["zombified", "StatusZombify", "icons/svg/skull.svg"]
 ].map(([id, label, img]) => ({ id, label, img }));
@@ -115,12 +118,12 @@ export async function createRuleStatus(actor, status, { origin = actor?.uuid, so
 
 export function actionBlockReason(actor, { kind = "", skillKey = "", item = null } = {}) {
   if (!actor) return "";
-  if (actorHasStatus(actor, "petrified") || actorHasStatus(actor, "sleeping")) return localize("StatusCannotAct");
+  if (actorHasStatus(actor, "petrified") || actorHasStatus(actor, "sleeping") || actorHasStatus(actor, "stunned")) return localize("StatusCannotAct");
   const paralysed = statusEffectList(actor).some(({ status, effect }) => status === "paralysed" && effect.getFlag(SYSTEM_ID, "statusData.paralysisThisTurn"));
   if (paralysed) return localize("StatusParalysisBlocksAction");
   if (actorHasStatus(actor, "silenced") && (["spell", "performance"].includes(item?.type)
     || (kind === "skill" && /spellcraft|perform|persuasion|oratory|instrument/.test(skillKey)))) return localize("StatusSilenceBlocksAction");
-  if (actorHasStatus(actor, "toad") && item && ["spell", "performance", "technick", "talent", "feature", "class", "advanced-class"].includes(item.type)) return localize("StatusToadBlocksAbility");
+  if (actorHasStatus(actor, "toad") && item && ["spell", "performance", "technick", "talent", "feature", "class", "advanced-class", "last-resort"].includes(item.type)) return localize("StatusToadBlocksAbility");
   if (actorHasStatus(actor, "toad") && item && ["armor", "equipment"].includes(item.type)) return localize("StatusToadBlocksAbility");
   if (actorHasStatus(actor, "toad") && item?.type === "weapon" && !["natural", "unarmed"].includes(String(item.system?.weaponGroup ?? "").toLowerCase())) return localize("StatusToadBlocksAbility");
   const confused = statusEffectList(actor).find(({ status, effect }) => status === "confused" && effect.getFlag(SYSTEM_ID, "statusData.confusionTargetTokenId"));

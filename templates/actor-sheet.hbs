@@ -75,6 +75,7 @@
     </div>
 
     <div class="tab" data-group="primary" data-tab="features">
+      {{#if lastResortItems.length}}<section class="la-panel la-item-section la-last-resort-panel"><div class="la-section-heading"><h2>{{localize "LA.LastResorts"}}</h2><button type="button" class="la-use-last-resort" {{#unless canUseLastResort}}disabled{{/unless}} title="{{lastResortDisabledReason}}"><i class="fas fa-bolt" aria-hidden="true"></i> {{localize "LA.UseLastResort"}}</button></div><p class="la-last-resort-gate"><i class="fas fa-heart" aria-hidden="true"></i> {{localize "LA.LastResortGateHint"}} {{#if system.combat.lastResortUsed}} · {{localize "LA.LastResortAlreadyUsed"}}{{/if}}</p>{{#each lastResortItems as |item|}}<div class="item la-item-row la-last-resort-row" data-item-id="{{item.id}}"><button type="button" class="item-roll la-item-image-button" title="{{localize 'LA.UseLastResort'}}"><img src="{{item.displayImg}}" alt=""></button><button type="button" class="item-edit la-link">{{item.name}} · {{item.system.tree}}</button><button type="button" class="item-delete la-icon-button" title="{{localize 'LA.Delete'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button><small class="la-feature-description">{{item.system.description}}{{#if item.damageProgressionLabel}} · {{localize "LA.Damage"}} {{item.damageProgressionLabel}}{{#if item.system.damageType}} ({{item.system.damageType}}){{/if}}{{/if}}</small></div>{{/each}}</section>{{/if}}
       {{#each itemGroups as |group|}}{{#if (or (eq group.type "race") (eq group.type "class") (eq group.type "advanced-class") (eq group.type "feature") (eq group.type "talent"))}}
       <section class="la-panel la-item-section"><div class="la-section-heading"><h2>{{group.label}}</h2>{{#unless (eq group.type "performance")}}<button type="button" class="item-create la-add" data-type="{{group.type}}">{{localize "LA.AddItem"}}</button>{{/unless}}</div>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}</section>{{/if}}{{/each}}
     </div>
@@ -98,7 +99,7 @@
 
     <div class="tab" data-group="primary" data-tab="inventory">
       <section class="la-panel"><div class="la-section-heading"><h2>{{localize "LA.Inventory"}}</h2><button type="button" class="item-create la-add" data-type="equipment">{{localize "LA.AddItem"}}</button></div><div class="la-inventory-meta"><label>{{localize "LA.Gold"}}<input type="number" name="system.inventory.gold" value="{{system.inventory.gold}}"></label><span>{{localize "LA.Bulk"}}: <b>{{system.inventoryBulk}}</b> / {{system.inventory.maxBulk}} <small>({{localize "LA.Overencumbered"}} {{system.inventory.overBulk}})</small></span></div>
-      {{#each itemGroups as |group|}}{{#if (or (eq group.type "equipment") (eq group.type "armor") (eq group.type "other"))}}<h3 class="la-subheading">{{group.label}}</h3>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}{{/if}}{{/each}}
+      {{#each itemGroups as |group|}}{{#if (or (eq group.type "equipment") (eq group.type "armor") (eq group.type "other") (eq group.type "relic"))}}<h3 class="la-subheading">{{group.label}}</h3>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}{{/if}}{{/each}}
       </section>
     </div>
 

@@ -12,6 +12,7 @@ await mkdir(outputDir, { recursive: true });
 const { SPELLS } = await import("./spell-catalog.mjs");
 const { PERFORMANCES } = await import("./performance-catalog.mjs");
 const { AEONS } = await import("./aeon-catalog.mjs");
+const { LAST_RESORTS, LAST_RESORT_RELICS, makeLastResortItem } = await import("./last-resort-catalog.mjs");
 const technickSource = JSON.parse(await readFile(join(sourceDir, "technicks.json"), "utf8"));
 const talentSource = JSON.parse(await readFile(join(sourceDir, "talents.json"), "utf8"));
 const advancedClassSource = JSON.parse(await readFile(join(sourceDir, "advanced-classes.json"), "utf8"));
@@ -38,6 +39,12 @@ for (const [school, packName] of schoolPacks) {
 const performanceRows = PERFORMANCES.map(source => makePackRow("performances", source));
 await writeFile(join(outputDir, "performances.db"), performanceRows.map(row => JSON.stringify(row)).join("\n") + "\n", "utf8");
 console.log(`performances: ${performanceRows.length} documents`);
+
+const lastResortRows = LAST_RESORTS.map(power => makePackRow("last-resorts", makeLastResortItem(power)));
+await writeFile(join(outputDir, "last-resorts.db"), lastResortRows.map(row => JSON.stringify(row)).join("\n") + "\n", "utf8");
+const relicRows = LAST_RESORT_RELICS.map(relic => makePackRow("last-resort-relics", relic));
+await writeFile(join(outputDir, "last-resort-relics.db"), relicRows.map(row => JSON.stringify(row)).join("\n") + "\n", "utf8");
+console.log(`last-resorts: ${lastResortRows.length} powers; relics: ${relicRows.length} items`);
 
 for (const file of await readdir(sourceDir)) {
   if (!file.endsWith(".json")) continue;
@@ -249,5 +256,5 @@ function makePackRow(packName, entry) {
 }
 
 function inferType(pack) {
-  return ({ races: "race", classes: "class", "advanced-classes": "advanced-class", talents: "talent", technicks: "technick", spells: "spell", performances: "performance", equipment: "equipment" })[pack] ?? "other";
+  return ({ races: "race", classes: "class", "advanced-classes": "advanced-class", talents: "talent", technicks: "technick", spells: "spell", performances: "performance", equipment: "equipment", "last-resorts": "last-resort", "last-resort-relics": "relic" })[pack] ?? "other";
 }

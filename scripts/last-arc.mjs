@@ -1,5 +1,6 @@
 import { rollSpell } from "./spells.mjs";
 import { rollPerformance } from "./performances.mjs";
+import { promptLastResort, studyLastResortRelic, useLastResort } from "./last-resorts.mjs";
 import { DAMAGE_TYPES, postDamageRoll, registerDamageChatControls } from "./damage-chat.mjs";
 import { resolveItemIcon } from "./item-icons.mjs";
 import { RULE_STATUS_EFFECTS, actionBlockReason, actorHasStatus, breakConfusionOnAllyAttack, createRuleStatus, registerRuleStatusEffects, statusAttackPenalty, statusDefencePenalty, statusHealingCap, statusManaCap, statusRollFormula, statusSkillPenalty, wakeFromDamage } from "./status-effects.mjs";
@@ -14,7 +15,7 @@ const SKILLS = {
   "lore-terrestrial": "int", "lore-mystic": "int", "lore-occult": "int", medicine: "int", perception: "mnd",
   perform: "cha", persuasion: "cha", pilot: "agi", ride: "agi", smithing: "int", spellcraft: "mnd", stealth: "agi", survival: "mnd"
 };
-const ITEM_TYPES = ["race", "class", "advanced-class", "spell", "performance", "talent", "technick", "weapon", "armor", "equipment", "feature", "other"];
+const ITEM_TYPES = ["race", "class", "advanced-class", "spell", "performance", "talent", "technick", "weapon", "armor", "equipment", "feature", "last-resort", "relic", "other"];
 const CLASS_TALENT_TREES = {
   Bard: ["Academic", "Dancer", "Mediator", "Minstrel"],
   Initiate: ["Animist", "Cleric", "Devotee", "Occultist"],
@@ -512,6 +513,7 @@ class LastArcActor extends Actor {
     system.combat.injuries ??= [];
     system.combat.recoveryMinorActions = Math.max(0, Math.min(2, Math.floor(safeNumber(system.combat.recoveryMinorActions))));
     system.combat.persistentHpRecovery ??= false;
+    system.combat.lastResortUsed ??= false;
     for (const key of ATTRIBUTES) system.attributes[key] ??= { score: 10 };
     const classItems = this.items.filter(item => ["class", "advanced-class"].includes(item.type));
     const raceItem = this.items.find(item => item.type === "race");
@@ -532,6 +534,7 @@ class LastArcActor extends Actor {
       }
       return result;
     }, {});
+    const relicSpellcraftBonus = this.items.filter(item => item.type === "relic").reduce((sum, item) => sum + safeNumber(item.system.itemEffects?.skillBonus?.scope === "spellcraft" ? item.system.itemEffects.skillBonus.value : 0), 0);
     const gearDefenceBonuses = equippedGear.reduce((result, item) => {
       for (const [key, value] of Object.entries(item.system.itemEffects?.defenceBonuses ?? {})) result[key] += safeNumber(value);
       return result;
@@ -615,7 +618,7 @@ class LastArcActor extends Actor {
         halfLevel,
         attributeMod: system.attributes[attribute].modifier,
         classSkill: WEAPON_SKILLS.has(key) || effectiveClassItems.some(item => item.system.classSkills?.includes(key)) || raceItem?.system.classSkills?.includes(key) || false,
-        total: halfLevel + (skill.trained ? 5 : 0) + safeNumber(skill.classBonus) + effectiveClassItems.reduce((sum, item) => sum + safeNumber(item.system.skillBonuses?.[key]) + safeNumber(item.system.selectedEffects?.skillBonuses?.[key]), 0) + safeNumber(effectiveRacialEffects.skillBonuses?.[key]) + safeNumber(technickSkillBonuses[key]) + performanceSkillBonus(key) + safeNumber(gearSkillBonuses[key]) + armourPenaltyForSkill(key, attribute, armourPenalty) + safeNumber(skill.misc) + system.attributes[attribute].modifier + safeNumber(injuryPenalties[attribute]) + gaugePenalty + statusSkillPenalty(this, key)
+        total: halfLevel + (skill.trained ? 5 : 0) + safeNumber(skill.classBonus) + effectiveClassItems.reduce((sum, item) => sum + safeNumber(item.system.skillBonuses?.[key]) + safeNumber(item.system.selectedEffects?.skillBonuses?.[key]), 0) + safeNumber(effectiveRacialEffects.skillBonuses?.[key]) + safeNumber(technickSkillBonuses[key]) + performanceSkillBonus(key) + safeNumber(gearSkillBonuses[key]) + (key === "spellcraft" ? relicSpellcraftBonus : 0) + armourPenaltyForSkill(key, attribute, armourPenalty) + safeNumber(skill.misc) + system.attributes[attribute].modifier + safeNumber(injuryPenalties[attribute]) + gaugePenalty + statusSkillPenalty(this, key)
       };
     }
     for (const defence of ["fort", "ref", "will"]) {
@@ -817,6 +820,7 @@ class LastArcActor extends Actor {
       "system.combat.recoveryMinorActions": 0
     };
     if (totalHours >= 8) update["system.combat.secondWindUsed"] = false;
+    if (totalHours >= 8) update["system.combat.lastResortUsed"] = false;
     if (totalHours >= 8 && this.items.some(item => item.type === "advanced-class" && item.name === "Summoner")) {
       update["system.combat.aeonSummons"] = { day: Math.floor(safeNumber(game.time?.worldTime) / 86400), usedAeonIds: [], astralUsesSpent: 0 };
     }
@@ -866,6 +870,8 @@ class LastArcItem extends Item {
     if (actor && safeNumber(actor.system.combat.recoveryMinorActions) > 0) await actor.update({ "system.combat.recoveryMinorActions": 0 });
     if (this.type === "spell") return rollSpell(this);
     if (this.type === "performance") return rollPerformance(this);
+    if (this.type === "relic") return studyLastResortRelic(this, actor);
+    if (this.type === "last-resort" && actor) return useLastResort(actor, this);
     if (this.type === "talent" && actor) return this.rollTalent(actor);
     if (actor?.system.aeon?.isAeon && this.type === "weapon" && this.system.aeonPrimaryAttack) return rollAeonBasicAttack(this, actor);
     if (actor?.system.aeon?.isAeon && this.type === "feature" && this.system.automation?.kind === "aeonUltimate") return rollAeonUltimate(this, actor);
@@ -1026,6 +1032,17 @@ class LastArcActorSheet extends ActorSheet {
         ...item.toObject(), id: item.id, displayImg: resolveItemIcon(item.toObject())
       }))
     }));
+    context.lastResortItems = this.actor.items.filter(item => item.type === "last-resort").map(item => {
+      const source = item.toObject();
+      const tiers = Object.entries(source.system.damageByLevel ?? {}).filter(([, formula]) => formula);
+      return { ...source, id: item.id, displayImg: resolveItemIcon(source), damageProgressionLabel: tiers.map(([level, formula]) => `${level === "base" ? game.i18n.localize("LA.LastResortBase") : `${game.i18n.localize("LA.Level")} ${level}`}: ${formula}`).join(" · ") };
+    });
+    const currentHp = safeNumber(this.actor.system.resources?.hp?.value);
+    const maximumHp = safeNumber(this.actor.system.resources?.hp?.max);
+    context.canUseLastResort = context.isCharacter && context.lastResortItems.length > 0 && maximumHp > 0 && currentHp <= maximumHp / 4
+      && !this.actor.system.combat.lastResortUsed && !this.actor.system.combat.dead && !this.actor.system.combat.unconscious;
+    context.lastResortDisabledReason = this.actor.system.combat.lastResortUsed ? game.i18n.localize("LA.LastResortAlreadyUsed")
+      : maximumHp > 0 && currentHp > maximumHp / 4 ? game.i18n.localize("LA.LastResortQuarterHp") : game.i18n.localize("LA.LastResortUseHint");
     const resourcePercent = resource => {
       const max = safeNumber(resource?.max);
       return max > 0 ? Math.max(0, Math.min(100, safeNumber(resource.value) / max * 100)) : 0;
@@ -1081,6 +1098,7 @@ class LastArcActorSheet extends ActorSheet {
     html.find(".item-edit").on("click", this._onItemEdit.bind(this));
     html.find(".item-delete").on("click", this._onItemDelete.bind(this));
     html.find(".item-roll").on("click", this._onItemRoll.bind(this));
+    html.find(".la-use-last-resort").on("click", async event => { event.preventDefault(); await promptLastResort(this.actor); });
     html.find(".la-aeon-open").on("click", this._onAeonOpen.bind(this));
     html.find(".la-aeon-add").on("click", this._onAeonAdd.bind(this));
     html.find(".la-aeon-summon").on("click", this._onAeonSummon.bind(this));
