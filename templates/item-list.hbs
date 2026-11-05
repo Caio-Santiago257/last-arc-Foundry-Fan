@@ -1,7 +1,7 @@
 <div class="la-item-list">
   {{#if items.length}}
     {{#each items as |item|}}
-      <div class="item la-item-row {{#if (eq item.type 'race')}}la-race-row{{/if}} {{#if (eq item.type 'technick')}}la-technick-row{{/if}} {{#if (eq item.type 'spell')}}la-spell-row{{/if}} {{#if (eq item.type 'performance')}}la-performance-row{{/if}} {{#if (or (eq item.type 'feature') (eq item.type 'talent'))}}la-feature-row{{/if}} {{#if (eq item.type 'talent')}}la-talent-row{{/if}} {{#if (or (eq item.type 'class') (eq item.type 'advanced-class'))}}la-class-row{{/if}} {{#if (or (eq item.type 'armor') item.system.equippable)}}la-equipped-row{{/if}}" data-item-id="{{item.id}}">
+      <div class="item la-item-row {{#if (eq item.type 'race')}}la-race-row{{/if}} {{#if (eq item.type 'technick')}}la-technick-row{{/if}} {{#if (eq item.type 'spell')}}la-spell-row{{/if}} {{#if (eq item.type 'performance')}}la-performance-row{{/if}} {{#if (or (eq item.type 'feature') (eq item.type 'talent'))}}la-feature-row{{/if}} {{#if (eq item.system.automation.kind 'aeonRoster')}}la-aeon-roster-row{{/if}} {{#if (eq item.type 'talent')}}la-talent-row{{/if}} {{#if (or (eq item.type 'class') (eq item.type 'advanced-class'))}}la-class-row{{/if}} {{#if (or (eq item.type 'armor') item.system.equippable)}}la-equipped-row{{/if}}" data-item-id="{{item.id}}">
         {{#if (eq item.type "technick")}}
           <button type="button" class="item-roll la-item-image-button" title="{{localize 'LA.Roll'}}" aria-label="{{localize 'LA.Roll'}}"><img src="{{item.displayImg}}" alt=""></button>
           <button type="button" class="item-edit la-link">{{item.name}}</button>
@@ -30,7 +30,7 @@
         {{else if (or (eq item.type "feature") (eq item.type "talent"))}}
           {{#if (or (eq item.type "talent") (eq item.system.automation.kind "aeonUltimate") (eq item.system.automation.kind "aeonAction") (eq item.system.automation.kind "adversaryAbility"))}}<button type="button" class="item-roll la-item-image-button" title="{{localize 'LA.Roll'}}" aria-label="{{localize 'LA.Roll'}}"><img src="{{item.displayImg}}" alt=""></button>{{else}}<img class="la-item-image" src="{{item.displayImg}}" alt="">{{/if}}
           <button type="button" class="item-edit la-link">{{item.name}}</button>
-          {{#if (eq item.system.automation.kind "summonAeon")}}<button type="button" class="la-aeon-add la-small-button" title="{{localize 'LA.AddAeonIdol'}}"><i class="fas fa-plus" aria-hidden="true"></i> {{localize "LA.AddAeonIdol"}}</button>{{/if}}
+          {{#if (eq item.system.automation.kind "summonAeon")}}<button type="button" class="la-aeon-add la-small-button" title="{{localize 'LA.AddAeonIdol'}}" aria-label="{{localize 'LA.AddAeonIdol'}}"><i class="fas fa-plus" aria-hidden="true"></i></button>{{/if}}
           <button type="button" class="item-delete la-icon-button" title="{{localize 'LA.Delete'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
           <small class="la-feature-description">{{item.system.description}}</small>
         {{else if (eq item.type "race")}}

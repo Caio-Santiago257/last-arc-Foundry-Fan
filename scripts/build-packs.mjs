@@ -70,7 +70,7 @@ console.log(`aeons: ${aeonRows.length} actor documents`);
 
 function makeAeonActor(aeon, spells, technicks) {
   const first = aeon.levels[0];
-  const image = aeon.img ?? `icons/creatures/magical/elemental-${aeon.affinity === "electric" ? "air" : aeon.affinity === "cold" ? "ice" : aeon.affinity === "fire" ? "fire" : aeon.affinity === "dark" ? "earth" : "earth"}.webp`;
+  const image = "systems/last-arc-analogue/assets/ffxiv-icons/generic/character.webp";
   const makeEmbedded = (key, source) => ({
     _id: createHash("sha256").update(`aeons:${aeon.id}:${key}`).digest("hex").slice(0, 16),
     name: source.name, type: source.type, img: source.img ?? image, system: source.system ?? {}, effects: source.effects ?? [], folder: null, sort: 0, ownership: { default: 0 }, flags: source.flags ?? {}

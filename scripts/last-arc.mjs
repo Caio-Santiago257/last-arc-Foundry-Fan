@@ -439,6 +439,7 @@ function describePerformanceEffect(effect = {}) {
 
 Hooks.once("init", () => {
   registerDamageChatControls();
+  Hooks.on("renderChatMessage", (_message, html) => applyImageFallbacks(html));
   CONFIG.Actor.documentClass = LastArcActor;
   CONFIG.Item.documentClass = LastArcItem;
   CONFIG.Combatant.documentClass = LastArcCombatant;
@@ -1040,6 +1041,7 @@ class LastArcActorSheet extends ActorSheet {
 
   activateListeners(html) {
     super.activateListeners(html);
+    applyImageFallbacks(html);
     html.find(".rollable").on("click", this._onRoll.bind(this));
     html.find(".item-create").on("click", this._onItemCreate.bind(this));
     html.find(".item-edit").on("click", this._onItemEdit.bind(this));
@@ -2304,6 +2306,18 @@ class LastArcActorSheet extends ActorSheet {
   }
 }
 
+function applyImageFallbacks(html) {
+  html.find("img").each((_index, image) => {
+    if (image.dataset.laFallbackReady) return;
+    image.dataset.laFallbackReady = "true";
+    image.addEventListener("error", () => {
+      if (image.dataset.laFallbackApplied) return;
+      image.dataset.laFallbackApplied = "true";
+      image.src = "icons/svg/aura.svg";
+    }, { once: true });
+  });
+}
+
 class LastArcNPCSheet extends LastArcActorSheet {}
 
 // Use the actor's class-derived die in the combat tracker as well as on the sheet.
@@ -2320,6 +2334,7 @@ class LastArcItemSheet extends ItemSheet {
   get template() { return "systems/last-arc-analogue/templates/item-sheet.hbs"; }
   getData(options) {
     const context = super.getData(options);
+    context.itemIcon = resolveItemIcon(this.item.toObject());
     context.system = foundry.utils.deepClone(this.item.system);
     context.system.classSkillsText = Array.isArray(context.system.classSkills) ? context.system.classSkills.join("\n") : "";
     context.system.traitsText = Array.isArray(context.system.traits) ? context.system.traits.join("\n") : "";
@@ -2350,6 +2365,7 @@ class LastArcItemSheet extends ItemSheet {
   }
   activateListeners(html) {
     super.activateListeners(html);
+    applyImageFallbacks(html);
     html.find(".item-roll").on("click", async event => {
       event.preventDefault();
       try { await this.item.roll(); }

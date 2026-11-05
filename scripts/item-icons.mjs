@@ -1,79 +1,58 @@
+import { ASSET_ICON_FILES } from "./asset-icon-index.mjs";
+import { SPELL_ICON_MAP } from "./spell-icon-map.mjs";
+
+const ROOT = "systems/last-arc-analogue/assets/ffxiv-icons/";
 const GENERIC_IMAGES = new Set([
-  "icons/svg/item-bag.svg",
-  "icons/svg/mystery-man.svg",
-  "icons/svg/d20-grey.svg",
-  "icons/magic/symbols/rune-sigil-blue.webp",
-  "icons/magic/symbols/rune-sigil-red.webp",
-  "icons/magic/symbols/rune-sigil-purple.webp",
-  "icons/magic/symbols/rune-sigil-gold.webp",
-  "icons/magic/symbols/rune-sigil-orange.webp"
+  "icons/svg/item-bag.svg", "icons/svg/mystery-man.svg", "icons/svg/d20-grey.svg",
+  "icons/svg/aura.svg", "icons/svg/book.svg", "icons/svg/target.svg", "icons/svg/sword.svg"
 ]);
-
-const IMAGE = {
-  sword: "icons/skills/melee/strike-sword-steel-yellow.webp",
-  dagger: "icons/skills/melee/strike-dagger-poison-green.webp",
-  axe: "icons/weapons/axes/axe-battle-black.webp",
-  bow: "icons/weapons/bows/bow-ornamental-carved-brown.webp",
-  shield: "icons/magic/defensive/shield-barrier-blue.webp",
-  armour: "icons/equipment/chest/breastplate-banded-steel-grey.webp",
-  book: "icons/svg/book.svg",
-  music: "icons/skills/trades/music-notes-sound-blue.webp",
-  holy: "icons/magic/holy/prayer-hands-glowing-yellow-white.webp",
-  stealth: "icons/magic/nature/stealth-hide-eyes-green.webp",
-  target: "icons/svg/target.svg",
-  aura: "icons/svg/aura.svg",
-  greenRune: "icons/magic/symbols/rune-sigil-green.webp",
-  blueRune: "icons/magic/symbols/rune-sigil-horned-blue.webp",
-  redRune: "icons/magic/symbols/rune-sigil-red-orange.webp",
-  purpleRune: "icons/magic/symbols/rune-sigil-horned-white-purple.webp",
-  goldRune: "icons/magic/symbols/rune-sigil-rough-white-teal.webp",
-  fire: "icons/magic/fire/explosion-fireball-large-orange.webp",
-  ice: "icons/magic/water/barrier-ice-crystal-wall-faceted-blue.webp",
-  lightning: "icons/magic/lightning/bolt-forked-blue.webp",
-  nature: "icons/magic/nature/plant-poison-spit-green.webp",
-  healing: "icons/magic/life/heart-cross-green.webp",
-  spellShield: "icons/magic/defensive/shield-barrier-blue.webp",
-  wind: "icons/magic/air/air-wave-gust-blue.webp",
-  dark: "icons/magic/unholy/hand-claw-fog-green.webp",
-  potion: "icons/consumables/potions/bottle-round-corked-blue.webp",
-  scroll: "icons/sundries/scrolls/scroll-plain-tan.webp",
-  potionGreen: "icons/consumables/potions/bottle-round-corked-green.webp",
-  potionRed: "icons/consumables/potions/bottle-round-corked-orante-red.webp",
-  gear: "icons/tools/smithing/anvil.webp"
+const SPELL_OVERRIDES = {
+  "Aphasia":"NIN/Hidden.webp", "Black Hole":"DRK/Salted_Earth.webp", "Corrode":"DRK/Edge_of_Darkness.webp", "Darkness":"DRK/Darkside.webp",
+  "Entomb":"BLM/Freeze.webp", "Expiry":"DRK/Living_Dead.webp", "Infest":"NIN/Mug.webp", "Maim":"DRK/Bloodspiller.webp",
+  "Miasma":"SCH/Bio_II.webp", "Mire":"NIN/Dokumori.webp", "Sap":"DRK/Abyssal_Drain.webp", "Torpor":"ROLE-HEALER/Repose.webp", "Void":"DRK/Flood_of_Darkness.webp",
+  "Charm":"BRD/Mage's_Ballad.webp", "Fear":"DRK/Shadow_Wall.webp", "Gravity":"AST/Gravity.webp", "Haste":"AST/Lightspeed.webp",
+  "Inertia":"NIN/Armor_Crush.webp", "Invisibility":"NIN/Hide.webp", "Levitation":"AST/The_Spire.webp", "Metamorphosis":"NIN/Huton.webp",
+  "Muddle":"NIN/Trick_Attack.webp", "Phase":"NIN/Shukuchi.webp", "Polymorph":"SMN/SummonGem.webp", "Repose":"ROLE-HEALER/Repose.webp", "Teleport":"BLM/Aetherial_Manipulation.webp",
+  "Aqua Blast":"SMN/Aerial_Blast.webp", "Boulder":"SMN/Rock_Buster.webp", "Cataclysm":"SMN/Earthen_Fury.webp", "Entangle":"SMN/Summon_Titan.webp",
+  "Overgrowth":"WHM/Regen.webp", "Quake":"SMN/Earthen_Fury.webp", "Shockwave":"SMN/Akh_Morn.webp", "Succession":"SMN/SummonGem.webp",
+  "Tempest":"SMN/Aerial_Slash.webp", "Tidal Wave":"SMN/Aerial_Blast.webp", "Torrent":"SCH/Art_of_War.webp", "Whirlwind":"SMN/Aerial_Slash.webp",
+  "Windburst":"WHM/Aero.webp", "Wind Slash":"SMN/Aerial_Slash.webp",
+  "Ark Blast":"SMN/Deathflare.webp", "Blizzard":"BLM/Blizzard.webp", "Chain Lightning":"BLM/Thunder_II.webp", "Ember":"BLM/Fire.webp",
+  "Fireball":"BLM/Fire_II.webp", "Firestorm":"BLM/Fire_III.webp", "Flamethrower":"MCH/Flamethrower.webp", "Frost Wave":"BLM/Blizzard_II.webp",
+  "Galvanic Strike":"RDM/Verthunder.webp", "Gelid Strike":"BLM/Blizzard_III.webp", "Ice Blast":"BLM/Blizzard_IV.webp", "Icicle":"RDM/Verstone.webp",
+  "Inferno":"SMN/Inferno.webp", "Lightning Bolt":"BLM/Thunder.webp", "Scorching Strike":"RDM/Verflare.webp", "Shock":"RDM/Verthunder_II.webp",
+  "Thunderstorm":"AST/Stellar_Detonation.webp", "Whiteout":"BLM/Blizzard.webp",
+  "Banish":"PLD/Holy_Spirit.webp", "Barrier":"SCH/Succor.webp", "Cleanse":"ROLE-HEALER/Esuna.webp", "Curatio":"WHM/Assize.webp",
+  "Cure":"WHM/Cure.webp", "Dispel":"ROLE-HEALER/Esuna.webp", "Faith":"WHM/Presence_of_Mind.webp", "Healing Wind":"WHM/Aero_II.webp",
+  "Holy":"WHM/Holy.webp", "Illuminate":"SCH/Fey_Illumination.webp", "Luminescence":"WHM/Benediction.webp", "Mend":"WHM/Cure_II.webp",
+  "Protect":"SCH/Adloquium.webp", "Regen":"WHM/Regen.webp", "Revive":"WHM/Raise.webp", "Shell":"SCH/Sacred_Soil.webp", "Smite":"PLD/Spirits_Within.webp", "Ward":"WHM/Divine_Benison.webp"
 };
 
-const CLASS_IMAGES = {
-  bard: IMAGE.music, initiate: IMAGE.holy, mage: IMAGE.book, ranger: IMAGE.target,
-  rogue: IMAGE.stealth, warrior: IMAGE.sword, archmage: IMAGE.purpleRune,
-  assassin: IMAGE.stealth, battlemage: IMAGE.sword, berserker: IMAGE.axe,
-  bishop: IMAGE.holy, "blade dancer": IMAGE.dagger, dragoon: IMAGE.sword,
-  druid: IMAGE.nature, gladiator: IMAGE.sword, necromancer: IMAGE.dark,
-  paladin: IMAGE.holy, purloiner: IMAGE.stealth, sabreur: IMAGE.sword,
-  summoner: IMAGE.aura, thaumaturge: IMAGE.purpleRune, troubadour: IMAGE.music,
-  warlock: IMAGE.dark, "beastmaster": IMAGE.nature, "spellblade": IMAGE.blueRune
+const CLASS_ICONS = {
+  bard:"JOB_ICONS/Bard.webp", initiate:"ROLE-HEALER/Esuna.webp", mage:"JOB_ICONS/BlackMage.webp", ranger:"ROLE-RANGED/Foot_Graze.webp",
+  rogue:"JOB_ICONS/Ninja.webp", warrior:"JOB_ICONS/Warrior.webp", archmage:"JOB_ICONS/BlackMage.webp", assassin:"JOB_ICONS/Ninja.webp",
+  battlemage:"JOB_ICONS/RedMage.webp", berserker:"JOB_ICONS/Warrior.webp", bishop:"JOB_ICONS/WhiteMage.webp", "blade dancer":"JOB_ICONS/Dancer.webp",
+  dragoon:"JOB_ICONS/Dragoon.webp", druid:"JOB_ICONS/Summoner.webp", gladiator:"JOB_ICONS/Paladin.webp", necromancer:"JOB_ICONS/Reaper.webp",
+  paladin:"JOB_ICONS/Paladin.webp", purloiner:"JOB_ICONS/Ninja.webp", sabreur:"JOB_ICONS/Samurai.webp", summoner:"JOB_ICONS/Summoner.webp",
+  thaumaturge:"JOB_ICONS/BlackMage.webp", troubadour:"JOB_ICONS/Bard.webp", warlock:"JOB_ICONS/DarkKnight.webp", beastmaster:"JOB_ICONS/Summoner.webp", spellblade:"JOB_ICONS/RedMage.webp"
 };
-const TREE_IMAGES = {
-  academic: IMAGE.book, dancer: IMAGE.dagger, mediator: IMAGE.holy, minstrel: IMAGE.music,
-  animist: IMAGE.nature, cleric: IMAGE.holy, devotee: IMAGE.holy, occultist: IMAGE.dark,
-  arcanist: IMAGE.purpleRune, conjurer: IMAGE.healing, elementalist: IMAGE.fire, illusionist: IMAGE.stealth,
-  archer: IMAGE.bow, hunter: IMAGE.target, scout: IMAGE.stealth, tamer: IMAGE.nature,
-  charlatan: IMAGE.book, cutthroat: IMAGE.dagger, footpad: IMAGE.stealth, saboteur: IMAGE.gear,
-  thief: IMAGE.stealth, barbarian: IMAGE.axe, defender: IMAGE.shield, fighter: IMAGE.sword,
-  uhlan: IMAGE.sword, thaumaturge: IMAGE.purpleRune, blackguard: IMAGE.dark, sniper: IMAGE.target,
-  spellblade: IMAGE.sword, spellbreaker: IMAGE.shield, viking: IMAGE.axe, priest: IMAGE.holy,
-  dervish: IMAGE.dagger, dragoneer: IMAGE.sword, lancer: IMAGE.sword, beastcaller: IMAGE.nature,
-  shapeshifter: IMAGE.nature, reaver: IMAGE.dark, champion: IMAGE.sword, necromant: IMAGE.dark,
-  templar: IMAGE.holy, brigand: IMAGE.dagger, trickster: IMAGE.stealth, fencer: IMAGE.dagger,
-  marksman: IMAGE.target, skirmisher: IMAGE.bow, evoker: IMAGE.aura, balladeer: IMAGE.music,
-  diabolist: IMAGE.dark
+const TALENT_ICONS = {
+  "arcane study":"BLM/Enochian.webp", "bardic study":"BRD/Mage's_Ballad.webp", "weapon proficiency":"ROLE-MELEE/Bloodbath.webp",
+  "hp up":"WAR/Thrill_of_Battle.webp", "mp up":"BLM/Manafont.webp", "second wind":"ROLE-MELEE/Second_Wind.webp",
+  "intensified spell":"BLM/Flare.webp", "distant spell":"BLM/Aetherial_Manipulation.webp", "spellshape":"RDM/Acceleration.webp",
+  "scorching flame":"RDM/Verflare.webp", "thunderclap":"MNK/Thunderclap.webp", "numbing cold":"BLM/Freeze.webp", "amplification":"BLM/Triplecast.webp"
+};
+const EQUIPMENT_ICONS = {
+  sword:"PLD/Fast_Blade.webp", dagger:"NIN/Spinning_Edge.webp", knife:"NIN/Throwing_Dagger.webp", axe:"WAR/Heavy_Swing.webp", bow:"BRD/Heavy_Shot.webp",
+  crossbow:"MCH/Drill.webp", polearm:"DRG/True_Thrust.webp", staff:"BLM/Blizzard.webp", shield:"PLD/Sheltron.webp", armour:"PLD/Sentinel.webp", armor:"PLD/Sentinel.webp",
+  potion:"items/Potion_icon1.webp", elixir:"items/Elixir_icon1.webp", ether:"items/Ether_icon2.webp", scroll:"items/120px-Clay_Tablet_Icon.webp", mount:"Mounts&Minions/Company_Chocobo_Mount.webp"
 };
 
+const fileSet = new Set(ASSET_ICON_FILES);
+function asset(path) { return fileSet.has(path) ? `${ROOT}${encodeURI(path)}` : "icons/svg/aura.svg"; }
 function textOf(item = {}, packName = "") {
-  return [item.name, item.system?.category, item.system?.school, item.system?.sourceClass,
-    item.system?.className, item.system?.tree, item.system?.weaponGroup, item.system?.description, packName]
-    .filter(Boolean).join(" ").toLowerCase();
+  return [item.name, item.system?.category, item.system?.school, item.system?.sourceClass, item.system?.className, item.system?.tree, item.system?.weaponGroup, item.system?.description, packName].filter(Boolean).join(" ").toLowerCase();
 }
-
 function typeOf(item = {}, packName = "") {
   if (item.type) return item.type;
   if (packName.includes("magick") || packName === "spells") return "spell";
@@ -85,82 +64,46 @@ function typeOf(item = {}, packName = "") {
   if (packName === "races") return "race";
   return "other";
 }
+function nearestAsset(text, preferredFolders = []) {
+  const words = text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().split(/[^a-z0-9]+/).filter(word => word.length > 2);
+  let best = "generic/character.webp", bestScore = -Infinity;
+  for (const file of ASSET_ICON_FILES) {
+    const folder = file.split("/")[0];
+    const base = file.split("/").at(-1).replace(/\.webp$/i, "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().split(/[^a-z0-9]+/);
+    let score = preferredFolders.includes(folder) ? 5 : 0;
+    for (const word of words) if (base.includes(word)) score += word.length > 4 ? 6 : 3;
+    if (/JOB_ICONS|Macros|Tab Icons|Stat Icons|items|Mounts&Minions/.test(folder)) score -= 20;
+    if (score > bestScore) { best = file; bestScore = score; }
+  }
+  return asset(best);
+}
 
-/** Return a Foundry Core Data image for an item, preserving custom artwork. */
+/** Map rule items to locally bundled, authored artwork; invalid legacy paths fall back safely. */
 export function resolveItemIcon(item = {}, packName = "") {
   const existing = item.img;
-  if (existing && !GENERIC_IMAGES.has(existing)) return existing;
-
+  if (existing && !GENERIC_IMAGES.has(existing) && !existing.startsWith("icons/") && !existing.startsWith("systems/last-arc-analogue/")) return existing;
   const type = typeOf(item, packName);
+  const name = String(item.name ?? "").trim();
   const text = textOf(item, packName);
-  if (type === "spell") {
-    if (/fire|flame|ember|blaze|scorch|inferno|flare|eruption|meteor/.test(text)) return IMAGE.fire;
-    if (/ice|frost|blizzard|snow|cold|freeze|gelid/.test(text)) return IMAGE.ice;
-    if (/lightning|thunder|electric|galvanic|shock|bolt/.test(text)) return IMAGE.lightning;
-    if (/heal|cure|life|raise|regen|restor|white magick/.test(text)) return IMAGE.healing;
-    if (/wind|air|tornado|whirl|gust/.test(text)) return IMAGE.wind;
-    if (/dark|black hole|void|shadow|drain|death|doom|necrot/.test(text)) return IMAGE.dark;
-    if (/green magick|nature|thorn|vine|plant|growth/.test(text)) return IMAGE.nature;
-    if (/shield|protect|barrier|guard|wall/.test(text)) return IMAGE.spellShield;
-    if (/black magick/.test(text)) return IMAGE.purpleRune;
-    if (/blue magick/.test(text)) return IMAGE.blueRune;
-    if (/green magick/.test(text)) return IMAGE.greenRune;
-    if (/red magick/.test(text)) return IMAGE.redRune;
-    if (/white magick/.test(text)) return IMAGE.goldRune;
-    return IMAGE.blueRune;
-  }
-  if (type === "performance" || /bardic|performance|score/.test(text)) {
-    if (/ranged|arrow|bow/.test(text)) return IMAGE.target;
-    if (/melee|weapon|damage|strike|attack/.test(text)) return IMAGE.sword;
-    if (/reflex|fortitude|defen|protect|shield/.test(text)) return IMAGE.shield;
-    if (/spellcraft|magick|arcane/.test(text)) return IMAGE.purpleRune;
-    if (/skill|check|knowledge/.test(text)) return IMAGE.book;
-    if (/heal|restore|life/.test(text)) return IMAGE.healing;
-    if (/mp|mana/.test(text)) return IMAGE.blueRune;
-    return IMAGE.music;
-  }
+  if (type === "spell") return asset(SPELL_OVERRIDES[name] ?? SPELL_ICON_MAP[name] ?? "generic/character.webp");
   if (type === "class" || type === "advanced-class") {
-    for (const [name, image] of Object.entries(CLASS_IMAGES)) if (text.includes(name)) return image;
-    return IMAGE.book;
+    for (const [key, icon] of Object.entries(CLASS_ICONS)) if (text.includes(key)) return asset(icon);
+    return asset("JOB_ICONS/Astrologian.webp");
   }
-  if (type === "technick" || type === "talent" || type === "feature") {
-    if (/intensified spell/.test(text)) return IMAGE.redRune;
-    if (/distant spell/.test(text)) return IMAGE.blueRune;
-    if (/lingering spell/.test(text)) return IMAGE.purpleRune;
-    if (/enlarged spell/.test(text)) return IMAGE.greenRune;
-    if (/multi.?spell/.test(text)) return IMAGE.goldRune;
-    if (/subtle spell/.test(text)) return IMAGE.stealth;
-    for (const [tree, image] of Object.entries(TREE_IMAGES)) if (text.includes(tree)) return image;
-    if (/arcane|spell|magick|mana|rune|eldritch|thaumatur/.test(text)) return IMAGE.purpleRune;
-    if (/heal|cure|restore|life|vital|second wind/.test(text)) return IMAGE.healing;
-    if (/fire|flame|scorch|ember|burn/.test(text)) return IMAGE.fire;
-    if (/ice|frost|cold/.test(text)) return IMAGE.ice;
-    if (/lightning|thunder|shock/.test(text)) return IMAGE.lightning;
-    if (/stealth|assassin|sneak|thief|shadow|dodge|evade/.test(text)) return IMAGE.stealth;
-    if (/bow|archer|ranged|aim|shot|arrow/.test(text)) return IMAGE.target;
-    if (/shield|defen|guard|armou?r|fortitude|protect/.test(text)) return IMAGE.shield;
-    if (/axe|berserk|rage/.test(text)) return IMAGE.axe;
-    if (/sword|blade|strike|weapon|attack|melee|warrior|dragoon/.test(text)) return IMAGE.sword;
-    if (/summon|aeon|spirit|aura/.test(text)) return IMAGE.aura;
-    if (/bard|music|perform|song|dance/.test(text)) return IMAGE.music;
-    if (/holy|paladin|bishop|divine/.test(text)) return IMAGE.holy;
-    if (/nature|beast|druid|animal|survival/.test(text)) return IMAGE.nature;
-    if (/necrom|death|curse|dark|void/.test(text)) return IMAGE.dark;
-    if (/knowledge|study|lore|learn|book|scholar|arcane/.test(text)) return IMAGE.book;
-    return IMAGE.goldRune;
+  if (type === "performance" || /bardic|performance|score/.test(text)) return nearestAsset(text, ["BRD", "ROLE-HEALER"]);
+  if (["technick", "talent", "feature"].includes(type)) {
+    for (const [key, icon] of Object.entries(TALENT_ICONS)) if (text.includes(key)) return asset(icon);
+    const folders = /bard|music|perform/.test(text) ? ["BRD"] : /fire|flame|scorch|ember/.test(text) ? ["BLM", "RDM"] : /heal|cure|restore|life/.test(text) ? ["WHM", "SCH"] : /stealth|assassin|sneak|thief|dodge/.test(text) ? ["NIN"] : /shield|defen|guard|armou?r|protect/.test(text) ? ["PLD", "ROLE-TANK"] : /summon|aeon|spirit/.test(text) ? ["SMN"] : /nature|beast|druid|animal/.test(text) ? ["SMN", "SCH"] : /lightning|thunder|shock/.test(text) ? ["BLM", "RDM"] : /ice|frost|cold/.test(text) ? ["BLM"] : /arcane|spell|magick|mana|rune|eldritch/.test(text) ? ["BLM", "AST"] : ["ROLE-MELEE", "DRG", "WAR"];
+    return nearestAsset(text, folders);
   }
   if (type === "weapon" || /weapon|sword|blade|dagger|knife|axe|bow|crossbow|polearm|staff|mace/.test(text)) {
-    if (/bow|ranged|crossbow/.test(text)) return IMAGE.bow;
-    if (/axe/.test(text)) return IMAGE.axe;
-    if (/knife|dagger/.test(text)) return IMAGE.dagger;
-    if (/staff/.test(text)) return IMAGE.book;
-    return IMAGE.sword;
+    for (const [key, icon] of Object.entries(EQUIPMENT_ICONS)) if (text.includes(key)) return asset(icon);
+    return asset("generic/auto-attack.webp");
   }
-  if (type === "armor" || /armou?r|shield/.test(text)) return /shield/.test(text) ? IMAGE.shield : IMAGE.armour;
-  if (/scroll|score|sheet music/.test(text)) return IMAGE.scroll;
-  if (/potion|elixir|tonic/.test(text)) return /heal|red/.test(text) ? IMAGE.potionRed : IMAGE.potionGreen;
-  if (/poison|venom/.test(text)) return IMAGE.potionGreen;
-  if (/tool|craft|smith|gear|mount|prosthe|ammunition|resource/.test(text)) return IMAGE.gear;
-  if (/race|species|elf|dwarf|human|gnome|goblin/.test(text)) return IMAGE.aura;
-  return IMAGE.goldRune;
+  if (type === "armor" || /armou?r|shield/.test(text)) return asset(EQUIPMENT_ICONS.shield);
+  for (const [key, icon] of Object.entries(EQUIPMENT_ICONS)) if (text.includes(key)) return asset(icon);
+  if (/race|species|elf|dwarf|human|gnome|goblin/.test(text)) return asset("generic/character.webp");
+  return nearestAsset(text, ["generic", "JOB_ICONS"]);
 }
+
+export function isGenericItemIcon(path) { return !path || GENERIC_IMAGES.has(path); }

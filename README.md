@@ -1,6 +1,6 @@
 # Last Arc: Tactics Analogue for Foundry VTT
 
-Unofficial Foundry VTT system framework for Last Arc: Tactics Analogue. This release provides structured race, class, Technick, Performance, Magick, and advanced-class talent records with automation for character calculations and supported effects. The repository includes rule text data and does not redistribute rulebook artwork.
+Unofficial Foundry VTT system framework for Last Arc: Tactics Analogue. This release provides structured race, class, Technick, Performance, Magick, and advanced-class talent records with automation for character calculations and supported effects. The repository includes the system's structured rule data and user-provided FFXIV-inspired icon assets in `assets/ffxiv-icons/`.
 
 ## Install
 
@@ -22,7 +22,7 @@ Alternatively, download the ZIP, extract its `last-arc-analogue` folder into Fou
 - The Technicks compendium contains 67 rule summaries with structured prerequisites. Level-up offers general Technicks at level 1 and even character levels; ineligible choices are hidden. Passive effects such as HP Up, MP Up, Defence Up, Improved Initiative, Skill Focus, and Weapon Proficiency are automated.
 - Clicking a Magick item rolls Spellcraft, spends MP, selects the highest reached threshold, resolves supported damage, healing, conditions, defence/skill changes, and dispels, and posts a chat result. Marked targets drive targeted and area effects; self-target spells default to the caster when nothing is selected.
 - Bardic Study prompts for Performances equal to 1 + Intelligence modifier; increased Intelligence opens any newly available choices. Perform rolls accept controlled or targeted tokens, apply eligible bonuses, penalties, damage, and MP loss, and list active effects on the sheet. Timed effects expire at the performer's next turn during combat; outside combat, remove them from the Active Effects tab.
-- Core Foundry SVG icons for the D20 control and skill/item icons. Portuguese (Brazil) and English labels.
+- Core Foundry SVG icons for the D20 control and skill/item icons, plus locally bundled FFXIV-inspired icons for classes, every Magick, talents, performances, and equipment. Missing icon paths fall back to a Foundry SVG so sheets and chat never show a broken-image glyph. Portuguese (Brazil) and English labels.
 
 The book models advancement with advanced classes and talent trees; it does not define a generic subclass item type. Configured choice groups prompt for selections such as race options.
 
