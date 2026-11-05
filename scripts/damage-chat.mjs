@@ -143,8 +143,13 @@ async function onChatApply(message, button) {
       amount,
       type,
       resource: payload.resource,
+      targetRecords: targets.map(({ token, actor }) => ({
+        tokenUuid: token?.document?.uuid ?? "",
+        actorUuid: actor.uuid,
+        tokenId: token?.document?.id ?? "",
+        sceneId: token?.document?.parent?.id ?? canvas?.scene?.id ?? ""
+      })),
       targetUuids: targets.map(target => target.actor.uuid),
-      targetKeys: targets.map(target => target.key),
       aeonEntities: targets.map(target => target.token?.document?.getFlag?.(SYSTEM_ID, "aeonEntity") ?? "")
     });
     return;
@@ -154,9 +159,12 @@ async function onChatApply(message, button) {
   const results = [];
   let totalApplied = 0;
   for (const target of targets) {
+    const gaugeBefore = Number(target.actor.system.combat?.breakGauge) || 0;
     const applied = await applyToActor(target.actor, payload, amount, type, target.token?.document?.getFlag?.(SYSTEM_ID, "aeonEntity") ?? "");
     totalApplied += applied;
-    results.push(`${foundry.utils.escapeHTML(target.actor.name)}: ${applied} ${payload.resource === "mp" ? "MP" : game.i18n.localize("LA.Damage")}`);
+    const gaugeAfter = Number(target.actor.system.combat?.breakGauge) || 0;
+    const gaugeNote = payload.resource === "mp" ? "" : ` · ${game.i18n.localize("LA.BreakGauge")}: ${gaugeBefore}→${gaugeAfter}/5`;
+    results.push(`${foundry.utils.escapeHTML(target.actor.name)}: ${applied} ${payload.resource === "mp" ? "MP" : game.i18n.localize("LA.Damage")}${gaugeNote}`);
   }
   await applyRiders(payload, totalApplied);
   await message.setFlag(SYSTEM_ID, "damageApplication", { ...payload, processing: false, applied: true });
@@ -186,12 +194,19 @@ export function registerDamageChatControls() {
         await message.setFlag(SYSTEM_ID, "damageApplication", { ...payload, processing: true });
         const results = [];
         let totalApplied = 0;
-        for (let index = 0; index < (data.targetUuids ?? []).length; index++) {
-          const actor = await fromUuid(data.targetUuids[index]).catch(() => null);
+        const remoteTargets = data.targetRecords?.length
+          ? await resolveRecordedTargets(data.targetRecords)
+          : await Promise.all((data.targetUuids ?? []).map(async (uuid, index) => ({ actor: await fromUuid(uuid).catch(() => null), token: null, aeonEntity: data.aeonEntities?.[index] ?? "" })));
+        for (const target of remoteTargets) {
+          const actor = target.actor;
           if (!actor) continue;
-          const applied = await applyToActor(actor, payload, Math.min(payload.amount, Math.max(0, Number(data.amount) || 0)), data.type, data.aeonEntities?.[index] ?? "");
+          const gaugeBefore = Number(actor.system.combat?.breakGauge) || 0;
+          const targetTokenDocument = target.token?.document ?? target.token;
+          const applied = await applyToActor(actor, payload, Math.min(payload.amount, Math.max(0, Number(data.amount) || 0)), data.type, target.aeonEntity ?? targetTokenDocument?.getFlag?.(SYSTEM_ID, "aeonEntity") ?? "");
           totalApplied += applied;
-          results.push(`${foundry.utils.escapeHTML(actor.name)}: ${applied} ${payload.resource === "mp" ? "MP" : game.i18n.localize("LA.Damage")}`);
+          const gaugeAfter = Number(actor.system.combat?.breakGauge) || 0;
+          const gaugeNote = payload.resource === "mp" ? "" : ` · ${game.i18n.localize("LA.BreakGauge")}: ${gaugeBefore}→${gaugeAfter}/5`;
+          results.push(`${foundry.utils.escapeHTML(actor.name)}: ${applied} ${payload.resource === "mp" ? "MP" : game.i18n.localize("LA.Damage")}${gaugeNote}`);
         }
         await applyRiders(payload, totalApplied);
         await message.setFlag(SYSTEM_ID, "damageApplication", { ...payload, processing: false, applied: true });

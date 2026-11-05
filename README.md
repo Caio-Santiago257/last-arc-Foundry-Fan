@@ -80,6 +80,8 @@ Version 0.2.25 adds a localized damage-type selector to manual Apply Damage and 
 
 Version 0.2.26 adds an Aeons compendium with all eight Chapter 13 Aeons as scalable NPC actors. Choosing Summoner links an Aeon actor to the character and exposes controls to open its sheet, add acquired Aeon idols, and summon it to the active scene. Aeon stats and unlocked Magicks/Technicks follow Summoner class level; summons spend 5 MP per Summoner level, use daily limits and Astral Conduit, last 5 + Mind modifier rounds, and are removed when the duration ends. The Aeon sheet supports HP/MP editing, natural attacks, spell and Technick rolls, ultimate attacks, and chapter progression details. Special actions for Pleiades, Alioth, and Betelgeuse and supported elemental affinities/defences are automated.
 
+Version 0.2.27 moves weapon attacks into the Combat tab below Break Gauge, applies chat damage through the shared actor damage routine even for unlinked tokens handled by the GM, adds Foundry measured-template placement for all 25 area Magicks with tier-dependent radii, and includes Scorching/Gelid/Galvanic Strike bonus dice in a separate visible elemental damage roll for melee attacks.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork. The system code is provided without an added license until the repository owner chooses one.

@@ -1,5 +1,7 @@
 import { postDamageRoll } from "./damage-chat.mjs";
 
+const SYSTEM_ID = "last-arc-analogue";
+
 const STATUS_ICONS = {
   blinded: "icons/svg/blind.svg", silenced: "icons/svg/deaf.svg", petrified: "icons/svg/stone.svg",
   zombified: "icons/svg/skull.svg", diseased: "icons/svg/biohazard.svg", paralysed: "icons/svg/paralysis.svg",
@@ -82,6 +84,141 @@ function targetActors(item, actor) {
   return [];
 }
 
+export function spellAreaTemplateSpec(item) {
+  const target = String(item.system.target ?? "");
+  const special = String(item.system.specialRules ?? "");
+  const combined = `${target} ${special}`;
+  const cone = combined.match(/(\d+)[-\s]square\s+cone/i);
+  const allTargets = target.match(/\ball\s+(enemies|creatures|allies)\s+within\s+(\d+)\s+squares?/i);
+  const nearby = /nearby creatures|adjacent creatures|area effect|light radius|radius/i.test(combined);
+  if (!cone && !allTargets && !nearby) return null;
+
+  const minimumDC = number(item.system.automation?.minimumDC);
+  let radiusProgression = [];
+  const radiusClause = special.match(/(?:area\s+)?radius[^.]+/i)?.[0] ?? "";
+  const growing = radiusClause.match(/grows\s+from\s+(\d+)\s+to\s+(\d+(?:\/\d+)+)\s+squares?\s+at\s+DC\s+(\d+(?:\/\d+)+)/i);
+  if (growing) {
+    const distances = [Number(growing[1]), ...growing[2].split("/").map(Number)];
+    const dcs = [minimumDC, ...growing[3].split("/").map(Number)];
+    if (distances.length === dcs.length) radiusProgression = distances.map((distance, index) => ({ distance, dc: dcs[index] }));
+  }
+  if (!radiusProgression.length) {
+    const valuesSlash = radiusClause.match(/(\d+(?:\/\d+)+)\s+squares?/i)?.[1];
+    const dcsSlash = radiusClause.match(/(?:at|for)\s+DC\s+(\d+(?:\/\d+)+)/i)?.[1];
+    if (valuesSlash && dcsSlash) {
+      const values = valuesSlash.split("/").map(Number);
+      const dcs = dcsSlash.split("/").map(Number);
+      if (values.length === dcs.length) radiusProgression = values.map((distance, index) => ({ distance, dc: dcs[index] }));
+    }
+  }
+  if (!radiusProgression.length) {
+    const pairs = [...special.matchAll(/(\d+)\s*(?:square(?:s)?)?\s+(?:at|for)\s+DC\s*(\d+)/gi)];
+    if (pairs.length > 1 && /radius/i.test(special)) radiusProgression = pairs.map(match => ({ distance: Number(match[1]), dc: Number(match[2]) }));
+  }
+  let distance = cone ? Number(cone[1]) : allTargets ? Number(allTargets[2]) : radiusProgression.at(-1)?.distance ?? (/adjacent creatures/i.test(special) ? 1 : 1);
+  const side = allTargets?.[1]?.toLowerCase() === "enemies" ? "enemies" : allTargets?.[1]?.toLowerCase() === "allies" ? "allies" : "all";
+  const centreOnTarget = !allTargets && !cone && /one creature|one living creature/i.test(target);
+  return {
+    type: cone ? "cone" : "circle", distance, radiusProgression, side, centreOnTarget,
+    adjacentReflexHalf: /adjacent creatures take half(?: of)? (?:the )?primary damage.*(?:only )?if the check beats their Reflex Defence/i.test(special)
+  };
+}
+
+async function placeSpellAreaTemplate(item, actor, spec) {
+  const layer = canvas?.templates;
+  if (!canvas?.scene || !layer?._createPreview) {
+    ui.notifications.error(game.i18n.localize("LA.SpellTemplateUnavailable"));
+    return null;
+  }
+  const priorLayer = canvas.activeLayer;
+  const sheet = actor.sheet;
+  const wasMinimized = Boolean(sheet?._minimized);
+  const selectedOrigin = spec.centreOnTarget ? [...(game.user?.targets ?? [])][0] : null;
+  spec.primaryTargetId = selectedOrigin?.id ?? "";
+  const originToken = selectedOrigin ?? actor.getActiveTokens(false, false)[0] ?? null;
+  const center = originToken?.center ?? { x: canvas.scene.width / 2, y: canvas.scene.height / 2 };
+  const id = foundry.utils.randomID();
+  const createData = {
+    t: spec.type, user: game.user.id, x: center.x, y: center.y, direction: 0,
+    distance: spec.distance, angle: 53, fillColor: game.user.color,
+    flags: { [SYSTEM_ID]: { spellAreaCastId: id, spellName: item.name } }
+  };
+  ui.notifications.info(game.i18n.localize("LA.SpellAreaPlaceHint"));
+  if (!wasMinimized && sheet?.minimize) await sheet.minimize();
+  layer.activate();
+
+  let createdDocument;
+  let cancelPlacement;
+  let preview;
+  let timer;
+  const placed = new Promise(resolve => {
+    const onCreate = document => {
+      if (document.getFlag(SYSTEM_ID, "spellAreaCastId") !== id) return;
+      Hooks.off("createMeasuredTemplate", onCreate);
+      resolve(document);
+    };
+    Hooks.on("createMeasuredTemplate", onCreate);
+    cancelPlacement = () => {
+      Hooks.off("createMeasuredTemplate", onCreate);
+      resolve(null);
+    };
+    timer = setTimeout(cancelPlacement, 180000);
+  });
+  try {
+    preview = layer._createPreview(createData, { renderSheet: false });
+    if (preview && typeof layer._onDragLeftCancel === "function") {
+      const originalCancel = layer._onDragLeftCancel;
+      const wrappedCancel = function (...args) {
+        const result = originalCancel.apply(this, args);
+        cancelPlacement?.();
+        return result;
+      };
+      layer._onDragLeftCancel = wrappedCancel;
+      try { createdDocument = await placed; }
+      finally { if (layer._onDragLeftCancel === wrappedCancel) layer._onDragLeftCancel = originalCancel; }
+    } else createdDocument = await placed;
+  } catch (error) {
+    console.error("Last Arc | Could not place spell area template", error);
+    createdDocument = null;
+  } finally {
+    clearTimeout(timer);
+    if (priorLayer && canvas.activeLayer !== priorLayer) priorLayer.activate();
+    if (!wasMinimized && sheet?.maximize && sheet._minimized) await sheet.maximize();
+  }
+  if (!createdDocument) return null;
+
+  const placeable = layer.get(createdDocument.id) ?? createdDocument.object;
+  if (!placeable) {
+    await createdDocument.delete().catch(() => {});
+    ui.notifications.error(game.i18n.localize("LA.SpellTemplateFailed"));
+    return null;
+  }
+  if (Math.abs(number(createdDocument.distance) - spec.distance) > 0.01) await createdDocument.update({ distance: spec.distance });
+  const shape = placeable.shape;
+  const candidates = canvas.tokens.placeables.filter(token => token.actor).map(token => {
+    const point = token.center ?? token.getCenterPoint?.();
+    if (!point) return null;
+    const local = { x: point.x - placeable.x, y: point.y - placeable.y };
+    const contained = shape?.contains ? shape.contains(local.x, local.y) : false;
+    return contained ? { actor: token.actor, token, distance: canvas.grid.measureDistance({ x: placeable.x, y: placeable.y }, point) } : null;
+  }).filter(Boolean);
+  const casterToken = actor.getActiveTokens(false, false)[0] ?? null;
+  await createdDocument.delete().catch(error => console.warn("Last Arc | Could not remove temporary spell template", error));
+  return { candidates };
+}
+
+function spellAreaTargets(candidates, spec, actor, spellcraftTotal = null) {
+  const eligible = spec.radiusProgression.filter(entry => spellcraftTotal === null || spellcraftTotal >= entry.dc);
+  const distance = spec.radiusProgression.length ? (eligible.at(-1) ?? spec.radiusProgression[0]).distance : spec.distance;
+  const casterToken = actor.getActiveTokens(false, false)[0] ?? null;
+  return candidates.filter(entry => {
+    if (entry.distance > distance + 0.01) return false;
+    if (spec.side === "enemies") return entry.token !== casterToken && (!casterToken || entry.token.document.disposition !== casterToken.document.disposition);
+    if (spec.side === "allies") return !casterToken || entry.token.document.disposition === casterToken.document.disposition;
+    return true;
+  }).map(entry => ({ ...entry, areaSecondary: Boolean(spec.adjacentReflexHalf && spec.primaryTargetId && entry.token.id !== spec.primaryTargetId) }));
+}
+
 function effectsForTier(automation, total) {
   const tiers = [...(automation.tiers ?? [])].sort((a, b) => number(a.dc) - number(b.dc));
   const eligible = tiers.filter(tier => total >= number(tier.dc));
@@ -110,7 +247,7 @@ function durationData(effect) {
   return rounds > 0 ? { rounds } : {};
 }
 
-async function applyCondition(target, caster, spell, condition, rounds = 0, changes = [], { checkImmunity = true } = {}) {
+async function applyCondition(target, caster, spell, condition, rounds = 0, changes = [], { checkImmunity = true, spellChange = null } = {}) {
   if (!target?.createEmbeddedDocuments) return;
   const status = String(condition ?? "effect");
   const normalizedStatus = status.toLowerCase().replace(/[ _-]/g, "");
@@ -131,12 +268,12 @@ async function applyCondition(target, caster, spell, condition, rounds = 0, chan
     duration: durationData({ durationRounds: rounds }),
     changes,
     statuses: [status],
-    flags: { "last-arc-analogue": { spell: true, dispellable: /may be dispelled/i.test(spell.system.specialRules ?? ""), spellName: spell.name, condition: status } }
+    flags: { "last-arc-analogue": { spell: true, dispellable: /may be dispelled/i.test(spell.system.specialRules ?? ""), spellName: spell.name, condition: status, ...(spellChange ? { spellChange } : {}) } }
   }]);
   return true;
 }
 
-async function applySpellEffect(effect, target, caster, spell, checkTotal, results, damageBonus = 0, highArcana = "", targetToken = null, damageRider = null) {
+async function applySpellEffect(effect, target, caster, spell, checkTotal, results, damageBonus = 0, highArcana = "", targetToken = null, damageRider = null, { areaSecondary = false, damageRollCache = null } = {}) {
   const cancelsSpell = { Inertia: "Haste", Gravity: "Levitation" }[spell.name];
   if (effect.type === "condition" && cancelsSpell) {
     const active = target.effects.filter(entry => entry.getFlag("last-arc-analogue", "spellName") === cancelsSpell);
@@ -165,13 +302,20 @@ async function applySpellEffect(effect, target, caster, spell, checkTotal, resul
   if (effect.requiresDefences?.length && hasFailure) return;
 
   if (effect.type === "damage") {
+    const adjacentRider = areaSecondary && spell.system.specialRules?.match(/adjacent creatures take half(?: of)? (?:the )?primary damage.*(?:only )?if the check beats their Reflex Defence/i);
+    if (adjacentRider && !defenceResult(target, caster, "ref", spell, checkTotal).success) return;
     if (hasFailure && !effect.halfOnFailure) return;
     const baseFormula = spellDamageFormula(effect.formula, caster, highArcana === "intensifiedSpell", effect.damageType, spell.system.school);
     const formula = damageBonus ? `(${baseFormula}) + ${damageBonus}` : baseFormula;
-    const damageRoll = await (new Roll(formula, { ...caster.getRollData(), level: caster.system.details.level })).evaluate();
+    let damageRoll = damageRollCache?.get(effect);
+    if (!damageRoll) {
+      damageRoll = await (new Roll(formula, { ...caster.getRollData(), level: caster.system.details.level })).evaluate();
+      damageRollCache?.set(effect, damageRoll);
+    }
     const areaSpell = Boolean(spell.system.automation?.areaEffect) || /area|cone|all (?:enemies|creatures)|within \d+ squares?/i.test(String(spell.system.target ?? ""));
     const fomalhautAreaHit = target.system.aeon?.aeonId === "fomalhaut" && areaSpell;
-    const amount = Math.max(0, Math.floor(fomalhautAreaHit ? (hasFailure ? 0 : damageRoll.total / 2) : hasFailure && effect.halfOnFailure ? damageRoll.total / 2 : damageRoll.total));
+    const areaRiderMultiplier = adjacentRider ? 0.5 : 1;
+    const amount = Math.max(0, Math.floor((fomalhautAreaHit ? (hasFailure ? 0 : damageRoll.total / 2) : hasFailure && effect.halfOnFailure ? damageRoll.total / 2 : damageRoll.total) * areaRiderMultiplier));
     await postDamageRoll(damageRoll, {
       speaker: ChatMessage.getSpeaker({ actor: caster }),
       flavor: `${escapeHTML(spell.name)} — ${escapeHTML(target.name)} (${escapeHTML(formula)})`,
@@ -197,7 +341,16 @@ async function applySpellEffect(effect, target, caster, spell, checkTotal, resul
     results.push(`${target.name}: ${applied ? effect.status : `immune to ${effect.status}`}`);
   } else if (effect.type === "change") {
     const rounds = number(effect.durationRounds) * (highArcana === "lingeringSpell" ? 2 : 1);
-    await applyCondition(target, caster, spell, effect.label ?? "bonus", rounds, [{ key: effect.key, mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: effect.value }], { checkImmunity: false });
+    const isMeleeStrike = effect.key === "system.combat.meleeDamageBonus";
+    if (isMeleeStrike) {
+      const strikeNames = new Set(["Scorching Strike", "Gelid Strike", "Galvanic Strike"]);
+      const prior = target.effects.filter(active => strikeNames.has(active.getFlag("last-arc-analogue", "spellName")));
+      if (prior.length) await target.deleteEmbeddedDocuments("ActiveEffect", prior.map(active => active.id));
+    }
+    await applyCondition(target, caster, spell, effect.label ?? "bonus", rounds || (isMeleeStrike ? 1 : 0), [{ key: effect.key, mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: effect.value }], {
+      checkImmunity: false,
+      ...(isMeleeStrike ? { spellChange: { key: effect.key, value: number(effect.value), damageType: ({ "Scorching Strike": "fire", "Gelid Strike": "cold", "Galvanic Strike": "electric" })[spell.name], expiresAtNextTurnFor: caster.id } } : {})
+    });
     results.push(`${target.name}: ${effect.label ?? "bonus"} ${effect.value >= 0 ? "+" : ""}${effect.value}`);
   } else if (effect.type === "dispel") {
     const targetWill = number(target.system.defences?.will?.total, 10) - (target === caster ? 5 : 0);
@@ -253,7 +406,15 @@ async function showSpellCard(item, actor = null) {
     }).render(true));
     if (amplificationPenalty === null) return null;
   }
-  let targets = targetActors(item, actor);
+  const areaSpec = spellAreaTemplateSpec(item);
+  let areaCandidates = [];
+  let targets;
+  if (areaSpec) {
+    const placedArea = await placeSpellAreaTemplate(item, actor, areaSpec);
+    if (!placedArea) return null;
+    areaCandidates = placedArea.candidates;
+    targets = spellAreaTargets(areaCandidates, areaSpec, actor);
+  } else targets = targetActors(item, actor);
   const multiSpellLimit = 1 + Math.max(1, number(actor.system.attributes?.mnd?.modifier));
   if (selectedHighArcana === "multiSpell" && targets.length > multiSpellLimit) {
     targets = targets.slice(0, multiSpellLimit);
@@ -301,6 +462,7 @@ async function showSpellCard(item, actor = null) {
   const bonus = number(actor.system.skills?.spellcraft?.total);
   const roll = await (new Roll(`1d20 + (${bonus + defensivePenalty - amplificationPenalty})`, actor.getRollData())).evaluate();
   const checkTotal = roll.total;
+  if (areaSpec) targets = spellAreaTargets(areaCandidates, areaSpec, actor, checkTotal);
   const { tier, effects } = effectsForTier(system.automation, roll.total);
   const minimumDC = number(system.automation.minimumDC);
   const castSucceeded = roll.total >= minimumDC;
@@ -313,25 +475,24 @@ async function showSpellCard(item, actor = null) {
     && (entry.system.classFeatures ?? []).some(feature => feature.name === "Arcane Acumen"));
   const castHasDamage = effects.some(effect => effect.type === "damage");
   const castHasElementalDamage = effects.some(effect => effect.type === "damage" && ["fire", "cold", "electric", "dark", "holy"].includes(String(effect.damageType ?? "").toLowerCase()));
-  let damageRidersAssigned = false;
   const getDamageRider = effect => {
-    if (damageRidersAssigned || effect.type !== "damage") return null;
+    if (effect.type !== "damage") return null;
     const healPerDamage = castHasDamage ? classesWithSoulEater.reduce((sum, entry) => sum + Math.floor(number(entry.system.classLevel) / 2), 0) : 0;
     const mpPerDamage = castHasElementalDamage ? classesWithArcaneAcumen.reduce((sum, entry) => sum + Math.floor(number(entry.system.classLevel) / 2), 0) : 0;
     if (!healPerDamage && !mpPerDamage) return null;
-    damageRidersAssigned = true;
     return {
       ...(healPerDamage ? { healActorUuid: actor.uuid, healPerDamage } : {}),
       ...(mpPerDamage ? { restoreMPActorUuid: actor.uuid, mpPerDamage } : {})
     };
   };
+  const damageRollCache = new Map();
 
   await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${game.i18n.localize("LA.SpellcraftCheck")}: ${escapeHTML(item.name)} (${escapeHTML(system.school)})` });
   if (castSucceeded && effects.length) {
     if (targets.length) {
-      for (const { actor: target, token } of targets) {
+      for (const { actor: target, token, areaSecondary = false } of targets) {
         const addle = target.effects.find(active => active.getFlag("last-arc-analogue", "addleEffect")?.casterActorId === actor.id);
-        for (const effect of effects) await applySpellEffect(effect, target, actor, item, checkTotal + (addle ? 5 : 0), results, amplificationPenalty * 2, selectedHighArcana, token, getDamageRider);
+        for (const effect of effects) await applySpellEffect(effect, target, actor, item, checkTotal + (addle ? 5 : 0), results, amplificationPenalty * 2, selectedHighArcana, token, getDamageRider, { areaSecondary, damageRollCache });
         if (addle && target.effects.has(addle.id)) await target.deleteEmbeddedDocuments("ActiveEffect", [addle.id]);
       }
     } else {

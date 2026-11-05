@@ -320,6 +320,27 @@ function itemDamageType(item) {
   return options.length ? options.join(" or ") : "unaspected";
 }
 
+function activeMeleeStrike(actor) {
+  const types = { "Scorching Strike": "fire", "Gelid Strike": "cold", "Galvanic Strike": "electric" };
+  const diceCount = value => {
+    if (Number.isFinite(Number(value))) return Math.max(0, Math.floor(Number(value)));
+    const match = String(value ?? "").match(/(?:\+\s*)?(\d*)\s*d\s*6\b/i);
+    return match ? Math.max(1, Number(match[1]) || 1) : 0;
+  };
+  const effects = [...(actor?.effects ?? [])].filter(effect => !effect.disabled).reverse();
+  for (const effect of effects) {
+    const metadata = effect.getFlag("last-arc-analogue", "spellChange");
+    const legacyChange = effect.changes?.find(change => change.key === "system.combat.meleeDamageBonus");
+    const spellName = effect.getFlag("last-arc-analogue", "spellName") ?? Object.keys(types).find(name => effect.name?.startsWith(`${name}:`));
+    if (!spellName || !types[spellName]) continue;
+    const change = legacyChange?.value ?? effect.changes?.find(entry => entry.key === "system.combat.meleeDamageBonus")?.value;
+    if (metadata?.key && metadata.key !== "system.combat.meleeDamageBonus" && !legacyChange) continue;
+    const dice = diceCount(metadata?.value ?? change ?? effect.name?.match(/\+(\d+d6)/i)?.[1]);
+    if (dice) return { name: spellName, dice, type: metadata?.damageType ?? types[spellName] };
+  }
+  return null;
+}
+
 function formatTechnickPrerequisites(system = {}) {
   const requirements = system.prerequisites ?? {};
   const parts = [];
@@ -364,7 +385,11 @@ Hooks.once("init", () => {
   Hooks.on("updateCombat", (combat, changes) => {
     if (changes.turn === undefined && changes.round === undefined) return;
     const activeActor = combat.combatants.get(combat.combatantId)?.actor;
-    if (activeActor && safeNumber(activeActor.system.combat?.shieldBlocksThisTurn)) activeActor.update({ "system.combat.shieldBlocksThisTurn": 0 });
+    if (!activeActor) return;
+    if (safeNumber(activeActor.system.combat?.shieldBlocksThisTurn)) activeActor.update({ "system.combat.shieldBlocksThisTurn": 0 });
+    const expiredStrikes = activeActor.effects.filter(effect => effect.getFlag("last-arc-analogue", "spellChange")?.expiresAtNextTurnFor === activeActor.id);
+    const activeGM = game.users?.activeGM ?? game.users?.find(user => user.isGM && user.active);
+    if (expiredStrikes.length && (activeActor.isOwner || !activeGM || activeGM.id === game.user?.id)) activeActor.deleteEmbeddedDocuments("ActiveEffect", expiredStrikes.map(effect => effect.id));
   });
   Hooks.on("deleteActiveEffect", effect => clearAeonSummonTokens(effect).catch(error => console.error("Last Arc | Failed to clear an expired Aeon summon", error)));
   Actors.unregisterSheet("core", ActorSheet);
@@ -708,6 +733,8 @@ class LastArcItem extends Item {
     if (actor?.system.aeon?.isAeon && this.type === "feature" && this.system.automation?.kind === "aeonUltimate") return rollAeonUltimate(this, actor);
     if (actor?.system.aeon?.isAeon && this.type === "feature" && this.system.automation?.kind === "aeonAction") return rollAeonAction(this, actor);
     let formula = this.system.damage?.formula || this.system.roll?.formula;
+    let weaponMode = "melee";
+    let meleeStrike = null;
     const title = this.name;
     let damageTitle = title;
     if (this.type === "armor" && this.system.armorType === "shield" && actor) {
@@ -738,7 +765,7 @@ class LastArcItem extends Item {
       const specialNote = this.system.specialRules ? `<br><small>${foundry.utils.escapeHTML(this.system.specialRules)}</small>` : "";
       await attack.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${game.i18n.localize("LA.AttackRoll")}: ${foundry.utils.escapeHTML(title)} (${game.i18n.localize(SKILL_LABELS[skillKey] ?? skillKey)} ${signed(skillBonus)}; ${game.i18n.localize("LA.WeaponBonus")} ${signed(safeNumber(this.system.attack?.bonus))}${proficiencyPenalty ? `; ${game.i18n.localize("LA.UnproficientPenalty")}` : ""})${specialNote}` });
       const naturalTwenty = attack.dice.some(die => die.results?.some(result => result.result === 20));
-      const weaponMode = ["bows", "crossbows"].includes(weaponGroup) || /ranged|range|distance/i.test(String(this.system.range ?? "")) ? "ranged" : "melee";
+      weaponMode = ["bows", "crossbows"].includes(weaponGroup) || /ranged|range|distance/i.test(String(this.system.range ?? "")) ? "ranged" : "melee";
       if (formula) {
         const levelBonus = Math.floor(safeNumber(actor.system.details.level) / 2);
         const strengthMultiplier = weaponGroup === "staves" || weaponGroup === "crossbows" || weaponMode === "ranged" && weaponGroup !== "bows" ? 0 : this.system.weaponSkill === "two-handed" ? 2 : 1;
@@ -748,6 +775,7 @@ class LastArcItem extends Item {
       }
       const damageBonuses = (actor.system.combat.performanceDamageDice ?? []).filter(entry => entry.weaponMode === weaponMode);
       if (formula && damageBonuses.length) formula = `${formula} + ${damageBonuses.map(entry => `1d${safeNumber(entry.die)}`).join(" + ")}`;
+      if (weaponMode === "melee") meleeStrike = activeMeleeStrike(actor);
       if (formula && ["bows", "crossbows"].includes(weaponGroup) && naturalTwenty && safeNumber(actor.system.combat.rangedCriticalMultiplier) > 2) {
         const multiplier = safeNumber(actor.system.combat.rangedCriticalMultiplier);
         formula = `(${formula}) * ${multiplier}`;
@@ -755,6 +783,13 @@ class LastArcItem extends Item {
       }
     }
     if (formula) {
+      if (actor && this.type === "weapon" && weaponMode === "melee" && meleeStrike) {
+        const baseRoll = await (new Roll(formula, actor.getRollData())).evaluate();
+        const strikeRoll = await (new Roll(`${meleeStrike.dice}d6`, actor.getRollData())).evaluate();
+        await postDamageRoll(baseRoll, { speaker: ChatMessage.getSpeaker({ actor }), flavor: damageTitle, type: itemDamageType(this) });
+        await postDamageRoll(strikeRoll, { speaker: ChatMessage.getSpeaker({ actor }), flavor: `${foundry.utils.escapeHTML(meleeStrike.name)} — ${foundry.utils.escapeHTML(title)}`, type: meleeStrike.type });
+        return strikeRoll;
+      }
       const roll = await (new Roll(formula, actor?.getRollData?.() ?? {})).evaluate();
       await postDamageRoll(roll, { speaker: ChatMessage.getSpeaker({ actor }), flavor: damageTitle, type: itemDamageType(this) });
       return roll;
