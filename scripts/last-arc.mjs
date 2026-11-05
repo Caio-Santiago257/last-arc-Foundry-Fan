@@ -2409,7 +2409,11 @@ class LastArcCombatant extends Combatant {
 
 class LastArcItemSheet extends ItemSheet {
   static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, { classes: ["last-arc", "sheet", "item"], template: "systems/last-arc-analogue/templates/item-sheet.hbs", width: 540, height: 610 });
+    return foundry.utils.mergeObject(super.defaultOptions, {
+      classes: ["last-arc", "sheet", "item"], template: "systems/last-arc-analogue/templates/item-sheet.hbs",
+      width: 540, height: 610, resizable: true,
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
+    });
   }
   get template() { return "systems/last-arc-analogue/templates/item-sheet.hbs"; }
   getData(options) {
@@ -2440,6 +2444,16 @@ class LastArcItemSheet extends ItemSheet {
     context.isSpell = this.item.type === "spell";
     context.isPerformance = this.item.type === "performance";
     context.performanceTiers = (context.system.automation?.tiers ?? []).map(tier => ({ dc: tier.dc, summary: (tier.effects ?? []).map(describePerformanceEffect).join("; ") }));
+    context.descriptionTiers = (context.system.automation?.tiers ?? []).map(tier => ({
+      dc: tier.dc,
+      effects: (tier.effects ?? []).map(effect => {
+        if (effect.type === "damage") return `${effect.formula ?? ""} ${effect.damageType ?? "damage"}${effect.defence ? ` · ${effect.defence.toUpperCase()}` : ""}`.trim();
+        if (effect.type === "condition") return `${effect.status ?? "Condition"}${effect.defence ? ` · ${effect.defence.toUpperCase()}` : ""}`;
+        if (effect.type === "heal") return `${effect.formula ?? ""} healing`;
+        if (effect.type === "buff" || effect.type === "debuff") return describePerformanceEffect(effect);
+        return effect.type ?? "Special effect";
+      }).join("; ")
+    }));
     context.isNonRollable = ["race", "class", "advanced-class", "feature", "talent", "technick"].includes(this.item.type);
     return context;
   }

@@ -80,7 +80,27 @@
       <section class="la-panel"><h2>{{localize "LA.ClassChoices"}}</h2><label>{{localize "LA.ClassSkillList"}}<textarea name="system.classSkillsText">{{system.classSkillsText}}</textarea></label><label>{{localize "LA.SpecializationOptionsJSON"}}<textarea name="system.choiceGroupsText" placeholder='[{"key":"specialization","label":"Choose a path","options":[{"name":"Option A"}]}]'>{{system.choiceGroupsText}}</textarea></label></section>
       {{/if}}
     </div>
-    <div class="tab" data-group="primary" data-tab="description"><section class="la-panel"><h2>{{localize "LA.Description"}}</h2><textarea class="la-item-description" name="system.description">{{system.description}}</textarea>{{#if system.specialRules}}<h3>Special rules</h3><div class="la-item-special-text">{{system.specialRules}}</div>{{/if}}</section></div>
+    <div class="tab" data-group="primary" data-tab="description">
+      <section class="la-panel la-item-reading">
+        <div class="la-item-reading-heading"><span class="la-item-reading-icon"><img src="{{itemIcon}}" alt=""></span><div><small>{{localize itemTypeLabel}}</small><h2>{{item.name}}</h2></div></div>
+        {{#if system.description}}<div class="la-item-description-text">{{system.description}}</div>{{else}}<p class="la-empty">{{localize "LA.NoDescription"}}</p>{{/if}}
+        <div class="la-item-facts">
+          {{#if system.school}}<div><small>{{localize "LA.SpellSchool"}}</small><strong>{{system.school}}</strong></div>{{/if}}
+          {{#if system.action}}<div><small>{{localize "LA.Action"}}</small><strong>{{system.action}}</strong></div>{{/if}}
+          {{#if system.target}}<div><small>{{localize "LA.Target"}}</small><strong>{{system.target}}</strong></div>{{/if}}
+          {{#if system.range}}<div><small>{{localize "LA.Range"}}</small><strong>{{system.range}}</strong></div>{{/if}}
+          {{#if system.mpCost}}<div><small>{{localize "LA.ManaCost"}}</small><strong>{{system.mpCost}} MP</strong></div>{{/if}}
+          {{#if system.duration}}<div><small>{{localize "LA.Duration"}}</small><strong>{{system.duration}}</strong></div>{{/if}}
+          {{#if system.prerequisites}}<div><small>{{localize "LA.Requirements"}}</small><strong>{{system.prerequisites}}</strong></div>{{/if}}
+        </div>
+        {{#if system.specialRules}}<section class="la-item-rule-block"><h3>{{localize "LA.SpecialRules"}}</h3><p>{{system.specialRules}}</p></section>{{/if}}
+        {{#if descriptionTiers.length}}<section class="la-item-rule-block"><h3>{{localize "LA.EffectsByCheck"}}</h3><ol class="la-item-tier-list">{{#each descriptionTiers as |tier|}}<li><strong>DC {{tier.dc}}</strong>{{#if tier.effects}}<span>{{tier.effects}}</span>{{/if}}</li>{{/each}}</ol></section>{{/if}}
+        {{#if isTalent}}<section class="la-item-rule-block"><h3>{{localize "LA.Requirements"}}</h3><p>{{#if system.prerequisites}}{{system.prerequisites}}{{else}}{{localize "LA.NoPrerequisites"}}{{/if}}</p>{{#if system.automation.reason}}<p class="la-hint">{{system.automation.reason}}</p>{{/if}}</section>{{/if}}
+        {{#if isTechnick}}<section class="la-item-rule-block"><h3>{{localize "LA.Requirements"}}</h3><p>{{#if technickPrerequisiteText}}{{technickPrerequisiteText}}{{else}}{{localize "LA.NoPrerequisites"}}{{/if}}</p></section>{{/if}}
+        {{#if isPerformance}}<section class="la-item-rule-block"><h3>{{localize "LA.Targets"}}</h3><p>{{#if (eq system.targetSide "ally")}}{{localize "LA.Allies"}}{{else}}{{localize "LA.Enemies"}}{{/if}} · {{localize "LA.Perform"}}</p></section>{{/if}}
+        <details class="la-item-edit-description"><summary>{{localize "LA.EditDescription"}}</summary><textarea class="la-item-description" name="system.description">{{system.description}}</textarea></details>
+      </section>
+    </div>
     {{#unless isNonRollable}}<footer class="la-item-footer"><button type="button" class="item-roll la-primary-button">{{localize "LA.Roll"}}</button></footer>{{/unless}}
   </section>
 </form>

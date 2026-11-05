@@ -137,6 +137,27 @@
 .la-item-header img { width: 54px; height: 54px; object-fit: cover; border: 1px solid var(--la-gold); cursor: pointer; }.la-item-header>div { flex: 1; }.la-item-header small { color: var(--la-muted); font: 700 9px Arial,sans-serif; text-transform: uppercase; }
 .la-item-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }.la-item-fields label { display: grid; gap: 4px; color: var(--la-muted); font: 700 9px Arial,sans-serif; text-transform: uppercase; }.la-item-fields input { height: 28px; }
 .la-item-description { width: 100%; min-height: 360px; font: 14px/1.5 Georgia,serif; }.la-item-footer { padding: 0 16px 16px; }
+.la-item-sheet .la-body { min-height: 0; }
+.la-item-reading { padding: 16px 18px; }
+.la-item-reading-heading { display: flex; align-items: center; gap: 12px; margin: -2px 0 14px; padding-bottom: 12px; border-bottom: 1px solid var(--la-line); }
+.la-item-reading-icon { display: grid; flex: 0 0 48px; width: 48px; height: 48px; place-items: center; border: 1px solid var(--la-gold); background: #f1e6d2; }
+.la-item-reading-icon img { width: 38px; height: 38px; object-fit: contain; border: 0; }
+.la-item-reading-heading small { color: var(--la-muted); font: 700 9px Arial,sans-serif; letter-spacing: .08em; text-transform: uppercase; }
+.la-item-reading-heading h2 { margin: 3px 0 0; padding: 0; border: 0; color: #30251f; font: 700 22px/1.15 Georgia,serif; letter-spacing: 0; text-transform: none; }
+.la-item-description-text { color: #40362e; font: 14px/1.6 Georgia,serif; white-space: pre-wrap; }
+.la-item-facts { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; margin: 14px 0; }
+.la-item-facts>div { display: grid; gap: 4px; min-width: 0; padding: 8px 10px; border-left: 2px solid var(--la-gold); background: rgba(232,220,197,.42); }
+.la-item-facts small { color: var(--la-muted); font: 700 9px Arial,sans-serif; letter-spacing: .06em; text-transform: uppercase; }
+.la-item-facts strong { color: #40362e; font: 12px/1.4 Arial,sans-serif; overflow-wrap: anywhere; }
+.la-item-rule-block { margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--la-line); }
+.la-item-rule-block h3 { margin: 0 0 7px; color: var(--la-accent); font: 700 10px Arial,sans-serif; letter-spacing: .07em; text-transform: uppercase; }
+.la-item-rule-block p { margin: 5px 0; color: #40362e; font: 13px/1.5 Georgia,serif; white-space: pre-wrap; }
+.la-item-tier-list { display: grid; gap: 5px; margin: 0; padding: 0; list-style: none; }
+.la-item-tier-list li { display: grid; grid-template-columns: 52px minmax(0,1fr); gap: 8px; padding: 7px 9px; border: 1px solid var(--la-line); background: rgba(255,252,244,.7); font: 12px/1.4 Arial,sans-serif; }
+.la-item-tier-list li>strong { color: var(--la-accent); }
+.la-item-edit-description { margin-top: 16px; border-top: 1px solid var(--la-line); padding-top: 9px; }
+.la-item-edit-description summary { cursor: pointer; color: var(--la-muted); font: 700 10px Arial,sans-serif; letter-spacing: .06em; text-transform: uppercase; }
+.la-item-edit-description .la-item-description { margin-top: 8px; min-height: 150px; }
 .la-race-description { margin: 4px 0 14px; line-height: 1.55; white-space: pre-wrap; }
 .la-race-traits ul { margin: 6px 0 0; padding-left: 22px; }.la-race-traits li { margin: 5px 0; line-height: 1.45; }
 .la-skill-choice-form fieldset { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 5px 12px; max-height: 320px; overflow-y: auto; border: 1px solid #bda783; padding: 10px; }

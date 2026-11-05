@@ -32,6 +32,8 @@ The item descriptions are concise rules summaries. Use a rulebook copy the GM is
 
 ## Development
 
+Version 0.2.44 fixes the item-sheet tab controller so Details and Description are interactive in Foundry VTT 13. Item descriptions now have a readable presentation with action, target, cost, prerequisites, special rules, and existing check-tier effects; editing the description remains available in a collapsed field.
+
 The system package ID is `last-arc-analogue`. Edit `packs-source/*.json` and run `node scripts/build-packs.mjs` to rebuild the Foundry compendium source files. They use the legacy NeDB import format that Foundry migrates on first launch.
 
 Version 0.2.3 removes duplicate defences from the Attributes tab, displays the active class defence bonus as a derived read-only value in Combat, and shows each skill's governing attribute modifier while removing the unused Class column.
