@@ -125,6 +125,92 @@ export function spellAreaTemplateSpec(item) {
 }
 
 async function placeSpellAreaTemplate(item, actor, spec) {
+  // Foundry 14 replaced MeasuredTemplate placement with Scene Regions. Use the
+  // public Region placement workflow there so the preview remains interactive
+  // (mouse-wheel rotation + left-click confirmation) instead of relying on the
+  // removed Templates layer internals.
+  if (canvas?.regions?.placeRegion) {
+    if (!canvas?.scene) {
+      ui.notifications.error(game.i18n.localize("LA.SpellTemplateUnavailable"));
+      return null;
+    }
+
+    const casterToken = actor.getActiveTokens(false, false)[0] ?? null;
+    const selectedOrigin = spec.centreOnTarget ? [...(game.user?.targets ?? [])][0] : null;
+    const anchorToken = selectedOrigin ?? null;
+    if (spec.type === "cone" && !casterToken) {
+      ui.notifications.warn(game.i18n.localize("LA.SpellAreaCasterTokenRequired"));
+      return null;
+    }
+
+    spec.primaryTargetId = selectedOrigin?.id ?? "";
+    const sheet = actor.sheet;
+    const wasMinimized = Boolean(sheet?._minimized);
+    const priorLayer = canvas.activeLayer;
+    if (!wasMinimized && sheet?.minimize) await sheet.minimize();
+
+    const shape = spec.type === "cone"
+      ? { type: "cone", x: 0, y: 0, radius: spec.distance * canvas.dimensions.distancePixels, angle: 53, rotation: 0, gridBased: true }
+      : { type: "circle", x: 0, y: 0, radius: spec.distance * canvas.dimensions.distancePixels, gridBased: true };
+    const placementData = {
+      name: `${item.name} — area preview`,
+      shapes: [shape],
+      color: game.user.color,
+      restriction: { enabled: false },
+      levels: canvas.level?.id ? [canvas.level.id] : [],
+      displayMeasurements: true,
+      highlightMode: "coverage",
+      visibility: CONST.REGION_VISIBILITY.ALWAYS,
+      ownership: { [game.user.id]: CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER }
+    };
+
+    const placeHint = spec.type === "cone" ? "LA.SpellAreaConePlaceHint"
+      : anchorToken ? "LA.SpellAreaTargetPlaceHint" : "LA.SpellAreaRegionPlaceHint";
+    ui.notifications.info(game.i18n.localize(placeHint));
+    let region = null;
+    try {
+      region = await canvas.regions.placeRegion(placementData, {
+        create: false,
+        allowRotation: true,
+      attachToToken: spec.type === "cone" || Boolean(anchorToken),
+        preConfirm: ({ document }) => {
+          // Cones originate from the caster. Requiring attachment here avoids
+          // silently resolving an area that was placed from a different token.
+          if (spec.type !== "cone" && !anchorToken) return true;
+          const attached = document.attachment?.token;
+          const attachedId = typeof attached === "string" ? attached.split(".").at(-1)
+            : attached?.id ?? attached?._id ?? attached?.document?.id;
+          const requiredToken = spec.type === "cone" ? casterToken : anchorToken;
+          if (attachedId === requiredToken.id || attached?.uuid === requiredToken.uuid) return true;
+          ui.notifications.warn(game.i18n.localize(spec.type === "cone" ? "LA.SpellAreaConeMustAttachToCaster" : "LA.SpellAreaTargetMustAttach"));
+          return false;
+        }
+      });
+    } catch (error) {
+      console.error("Last Arc | Could not place spell area region", error);
+      ui.notifications.error(game.i18n.localize("LA.SpellTemplateFailed"));
+    } finally {
+      if (priorLayer && canvas.activeLayer !== priorLayer) priorLayer.activate();
+      if (!wasMinimized && sheet?.maximize && sheet._minimized) await sheet.maximize();
+    }
+    if (!region) return null;
+
+    const shapeData = region.shapes?.[0];
+    const origin = spec.type === "cone"
+      ? casterToken?.center
+      : shapeData?.origin ?? shapeData?.center ?? anchorToken?.center;
+    const candidates = canvas.tokens.placeables.filter(token => token.actor).map(token => {
+      const point = token.center ?? token.getCenterPoint?.();
+      if (!point || !region.testPoint({ ...point, elevation: number(token.document.elevation) })) return null;
+      return {
+        actor: token.actor,
+        token,
+        distance: origin ? canvas.grid.measureDistance(origin, point) : 0
+      };
+    }).filter(Boolean);
+    return { candidates };
+  }
+
   const layer = canvas?.templates;
   if (!canvas?.scene || !layer?._createPreview) {
     ui.notifications.error(game.i18n.localize("LA.SpellTemplateUnavailable"));

@@ -84,6 +84,8 @@ Version 0.2.27 moves weapon attacks into the Combat tab below Break Gauge, appli
 
 Version 0.2.28 initializes nested HP, MP, Hero Point, racial effect, and inventory data for newly created Actors before preparing derived values, preventing fresh character sheets from failing to render when those fields have not yet been saved.
 
+Version 0.2.29 uses Foundry VTT 14's native Scene Region placement for area Magicks. Cones attach to the caster's token, rotate with the mouse wheel, and confirm with left-click; the temporary preview is not saved to the scene. Confirmed Region geometry determines affected tokens before Spellcraft tiers and damage are resolved. Foundry 12/13 continue to use the legacy measured-template path.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork. The system code is provided without an added license until the repository owner chooses one.
