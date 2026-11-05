@@ -96,6 +96,8 @@ Version 0.2.33 refreshes only the player sheet with a larger portrait, cleaner h
 
 Version 0.2.34 fixes legacy player sheets whose saved HP maximum was masked by an initialized zero `baseMax`. Missing maximum values are rebuilt from class progression and resource Technicks. The player overview now displays HP and MP as proportionally filled resource bars.
 
+Version 0.2.35 replaces item roll dice glyphs with the item's image while preserving the existing roll action. A semantic icon resolver assigns Foundry Core Data artwork to generic item images and new compendium entries, including Magicks, Technicks, talents, features, classes, weapons, armour, and equipment. Existing custom item art is preserved, and older player and NPC sheets receive resolved icons when rendered.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork. The system code is provided without an added license until the repository owner chooses one.

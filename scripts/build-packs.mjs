@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { resolveItemIcon } from "./item-icons.mjs";
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const sourceDir = join(root, "packs-source");
@@ -125,7 +126,7 @@ function makeAdversaryActor(packName, entry, equipageCatalog, technickCatalog, t
   const id = key => createHash("sha256").update(`${packName}:${entry.name}:${key}`).digest("hex").slice(0, 16);
   const actorImage = "icons/svg/mystery-man.svg";
   const actorItem = (key, source) => ({
-    _id: id(key), name: source.name, type: source.type, img: source.img ?? "icons/svg/item-bag.svg",
+    _id: id(key), name: source.name, type: source.type, img: resolveItemIcon(source, packName),
     system: source.system ?? {}, effects: source.effects ?? [], folder: null, sort: 0,
     ownership: { default: 0 }, flags: source.flags ?? {}
   });
@@ -237,7 +238,7 @@ function makePackRow(packName, entry) {
     _id: id,
     name: source.name,
     type: source.type ?? inferType(packName),
-    img: source.img ?? "icons/svg/item-bag.svg",
+    img: resolveItemIcon({ ...source, type: source.type ?? inferType(packName) }, packName),
     system: source.system ?? { description: "" },
     effects: source.effects ?? [],
     folder: null,

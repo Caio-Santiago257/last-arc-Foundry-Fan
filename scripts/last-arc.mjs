@@ -1,6 +1,7 @@
 import { rollSpell } from "./spells.mjs";
 import { rollPerformance } from "./performances.mjs";
 import { DAMAGE_TYPES, postDamageRoll, registerDamageChatControls } from "./damage-chat.mjs";
+import { resolveItemIcon } from "./item-icons.mjs";
 
 const ATTRIBUTES = ["str", "vit", "agi", "int", "mnd", "cha"];
 const LEVEL_XP = [0, 0, 1000, 3000, 6000, 10000, 15000, 21000, 28000, 36000, 45000, 55000, 66000, 78000, 91000, 105000, 120000, 136000, 153000, 171000, 190000];
@@ -984,7 +985,13 @@ class LastArcActorSheet extends ActorSheet {
     context.attributeList = ATTRIBUTES.map(key => ({ key, label: ATTRIBUTE_LABELS[key], ...this.actor.system.attributes[key] }));
     context.skills = Object.entries(SKILLS).map(([key, attribute]) => ({ key, label: SKILL_LABELS[key], icon: SKILL_ICONS[key], attribute, attributeLabel: ATTRIBUTE_LABELS[attribute], ...this.actor.system.skills[key] }));
     context.defenceList = ["fort", "ref", "will"].map(key => ({ key, label: `LA.${key === "fort" ? "Fortitude" : key === "ref" ? "Reflex" : "Will"}`, ...this.actor.system.defences[key] }));
-    context.itemGroups = ITEM_TYPES.map(type => ({ type, label: game.i18n.localize(`LA.ItemType.${type}`), items: this.actor.items.filter(item => item.type === type) }));
+    context.itemGroups = ITEM_TYPES.map(type => ({
+      type,
+      label: game.i18n.localize(`LA.ItemType.${type}`),
+      items: this.actor.items.filter(item => item.type === type).map(item => ({
+        ...item.toObject(), id: item.id, displayImg: resolveItemIcon(item.toObject())
+      }))
+    }));
     const resourcePercent = resource => {
       const max = safeNumber(resource?.max);
       return max > 0 ? Math.max(0, Math.min(100, safeNumber(resource.value) / max * 100)) : 0;
@@ -1976,7 +1983,7 @@ class LastArcActorSheet extends ActorSheet {
       rows.push({
         name: `${classItem.name}: ${feature.name}`,
         type: "feature",
-        img: classItem.img || "icons/svg/item-bag.svg",
+        img: resolveItemIcon({ name: feature.name, type: "feature", system: { sourceClass: classItem.name, className: classItem.name, description } }),
         system: { category: "Class Feature", sourceClass: classItem.name, classLevel: feature.level, description, automation: feature.automation ?? {} },
         flags: { "last-arc-analogue": { classItemId: classItem.id, featureKey: key, advancedClassFeature: true } }
       });
