@@ -161,6 +161,8 @@
     "Attack": "Ataque",
     "Damage": "Dano",
     "ApplyDamage": "Aplicar dano",
+    "Targets": "Alvos",
+    "NoTargetsSelected": "Nenhum alvo marcado",
     "Success": "Sucesso",
     "Failure": "Falha",
     "Unaspected": "não tipado",

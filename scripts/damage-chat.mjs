@@ -23,13 +23,23 @@ export async function postDamageRoll(roll, {
   targetAmounts = [],
   onApply = null
 } = {}) {
+  const sourceToken = speaker?.token ? canvas?.tokens?.get(speaker.token) : null;
+  const sourceActor = (speaker?.actor ? game.actors?.get(speaker.actor) : null) ?? sourceToken?.actor ?? null;
+  const source = {
+    name: sourceActor?.name ?? speaker?.alias ?? game.user?.name ?? "",
+    img: sourceActor?.img ?? game.user?.avatar ?? "icons/svg/mystery-man.svg"
+  };
   const targets = [...new Map(targetTokens.filter(Boolean).map(token => {
     const document = token.document ?? token;
+    const actor = token.actor ?? document.actor ?? null;
     return [document.uuid ?? token.uuid ?? document.id, {
       tokenUuid: document.uuid ?? token.uuid ?? "",
-      actorUuid: token.actor?.uuid ?? document.actor?.uuid ?? "",
+      actorUuid: actor?.uuid ?? "",
       tokenId: document.id ?? token.id ?? "",
-      actorId: token.actor?.id ?? document.actor?.id ?? "",
+      actorId: actor?.id ?? "",
+      actorName: actor?.name ?? document.name ?? "",
+      actorImg: actor?.img ?? "icons/svg/mystery-man.svg",
+      tokenName: document.name ?? "",
       sceneId: document.parent?.id ?? canvas?.scene?.id ?? "",
       aeonEntity: document.getFlag?.(SYSTEM_ID, "aeonEntity") ?? ""
     }];
@@ -44,6 +54,7 @@ export async function postDamageRoll(roll, {
           type: String(type || "unaspected").toLowerCase(),
           bypassDR: Boolean(bypassDR),
           resource: resource === "mp" ? "mp" : "hp",
+          source,
           targets,
           targetAmounts: targetAmounts.map(entry => ({
             tokenUuid: String(entry.tokenUuid ?? ""),
@@ -195,10 +206,35 @@ export function registerDamageChatControls() {
     if (!payload || payload.applied || payload.processing) return;
     const root = html instanceof HTMLElement ? $(html) : html;
     const content = root.find(".message-content");
-    if (!content.length || content.find(".la-chat-apply-damage").length) return;
-    const button = $(`<button type="button" class="la-chat-apply-damage"><i class="fas fa-heartbeat" aria-hidden="true"></i> ${game.i18n.localize("LA.ApplyDamage")} (${payload.amount}${payload.resource === "mp" ? " MP" : " HP"})</button>`);
+    if (!content.length || content.find(".la-damage-chat-controls").length) return;
+    const source = payload.source ?? { name: message.speaker?.alias ?? "", img: message.speaker?.avatar ?? "icons/svg/mystery-man.svg" };
+    const author = $(`<div class="la-chat-roll-author"><img alt=""><strong></strong></div>`);
+    author.find("img").attr("src", source.img || "icons/svg/mystery-man.svg").attr("alt", source.name || "");
+    author.find("strong").text(source.name || "");
+    content.prepend(author);
+
+    const controls = $(`<section class="la-damage-chat-controls"><div class="la-chat-target-heading"></div><div class="la-chat-target-list"></div><button type="button" class="la-chat-apply-damage"><i class="fas fa-heartbeat" aria-hidden="true"></i><span></span></button></section>`);
+    const targetList = controls.find(".la-chat-target-list");
+    const targets = payload.targets ?? [];
+    if (targets.length) {
+      controls.find(".la-chat-target-heading").text(`${game.i18n.localize("LA.Targets") || "Targets"} · ${targets.length}`);
+      for (const target of targets) {
+        const chip = $(`<div class="la-chat-target-chip"><img alt=""><span></span></div>`);
+        const name = target.tokenName && target.tokenName !== target.actorName
+          ? `${target.tokenName} (${target.actorName})` : (target.actorName || target.tokenName || "");
+        chip.find("img").attr("src", target.actorImg || "icons/svg/mystery-man.svg").attr("alt", name);
+        chip.find("span").text(name);
+        targetList.append(chip);
+      }
+    } else {
+      controls.addClass("no-targets");
+      controls.find(".la-chat-target-heading").text(game.i18n.localize("LA.NoTargetsSelected") || "No marked targets");
+    }
+    const button = controls.find(".la-chat-apply-damage");
+    button.attr("title", `${game.i18n.localize("LA.ApplyDamage")} (${payload.amount}${payload.resource === "mp" ? " MP" : " HP"})`);
+    button.find("span").text(`${game.i18n.localize("LA.ApplyDamage")} · ${payload.amount}${payload.resource === "mp" ? " MP" : " HP"}`);
     button.on("click", event => { event.preventDefault(); onChatApply(message, button).catch(async error => { console.error("Last Arc | Chat damage application failed", error); ui.notifications.error(game.i18n.localize("LA.ChatDamageApplyFailed")); const pending = message.getFlag(SYSTEM_ID, "damageApplication"); if (pending?.processing) await message.setFlag(SYSTEM_ID, "damageApplication", { ...pending, processing: false }); button.prop("disabled", false); }); });
-    content.append(button);
+    content.append(controls);
   });
 
   Hooks.once("ready", () => {

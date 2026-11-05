@@ -440,6 +440,7 @@ function describePerformanceEffect(effect = {}) {
 Hooks.once("init", () => {
   registerDamageChatControls();
   Hooks.on("renderChatMessage", (_message, html) => applyImageFallbacks(html));
+  Hooks.on("renderChatMessage", (message, html) => applyRollAuthor(message, html));
   CONFIG.Actor.documentClass = LastArcActor;
   CONFIG.Item.documentClass = LastArcItem;
   CONFIG.Combatant.documentClass = LastArcCombatant;
@@ -2316,6 +2317,23 @@ function applyImageFallbacks(html) {
       image.src = "icons/svg/aura.svg";
     }, { once: true });
   });
+}
+
+function applyRollAuthor(message, html) {
+  if (!message.isRoll && !message.rolls?.length) return;
+  const root = html instanceof HTMLElement ? $(html) : html;
+  const content = root.find(".message-content");
+  if (!content.length || content.find(".la-chat-roll-author").length) return;
+  const speaker = message.speaker ?? {};
+  const token = speaker.token ? (canvas?.tokens?.get(speaker.token) ?? null) : null;
+  const actor = (speaker.actor ? game.actors?.get(speaker.actor) : null) ?? token?.actor ?? null;
+  const name = actor?.name ?? speaker.alias ?? message.user?.name ?? "";
+  const image = actor?.img ?? message.user?.avatar ?? "icons/svg/mystery-man.svg";
+  const author = $(`<div class="la-chat-roll-author"><img alt=""><strong></strong></div>`);
+  author.find("img").attr("src", image).attr("alt", name);
+  author.find("strong").text(name);
+  content.prepend(author);
+  applyImageFallbacks(root);
 }
 
 class LastArcNPCSheet extends LastArcActorSheet {}
