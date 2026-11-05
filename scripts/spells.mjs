@@ -1,5 +1,6 @@
 import { postDamageRoll } from "./damage-chat.mjs";
 import { resolveItemIcon } from "./item-icons.mjs";
+import { canonicalRuleStatus, createRuleStatus, statusRollFormula } from "./status-effects.mjs";
 
 const SYSTEM_ID = "last-arc-analogue";
 
@@ -466,17 +467,29 @@ function durationData(effect) {
   return rounds > 0 ? { rounds } : {};
 }
 
-async function applyCondition(target, caster, spell, condition, rounds = 0, changes = [], { checkImmunity = true, spellChange = null } = {}) {
+async function applyCondition(target, caster, spell, condition, rounds = 0, changes = [], { checkImmunity = true, spellChange = null, statusData = {} } = {}) {
   if (!target?.createEmbeddedDocuments) return;
   const status = String(condition ?? "effect");
-  const normalizedStatus = status.toLowerCase().replace(/[ _-]/g, "");
+  const ruleStatus = canonicalRuleStatus(status);
+  const normalizedStatus = ruleStatus;
   const immunities = [target.system.combat?.immunities, target.system.combat?.equipmentImmunities]
     .flatMap(value => Array.isArray(value) ? value : String(value ?? "").split(/[,;\n]+/))
-    .map(value => String(value).trim().toLowerCase().replace(/[ _-]/g, "")).filter(Boolean);
+    .map(value => canonicalRuleStatus(String(value).trim())).filter(Boolean);
   const statusImmune = checkImmunity && target.system.combat?.equipmentAllStatusImmunities && !["curse", "curses"].includes(normalizedStatus);
   const mindEffectImmune = checkImmunity && target.system.combat?.equipmentMindEffectImmunity
-    && ["charm", "charmed", "confusion", "confused", "fear", "muddle", "sleep"].includes(normalizedStatus);
+    && ["charm", "charmed", "confused", "fear", "muddle", "sleeping"].includes(normalizedStatus);
   if (statusImmune || mindEffectImmune || (checkImmunity && (immunities.includes("all") || immunities.includes(normalizedStatus) || (normalizedStatus === "cursed" && immunities.includes("curse"))))) return false;
+  if (["blinded", "confused", "agony", "exhaustion", "misfortune", "withering", "dim", "doom", "diseased", "drenched", "oiled", "paralysed", "petrified", "poisoned", "silenced", "sleeping", "slowed", "toad", "zombified"].includes(ruleStatus)) {
+    await createRuleStatus(target, ruleStatus, {
+      origin: caster.uuid,
+      sourceName: spell.name,
+      changes,
+      data: statusData,
+      duration: durationData({ durationRounds: rounds }),
+      flags: { spell: true, dispellable: /may be dispelled/i.test(spell.system.specialRules ?? ""), spellName: spell.name, ...(spellChange ? { spellChange } : {}) }
+    });
+    return true;
+  }
   const existing = target.effects.find(effect => effect.getFlag("last-arc-analogue", "spellName") === spell.name && effect.getFlag("last-arc-analogue", "condition") === status);
   if (existing) await existing.delete();
   await target.createEmbeddedDocuments("ActiveEffect", [{
@@ -564,6 +577,7 @@ async function applySpellEffect(effect, target, caster, spell, checkTotal, resul
         type: effect.damageType ?? "unaspected",
         bypassDR: Boolean(effect.bypassDR),
         targetTokens: [targetToken].filter(Boolean),
+        targetAmounts: [{ tokenUuid: targetToken?.document?.uuid ?? "", actorUuid: target.uuid, amount }],
         onApply: damageRider?.(effect) ?? null
       });
     }
@@ -579,7 +593,7 @@ async function applySpellEffect(effect, target, caster, spell, checkTotal, resul
   } else if (effect.type === "condition") {
     if (defenceSpecifications.length && hasFailure) return;
     const rounds = number(effect.durationRounds) * (highArcana === "lingeringSpell" ? 2 : 1);
-    const applied = await applyCondition(target, caster, spell, effect.status, rounds, effect.changes ?? []);
+    const applied = await applyCondition(target, caster, spell, effect.status, rounds, effect.changes ?? [], { statusData: effect.statusData ?? (effect.poisonAttackBonus !== undefined ? { poisonAttackBonus: effect.poisonAttackBonus } : {}) });
     results.push(`${target.name}: ${applied ? effect.status : `immune to ${effect.status}`}`);
   } else if (effect.type === "change") {
     const rounds = number(effect.durationRounds) * (highArcana === "lingeringSpell" ? 2 : 1);
@@ -699,7 +713,7 @@ async function showSpellCard(item, actor = null) {
     await actor.update({ "system.aeon.dragonphaseResistance": nextResistance });
   }
   const bonus = number(actor.system.skills?.spellcraft?.total);
-  const roll = await (new Roll(`1d20 + (${bonus + defensivePenalty - amplificationPenalty})`, actor.getRollData())).evaluate();
+  const roll = await (new Roll(statusRollFormula(actor, `1d20 + (${bonus + defensivePenalty - amplificationPenalty})`), actor.getRollData())).evaluate();
   const checkTotal = roll.total;
   if (areaSpec) targets = spellAreaTargets(areaCandidates, areaSpec, actor, checkTotal);
   const { tier, effects } = effectsForTier(system.automation, roll.total);

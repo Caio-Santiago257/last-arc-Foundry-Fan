@@ -343,6 +343,11 @@
 .la-character .la-resource-values input { width:54px; height:26px; min-width:0; padding:1px 3px; border:0; border-radius:2px; background:rgba(255,255,255,.08); color:inherit; font:700 15px Arial,sans-serif; text-align:center; text-shadow:inherit; box-shadow:none; }
 .la-character .la-resource-values input:focus { background:rgba(255,255,255,.2); outline:1px solid rgba(255,255,255,.72); }
 .la-character .la-resource-values>span { opacity:.8; }
+.la-status-panel { display:grid; gap:8px; }
+.la-status-panel .la-status-controls { display:flex; align-items:center; gap:8px; }
+.la-status-panel .la-status-controls select { flex:1 1 auto; min-width:12rem; }
+.la-status-panel .la-status-controls button { flex:0 0 auto; width:auto; min-width:8rem; }
+.la-status-panel .la-muted,.la-status-panel .la-npc-muted { margin:0; opacity:.78; }
 @media (max-width:760px) {
   .la-character { padding-right:46px; }
   .la-character .la-tabs { width:46px; padding:10px 4px; }

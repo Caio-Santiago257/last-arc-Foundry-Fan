@@ -1,3 +1,4 @@
+import { actorHasStatus } from "./status-effects.mjs";
 const SYSTEM_ID = "last-arc-analogue";
 
 export const DAMAGE_TYPES = [
@@ -26,9 +27,11 @@ export async function postDamageRoll(roll, {
   const sourceToken = speaker?.token ? canvas?.tokens?.get(speaker.token) : null;
   const sourceActor = (speaker?.actor ? game.actors?.get(speaker.actor) : null) ?? sourceToken?.actor ?? null;
   const source = {
+    actorUuid: sourceActor?.uuid ?? "",
     name: sourceActor?.name ?? speaker?.alias ?? game.user?.name ?? "",
     img: sourceActor?.img ?? game.user?.avatar ?? "icons/svg/mystery-man.svg"
   };
+  const toadPenalty = sourceActor && actorHasStatus(sourceActor, "toad") ? 10 : 0;
   const targets = [...new Map(targetTokens.filter(Boolean).map(token => {
     const document = token.document ?? token;
     const actor = token.actor ?? document.actor ?? null;
@@ -46,20 +49,22 @@ export async function postDamageRoll(roll, {
   })).values()];
   return roll.toMessage({
     speaker,
-    flavor,
+    flavor: toadPenalty ? `${flavor}<br><small>${game.i18n.localize("LA.StatusToadDamagePenalty")}</small>` : flavor,
     flags: {
       [SYSTEM_ID]: {
         damageApplication: {
-          amount: Math.max(0, Math.floor(Number(amount) || 0)),
+          amount: Math.max(0, Math.floor(Number(amount) || 0) - toadPenalty),
           type: String(type || "unaspected").toLowerCase(),
           bypassDR: Boolean(bypassDR),
+          damageFormula: String(roll.formula ?? ""),
+          baseRollTotal: Math.max(0, Number(roll.total) || 0),
           resource: resource === "mp" ? "mp" : "hp",
           source,
           targets,
           targetAmounts: targetAmounts.map(entry => ({
             tokenUuid: String(entry.tokenUuid ?? ""),
             actorUuid: String(entry.actorUuid ?? ""),
-            amount: Math.max(0, Math.floor(Number(entry.amount) || 0))
+            amount: Math.max(0, Math.floor(Number(entry.amount) || 0) - toadPenalty)
           })),
           onApply,
           applied: false
@@ -115,14 +120,30 @@ function isActiveGM() {
   return Boolean(game.user?.isGM && activeGM?.id === game.user.id);
 }
 
-async function applyToActor(actor, payload, amount, type, aeonEntity = "") {
+async function applyToActor(actor, payload, amount, type, aeonEntity = "", sharedBonus = null) {
   if (payload.resource === "mp") {
     const mp = actor.system.resources?.mp ?? { value: 0, max: 0 };
     const loss = Math.min(Math.max(0, Number(mp.value) || 0), amount);
     await actor.update({ "system.resources.mp.value": Math.max(0, Number(mp.value) - loss) });
     return loss;
   }
-  return actor.applyDamage(amount, { type, bypassDR: Boolean(payload.bypassDR), aeonEntity });
+  let finalAmount = amount;
+  const matches = actorHasStatus(actor, "drenched") && ["cold", "electric"].includes(String(type).toLowerCase())
+    || actorHasStatus(actor, "oiled") && String(type).toLowerCase() === "fire";
+  if (matches && sharedBonus) finalAmount += Math.floor(sharedBonus.total * Math.max(0, Math.min(1, Number(amount) / Math.max(1, Number(payload.baseRollTotal) || Number(payload.amount) || 1))));
+  return actor.applyDamage(finalAmount, { type, bypassDR: Boolean(payload.bypassDR), aeonEntity });
+}
+
+async function rollSharedStatusBonus(payload, type, targets) {
+  const die = String(payload.damageFormula ?? "").match(/(?:^|\D)(\d*)d(\d+)/i)?.[2];
+  if (!die) return null;
+  const isVulnerable = target => actorHasStatus(target.actor, "drenched") && ["cold", "electric"].includes(String(type).toLowerCase())
+    || actorHasStatus(target.actor, "oiled") && String(type).toLowerCase() === "fire";
+  if (!targets.some(isVulnerable)) return null;
+  const roll = await (new Roll(`2d${die}`)).evaluate();
+  const status = String(type).toLowerCase() === "fire" ? "LA.StatusOilBonusDamage" : "LA.StatusDrenchBonusDamage";
+  await roll.toMessage({ speaker: payload.source ? { alias: payload.source.name, img: payload.source.img } : undefined, flavor: game.i18n.localize(status) });
+  return roll;
 }
 
 async function applyRiders(payload, totalApplied) {
@@ -157,6 +178,7 @@ async function onChatApply(message, button) {
   const type = payload.resource === "mp" ? "unaspected" : await chosenDamageType(payload.type);
   if (type === null) return;
   const amount = Math.max(0, Math.floor(Number(payload.amount) || 0));
+  const sharedBonus = payload.resource === "mp" ? null : await rollSharedStatusBonus(payload, type, targets);
   const remoteTargets = targets.filter(target => !game.user.isGM && !target.actor.isOwner);
   if (remoteTargets.length || !message.isOwner) {
     const activeGM = game.users?.activeGM ?? game.users?.find(user => user.isGM && user.active);
@@ -188,7 +210,7 @@ async function onChatApply(message, button) {
   for (const target of targets) {
     const gaugeBefore = Number(target.actor.system.combat?.breakGauge) || 0;
     const targetAmount = amountForTarget(payload, target, amount);
-    const applied = await applyToActor(target.actor, payload, targetAmount, type, target.token?.document?.getFlag?.(SYSTEM_ID, "aeonEntity") ?? "");
+    const applied = await applyToActor(target.actor, payload, targetAmount, type, target.token?.document?.getFlag?.(SYSTEM_ID, "aeonEntity") ?? "", sharedBonus);
     totalApplied += applied;
     const gaugeAfter = Number(target.actor.system.combat?.breakGauge) || 0;
     const gaugeNote = payload.resource === "mp" ? "" : ` · ${game.i18n.localize("LA.BreakGauge")}: ${gaugeBefore}→${gaugeAfter}/5`;
@@ -250,6 +272,7 @@ export function registerDamageChatControls() {
         const remoteTargets = data.targetRecords?.length
           ? await resolveRecordedTargets(data.targetRecords)
           : await Promise.all((data.targetUuids ?? []).map(async (uuid, index) => ({ actor: await fromUuid(uuid).catch(() => null), token: null, aeonEntity: data.aeonEntities?.[index] ?? "" })));
+        const sharedBonus = payload.resource === "mp" ? null : await rollSharedStatusBonus(payload, data.type, remoteTargets);
         for (const target of remoteTargets) {
           const actor = target.actor;
           if (!actor) continue;
@@ -258,7 +281,7 @@ export function registerDamageChatControls() {
           const targetAmount = target.amount !== undefined
             ? Math.max(0, Math.floor(Number(target.amount) || 0))
             : amountForTarget(payload, target, Math.max(0, Math.floor(Number(data.amount ?? payload.amount) || 0)));
-          const applied = await applyToActor(actor, payload, targetAmount, data.type, target.aeonEntity ?? targetTokenDocument?.getFlag?.(SYSTEM_ID, "aeonEntity") ?? "");
+          const applied = await applyToActor(actor, payload, targetAmount, data.type, target.aeonEntity ?? targetTokenDocument?.getFlag?.(SYSTEM_ID, "aeonEntity") ?? "", sharedBonus);
           totalApplied += applied;
           const gaugeAfter = Number(actor.system.combat?.breakGauge) || 0;
           const gaugeNote = payload.resource === "mp" ? "" : ` · ${game.i18n.localize("LA.BreakGauge")}: ${gaugeBefore}→${gaugeAfter}/5`;

@@ -86,6 +86,7 @@
     </div>
 
     <div class="tab" data-group="primary" data-tab="effects">
+      <section class="la-panel la-status-panel"><h2>{{localize "LA.StatusEffects"}}</h2><p class="la-muted">{{localize "LA.StatusEffectsHint"}}</p><div class="la-status-controls"><select name="ruleStatus"><option value="">{{localize "LA.ChooseStatus"}}</option>{{#each ruleStatusOptions as |status|}}<option value="{{status.id}}">{{status.label}}</option>{{/each}}</select><button type="button" class="la-apply-status la-add">{{localize "LA.ApplyStatus"}}</button></div></section>
       <section class="la-panel"><h2>{{localize "LA.ActiveEffects"}}</h2>
         {{#if activeEffects.length}}
           {{#each activeEffects as |effect|}}

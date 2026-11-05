@@ -45,6 +45,8 @@
 
     {{#if npcSkills.length}}<section class="la-panel"><h2>{{localize "LA.Skills"}}</h2><div class="la-npc-skills">{{#each npcSkills as |skill|}}<button type="button" class="rollable la-npc-skill-roll" data-roll="npc-skill" data-label="{{skill.label}}" data-bonus="{{skill.value}}" title="{{localize 'LA.RollSkill'}}"><span>{{skill.label}}</span><b>{{skill.value}}</b></button>{{/each}}</div></section>{{/if}}
 
+    <section class="la-panel la-status-panel"><h2>{{localize "LA.StatusEffects"}}</h2><p class="la-npc-muted">{{localize "LA.StatusEffectsHint"}}</p><div class="la-status-controls"><select name="ruleStatus"><option value="">{{localize "LA.ChooseStatus"}}</option>{{#each ruleStatusOptions as |status|}}<option value="{{status.id}}">{{status.label}}</option>{{/each}}</select><button type="button" class="la-apply-status la-add">{{localize "LA.ApplyStatus"}}</button></div>{{#if activeEffects.length}}<div class="la-npc-active-effects">{{#each activeEffects as |effect|}}<div class="la-active-effect" data-effect-id="{{effect.id}}"><img src="{{effect.img}}" alt=""><div><strong>{{effect.name}}</strong>{{#if effect.description}}<small>{{effect.description}}</small>{{/if}}</div><button type="button" class="active-effect-delete la-icon-button" title="{{localize 'LA.RemoveEffect'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button></div>{{/each}}</div>{{/if}}</section>
+
     {{#each itemGroups as |group|}}{{#if (or (eq group.type "feature") (eq group.type "talent") (eq group.type "technick"))}}<section class="la-panel la-npc-actions"><h2>{{group.label}}</h2>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}</section>{{/if}}{{/each}}
 
     <section class="la-panel la-npc-inventory"><h2>{{localize "LA.Inventory"}}</h2>

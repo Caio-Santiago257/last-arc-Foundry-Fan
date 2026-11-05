@@ -2,6 +2,7 @@ import { rollSpell } from "./spells.mjs";
 import { rollPerformance } from "./performances.mjs";
 import { DAMAGE_TYPES, postDamageRoll, registerDamageChatControls } from "./damage-chat.mjs";
 import { resolveItemIcon } from "./item-icons.mjs";
+import { RULE_STATUS_EFFECTS, actionBlockReason, actorHasStatus, breakConfusionOnAllyAttack, createRuleStatus, registerRuleStatusEffects, statusAttackPenalty, statusDefencePenalty, statusHealingCap, statusManaCap, statusRollFormula, statusSkillPenalty, wakeFromDamage } from "./status-effects.mjs";
 
 const ATTRIBUTES = ["str", "vit", "agi", "int", "mnd", "cha"];
 const LEVEL_XP = [0, 0, 1000, 3000, 6000, 10000, 15000, 21000, 28000, 36000, 45000, 55000, 66000, 78000, 91000, 105000, 120000, 136000, 153000, 171000, 190000];
@@ -114,6 +115,7 @@ function prepareAdversaryDerivedData(system) {
   system.combat.initiativeDie = adversary.initiativeDie || system.combat.initiativeDie || "1d10";
   system.combat.speed = safeNumber(adversary.speedText?.match(/\d+/)?.[0], safeNumber(system.combat.speed));
   system.combat.baseSpeed = system.combat.speed;
+  if (actorHasStatus(this, "slowed")) system.combat.speed = Math.max(1, Math.floor(system.combat.speed / 2));
   system.combat.damageReduction = safeNumber(adversary.damageReduction, safeNumber(system.combat.damageReduction));
   system.combat.baseDamageReduction = system.combat.damageReduction;
   system.combat.breakThreshold = safeNumber(adversary.breakThreshold, safeNumber(system.defences?.fort?.total, 10));
@@ -137,7 +139,8 @@ function prepareAdversaryDerivedData(system) {
     record.base = printed;
     record.attributeMod = 0;
     record.classBonus = 0;
-    record.total = Math.max(0, printed + gaugePenalty);
+    const flatFooted = key === "ref" && (actorHasStatus(this, "petrified") || actorHasStatus(this, "sleeping"));
+    record.total = Math.max(0, (flatFooted ? safeNumber(adversary.defences?.flatFootedRef, printed) : printed) + gaugePenalty - statusDefencePenalty(this));
   }
   const skillValues = new Map((adversary.skills ?? []).filter(skill => skill.key).map(skill => [skill.key, safeNumber(skill.bonus)]));
   for (const [key, attribute] of Object.entries(SKILLS)) {
@@ -145,15 +148,19 @@ function prepareAdversaryDerivedData(system) {
     const printed = skillValues.get(key);
     system.skills[key] = {
       ...skill, attribute, trained: printed !== undefined || Boolean(skill.trained), halfLevel: 0,
-      attributeMod: 0, classSkill: false, total: (printed ?? safeNumber(skill.total)) + gaugePenalty
+      attributeMod: 0, classSkill: false, total: (printed ?? safeNumber(skill.total)) + gaugePenalty + statusSkillPenalty(this, key)
     };
   }
   const hp = system.resources.hp ?? {};
   const maxHP = Math.max(1, safeNumber(adversary.hp, safeNumber(hp.max, 1)));
-  system.resources.hp = { ...hp, max: maxHP, baseMax: maxHP, value: Math.min(maxHP, Math.max(0, safeNumber(hp.value, maxHP))) };
+  let effectiveMaxHP = maxHP;
+  if (actorHasStatus(this, "withering")) effectiveMaxHP = Math.min(effectiveMaxHP, Math.floor(maxHP / 2));
+  if (actorHasStatus(this, "diseased")) effectiveMaxHP = Math.min(effectiveMaxHP, safeNumber(hp.value, maxHP));
+  system.resources.hp = { ...hp, max: effectiveMaxHP, baseMax: maxHP, value: Math.min(effectiveMaxHP, Math.max(0, safeNumber(hp.value, maxHP))) };
   const mp = system.resources.mp ?? {};
   const maxMP = Math.max(0, safeNumber(adversary.mp, safeNumber(mp.max)));
-  system.resources.mp = { ...mp, max: maxMP, value: Math.min(maxMP, Math.max(0, safeNumber(mp.value, maxMP))) };
+  const effectiveMaxMP = actorHasStatus(this, "dim") ? Math.min(maxMP, Math.floor(maxMP / 2)) : maxMP;
+  system.resources.mp = { ...mp, max: effectiveMaxMP, baseMax: maxMP, value: Math.min(effectiveMaxMP, Math.max(0, safeNumber(mp.value, maxMP))) };
   system.initiative = { total: 0 };
   system.combat.passivePerception = safeNumber(adversary.passivePerception, 10);
   system.combat.unconscious = system.combat.breakGauge >= 5 || (system.resources.hp.value <= 0 && !system.combat.dead);
@@ -439,6 +446,7 @@ function describePerformanceEffect(effect = {}) {
 
 Hooks.once("init", () => {
   registerDamageChatControls();
+  registerRuleStatusEffects();
   Hooks.on("renderChatMessage", (_message, html) => applyImageFallbacks(html));
   Hooks.on("renderChatMessage", (message, html) => applyRollAuthor(message, html));
   CONFIG.Actor.documentClass = LastArcActor;
@@ -508,7 +516,12 @@ class LastArcActor extends Actor {
     const classItems = this.items.filter(item => ["class", "advanced-class"].includes(item.type));
     const raceItem = this.items.find(item => item.type === "race");
     const technicks = this.items.filter(item => item.type === "technick");
-    const equippedGear = this.items.filter(item => item.system.equipped);
+    const toadTransformed = actorHasStatus(this, "toad");
+    const effectiveRacialEffects = toadTransformed ? {} : system.details.racialEffects;
+    const effectiveClassItems = toadTransformed ? [] : classItems;
+    const effectiveTechnicks = toadTransformed ? [] : technicks;
+    const effectiveGear = toadTransformed ? [] : this.items.filter(item => item.system.equipped);
+    const equippedGear = effectiveGear;
     const gearSkillBonuses = equippedGear.reduce((result, item) => {
       const bonus = item.system.itemEffects?.skillBonus;
       if (bonus) {
@@ -527,19 +540,19 @@ class LastArcActor extends Actor {
     const gearBreakBonus = equippedGear.reduce((sum, item) => sum + safeNumber(item.system.itemEffects?.breakThresholdBonus), 0);
     const gearSpeedBonus = equippedGear.reduce((sum, item) => sum + safeNumber(item.system.itemEffects?.speedBonus), 0);
     const armourPenalty = equippedGear.filter(item => item.type === "armor" && item.system.armorType !== "shield")
-      .filter(item => !technicks.some(tech => tech.name.toLowerCase() === `armour proficiency (${String(item.system.armorType).toLowerCase()})`))
+      .filter(item => !effectiveTechnicks.some(tech => tech.name.toLowerCase() === `armour proficiency (${String(item.system.armorType).toLowerCase()})`))
       .reduce((penalty, item) => Math.min(penalty, safeNumber(item.system.armorCheckPenalty)), 0);
     system.combat.equipmentResistances = [...new Set(equippedGear.flatMap(item => item.system.itemEffects?.resistances ?? []))];
     system.combat.equipmentImmunities = [...new Set(equippedGear.flatMap(item => item.system.itemEffects?.immunities ?? []))];
     system.combat.equipmentAllStatusImmunities = equippedGear.some(item => item.system.itemEffects?.allStatusImmunities);
     system.combat.equipmentMindEffectImmunity = equippedGear.some(item => item.system.itemEffects?.mindEffectImmunity);
-    const technickEffects = technicks.map(item => item.system.effects ?? {});
-    const activePerformances = [...(this.effects ?? [])].map(effect => effect.getFlag("last-arc-analogue", "performanceEffect")).filter(effect => effect && !effect.immunity);
+    const technickEffects = effectiveTechnicks.map(item => item.system.effects ?? {});
+    const activePerformances = toadTransformed ? [] : [...(this.effects ?? [])].map(effect => effect.getFlag("last-arc-analogue", "performanceEffect")).filter(effect => effect && !effect.immunity);
     const technickDefences = technickEffects.reduce((result, effect) => {
       for (const key of ["fort", "ref", "will"]) result[key] += safeNumber(effect.defenceBonuses?.[key]);
       return result;
     }, { fort: 0, ref: 0, will: 0 });
-    const brawlerBonus = Math.max(0, ...technicks.filter(item => /^Brawler [I]+$/.test(item.name)).map(item => safeNumber(item.system.effects?.conditional?.defenceBonuses?.ref)));
+    const brawlerBonus = Math.max(0, ...effectiveTechnicks.filter(item => /^Brawler [I]+$/.test(item.name)).map(item => safeNumber(item.system.effects?.conditional?.defenceBonuses?.ref)));
     const technickSkillBonuses = technickEffects.reduce((result, effect) => {
       for (const [key, value] of Object.entries(effect.skillBonuses ?? {})) result[key] = safeNumber(result[key]) + safeNumber(value);
       return result;
@@ -601,15 +614,15 @@ class LastArcActor extends Actor {
         attribute,
         halfLevel,
         attributeMod: system.attributes[attribute].modifier,
-        classSkill: WEAPON_SKILLS.has(key) || classItems.some(item => item.system.classSkills?.includes(key)) || raceItem?.system.classSkills?.includes(key) || false,
-        total: halfLevel + (skill.trained ? 5 : 0) + safeNumber(skill.classBonus) + classItems.reduce((sum, item) => sum + safeNumber(item.system.skillBonuses?.[key]) + safeNumber(item.system.selectedEffects?.skillBonuses?.[key]), 0) + safeNumber(system.details.racialEffects?.skillBonuses?.[key]) + safeNumber(technickSkillBonuses[key]) + performanceSkillBonus(key) + safeNumber(gearSkillBonuses[key]) + armourPenaltyForSkill(key, attribute, armourPenalty) + safeNumber(skill.misc) + system.attributes[attribute].modifier + safeNumber(injuryPenalties[attribute]) + gaugePenalty
+        classSkill: WEAPON_SKILLS.has(key) || effectiveClassItems.some(item => item.system.classSkills?.includes(key)) || raceItem?.system.classSkills?.includes(key) || false,
+        total: halfLevel + (skill.trained ? 5 : 0) + safeNumber(skill.classBonus) + effectiveClassItems.reduce((sum, item) => sum + safeNumber(item.system.skillBonuses?.[key]) + safeNumber(item.system.selectedEffects?.skillBonuses?.[key]), 0) + safeNumber(effectiveRacialEffects.skillBonuses?.[key]) + safeNumber(technickSkillBonuses[key]) + performanceSkillBonus(key) + safeNumber(gearSkillBonuses[key]) + armourPenaltyForSkill(key, attribute, armourPenalty) + safeNumber(skill.misc) + system.attributes[attribute].modifier + safeNumber(injuryPenalties[attribute]) + gaugePenalty + statusSkillPenalty(this, key)
       };
     }
     for (const defence of ["fort", "ref", "will"]) {
       const attribute = { fort: "vit", ref: "agi", will: "mnd" }[defence];
       const record = system.defences?.[defence] ?? {};
-      const classBonus = Math.max(0, ...classItems.map(item => safeNumber(item.system.defenceBonuses?.[defence]) + safeNumber(item.system.selectedEffects?.defenceBonuses?.[defence])));
-      const attributeModifier = defence === "ref" && activeClasses.some(item => ["Divine Benison", "Dark Pact"].some(name => item.system.classFeatures?.some(feature => feature.name === name)))
+      const classBonus = Math.max(0, ...effectiveClassItems.map(item => safeNumber(item.system.defenceBonuses?.[defence]) + safeNumber(item.system.selectedEffects?.defenceBonuses?.[defence])));
+      const attributeModifier = defence === "ref" && !toadTransformed && activeClasses.some(item => ["Divine Benison", "Dark Pact"].some(name => item.system.classFeatures?.some(feature => feature.name === name)))
         ? Math.max(system.attributes.agi.modifier, system.attributes.mnd.modifier)
         : system.attributes[attribute].modifier;
       system.defences ??= {};
@@ -618,7 +631,7 @@ class LastArcActor extends Actor {
         base: 10,
         attributeMod: attributeModifier,
         classBonus,
-        total: 10 + (defence === "ref" ? Math.min(attributeModifier, armourTotals.maxAgilityBonus) : attributeModifier) + classBonus + (defence === "ref" ? armourTotals.reflexBonus : 0) + safeNumber(system.details.racialEffects?.defenceBonuses?.[defence]) + technickDefences[defence] + performanceDefenceBonuses[defence] + gearDefenceBonuses[defence] + (defence === "ref" && system.combat.emptyHands && !system.combat.flatFooted ? brawlerBonus : 0) + level + safeNumber(record.misc) + gaugePenalty + safeNumber(injuryPenalties[attribute])
+        total: 10 + (defence === "ref" ? ((system.combat.flatFooted || actorHasStatus(this, "petrified") || actorHasStatus(this, "sleeping")) ? 0 : Math.min(attributeModifier, armourTotals.maxAgilityBonus)) : attributeModifier) + classBonus + (defence === "ref" ? armourTotals.reflexBonus : 0) + safeNumber(effectiveRacialEffects.defenceBonuses?.[defence]) + technickDefences[defence] + performanceDefenceBonuses[defence] + gearDefenceBonuses[defence] + (defence === "ref" && system.combat.emptyHands && !system.combat.flatFooted ? brawlerBonus : 0) + level + safeNumber(record.misc) + gaugePenalty + safeNumber(injuryPenalties[attribute]) - statusDefencePenalty(this)
       };
     }
     const hp = system.resources?.hp ?? {};
@@ -635,7 +648,7 @@ class LastArcActor extends Actor {
       const initial = item.system.isStartingClass ? safeNumber(item.system.mpAtFirstLevel) : 0;
       return sum + initial + Math.max(0, levels - (item.system.isStartingClass ? 1 : 0)) * Math.max(1, safeNumber(item.system.mpPerLevel) + system.attributes.mnd.modifier) + (item.system.isStartingClass ? system.attributes.mnd.modifier : 0);
     }, 0);
-    const technickResourceMax = technicks.reduce((totals, item) => {
+    const technickResourceMax = effectiveTechnicks.reduce((totals, item) => {
       const resources = item.system.effects?.resources ?? {};
       totals.hp += safeNumber(resources.hpMaxFlat) + safeNumber(resources.hpMaxPerLevel) * level;
       totals.mp += safeNumber(resources.mpMaxFlat) + safeNumber(resources.mpMaxPerLevel) * level;
@@ -651,8 +664,12 @@ class LastArcActor extends Actor {
     const baseHpMax = savedBaseHp > 0 ? savedBaseHp : savedHpMax > 0 ? savedHpMax : classHpMax + technickResourceMax.hp;
     const savedMpMax = safeNumber(mp.max);
     const baseMpMax = savedMpMax > 0 ? savedMpMax : classMpMax + technickResourceMax.mp;
-    system.resources.hp = { value: safeNumber(hp.value), max: baseHpMax + gearHpBonus, baseMax: baseHpMax };
-    system.resources.mp = { value: safeNumber(mp.value), max: baseMpMax };
+    let hpMax = baseHpMax + gearHpBonus;
+    if (actorHasStatus(this, "withering")) hpMax = Math.min(hpMax, Math.floor(baseHpMax / 2));
+    if (actorHasStatus(this, "diseased")) hpMax = Math.min(hpMax, safeNumber(hp.value));
+    const mpMax = actorHasStatus(this, "dim") ? Math.min(baseMpMax, Math.floor(baseMpMax / 2)) : baseMpMax;
+    system.resources.hp = { value: Math.min(safeNumber(hp.value), hpMax), max: hpMax, baseMax: baseHpMax };
+    system.resources.mp = { value: Math.min(safeNumber(mp.value), mpMax), max: mpMax, baseMax: baseMpMax };
     system.combat.breakThresholdBonus = countTechnickEffect("breakThresholdBonus") + gearBreakBonus;
     const size = String(raceItem?.system.size ?? system.combat.creatureSize ?? "medium").toLowerCase();
     const sizeBonus = ({ large: 5, huge: 10, gargantuan: 20, colossal: 50 })[size] ?? 0;
@@ -660,9 +677,10 @@ class LastArcActor extends Actor {
     system.combat.breakThreshold = Math.max(0, safeNumber(system.defences.fort.total) + safeNumber(system.combat.breakThresholdBonus) + safeNumber(system.combat.damageThreshold) + sizeBonus);
     const legPenalty = system.combat.injuries.some(injury => injury.type === "severed-leg");
     system.combat.speed = Math.floor((safeNumber(system.combat.baseSpeed, safeNumber(system.combat.speed)) + gearSpeedBonus) / (legPenalty ? 2 : 1));
+    if (actorHasStatus(this, "slowed")) system.combat.speed = Math.max(1, Math.floor(system.combat.speed / 2));
     system.combat.passivePerception = 10 + safeNumber(system.skills.perception?.total);
     const classInitiative = classItems.map(item => item.system.initiativeDie).filter(Boolean).sort((a, b) => Number((b.match(/d(\d+)/i) ?? [0, 0])[1]) - Number((a.match(/d(\d+)/i) ?? [0, 0])[1]))[0];
-    const initiativeSteps = Math.min(technicks.filter(item => item.name === "Improved Initiative").length, 5);
+    const initiativeSteps = Math.min(effectiveTechnicks.filter(item => item.name === "Improved Initiative").length, 5);
     const initiativeSizes = [12, 10, 8, 6, 4, 3];
     const baseDie = classInitiative || system.combat.initiativeDie || "1d20";
     const baseDieSize = Number((baseDie.match(/d(\d+)/i) ?? [0, 20])[1]);
@@ -670,7 +688,7 @@ class LastArcActor extends Actor {
     system.combat.initiativeDie = initiativeSteps ? `1d${initiativeSizes[Math.min(initiativeSizes.length - 1, Math.max(0, dieIndex) + initiativeSteps)]}` : baseDie;
     system.combat.heroPointsPerDayBonus = countTechnickEffect("heroPointsPerDay");
     system.combat.extraSecondWinds = countTechnickEffect("extraSecondWinds");
-    system.combat.additionalCounterattacks = technicks.some(item => item.system.effects?.counterattacksPerTurnFromAgi) ? Math.max(0, system.attributes.agi.modifier) : 0;
+    system.combat.additionalCounterattacks = effectiveTechnicks.some(item => item.system.effects?.counterattacksPerTurnFromAgi) ? Math.max(0, system.attributes.agi.modifier) : 0;
     system.combat.performanceWeaponSkillBonus = activePerformances.reduce((sum, effect) => sum + safeNumber(effect.weaponSkillBonus), 0);
     system.combat.performanceAttackBonus = activePerformances.reduce((sum, effect) => sum + safeNumber(effect.attackBonus), 0);
     system.combat.performanceDamageDice = activePerformances.map(effect => effect.damageDice).filter(Boolean);
@@ -682,11 +700,11 @@ class LastArcActor extends Actor {
       for (const [key, value] of Object.entries(effect.substituteDefence ?? {})) if (value) result[key] = Math.max(safeNumber(result[key]), safeNumber(effect.performTotal));
       return result;
     }, {});
-    system.combat.rangedCriticalMultiplier = technicks.some(item => item.system.effects?.rangedCriticalMultiplier) ? 3 : 2;
-    system.combat.weaponProficiencies = [...new Set(technicks.map(item => item.system.selectedWeaponGroup).filter(Boolean))];
-    system.details.additionalLanguages = technicks.reduce((sum, item) => sum + (item.system.effects?.languages ? (item.system.selectedLanguages?.length ?? Math.max(1, 1 + system.attributes.int.modifier)) : 0), 0);
-    system.details.additionalSpellSlots = technicks.reduce((sum, item) => sum + safeNumber(item.system.effects?.spellSlotsPerCopy) * Math.max(1, 1 + system.attributes.int.modifier), 0);
-    system.details.additionalPerformanceSlots = technicks.reduce((sum, item) => sum + safeNumber(item.system.effects?.performanceSlotsPerCopy) * Math.max(0, 1 + system.attributes.int.modifier), 0);
+    system.combat.rangedCriticalMultiplier = effectiveTechnicks.some(item => item.system.effects?.rangedCriticalMultiplier) ? 3 : 2;
+    system.combat.weaponProficiencies = [...new Set(effectiveTechnicks.map(item => item.system.selectedWeaponGroup).filter(Boolean))];
+    system.details.additionalLanguages = effectiveTechnicks.reduce((sum, item) => sum + (item.system.effects?.languages ? (item.system.selectedLanguages?.length ?? Math.max(1, 1 + system.attributes.int.modifier)) : 0), 0);
+    system.details.additionalSpellSlots = effectiveTechnicks.reduce((sum, item) => sum + safeNumber(item.system.effects?.spellSlotsPerCopy) * Math.max(1, 1 + system.attributes.int.modifier), 0);
+    system.details.additionalPerformanceSlots = effectiveTechnicks.reduce((sum, item) => sum + safeNumber(item.system.effects?.performanceSlotsPerCopy) * Math.max(0, 1 + system.attributes.int.modifier), 0);
     system.inventory ??= {};
     system.inventoryBulk = this.items.reduce((sum, item) => sum + safeNumber(item.system.quantity, 1) * safeNumber(item.system.bulk), 0);
     system.inventory.maxBulk = Math.floor((5 + safeNumber(system.attributes.str.score)) / (legPenalty ? 2 : 1));
@@ -706,9 +724,10 @@ class LastArcActor extends Actor {
       if (entity === "maiden" && kind === "dark" || entity === "pythoness" && kind === "fire") vulnerabilities.push(kind);
     }
     const matches = values => values.some(entry => [kind, kindGroup, "all"].includes(entry));
-    if (matches(immunities)) damage = 0;
-    else if (matches(vulnerabilities)) damage *= 2;
-    else if (matches(resistances)) damage = Math.floor(damage / 2);
+    const agony = actorHasStatus(this, "agony");
+    if (!agony && matches(immunities)) damage = 0;
+    else if (agony || matches(vulnerabilities)) damage *= 2;
+    else if (!agony && matches(resistances)) damage = Math.floor(damage / 2);
     const physicalDR = ["physical", "blunt", "piercing", "slashing"].includes(kind) ? safeNumber(this.system.combat?.physicalDamageReduction) : 0;
     const elementalDR = ["fire", "cold", "electric"].includes(kind) ? safeNumber(this.system.combat?.elementalDamageReduction) : 0;
     const dr = bypassDR ? 0 : Math.max(0, safeNumber(this.system.combat?.damageReduction) + physicalDR + elementalDR);
@@ -745,6 +764,7 @@ class LastArcActor extends Actor {
       }
     }
     await this.update(update);
+    if (applied > 0) await wakeFromDamage(this, kind);
     const outcome = update["system.combat.dead"] ? `<strong>${game.i18n.localize("LA.Dead")}</strong>` : gauge >= 5 ? `<strong>${game.i18n.localize("LA.Unconscious")}</strong>` : `${game.i18n.localize("LA.BreakGauge")}: ${gauge}/5`;
     await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<p><strong>${game.i18n.localize("LA.ApplyDamage")}:</strong> ${applied} (${foundry.utils.escapeHTML(type)}). ${game.i18n.localize("LA.Health")}: ${newHp}/${hp.max}. ${game.i18n.localize("LA.BreakThreshold")}: ${threshold}; ${outcome}.</p>` });
     return applied;
@@ -764,12 +784,14 @@ class LastArcActor extends Actor {
   async useSecondWind() {
     if (this.type !== "character") return ui.notifications.warn(game.i18n.localize("LA.SecondWindHeroicOnly"));
     if (this.system.combat.secondWindUsed) return ui.notifications.warn(game.i18n.localize("LA.SecondWindUsed"));
+    if (actorHasStatus(this, "diseased")) return ui.notifications.warn(game.i18n.localize("LA.StatusDiseaseBlocksRecovery"));
     const hp = this.system.resources.hp;
     if (safeNumber(hp.value) > safeNumber(hp.max) / 2) return ui.notifications.warn(game.i18n.localize("LA.SecondWindHalfHp"));
     if (this.system.combat.unconscious || this.system.combat.dead) return ui.notifications.warn(game.i18n.localize("LA.CannotActUnconscious"));
     const healed = Math.max(Math.floor(safeNumber(hp.max) / 4), safeNumber(this.system.attributes.vit.score));
-    await this.update({ "system.resources.hp.value": Math.min(safeNumber(hp.max), safeNumber(hp.value) + healed), "system.combat.secondWindUsed": true, "system.combat.recoveryMinorActions": 0 });
-    await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<p><strong>${game.i18n.localize("LA.SecondWind")}:</strong> ${healed} HP.</p>` });
+    const actual = await this.applyHealing(healed);
+    await this.update({ "system.combat.secondWindUsed": true, "system.combat.recoveryMinorActions": 0 });
+    await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<p><strong>${game.i18n.localize("LA.SecondWind")}:</strong> ${actual} HP.</p>` });
   }
 
   async rest(hours, comfortable) {
@@ -783,13 +805,13 @@ class LastArcActor extends Actor {
     const level = safeNumber(this.system.details.level, 1);
     const hp = this.system.resources.hp;
     const mp = this.system.resources.mp;
-    const restCanHealHp = !this.system.combat.persistentHpRecovery && ![...this.effects].some(effect => /poison|disease|zombif/i.test(`${effect.name} ${effect.description ?? ""}`));
+    const restCanHealHp = !this.system.combat.persistentHpRecovery && !actorHasStatus(this, "diseased") && !actorHasStatus(this, "zombified") && ![...this.effects].some(effect => /poison|disease|zombif/i.test(`${effect.name} ${effect.description ?? ""}`));
     const hpRecovery = restCanHealHp ? Math.max(0, (safeNumber(this.system.attributes.vit.modifier) + level) * effectiveHours) : 0;
     const mpRecovery = Math.max(0, (safeNumber(this.system.attributes.mnd.modifier) + level) * effectiveHours);
     const totalHours = previousHours + effectiveHours;
     const update = {
       "system.resources.hp.value": Math.min(safeNumber(hp.max), safeNumber(hp.value) + hpRecovery),
-      "system.resources.mp.value": Math.min(safeNumber(mp.max), safeNumber(mp.value) + mpRecovery),
+      "system.resources.mp.value": Math.min(statusManaCap(this), safeNumber(mp.value) + mpRecovery),
       "system.combat.restHoursInPeriod": totalHours,
       "system.combat.restPeriodStartedAt": previousHours ? periodStart : now,
       "system.combat.recoveryMinorActions": 0
@@ -803,6 +825,7 @@ class LastArcActor extends Actor {
   }
 
   async takeRecoveryAction() {
+    if (actorHasStatus(this, "diseased")) return ui.notifications.warn(game.i18n.localize("LA.StatusDiseaseBlocksRecovery"));
     if (this.system.combat.unconscious || this.system.combat.dead) return ui.notifications.warn(game.i18n.localize("LA.CannotActUnconscious"));
     const gauge = safeNumber(this.system.combat.breakGauge);
     const persistent = (this.system.combat.injuries ?? []).filter(injury => injury.type === "injury").length;
@@ -817,9 +840,14 @@ class LastArcActor extends Actor {
   }
 
   async applyHealing(amount) {
+    if (actorHasStatus(this, "zombified")) {
+      const damage = Math.max(0, Math.floor(safeNumber(amount)));
+      if (damage) await this.applyDamage(damage, { type: "unaspected", bypassDR: true });
+      return -damage;
+    }
     const hp = this.system.resources.hp;
     const healed = Math.max(0, Math.floor(safeNumber(amount)));
-    const actual = Math.min(healed, Math.max(0, safeNumber(hp.max) - safeNumber(hp.value)));
+    const actual = Math.min(healed, Math.max(0, statusHealingCap(this) - safeNumber(hp.value)));
     if (!actual) return 0;
     await this.update({ "system.resources.hp.value": safeNumber(hp.value) + actual, "system.combat.persistentHpRecovery": false });
     return actual;
@@ -833,6 +861,8 @@ class LastArcItem extends Item {
       ui.notifications.warn(game.i18n.localize(actor.system.combat.dead ? "LA.Dead" : "LA.CannotActUnconscious"));
       return null;
     }
+    const blocked = actionBlockReason(actor, { item: this });
+    if (blocked) { ui.notifications.warn(blocked); return null; }
     if (actor && safeNumber(actor.system.combat.recoveryMinorActions) > 0) await actor.update({ "system.combat.recoveryMinorActions": 0 });
     if (this.type === "spell") return rollSpell(this);
     if (this.type === "performance") return rollPerformance(this);
@@ -852,7 +882,7 @@ class LastArcItem extends Item {
       const proficiencyPenalty = proficient ? 0 : -5;
       const blockPenalty = -Math.max(0, safeNumber(actor.system.combat.shieldBlocksThisTurn)) * (proficient ? 5 : 10);
       const bonus = skillBonus + safeNumber(this.system.attack?.bonus) + proficiencyPenalty + blockPenalty;
-      const block = await (new Roll(`1d20 + (${bonus})`, actor.getRollData())).evaluate();
+      const block = await (new Roll(statusRollFormula(actor, `1d20 + (${bonus})`), actor.getRollData())).evaluate();
       const specialNote = this.system.specialRules ? `<br><small>${foundry.utils.escapeHTML(this.system.specialRules)}</small>` : "";
       await block.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${game.i18n.localize("LA.ShieldBlock")}: ${foundry.utils.escapeHTML(title)} (${game.i18n.localize(SKILL_LABELS[skillKey] ?? skillKey)} ${signed(skillBonus)}; ${game.i18n.localize("LA.WeaponBonus")} ${signed(safeNumber(this.system.attack?.bonus))}${proficiencyPenalty ? `; ${game.i18n.localize("LA.UnproficientPenalty")}` : ""}${blockPenalty ? `; ${game.i18n.localize("LA.BlockPenalty")} ${signed(blockPenalty)}` : ""})${specialNote}` });
       if (game.combat) await actor.update({ "system.combat.shieldBlocksThisTurn": safeNumber(actor.system.combat.shieldBlocksThisTurn) + 1 });
@@ -870,10 +900,12 @@ class LastArcItem extends Item {
       const skillKey = this.system.weaponSkill || (weaponGroup === "bows" || weaponGroup === "crossbows" ? "ranged" : weaponGroup === "staves" ? "spellcraft" : "one-handed");
       const skillBonus = safeNumber(actor.system.skills?.[skillKey]?.total);
       const bonus = skillBonus + safeNumber(this.system.attack?.bonus) + proficiencyPenalty + performanceAttackBonus;
-      const attack = await (new Roll(`1d20 + (${bonus})`, actor.getRollData())).evaluate();
+      const attack = await (new Roll(statusRollFormula(actor, `1d20 + (${bonus})`), actor.getRollData())).evaluate();
       const specialNote = this.system.specialRules ? `<br><small>${foundry.utils.escapeHTML(this.system.specialRules)}</small>` : "";
-      await attack.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${game.i18n.localize("LA.AttackRoll")}: ${foundry.utils.escapeHTML(title)} (${game.i18n.localize(SKILL_LABELS[skillKey] ?? skillKey)} ${signed(skillBonus)}; ${game.i18n.localize("LA.WeaponBonus")} ${signed(safeNumber(this.system.attack?.bonus))}${proficiencyPenalty ? `; ${game.i18n.localize("LA.UnproficientPenalty")}` : ""})${specialNote}` });
-      const naturalTwenty = attack.dice.some(die => die.results?.some(result => result.result === 20));
+      const blindHint = actorHasStatus(actor, "blinded") ? `<br><small>${game.i18n.localize("LA.StatusBlindAttackHint")}</small>` : "";
+      await attack.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${game.i18n.localize("LA.AttackRoll")}: ${foundry.utils.escapeHTML(title)} (${game.i18n.localize(SKILL_LABELS[skillKey] ?? skillKey)} ${signed(skillBonus)}; ${game.i18n.localize("LA.WeaponBonus")} ${signed(safeNumber(this.system.attack?.bonus))}${proficiencyPenalty ? `; ${game.i18n.localize("LA.UnproficientPenalty")}` : ""})${specialNote}${blindHint}` });
+      for (const token of game.user?.targets ?? []) await breakConfusionOnAllyAttack(actor, token.actor, attack.total);
+      const naturalTwenty = attack.dice.some(die => die.results?.some(result => result.result === 20 && result.active !== false));
       weaponMode = ["bows", "crossbows"].includes(weaponGroup) || /ranged|range|distance/i.test(String(this.system.range ?? "")) ? "ranged" : "melee";
       if (formula) {
         const levelBonus = staticAdversaryAttack ? 0 : Math.floor(safeNumber(actor.system.details.level) / 2);
@@ -1023,11 +1055,12 @@ class LastArcActorSheet extends ActorSheet {
         : effect.duration?.rounds ? `${effect.duration.rounds} ${game.i18n.localize("LA.Rounds")}` : game.i18n.localize("LA.UntilRemoved");
       return { id: effect.id, name: effect.name, img: effect.img, description: performance?.description ?? effect.description ?? "", duration };
     });
+    context.ruleStatusOptions = RULE_STATUS_EFFECTS.map(effect => ({ id: effect.id, label: game.i18n.localize(`LA.${effect.label}`) }));
     context.canLevelUp = this.actor.type === "character" && this.actor.system.details.level < LEVEL_XP.length - 1
       && this.actor.system.details.xp >= this.actor.system.details.nextLevel
       && this.actor.items.some(item => ["class", "advanced-class"].includes(item.type) && safeNumber(item.system.classLevel) > 0);
     context.gaugeSteps = [0, 1, 2, 3, 4, 5].map(step => ({ step, current: safeNumber(this.actor.system.combat.breakGauge) === step, bottom: step === 5, label: game.i18n.localize(["LA.BreakGaugeNormal", "LA.BreakGaugeMinusOne", "LA.BreakGaugeMinusTwo", "LA.BreakGaugeMinusFive", "LA.BreakGaugeMinusTen", "LA.BreakGaugeBottom"][step]) }));
-    context.canSecondWind = this.actor.type === "character" && !this.actor.system.combat.secondWindUsed && !this.actor.system.combat.unconscious && !this.actor.system.combat.dead && safeNumber(this.actor.system.resources.hp.value) <= safeNumber(this.actor.system.resources.hp.max) / 2;
+    context.canSecondWind = this.actor.type === "character" && !actorHasStatus(this.actor, "diseased") && !this.actor.system.combat.secondWindUsed && !this.actor.system.combat.unconscious && !this.actor.system.combat.dead && safeNumber(this.actor.system.resources.hp.value) <= safeNumber(this.actor.system.resources.hp.max) / 2;
     context.canWakeCheck = this.actor.system.combat.unconscious && !this.actor.system.combat.dead && !this.actor.system.combat.persistentHpRecovery;
     context.injuries = this.actor.system.combat.injuries ?? [];
     context.recoveryActions = safeNumber(this.actor.system.combat.recoveryMinorActions);
@@ -1066,6 +1099,12 @@ class LastArcActorSheet extends ActorSheet {
     html.find(".roll-attributes").on("click", this._onRollAttributes.bind(this));
     html.find(".la-level-up").on("click", this._onLevelUp.bind(this));
     html.find(".active-effect-delete").on("click", this._onActiveEffectDelete.bind(this));
+    html.find(".la-apply-status").on("click", async event => {
+      event.preventDefault();
+      const status = html.find("[name='ruleStatus']").val();
+      if (!status) return;
+      await createRuleStatus(this.actor, status);
+    });
   }
 
   async _onLevelUp(event) {
@@ -2101,6 +2140,8 @@ class LastArcActorSheet extends ActorSheet {
     const kind = target.dataset.roll;
     const key = target.dataset.key;
     const actor = this.actor;
+    const blocked = actionBlockReason(actor, { kind, skillKey: key });
+    if (blocked) return ui.notifications.warn(blocked);
     if (safeNumber(actor.system.combat.recoveryMinorActions) > 0) await actor.update({ "system.combat.recoveryMinorActions": 0 });
     if (actor.system.combat.dead || actor.system.combat.unconscious) return ui.notifications.warn(game.i18n.localize(actor.system.combat.dead ? "LA.Dead" : "LA.CannotActUnconscious"));
     let label = target.dataset.label || game.i18n.localize("LA.Roll");
@@ -2110,8 +2151,8 @@ class LastArcActorSheet extends ActorSheet {
     if (kind === "attribute") { label = game.i18n.localize(ATTRIBUTE_LABELS[key] ?? label); bonus = actor.system.attributes[key]?.modifier ?? bonus; }
     if (kind === "attack") label = game.i18n.localize("LA.AttackRoll");
     if (kind === "initiative") label = game.i18n.localize("LA.Initiative");
-    const formula = kind === "initiative" ? (actor.system.combat.initiativeDie || "1d20") : `1d20 + (${bonus})`;
-    const roll = await (new Roll(formula, actor.getRollData())).evaluate();
+    const formula = kind === "initiative" ? (actor.system.combat.initiativeDie || "1d20") : `1d20 + (${bonus + (kind === "attack" ? statusAttackPenalty(actor) : 0)})`;
+    const roll = await (new Roll(statusRollFormula(actor, formula, { eligible: ["attack", "skill", "npc-skill"].includes(kind) }), actor.getRollData())).evaluate();
     const dcField = kind === "skill" ? target.closest(".skill-row")?.querySelector("[name='dc']") : null;
     const dc = dcField && dcField.value !== "" ? safeNumber(dcField.value) : null;
     const result = dc === null ? "" : `<p class="la-result ${roll.total >= dc ? "success" : "failure"}">${game.i18n.localize(roll.total >= dc ? "LA.Success" : "LA.Failure")} (CD ${dc})</p>`;
@@ -2151,6 +2192,8 @@ class LastArcActorSheet extends ActorSheet {
   async _onItemRoll(event) {
     event.preventDefault();
     const item = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId);
+    const blocked = actionBlockReason(this.actor, { item });
+    if (blocked) return ui.notifications.warn(blocked);
     try { await item?.roll(); }
     catch (error) {
       console.error(`Last Arc | Failed to roll item ${item?.name ?? "unknown"}`, error);

@@ -1,4 +1,5 @@
 import { postDamageRoll } from "./damage-chat.mjs";
+import { actionBlockReason, statusRollFormula } from "./status-effects.mjs";
 
 const escapeHTML = value => foundry.utils.escapeHTML(String(value ?? ""));
 const number = (value, fallback = 0) => Number.isFinite(Number(value)) ? Number(value) : fallback;
@@ -232,6 +233,8 @@ async function addPerformanceImmunity(target, performer, performance, side) {
 }
 
 async function perform(item, performer) {
+  const blocked = actionBlockReason(performer, { item });
+  if (blocked) { ui.notifications.warn(blocked); return null; }
   if (!performer || !item.system.automation) {
     return ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: performer }), content: `<h3>${escapeHTML(item.name)}</h3><p>${escapeHTML(item.system.description)}</p>` });
   }
@@ -252,7 +255,7 @@ async function perform(item, performer) {
   const melee = await threatenedCast(performer);
   if (!melee) return null;
   const performBonus = number(performer.system.skills?.perform?.total);
-  const check = await (new Roll(`1d20 + (${performBonus + melee.penalty})`, performer.getRollData())).evaluate();
+  const check = await (new Roll(statusRollFormula(performer, `1d20 + (${performBonus + melee.penalty})`), performer.getRollData())).evaluate();
   await check.toMessage({ speaker: ChatMessage.getSpeaker({ actor: performer }), flavor: `${game.i18n.localize("LA.PerformCheck")}: ${escapeHTML(item.name)} (${escapeHTML(item.system.targetSide)})` });
 
   const { tier, effects } = tierFor(item.system.automation, check.total);

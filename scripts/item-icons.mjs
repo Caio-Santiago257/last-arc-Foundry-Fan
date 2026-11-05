@@ -32,9 +32,10 @@ const CLASS_ICONS = {
   bard:"JOB_ICONS/Bard.webp", initiate:"ROLE-HEALER/Esuna.webp", mage:"JOB_ICONS/BlackMage.webp", ranger:"ROLE-RANGED/Foot_Graze.webp",
   rogue:"JOB_ICONS/Ninja.webp", warrior:"JOB_ICONS/Warrior.webp", archmage:"JOB_ICONS/BlackMage.webp", assassin:"JOB_ICONS/Ninja.webp",
   battlemage:"JOB_ICONS/RedMage.webp", berserker:"JOB_ICONS/Warrior.webp", bishop:"JOB_ICONS/WhiteMage.webp", "blade dancer":"JOB_ICONS/Dancer.webp",
-  dragoon:"JOB_ICONS/Dragoon.webp", druid:"JOB_ICONS/Summoner.webp", gladiator:"JOB_ICONS/Paladin.webp", necromancer:"JOB_ICONS/Reaper.webp",
+  "fell knight":"JOB_ICONS/DarkKnight.webp", dragoon:"JOB_ICONS/Dragoon.webp", druid:"JOB_ICONS/Summoner.webp", gladiator:"JOB_ICONS/Paladin.webp", necromancer:"JOB_ICONS/Reaper.webp",
   paladin:"JOB_ICONS/Paladin.webp", purloiner:"JOB_ICONS/Ninja.webp", sabreur:"JOB_ICONS/Samurai.webp", summoner:"JOB_ICONS/Summoner.webp",
-  thaumaturge:"JOB_ICONS/BlackMage.webp", troubadour:"JOB_ICONS/Bard.webp", warlock:"JOB_ICONS/DarkKnight.webp", beastmaster:"JOB_ICONS/Summoner.webp", spellblade:"JOB_ICONS/RedMage.webp"
+  shikari:"JOB_ICONS/Machinist.webp", thaumaturge:"JOB_ICONS/BlackMage.webp", troubador:"JOB_ICONS/Bard.webp", troubadour:"JOB_ICONS/Bard.webp",
+  warlock:"JOB_ICONS/Reaper.webp", beastmaster:"JOB_ICONS/Summoner.webp", spellblade:"JOB_ICONS/RedMage.webp"
 };
 const TALENT_ICONS = {
   "arcane study":"BLM/Enochian.webp", "bardic study":"BRD/Mage's_Ballad.webp", "weapon proficiency":"ROLE-MELEE/Bloodbath.webp",
