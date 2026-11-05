@@ -12,7 +12,7 @@ Alternatively, download the ZIP, extract its `last-arc-analogue` folder into Fou
 
 ## Included
 
-- Character and NPC sheets with attributes, skills, defences, combat resources, weapons, features, spell/technick lists, inventory, and biography.
+- Character and NPC sheets with attributes, skills, defences, combat resources, weapons, features, spell/technick lists, inventory, and biography. Player sheets use a portrait-led header, compact hover-expanding icon navigation, and a dedicated configuration dialog for damage resistance, immunity, vulnerabilities, and condition immunity.
 - Break Threshold is derived from Fortitude Defence, Technick/equipment and miscellaneous bonuses, and creature size. Damage that exceeds it moves a character down the Break Gauge; gauge penalties affect defences, attacks, skills, and attribute checks. The sheet tracks unconsciousness, persistent injuries, limb loss, Second Wind, recovery actions, consciousness checks, and rest-based HP/MP recovery.
 - Attribute modifiers, level-scaled skill/defence values, class bonuses, passive Perception, and class initiative dice (including the combat tracker).
 - Chat rolls for attributes, skills, initiative, weapon attacks, and item damage formulas; HP/MP controls, damage application, and inventory bulk.
@@ -91,6 +91,8 @@ Version 0.2.30 fixes area Magick placement for Foundry VTT 12/13 by drawing an i
 Version 0.2.31 rolls area Magick damage once per damage effect and posts one chat roll for all affected tokens. The chat damage payload carries per-target amounts so successful defences, half-damage effects, and area riders still resolve separately for each target.
 
 Version 0.2.32 adds a dedicated one-page NPC/adversary sheet, preserves printed stat-block values for NPC attacks, defences, resources, Break Threshold, and skills, and adds the Allies and Adversaries actor pack plus ten Bestiary actor packs. The packs contain 33 NPC Codex entries and 127 creatures, including their attacks, listed skills, protections, special-ability references, spell/performance links, equipment and loot notes. NPC Rules and Afflictions contains quick references for nonheroic characters, beasts, lichdom, lycanthropy, vampyrism, group scaling, and companions. Foundry v13 compatibility remains declared.
+
+Version 0.2.33 refreshes only the player sheet with a larger portrait, cleaner header and resource cards, a right-side navigation rail that reveals page names on hover/focus, and a checkbox-based protection editor for damage resistances, damage immunities, vulnerabilities, condition immunities, and custom entries. NPC, bestiary, and Aeon sheets retain their own layouts.
 
 ## Attribution and status
 

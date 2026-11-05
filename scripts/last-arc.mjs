@@ -34,6 +34,14 @@ const SKILL_ICONS = {
   "lore-terrestrial": "fa-book-open", "lore-mystic": "fa-book-open", "lore-occult": "fa-book-open", medicine: "fa-medkit", perception: "fa-eye",
   perform: "fa-theater-masks", persuasion: "fa-comments", pilot: "fa-compass", ride: "fa-horse", smithing: "fa-hammer", spellcraft: "fa-magic", stealth: "fa-user-secret", survival: "fa-tree"
 };
+const CONDITION_IMMUNITY_TYPES = [
+  ["blinded", "LA.ConditionBlinded"], ["charmed", "LA.ConditionCharmed"], ["confused", "LA.ConditionConfused"],
+  ["cursed", "LA.ConditionCursed"], ["dazed", "LA.ConditionDazed"], ["deafened", "LA.ConditionDeafened"],
+  ["diseased", "LA.ConditionDiseased"], ["frightened", "LA.ConditionFrightened"], ["grappled", "LA.ConditionGrappled"],
+  ["paralyzed", "LA.ConditionParalyzed"], ["poisoned", "LA.ConditionPoisoned"], ["prone", "LA.ConditionProne"],
+  ["restrained", "LA.ConditionRestrained"], ["silenced", "LA.ConditionSilenced"], ["stunned", "LA.ConditionStunned"],
+  ["unconscious", "LA.ConditionUnconscious"]
+].map(([value, label]) => ({ value, label }));
 
 function safeNumber(value, fallback = 0) {
   const n = Number(value);
@@ -469,6 +477,7 @@ class LastArcActor extends Actor {
     system.resources ??= {};
     system.details ??= {};
     system.combat ??= {};
+    system.combat.conditionImmunities ??= [];
     // Fresh Actors can have an empty system object because the document type
     // schemas are intentionally permissive. Existing sheets already carry
     // these nested values, so initialize them before any derived calculations
@@ -948,6 +957,19 @@ class LastArcActorSheet extends ActorSheet {
     context.skills = Object.entries(SKILLS).map(([key, attribute]) => ({ key, label: SKILL_LABELS[key], icon: SKILL_ICONS[key], attribute, attributeLabel: ATTRIBUTE_LABELS[attribute], ...this.actor.system.skills[key] }));
     context.defenceList = ["fort", "ref", "will"].map(key => ({ key, label: `LA.${key === "fort" ? "Fortitude" : key === "ref" ? "Reflex" : "Will"}`, ...this.actor.system.defences[key] }));
     context.itemGroups = ITEM_TYPES.map(type => ({ type, label: game.i18n.localize(`LA.ItemType.${type}`), items: this.actor.items.filter(item => item.type === type) }));
+    const protectionValues = value => (Array.isArray(value) ? value : String(value ?? "").split(/[,;\n]+/))
+      .map(entry => String(entry).trim().toLowerCase()).filter(Boolean);
+    const protectionLabels = values => values.map(value => {
+      const damageType = DAMAGE_TYPES.find(type => type.value === value);
+      const conditionType = CONDITION_IMMUNITY_TYPES.find(type => type.value === value);
+      return damageType || conditionType ? game.i18n.localize(damageType?.label ?? conditionType.label) : value;
+    });
+    context.protectionSummary = {
+      resistances: protectionLabels(protectionValues(this.actor.system.combat.resistances)),
+      immunities: protectionLabels(protectionValues(this.actor.system.combat.immunities)),
+      vulnerabilities: protectionLabels(protectionValues(this.actor.system.combat.vulnerabilities)),
+      conditionImmunities: protectionLabels(protectionValues(this.actor.system.combat.conditionImmunities))
+    };
     const npcGaugePenalty = safeNumber(this.actor.system.combat.breakGaugePenalty);
     context.npcSkills = (this.actor.system.adversary?.skills ?? []).map(skill => ({ ...skill, label: skill.name, value: signed(safeNumber(skill.bonus) + npcGaugePenalty) }));
     context.npcAttributes = ATTRIBUTES.map(key => ({ key, label: game.i18n.localize(ATTRIBUTE_LABELS[key]), score: safeNumber(this.actor.system.adversary?.attributes?.[key], this.actor.system.attributes[key]?.score) }));
@@ -989,6 +1011,7 @@ class LastArcActorSheet extends ActorSheet {
       if (item) await item.update({ "system.equipped": event.currentTarget.checked });
     });
     html.find(".apply-damage").on("click", this._onApplyDamage.bind(this));
+    html.find(".la-open-protection-config").on("click", this._onProtectionConfig.bind(this));
     html.find(".la-second-wind").on("click", async event => { event.preventDefault(); await this.actor.useSecondWind(); });
     html.find(".la-rest").on("click", this._onRest.bind(this));
     html.find(".la-recovery-action").on("click", async event => { event.preventDefault(); await this.actor.takeRecoveryAction(); });
@@ -2098,6 +2121,48 @@ class LastArcActorSheet extends ActorSheet {
       default: "apply", close: () => resolve(null)
     }).render(true));
     if (amount) await this.actor.applyDamage(amount.amount, { type: amount.type });
+  }
+  async _onProtectionConfig(event) {
+    event.preventDefault();
+    const readValues = value => (Array.isArray(value) ? value : String(value ?? "").split(/[,;\n]+/))
+      .map(entry => String(entry).trim().toLowerCase()).filter(Boolean);
+    const damageKeys = DAMAGE_TYPES.map(type => type.value);
+    const conditionKeys = CONDITION_IMMUNITY_TYPES.map(type => type.value);
+    const makeOptions = (name, options, selected) => options.map(option => {
+      const value = typeof option === "string" ? option : option.value;
+      const label = typeof option === "string" ? option : game.i18n.localize(option.label);
+      return `<label class="la-protection-option"><span>${foundry.utils.escapeHTML(label)}</span><input type="checkbox" name="${name}" value="${foundry.utils.escapeHTML(value)}" ${selected.has(value) ? "checked" : ""}></label>`;
+    }).join("");
+    const categories = [
+      { key: "resistances", label: game.i18n.localize("LA.Resistances"), types: DAMAGE_TYPES, known: damageKeys },
+      { key: "immunities", label: game.i18n.localize("LA.DamageImmunities"), types: DAMAGE_TYPES, known: damageKeys },
+      { key: "vulnerabilities", label: game.i18n.localize("LA.Vulnerabilities"), types: DAMAGE_TYPES, known: damageKeys },
+      { key: "conditionImmunities", label: game.i18n.localize("LA.ConditionImmunities"), types: CONDITION_IMMUNITY_TYPES, known: conditionKeys }
+    ];
+    const fields = categories.map(category => {
+      const values = readValues(this.actor.system.combat[category.key]);
+      const selected = new Set(values.filter(value => category.known.includes(value)));
+      const custom = values.filter(value => !category.known.includes(value)).join("; ");
+      return `<fieldset class="la-protection-config-group"><legend>${foundry.utils.escapeHTML(category.label)}</legend><div class="la-protection-options">${makeOptions(category.key, category.types, selected)}</div><label class="la-protection-special">${game.i18n.localize("LA.SpecialValues")}<input type="text" name="${category.key}-special" value="${foundry.utils.escapeHTML(custom)}" placeholder="${game.i18n.localize("LA.SpecialValuesHint")}"><small>${game.i18n.localize("LA.SpecialValuesHint")}</small></label></fieldset>`;
+    }).join("");
+    const result = await new Promise(resolve => new Dialog({
+      title: game.i18n.localize("LA.ConfigureProtections"),
+      content: `<form class="la-protection-config"><p>${game.i18n.localize("LA.ConfigureProtectionsHint")}</p><div class="la-protection-config-grid">${fields}</div></form>`,
+      buttons: {
+        save: { label: game.i18n.localize("LA.SaveChanges"), callback: html => {
+          const update = {};
+          for (const category of categories) {
+            const chosen = html.find(`input[name="${category.key}"]:checked`).map((_, input) => input.value).get();
+            const special = String(html.find(`[name="${category.key}-special"]`).val() ?? "").split(/[;,\n]+/).map(value => value.trim().toLowerCase()).filter(Boolean);
+            update[`system.combat.${category.key}`] = [...new Set([...chosen, ...special])];
+          }
+          resolve(update);
+        } },
+        cancel: { label: game.i18n.localize("LA.Cancel"), callback: () => resolve(null) }
+      },
+      default: "save", close: () => resolve(null)
+    }, { width: 760 }).render(true));
+    if (result) await this.actor.update(result);
   }
   async _onRest(event) {
     event.preventDefault();

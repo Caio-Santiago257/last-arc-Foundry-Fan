@@ -1,6 +1,6 @@
 <form class="la-sheet {{#if isCharacter}}la-character{{else}}la-npc{{/if}}" autocomplete="off">
-  <header class="la-header">
-    <div class="la-portrait" title="{{localize 'LA.CharacterSheet'}}"><img src="{{actor.img}}" data-edit="img" alt=""></div>
+  <header class="la-header la-character-header">
+    <div class="la-portrait" title="{{localize 'LA.CharacterSheet'}}"><img src="{{actor.img}}" data-edit="img" alt=""><span class="la-portrait-frame" aria-hidden="true"></span></div>
     <div class="la-identity">
       <input class="la-name" name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'LA.Name'}}">
       <div class="la-identity-grid">
@@ -15,14 +15,14 @@
   </header>
 
   <nav class="sheet-tabs la-tabs" data-group="primary">
-    <a class="item" data-tab="overview">{{localize "LA.Attributes"}}</a>
-    <a class="item" data-tab="combat">{{localize "LA.Combat"}}</a>
-    <a class="item" data-tab="skills">{{localize "LA.Skills"}}</a>
-    <a class="item" data-tab="features">{{localize "LA.Features"}}</a>
-    <a class="item" data-tab="spells">{{localize "LA.Spells"}} / {{localize "LA.Technicks"}}</a>
-    <a class="item" data-tab="effects">{{localize "LA.ActiveEffects"}}</a>
-    <a class="item" data-tab="inventory">{{localize "LA.Inventory"}}</a>
-    <a class="item" data-tab="biography">{{localize "LA.Biography"}}</a>
+    <a class="item" data-tab="overview" title="{{localize 'LA.Attributes'}}" aria-label="{{localize 'LA.Attributes'}}"><i class="fas fa-user" aria-hidden="true"></i><span>{{localize "LA.Attributes"}}</span></a>
+    <a class="item" data-tab="combat" title="{{localize 'LA.Combat'}}" aria-label="{{localize 'LA.Combat'}}"><i class="fas fa-shield-alt" aria-hidden="true"></i><span>{{localize "LA.Combat"}}</span></a>
+    <a class="item" data-tab="skills" title="{{localize 'LA.Skills'}}" aria-label="{{localize 'LA.Skills'}}"><i class="fas fa-list-alt" aria-hidden="true"></i><span>{{localize "LA.Skills"}}</span></a>
+    <a class="item" data-tab="features" title="{{localize 'LA.Features'}}" aria-label="{{localize 'LA.Features'}}"><i class="fas fa-book-open" aria-hidden="true"></i><span>{{localize "LA.Features"}}</span></a>
+    <a class="item" data-tab="spells" title="{{localize 'LA.Spells'}} / {{localize 'LA.Technicks'}}" aria-label="{{localize 'LA.Spells'}} / {{localize 'LA.Technicks'}}"><i class="fas fa-magic" aria-hidden="true"></i><span>{{localize "LA.Spells"}} / {{localize "LA.Technicks"}}</span></a>
+    <a class="item" data-tab="effects" title="{{localize 'LA.ActiveEffects'}}" aria-label="{{localize 'LA.ActiveEffects'}}"><i class="fas fa-bolt" aria-hidden="true"></i><span>{{localize "LA.ActiveEffects"}}</span></a>
+    <a class="item" data-tab="inventory" title="{{localize 'LA.Inventory'}}" aria-label="{{localize 'LA.Inventory'}}"><i class="fas fa-suitcase" aria-hidden="true"></i><span>{{localize "LA.Inventory"}}</span></a>
+    <a class="item" data-tab="biography" title="{{localize 'LA.Biography'}}" aria-label="{{localize 'LA.Biography'}}"><i class="fas fa-feather-alt" aria-hidden="true"></i><span>{{localize "LA.Biography"}}</span></a>
   </nav>
 
   <section class="sheet-body la-body">
@@ -60,7 +60,12 @@
         <div class="la-section-heading"><h2>{{localize "LA.Attack"}}</h2><button type="button" class="item-create la-add" data-type="weapon">{{localize "LA.AddItem"}}</button></div>
         <div class="la-weapon-list">{{#each itemGroups as |group|}}{{#if (eq group.type "weapon")}}{{#each group.items as |item|}}<div class="item la-weapon-row" data-item-id="{{item.id}}"><button type="button" class="item-roll la-die" title="{{localize 'LA.Roll'}}"><i class="fas fa-dice-d20" aria-hidden="true"></i></button><button type="button" class="item-edit la-link"><i class="fas fa-crosshairs" aria-hidden="true"></i> {{item.name}}</button><span>{{item.system.range}}</span><span>{{item.system.damage.formula}}</span><button type="button" class="item-delete la-icon-button" title="{{localize 'LA.Delete'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button></div>{{/each}}{{/if}}{{/each}}</div>
       </section>
-        <section class="la-panel"><h2>{{localize "LA.Combat"}} — {{localize "LA.Details"}}</h2><div class="la-three-columns"><label>{{localize "LA.Immunities"}}<textarea name="system.combat.immunities">{{system.combat.immunities}}</textarea></label><label>{{localize "LA.Resistances"}}<textarea name="system.combat.resistances">{{system.combat.resistances}}</textarea></label><label>{{localize "LA.Vulnerabilities"}}<textarea name="system.combat.vulnerabilities">{{system.combat.vulnerabilities}}</textarea></label></div>{{#if system.combat.equipmentResistances.length}}<small>{{localize "LA.GearResistances"}}: {{#each system.combat.equipmentResistances as |entry|}}{{entry}}{{#unless @last}}, {{/unless}}{{/each}}</small>{{/if}}{{#if system.combat.equipmentImmunities.length}}<small>{{localize "LA.GearImmunities"}}: {{#each system.combat.equipmentImmunities as |entry|}}{{entry}}{{#unless @last}}, {{/unless}}{{/each}}</small>{{/if}}<label class="la-toggle"><input type="checkbox" name="system.combat.emptyHands" {{checked system.combat.emptyHands}}>{{localize "LA.EmptyHands"}}</label><label class="la-toggle"><input type="checkbox" name="system.combat.flatFooted" {{checked system.combat.flatFooted}}>{{localize "LA.FlatFooted"}}</label><div class="la-technick-summary">{{#if system.combat.additionalCounterattacks}}<span>{{localize "LA.AdditionalCounterattacks"}}: +{{system.combat.additionalCounterattacks}}</span>{{/if}}{{#if system.combat.extraSecondWinds}}<span>{{localize "LA.ExtraSecondWinds"}}: +{{system.combat.extraSecondWinds}}</span>{{/if}}{{#if system.combat.breakThresholdBonus}}<span>{{localize "LA.BreakThresholdBonus"}}: +{{system.combat.breakThresholdBonus}}</span>{{/if}}{{#if showTripleCrit}}<span>{{localize "LA.RangedCriticalMultiplier"}}: ×{{system.combat.rangedCriticalMultiplier}}</span>{{/if}}{{#if hasWeaponProficiencies}}<span>{{localize "LA.WeaponProficiency"}}: {{#each weaponProficiencyList as |group|}}{{group}}{{#unless @last}}, {{/unless}}{{/each}}</span>{{/if}}</div></section>
+        <section class="la-panel la-protection-panel"><div class="la-section-heading"><h2>{{localize "LA.Combat"}} — {{localize "LA.Details"}}</h2><button type="button" class="la-open-protection-config la-add" title="{{localize 'LA.ConfigureProtections'}}"><i class="fas fa-cog" aria-hidden="true"></i> {{localize "LA.Configure"}}</button></div><div class="la-protection-grid">
+          <div><b><i class="fas fa-shield-alt" aria-hidden="true"></i> {{localize "LA.Resistances"}}</b><p>{{#each protectionSummary.resistances as |entry|}}<span>{{entry}}</span>{{else}}<small>—</small>{{/each}}</p></div>
+          <div><b><i class="fas fa-ban" aria-hidden="true"></i> {{localize "LA.Immunities"}}</b><p>{{#each protectionSummary.immunities as |entry|}}<span>{{entry}}</span>{{else}}<small>—</small>{{/each}}</p></div>
+          <div><b><i class="fas fa-heart-broken" aria-hidden="true"></i> {{localize "LA.Vulnerabilities"}}</b><p>{{#each protectionSummary.vulnerabilities as |entry|}}<span>{{entry}}</span>{{else}}<small>—</small>{{/each}}</p></div>
+          <div><b><i class="fas fa-user-slash" aria-hidden="true"></i> {{localize "LA.ConditionImmunities"}}</b><p>{{#each protectionSummary.conditionImmunities as |entry|}}<span>{{entry}}</span>{{else}}<small>—</small>{{/each}}</p></div>
+        </div>{{#if system.combat.equipmentResistances.length}}<small>{{localize "LA.GearResistances"}}: {{#each system.combat.equipmentResistances as |entry|}}{{entry}}{{#unless @last}}, {{/unless}}{{/each}}</small>{{/if}}{{#if system.combat.equipmentImmunities.length}}<small>{{localize "LA.GearImmunities"}}: {{#each system.combat.equipmentImmunities as |entry|}}{{entry}}{{#unless @last}}, {{/unless}}{{/each}}</small>{{/if}}<label class="la-toggle"><input type="checkbox" name="system.combat.emptyHands" {{checked system.combat.emptyHands}}>{{localize "LA.EmptyHands"}}</label><label class="la-toggle"><input type="checkbox" name="system.combat.flatFooted" {{checked system.combat.flatFooted}}>{{localize "LA.FlatFooted"}}</label><div class="la-technick-summary">{{#if system.combat.additionalCounterattacks}}<span>{{localize "LA.AdditionalCounterattacks"}}: +{{system.combat.additionalCounterattacks}}</span>{{/if}}{{#if system.combat.extraSecondWinds}}<span>{{localize "LA.ExtraSecondWinds"}}: +{{system.combat.extraSecondWinds}}</span>{{/if}}{{#if system.combat.breakThresholdBonus}}<span>{{localize "LA.BreakThresholdBonus"}}: +{{system.combat.breakThresholdBonus}}</span>{{/if}}{{#if showTripleCrit}}<span>{{localize "LA.RangedCriticalMultiplier"}}: ×{{system.combat.rangedCriticalMultiplier}}</span>{{/if}}{{#if hasWeaponProficiencies}}<span>{{localize "LA.WeaponProficiency"}}: {{#each weaponProficiencyList as |group|}}{{group}}{{#unless @last}}, {{/unless}}{{/each}}</span>{{/if}}</div></section>
     </div>
 
     <div class="tab" data-group="primary" data-tab="skills">

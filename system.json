@@ -2,7 +2,7 @@
   "id": "last-arc-analogue",
   "title": "Last Arc: Tactics Analogue (Fan System)",
   "description": "Community-built Foundry VTT system framework for Last Arc: Tactics Analogue.",
-  "version": "0.2.32",
+  "version": "0.2.33",
   "compatibility": {
     "minimum": 12,
     "verified": 13
@@ -517,5 +517,5 @@
   "secondaryTokenAttribute": "resources.mp",
   "url": "https://github.com/Caio-Santiago257/last-arc-Foundry-Fan",
   "manifest": "https://raw.githubusercontent.com/Caio-Santiago257/last-arc-Foundry-Fan/main/system.json",
-  "download": "https://raw.githubusercontent.com/Caio-Santiago257/last-arc-Foundry-Fan/main/releases/last-arc-analogue-v0.2.32.zip"
+  "download": "https://raw.githubusercontent.com/Caio-Santiago257/last-arc-Foundry-Fan/main/releases/last-arc-analogue-v0.2.33.zip"
 }
