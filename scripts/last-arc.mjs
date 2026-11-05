@@ -482,7 +482,7 @@ class LastArcActor extends Actor {
     // schemas are intentionally permissive. Existing sheets already carry
     // these nested values, so initialize them before any derived calculations
     // access hp.baseMax, mp.max, or heroPoints.value.
-    system.resources.hp = { value: 0, max: 0, baseMax: 0, ...(system.resources.hp ?? {}) };
+    system.resources.hp = { value: 0, max: 0, ...(system.resources.hp ?? {}) };
     system.resources.mp = { value: 0, max: 0, ...(system.resources.mp ?? {}) };
     system.resources.heroPoints = { value: 0, max: 0, ...(system.resources.heroPoints ?? {}) };
     system.details.racialEffects ??= {};
@@ -620,8 +620,36 @@ class LastArcActor extends Actor {
     }
     const hp = system.resources?.hp ?? {};
     const mp = system.resources?.mp ?? {};
-    system.resources.hp = { value: safeNumber(hp.value), max: safeNumber(system.resources.hp.baseMax, safeNumber(hp.max)) + gearHpBonus, baseMax: safeNumber(system.resources.hp.baseMax, safeNumber(hp.max)) };
-    system.resources.mp = { value: safeNumber(mp.value), max: safeNumber(mp.max) };
+    const classHpMax = classItems.reduce((sum, item) => {
+      const levels = Math.max(0, safeNumber(item.system.classLevel));
+      if (!levels) return sum;
+      const initial = item.system.isStartingClass ? safeNumber(item.system.hpAtFirstLevel) : 0;
+      return sum + initial + Math.max(0, levels - (item.system.isStartingClass ? 1 : 0)) * Math.max(1, safeNumber(item.system.hpPerLevel) + system.attributes.vit.modifier) + (item.system.isStartingClass ? system.attributes.vit.modifier : 0);
+    }, 0);
+    const classMpMax = classItems.reduce((sum, item) => {
+      const levels = Math.max(0, safeNumber(item.system.classLevel));
+      if (!levels) return sum;
+      const initial = item.system.isStartingClass ? safeNumber(item.system.mpAtFirstLevel) : 0;
+      return sum + initial + Math.max(0, levels - (item.system.isStartingClass ? 1 : 0)) * Math.max(1, safeNumber(item.system.mpPerLevel) + system.attributes.mnd.modifier) + (item.system.isStartingClass ? system.attributes.mnd.modifier : 0);
+    }, 0);
+    const technickResourceMax = technicks.reduce((totals, item) => {
+      const resources = item.system.effects?.resources ?? {};
+      totals.hp += safeNumber(resources.hpMaxFlat) + safeNumber(resources.hpMaxPerLevel) * level;
+      totals.mp += safeNumber(resources.mpMaxFlat) + safeNumber(resources.mpMaxPerLevel) * level;
+      return totals;
+    }, { hp: 0, mp: 0 });
+    // Older character records may have hp.max but no hp.baseMax. The old
+    // initialization inserted baseMax: 0 first, masking the saved max and
+    // making a healthy character display as 78/0. Recover from the saved max,
+    // or rebuild it from class progression and resource Technicks if both
+    // legacy values are empty.
+    const savedBaseHp = safeNumber(hp.baseMax);
+    const savedHpMax = safeNumber(hp.max);
+    const baseHpMax = savedBaseHp > 0 ? savedBaseHp : savedHpMax > 0 ? savedHpMax : classHpMax + technickResourceMax.hp;
+    const savedMpMax = safeNumber(mp.max);
+    const baseMpMax = savedMpMax > 0 ? savedMpMax : classMpMax + technickResourceMax.mp;
+    system.resources.hp = { value: safeNumber(hp.value), max: baseHpMax + gearHpBonus, baseMax: baseHpMax };
+    system.resources.mp = { value: safeNumber(mp.value), max: baseMpMax };
     system.combat.breakThresholdBonus = countTechnickEffect("breakThresholdBonus") + gearBreakBonus;
     const size = String(raceItem?.system.size ?? system.combat.creatureSize ?? "medium").toLowerCase();
     const sizeBonus = ({ large: 5, huge: 10, gargantuan: 20, colossal: 50 })[size] ?? 0;
@@ -957,6 +985,13 @@ class LastArcActorSheet extends ActorSheet {
     context.skills = Object.entries(SKILLS).map(([key, attribute]) => ({ key, label: SKILL_LABELS[key], icon: SKILL_ICONS[key], attribute, attributeLabel: ATTRIBUTE_LABELS[attribute], ...this.actor.system.skills[key] }));
     context.defenceList = ["fort", "ref", "will"].map(key => ({ key, label: `LA.${key === "fort" ? "Fortitude" : key === "ref" ? "Reflex" : "Will"}`, ...this.actor.system.defences[key] }));
     context.itemGroups = ITEM_TYPES.map(type => ({ type, label: game.i18n.localize(`LA.ItemType.${type}`), items: this.actor.items.filter(item => item.type === type) }));
+    const resourcePercent = resource => {
+      const max = safeNumber(resource?.max);
+      return max > 0 ? Math.max(0, Math.min(100, safeNumber(resource.value) / max * 100)) : 0;
+    };
+    context.hpPercent = resourcePercent(this.actor.system.resources.hp);
+    context.mpPercent = resourcePercent(this.actor.system.resources.mp);
+    context.hpState = context.hpPercent <= 25 ? "critical" : context.hpPercent <= 50 ? "wounded" : "healthy";
     const protectionValues = value => (Array.isArray(value) ? value : String(value ?? "").split(/[,;\n]+/))
       .map(entry => String(entry).trim().toLowerCase()).filter(Boolean);
     const protectionLabels = values => values.map(value => {

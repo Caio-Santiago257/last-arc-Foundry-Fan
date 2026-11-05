@@ -94,6 +94,8 @@ Version 0.2.32 adds a dedicated one-page NPC/adversary sheet, preserves printed 
 
 Version 0.2.33 refreshes only the player sheet with a larger portrait, cleaner header and resource cards, a right-side navigation rail that reveals page names on hover/focus, and a checkbox-based protection editor for damage resistances, damage immunities, vulnerabilities, condition immunities, and custom entries. NPC, bestiary, and Aeon sheets retain their own layouts.
 
+Version 0.2.34 fixes legacy player sheets whose saved HP maximum was masked by an initialized zero `baseMax`. Missing maximum values are rebuilt from class progression and resource Technicks. The player overview now displays HP and MP as proportionally filled resource bars.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork. The system code is provided without an added license until the repository owner chooses one.
