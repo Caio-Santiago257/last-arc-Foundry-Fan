@@ -43,7 +43,7 @@
       {{#each itemGroups as |group|}}{{#if (eq group.type "performance")}}<h3 class="la-subheading">{{localize "LA.Performances"}}</h3>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}{{/if}}{{/each}}
     </section>
 
-    {{#if npcSkills.length}}<section class="la-panel"><h2>{{localize "LA.Skills"}}</h2><div class="la-npc-skills">{{#each npcSkills as |skill|}}<div><span>{{skill.label}}</span><b>{{skill.value}}</b></div>{{/each}}</div></section>{{/if}}
+    {{#if npcSkills.length}}<section class="la-panel"><h2>{{localize "LA.Skills"}}</h2><div class="la-npc-skills">{{#each npcSkills as |skill|}}<button type="button" class="rollable la-npc-skill-roll" data-roll="npc-skill" data-label="{{skill.label}}" data-bonus="{{skill.value}}" title="{{localize 'LA.RollSkill'}}"><span>{{skill.label}}</span><b>{{skill.value}}</b></button>{{/each}}</div></section>{{/if}}
 
     {{#each itemGroups as |group|}}{{#if (or (eq group.type "feature") (eq group.type "talent") (eq group.type "technick"))}}<section class="la-panel la-npc-actions"><h2>{{group.label}}</h2>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}</section>{{/if}}{{/each}}
 

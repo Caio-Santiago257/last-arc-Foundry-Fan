@@ -261,13 +261,21 @@
 .la-npc-protections>div:last-child { border-bottom:0; }
 .la-npc-protections>div>b { color:var(--la-muted); font:700 9px Arial,sans-serif; text-transform:uppercase; }
 .la-npc-muted { margin:8px 0 0; color:var(--la-muted); font:10px/1.4 Arial,sans-serif; }
-.la-npc-skills { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:4px 12px; }
-.la-npc-skills>div { display:flex; justify-content:space-between; gap:8px; padding:4px; border-bottom:1px solid var(--la-line); font:11px Arial,sans-serif; }
-.la-npc-skills b { color:var(--la-accent); }
-.la-npc-inventory p,.la-npc-description { margin:5px 0; font:12px/1.5 Georgia,serif; }
+.la-npc-skills { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:3px 8px; }
+.la-npc-skill-roll { display:flex; min-width:0; justify-content:space-between; gap:8px; padding:4px 5px; border:0; border-bottom:1px solid var(--la-line); background:transparent; color:var(--la-ink); text-align:left; font:11px Arial,sans-serif; cursor:pointer; }
+.la-npc-skill-roll:hover,.la-npc-skill-roll:focus-visible { background:rgba(169,130,76,.12); color:var(--la-accent); }
+.la-npc-skill-roll span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.la-npc-skill-roll b { flex:0 0 auto; color:var(--la-accent); }
+.la-npc-inventory p,.la-npc-description { margin:3px 0; font:12px/1.4 Georgia,serif; }
 .la-npc-damage { padding:6px 10px; }
 .la-npc-damage .la-primary-button { min-height:30px; }
 .la-npc-sheet .la-item-list .item.la-item-row { grid-template-columns:30px minmax(120px,1fr) minmax(70px,auto) minmax(60px,auto) 28px; }
+.la-npc-inventory .la-item-list { margin-top:5px; }
+.la-npc-inventory .la-item-row { min-width:0; gap:5px; padding:4px 2px; }
+.la-npc-sheet .la-item-list .item.la-item-row.la-equipped-row { grid-template-columns:18px 25px minmax(0,1fr) minmax(45px,auto) minmax(40px,auto) 22px; min-height:36px; }
+.la-npc-inventory .la-item-row .item-edit { min-width:0; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+.la-npc-inventory .la-item-row .la-item-image-button,.la-npc-inventory .la-item-row .la-item-image { width:25px; min-width:25px; max-width:25px; height:25px; }
+.la-npc-inventory .la-item-row .item-delete { justify-self:center; }
 @media (max-width:700px) { .la-npc-header { grid-template-columns:56px minmax(0,1fr) 65px; gap:8px; padding:8px; }.la-npc-portrait { width:56px; height:56px; }.la-npc-identity .la-name { font-size:19px; }.la-npc-resource-grid { grid-template-columns:1fr 1fr; }.la-npc-grid { grid-template-columns:1fr; }.la-npc-body { padding:8px; } }
 @media (max-width: 760px) { .la-break-track { grid-template-columns:repeat(3,minmax(0,1fr)); }.la-break-heading { align-items:flex-start; } }
 @media (max-width: 760px) { .la-header { grid-template-columns: 65px minmax(0,1fr) 156px; gap: 8px; padding: 10px; }.la-level-card { padding: 5px; }.la-portrait { width: 65px; height: 82px; }.la-identity-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }.la-overview-grid { grid-template-columns: 1fr; }.la-body { padding: 8px; }.la-skill-table { overflow-x: auto; }.la-skill-header,.la-skill-row { min-width: 590px; }.la-tabs { overflow-x: auto; }.la-tabs .item { white-space: nowrap; padding: 7px; } }

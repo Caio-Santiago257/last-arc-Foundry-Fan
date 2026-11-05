@@ -2106,6 +2106,7 @@ class LastArcActorSheet extends ActorSheet {
     let label = target.dataset.label || game.i18n.localize("LA.Roll");
     let bonus = safeNumber(target.dataset.bonus);
     if (kind === "skill") { label = game.i18n.localize(SKILL_LABELS[key] ?? label); bonus = actor.system.skills[key]?.total ?? bonus; }
+    if (kind === "npc-skill") { label = target.dataset.label || label; bonus = safeNumber(target.dataset.bonus); }
     if (kind === "attribute") { label = game.i18n.localize(ATTRIBUTE_LABELS[key] ?? label); bonus = actor.system.attributes[key]?.modifier ?? bonus; }
     if (kind === "attack") label = game.i18n.localize("LA.AttackRoll");
     if (kind === "initiative") label = game.i18n.localize("LA.Initiative");
