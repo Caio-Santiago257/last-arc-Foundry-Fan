@@ -1,0 +1,1234 @@
+[
+  {
+    "name": "Kobold",
+    "category": "Beastkin",
+    "profile": "beastkin",
+    "cr": 3,
+    "level": 3,
+    "xp": 600,
+    "size": "small",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 18,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "Low-light Vision, Scent; Passive Perception 15",
+    "passivePerception": 15,
+    "ref": 15,
+    "flatFootedRef": 14,
+    "fort": 14,
+    "will": 12,
+    "dr": 0,
+    "breakThreshold": 14,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Beastongue Vicious yet cowardly, these mongrels strike only when their numbers give them the advantage.",
+    "attributes": {
+      "str": 9,
+      "agi": 13,
+      "vit": 12,
+      "int": 10,
+      "mnd": 9,
+      "cha": 8
+    },
+    "attacks": [
+      {
+        "name": "Field Khukuri",
+        "attack": 12,
+        "damage": "2d4+1",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 7,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Athletics",
+        "bonus": 5,
+        "key": "athletics"
+      },
+      {
+        "name": "Light Weapon",
+        "bonus": 12,
+        "key": "light-weapon"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 6,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 5,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 12,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 5,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Vicious yet cowardly, these mongrels strike only when their numbers give them the advantage.",
+    "abilities": [
+      {
+        "name": "Pack Tactics",
+        "description": "When a kobold is adjacent to an enemy creature, the kobold’s allies gain a +2 bonus on attack rolls against that creature (max +10)."
+      },
+      {
+        "name": "Subservient",
+        "description": "Kobolds may add the Str modifier of a single ally, within 6 squares and line of sight, to their own Will Defence."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Skill Focus (light weapon)",
+      "Weapon Proficiency (knives)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Field Khukuri",
+    "loot": "Field Khukuri (20%), Beast Mane (50%)",
+    "steal": "Health Potion (5%)",
+    "sourcePage": 303,
+    "profileLine": "Corrupt Neutral Small Beastkin 3; Aggressive",
+    "species": "Beastkin",
+    "classLevels": ""
+  },
+  {
+    "name": "Faun",
+    "category": "Beastkin",
+    "profile": "beastkin",
+    "cr": 4,
+    "level": 4,
+    "xp": 800,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "Helpful*",
+    "hp": 24,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "; Passive Perception 19",
+    "passivePerception": 19,
+    "ref": 17,
+    "flatFootedRef": 14,
+    "fort": 15,
+    "will": 16,
+    "dr": 5,
+    "breakThreshold": 15,
+    "immunities": [
+      "Sleep"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Beastongue Helpful to lone travelers but easily frightened, these creatures flee from larger groups.",
+    "attributes": {
+      "str": 14,
+      "agi": 16,
+      "vit": 13,
+      "int": 11,
+      "mnd": 14,
+      "cha": 17
+    },
+    "attacks": [
+      {
+        "name": "Gore",
+        "attack": 14,
+        "damage": "1d6+4",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 10,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 10,
+        "key": "deception"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 7,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 9,
+        "key": "perception"
+      },
+      {
+        "name": "Perform (instrument)",
+        "bonus": 15,
+        "key": "perform"
+      },
+      {
+        "name": "Survival",
+        "bonus": 9,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 14,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Helpful to lone travelers but easily frightened, these creatures flee from larger groups.",
+    "abilities": [
+      {
+        "name": "Lullaby",
+        "description": "As a primary action, the faun may make a Perform Instrument check (d20+15) against the Will Defence of all living creatures within 6 squares. If successful, the target is put to sleep. The faun may not use this ability again for 1d4+1 turns. This is a mind effect."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Skill Focus (perform instrument, unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Crumhorn",
+    "loot": "Beast Horn (50%), Crumhorn (95%)",
+    "steal": "Ammonia Salt (50%)",
+    "sourcePage": 303,
+    "profileLine": "Neutral Good Medium Beastkin 4; Helpful*",
+    "species": "Beastkin",
+    "classLevels": ""
+  },
+  {
+    "name": "Siren",
+    "category": "Beastkin",
+    "profile": "beastkin",
+    "cr": 5,
+    "level": 5,
+    "xp": 1000,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "Territorial",
+    "hp": 30,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "4, Fly 8 (hover)",
+    "senses": "Low-light Vision; Passive Perception 21",
+    "passivePerception": 21,
+    "ref": 18,
+    "flatFootedRef": 15,
+    "fort": 19,
+    "will": 19,
+    "dr": 5,
+    "breakThreshold": 19,
+    "immunities": [
+      "Silence",
+      "Toad"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Beastongue, Primordial One of the terrors of the Sphallien Sea, these creatures use their haunting song to lure sailors to a watery doom.",
+    "attributes": {
+      "str": 10,
+      "agi": 17,
+      "vit": 12,
+      "int": 14,
+      "mnd": 19,
+      "cha": 21
+    },
+    "attacks": [
+      {
+        "name": "Claws",
+        "attack": 12,
+        "damage": "1d4+2",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 10,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 9,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 11,
+        "key": "perception"
+      },
+      {
+        "name": "Perform (oratory)",
+        "bonus": 17,
+        "key": "perform"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 10,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 11,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 12,
+        "key": "unarmed"
+      }
+    ],
+    "description": "One of the terrors of the Sphallien Sea, these creatures use their haunting song to lure sailors to a watery doom.",
+    "abilities": [
+      {
+        "name": "Siren Song",
+        "description": "As a minor action, the siren can cast the Charm spell, at no MP cost, with a Perform Oratory check (d20+17). Additionally, this ability does not require the siren to know the spell or share a known language with the target. The siren may not use this ability again for 1d4+1 turns. This is a mind effect."
+      },
+      {
+        "name": "Swoop",
+        "description": "Whenever the siren uses the Running Attack technick, it deals +1 die of damage."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Running Attack",
+      "Skill Focus (oratory, unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Golden sap (20%), Health Potion (50%)",
+    "steal": "Hi-potion (5%), Health Potion (95%)",
+    "sourcePage": 304,
+    "profileLine": "Neutral Evil Medium Beastkin 5; Territorial",
+    "species": "Beastkin",
+    "classLevels": ""
+  },
+  {
+    "name": "Gnoll",
+    "category": "Beastkin",
+    "profile": "beastkin",
+    "cr": 7,
+    "level": 7,
+    "xp": 1400,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 63,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "Dark Vision; Passive Perception 18",
+    "passivePerception": 18,
+    "ref": 21,
+    "flatFootedRef": 19,
+    "fort": 21,
+    "will": 17,
+    "dr": 5,
+    "breakThreshold": 21,
+    "immunities": [
+      "Confusion",
+      "Disease Block Spiked Pavis +18"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Beastongue Rapacious brutes who hunt in packs, ganging up on weaker prey. The scent of blood drives them into a frenzied rage.",
+    "attributes": {
+      "str": 18,
+      "agi": 14,
+      "vit": 19,
+      "int": 8,
+      "mnd": 10,
+      "cha": 8
+    },
+    "attacks": [
+      {
+        "name": "Bandit’s Bhuj",
+        "attack": 19,
+        "damage": "2d6+9",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "handed",
+        "bonus": 17,
+        "key": ""
+      },
+      {
+        "name": "Acrobatics",
+        "bonus": 10,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Athletics",
+        "bonus": 12,
+        "key": "athletics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 8,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 8,
+        "key": "survival"
+      }
+    ],
+    "description": "Rapacious brutes who hunt in packs, ganging up on weaker prey. The scent of blood drives them into a frenzied rage.",
+    "abilities": [
+      {
+        "name": "Bloodlust",
+        "description": "A gnoll deals +1 damage die against any creature that took physical damage on the previous turn."
+      },
+      {
+        "name": "Pack Tactics",
+        "description": "When a gnoll is adjacent to an enemy creature, the gnoll’s allies gain a +2 bonus on attack rolls against that creature (max +10)."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Armour Proficiency (light)",
+      "Shield Proficiency",
+      "Skill Focus (1-handed)",
+      "Weapon Proficiency (axes)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Bandit’s Bhuj, Spiked Pavis, Wooden Breastplate",
+    "loot": "Golden sap (20%), Health Potion (50%)",
+    "steal": "Hi-potion (5%), Health Potion (95%)",
+    "sourcePage": 304,
+    "profileLine": "Corrupt Neutral Medium Beastkin 7; Aggressive",
+    "species": "Beastkin",
+    "classLevels": ""
+  },
+  {
+    "name": "Satyr",
+    "category": "Beastkin",
+    "profile": "beastkin",
+    "cr": 7,
+    "level": 7,
+    "xp": 1400,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "Territorial",
+    "hp": 49,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "Low-light Vision; Passive Perception 15",
+    "passivePerception": 15,
+    "ref": 19,
+    "flatFootedRef": 17,
+    "fort": 19,
+    "will": 19,
+    "dr": 5,
+    "breakThreshold": 19,
+    "immunities": [
+      "Sleep"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Beastongue, Sylvan Mischievous tricksters who prey on those fooled into thinking they’re the gentler faun.",
+    "attributes": {
+      "str": 14,
+      "agi": 15,
+      "vit": 15,
+      "int": 12,
+      "mnd": 14,
+      "cha": 19
+    },
+    "attacks": [
+      {
+        "name": "Gore",
+        "attack": 10,
+        "damage": "1d6+5",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 15,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 12,
+        "key": "deception"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 14,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perform (instrument)",
+        "bonus": 17,
+        "key": "perform"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 12,
+        "key": "persuasion"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 10,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 10,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 10,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Mischievous tricksters who prey on those fooled into thinking they’re the gentler faun.",
+    "abilities": [
+      {
+        "name": "Lullaby",
+        "description": "As a primary action, the satyr may make a Perform Instrument check (d20+19) against the Will Defence of all living creatures within 6 squares. If successful, the target is put to sleep. The satyr may not use this ability again for 1d4+1 turns. This is a mind effect."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Dodge",
+      "Skill Focus (acrobatics, lore [terrestrial], perform [instrument])"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Satyr’s Aulos",
+    "loot": "Satyr's Aulos (20%), Beast Horn (50%)",
+    "steal": "Panacea (20%), Philter (50%)",
+    "sourcePage": 305,
+    "profileLine": "Corrupt Neutral Medium Beastkin 7; Territorial",
+    "species": "Beastkin",
+    "classLevels": ""
+  },
+  {
+    "name": "Centaur Cataphract",
+    "category": "Beastkin",
+    "profile": "beastkin",
+    "cr": 9,
+    "level": 9,
+    "xp": 1800,
+    "size": "large",
+    "alignment": "Pure",
+    "temperament": "Helpful/Territorial",
+    "hp": 99,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "12",
+    "senses": "; Passive",
+    "passivePerception": 10,
+    "ref": 24,
+    "flatFootedRef": 23,
+    "fort": 25,
+    "will": 22,
+    "dr": 10,
+    "breakThreshold": 30,
+    "immunities": [
+      "Toad Block Heater Shield +21"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Beastongue, Common Valiant warriors who charge fearlessly into battle, driven solely by the desire for victory.",
+    "attributes": {
+      "str": 24,
+      "agi": 12,
+      "vit": 22,
+      "int": 9,
+      "mnd": 16,
+      "cha": 12
+    },
+    "attacks": [
+      {
+        "name": "Knight’s Lance",
+        "attack": 22,
+        "damage": "2d8+12",
+        "mode": "melee",
+        "type": "blunt"
+      },
+      {
+        "name": "Knight’s Lance",
+        "attack": 24,
+        "damage": "2d10+12",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "handed",
+        "bonus": 21,
+        "key": ""
+      },
+      {
+        "name": "Athletics",
+        "bonus": 16,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 8,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 12,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 12,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 16,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Valiant warriors who charge fearlessly into battle, driven solely by the desire for victory.",
+    "abilities": [
+      {
+        "name": "Overrun",
+        "description": "The centaur cataphract is treated as having the Trample technick and is treated as both mount and rider while charging."
+      },
+      {
+        "name": "Second Skin",
+        "description": "Centaur Cataphracts are never treated as encumbered by heavy armour."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Armour Proficiency (light, heavy)",
+      "Shield Proficiency",
+      "Skill Focus (1-handed)",
+      "Weapon Proficiency (Polearms)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Heater Shield, Knight’s Lance, Plate Armour",
+    "loot": "Plate Armour (20%), Knight's Lance (50%), Heater Shield (95%)",
+    "steal": "Mega-Potion (5%), Elfwort (20%)",
+    "sourcePage": 305,
+    "profileLine": "Pure Neutral Large Beastkin 9; Helpful/Territorial",
+    "species": "Beastkin",
+    "classLevels": ""
+  },
+  {
+    "name": "Harpy",
+    "category": "Beastkin",
+    "profile": "beastkin",
+    "cr": 9,
+    "level": 9,
+    "xp": 1800,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 72,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "4, Fly 8 (hover)",
+    "senses": "; Passive Perception 21",
+    "passivePerception": 21,
+    "ref": 24,
+    "flatFootedRef": 19,
+    "fort": 22,
+    "will": 21,
+    "dr": 10,
+    "breakThreshold": 22,
+    "immunities": [
+      "Curse",
+      "Paralysis",
+      "Poison",
+      "Silence"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Beastongue, Truespeech Accursed beasts that terrorize the Knorhing Highlands, ruled by their dark queen, Garuda.",
+    "attributes": {
+      "str": 10,
+      "agi": 20,
+      "vit": 16,
+      "int": 7,
+      "mnd": 14,
+      "cha": 19
+    },
+    "attacks": [
+      {
+        "name": "Claws",
+        "attack": 19,
+        "damage": "1d4+9",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 14,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 11,
+        "key": "perception"
+      },
+      {
+        "name": "Perform (oratory)",
+        "bonus": 18,
+        "key": "perform"
+      },
+      {
+        "name": "Survival",
+        "bonus": 11,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 19,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Accursed beasts that terrorize the Knorhing Highlands, ruled by their dark queen, Garuda.",
+    "abilities": [
+      {
+        "name": "Blasphemous Song",
+        "description": "As a minor action, the harpy may make a Perform Oratory check (d20+18) against the Will Defence of a single creature within 6 squares and line of sight. If successful, the creature is cursed with dim. Additionally, this ability does not require the harpy to share a known language with the target. The harpy may not use this ability again for 1d4+1 turns. Higher-level targets gain a +5 to their defence against this ability."
+      },
+      {
+        "name": "Swoop",
+        "description": "Whenever the harpy uses the Running Attack technick, it deals +1 damage die."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Agile Manoeuvres",
+      "Running Attack",
+      "Skill Focus (perform [oratory], unarmed)",
+      "Weapon Finesse"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Divine Earrings",
+    "loot": "Great Feather (20%), Hi-potion (50%)",
+    "steal": "Divine Earrings (5%), Hi-potion (95%)",
+    "sourcePage": 306,
+    "profileLine": "Corrupt Evil Medium Beastkin 9; Aggressive",
+    "species": "Beastkin",
+    "classLevels": ""
+  },
+  {
+    "name": "Naga",
+    "category": "Beastkin",
+    "profile": "beastkin",
+    "cr": 9,
+    "level": 9,
+    "xp": 1800,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "Aggressive",
+    "hp": 90,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6, Swim 10",
+    "senses": "Dark Vision; Passive Perception 22",
+    "passivePerception": 22,
+    "ref": 25,
+    "flatFootedRef": 20,
+    "fort": 24,
+    "will": 22,
+    "dr": 10,
+    "breakThreshold": 24,
+    "immunities": [
+      "Curse",
+      "Death Effects",
+      "Poison",
+      "Sleep",
+      "Stuns",
+      "Toad"
+    ],
+    "resistances": [
+      "Fire"
+    ],
+    "weaknesses": [
+      "Electric"
+    ],
+    "languages": "Beastongue The serpentfolk of the Faewood’s lakes and ponds, they lure the lost to watery graves with enchanting cunning.",
+    "attributes": {
+      "str": 18,
+      "agi": 24,
+      "vit": 21,
+      "int": 11,
+      "mnd": 16,
+      "cha": 23
+    },
+    "attacks": [
+      {
+        "name": "Dancing Sabre",
+        "attack": 24,
+        "damage": "2d6+14",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Light",
+        "bonus": 21,
+        "key": ""
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 9,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 12,
+        "key": "perception"
+      },
+      {
+        "name": "Perform (dance)",
+        "bonus": 22,
+        "key": "perform"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 16,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 12,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 13,
+        "key": "unarmed"
+      }
+    ],
+    "description": "The serpentfolk of the Faewood’s lakes and ponds, they lure the lost to watery graves with enchanting cunning.",
+    "abilities": [
+      {
+        "name": "Somniferous Dance",
+        "description": "As a secondary action, a naga can make a Perform Dance check (d20+22) against the Will Defence of a creature within 6 squares and line of sight. If successful, the target is put to sleep. The naga may not use this ability again for 1d4+1 turns."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Armour Proficiency (light)",
+      "Skill Focus (light weapon, perform [dance])",
+      "Weapon Finesse",
+      "Weapon Proficiency (swords)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Dancing Sabre (5%), Dancer’s Mail (20%), Ice Crystal (50%), Antidote (95%)",
+    "steal": "Moondust (5%), Antidote (20%), Nothing (50%)",
+    "sourcePage": 306,
+    "profileLine": "Neutral Evil Medium Beastkin 9; Aggressive",
+    "species": "Beastkin",
+    "classLevels": ""
+  },
+  {
+    "name": "Centaur Arbalist",
+    "category": "Beastkin",
+    "profile": "beastkin",
+    "cr": 10,
+    "level": 10,
+    "xp": 2000,
+    "size": "large",
+    "alignment": "Pure",
+    "temperament": "Helpful/Territorial",
+    "hp": 90,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "12",
+    "senses": "; Passive Perception 23",
+    "passivePerception": 23,
+    "ref": 25,
+    "flatFootedRef": 24,
+    "fort": 24,
+    "will": 23,
+    "dr": 10,
+    "breakThreshold": 29,
+    "immunities": [
+      "Toad"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Beastongue, Common Elite warriors who wield siege weapons with ease, charging into battle with formidable power.",
+    "attributes": {
+      "str": 23,
+      "agi": 12,
+      "vit": 19,
+      "int": 9,
+      "mnd": 16,
+      "cha": 10
+    },
+    "attacks": [
+      {
+        "name": "Slam",
+        "attack": 16,
+        "damage": "1d6+11",
+        "mode": "melee",
+        "type": "blunt"
+      },
+      {
+        "name": "Arbalest",
+        "attack": 23,
+        "damage": "2d12+5",
+        "mode": "ranged",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 16,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 9,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 13,
+        "key": "perception"
+      },
+      {
+        "name": "Ranged",
+        "bonus": 21,
+        "key": "ranged"
+      },
+      {
+        "name": "Survival",
+        "bonus": 13,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 16,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Elite warriors who wield siege weapons with ease, charging into battle with formidable power.",
+    "abilities": [
+      {
+        "name": "Second Skin",
+        "description": "Centaur Arbalists are never treated as encumbered by heavy armour."
+      },
+      {
+        "name": "Stalwart Aim",
+        "description": "Centaur Arbalists may use their Str modifier for ranged attack rolls."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Armour Proficiency (light, heavy)",
+      "Skill Focus (ranged, ride)",
+      "Weapon Proficiency (crossbow)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Arbalest, Plate Armour, Black Bolts",
+    "loot": "Arbalest (20%), Plate Armour (50%), 2d4 Black Bolts (95%)",
+    "steal": "Elfwort (20%), Golden Sap (50%)",
+    "sourcePage": 307,
+    "profileLine": "Pure Neutral Large Beastkin 10; Helpful/Territorial",
+    "species": "Beastkin",
+    "classLevels": ""
+  },
+  {
+    "name": "Lamia",
+    "category": "Beastkin",
+    "profile": "beastkin",
+    "cr": 11,
+    "level": 11,
+    "xp": 2200,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 126,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "8",
+    "senses": "Dark Vision; Passive Perception 28",
+    "passivePerception": 28,
+    "ref": 27,
+    "flatFootedRef": 22,
+    "fort": 26,
+    "will": 24,
+    "dr": 10,
+    "breakThreshold": 26,
+    "immunities": [
+      "Blind",
+      "Curses",
+      "Death Effects",
+      "Disease",
+      "Poison",
+      "Sleep",
+      "Toad"
+    ],
+    "resistances": [
+      "Cold",
+      "Dark"
+    ],
+    "weaknesses": [
+      "Electric"
+    ],
+    "languages": "Beastongue Serpentine rulers of the Labyrinth’s twisting depths.",
+    "attributes": {
+      "str": 22,
+      "agi": 23,
+      "vit": 21,
+      "int": 11,
+      "mnd": 16,
+      "cha": 25
+    },
+    "attacks": [
+      {
+        "name": "Dancing Sabre",
+        "attack": 24,
+        "damage": "2d6+14",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Light Weapon",
+        "bonus": 21,
+        "key": "light-weapon"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 10,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 18,
+        "key": "perception"
+      },
+      {
+        "name": "Perform (dance)",
+        "bonus": 24,
+        "key": "perform"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 16,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 13,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 16,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Serpentine rulers of the Labyrinth’s twisting depths.",
+    "abilities": [
+      {
+        "name": "Frog Song",
+        "description": "As an all-out action, a lamia may make a Perform Dance check (d20+24) against the Will Defence of a single creature within 6 squares and line of sight. If successful, the target gains the toad status. The lamia may not use this ability again for 1d4+1 turns."
+      },
+      {
+        "name": "Hypnotic Sway",
+        "description": "While performing defensively, the lamia only takes a single -2 penalty while threatened by multiple enemies."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Armour Proficiency (light)",
+      "HP Up",
+      "Skill Focus (light weapon, perception, perform [dance])",
+      "Weapon Proficiency (swords)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Dancing Sabre (5%), Dancer’s Mail (20%), Ammonia Salt (50%), Mandrake Root (95%)",
+    "steal": "Orichalcum (20%), Ammonia Salt (50%), Mandrake Root (95%)",
+    "sourcePage": 307,
+    "profileLine": "Corrupt Evil Medium Beastkin 11; Aggressive",
+    "species": "Beastkin",
+    "classLevels": ""
+  },
+  {
+    "name": "Minotaur",
+    "category": "Beastkin",
+    "profile": "beastkin",
+    "cr": 11,
+    "level": 11,
+    "xp": 2200,
+    "size": "large",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 99,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "Dark Vision, Scent; Passive Perception 24",
+    "passivePerception": 24,
+    "ref": 24,
+    "flatFootedRef": 24,
+    "fort": 25,
+    "will": 25,
+    "dr": 12,
+    "breakThreshold": 30,
+    "immunities": [
+      "Curse",
+      "Death Effects",
+      "Paralysis",
+      "Petrify"
+    ],
+    "resistances": [
+      "to all physical damage for the duration of the encounter. This effect may be dispelled",
+      "in which case",
+      "the minotaur may not use this ability again for 1d4+1 turns. Bulldoze: The minotaur is treated as having the Trample technick and is treated as both mount and rider while charging. Additionally",
+      "any creature the minotaur tramples is knocked prone",
+      "even if they took half damage. Butcher’s Grip: The minotaur may treat large weapons as 2-handed weapons",
+      "despite their size. Second Skin: Minotaurs are never treated as encumbered by heavy armour. Skewer: Whenever the minotaur successfully hits a target with its gore attack at the end of a charge",
+      "it deals +1 damage die. Additionally",
+      "the damage ignores all non-magickal DR."
+    ],
+    "weaknesses": [],
+    "languages": "Beastongue Hulking brutes who patrol the Labyrinth’s narrow halls, crushing all who cross their path.",
+    "attributes": {
+      "str": 23,
+      "agi": 10,
+      "vit": 19,
+      "int": 7,
+      "mnd": 19,
+      "cha": 9
+    },
+    "attacks": [
+      {
+        "name": "Gigas Mallet",
+        "attack": 24,
+        "damage": "2d12+20",
+        "mode": "melee",
+        "type": "blunt"
+      },
+      {
+        "name": "Gore",
+        "attack": 23,
+        "damage": "2d8+11",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "handed",
+        "bonus": 21,
+        "key": ""
+      },
+      {
+        "name": "Athletics",
+        "bonus": 16,
+        "key": "athletics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 14,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 14,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 21,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Hulking brutes who patrol the Labyrinth’s narrow halls, crushing all who cross their path.",
+    "abilities": [
+      {
+        "name": "Beef Up",
+        "description": "As a minor action, the minotaur can grant itself resistance to all physical damage for the duration of the encounter. This effect may be dispelled, in which case, the minotaur may not use this ability again for 1d4+1 turns."
+      },
+      {
+        "name": "Bulldoze",
+        "description": "The minotaur is treated as having the Trample technick and is treated as both mount and rider while charging. Additionally, any creature the minotaur tramples is knocked prone, even if they took half damage."
+      },
+      {
+        "name": "Butcher’s Grip",
+        "description": "The minotaur may treat large weapons as 2-handed weapons, despite their size."
+      },
+      {
+        "name": "Second Skin",
+        "description": "Minotaurs are never treated as encumbered by heavy armour."
+      },
+      {
+        "name": "Skewer",
+        "description": "Whenever the minotaur successfully hits a target with its gore attack at the end of a charge, it deals +1 damage die. Additionally, the damage ignores all non-magickal DR."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Armour Proficiency (light, heavy)",
+      "Bull Rush",
+      "Skill Focus (2-handed, unarmed)",
+      "Weapon Proficiency (bludgeons)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Ancient Armour (5%), Gigas Mallet (20%), Mega-Potion (50%), Beast Horn (95%)",
+    "steal": "Gigas Heart (20%), Earth Crystal (95%)",
+    "sourcePage": 308,
+    "profileLine": "Corrupt Neutral Large Beastkin 11; Aggressive",
+    "species": "Beastkin",
+    "classLevels": ""
+  }
+]

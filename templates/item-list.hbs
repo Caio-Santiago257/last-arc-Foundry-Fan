@@ -27,7 +27,7 @@
           <button type="button" class="item-delete la-icon-button" title="{{localize 'LA.Delete'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
           <small class="la-feature-description">{{item.system.description}}</small>
         {{else if (or (eq item.type "feature") (eq item.type "talent"))}}
-          {{#if (or (eq item.type "talent") (eq item.system.automation.kind "aeonUltimate") (eq item.system.automation.kind "aeonAction"))}}<button type="button" class="item-roll la-die" title="{{localize 'LA.Roll'}}"><i class="fas fa-dice-d20" aria-hidden="true"></i></button>{{/if}}
+          {{#if (or (eq item.type "talent") (eq item.system.automation.kind "aeonUltimate") (eq item.system.automation.kind "aeonAction") (eq item.system.automation.kind "adversaryAbility"))}}<button type="button" class="item-roll la-die" title="{{localize 'LA.Roll'}}"><i class="fas fa-dice-d20" aria-hidden="true"></i></button>{{/if}}
           <button type="button" class="item-edit la-link">{{item.name}}</button>
           {{#if (eq item.system.automation.kind "summonAeon")}}<button type="button" class="la-aeon-add la-small-button" title="{{localize 'LA.AddAeonIdol'}}"><i class="fas fa-plus" aria-hidden="true"></i> {{localize "LA.AddAeonIdol"}}</button>{{/if}}
           <button type="button" class="item-delete la-icon-button" title="{{localize 'LA.Delete'}}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>

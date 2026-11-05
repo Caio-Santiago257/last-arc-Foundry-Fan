@@ -2,7 +2,7 @@
   "id": "last-arc-analogue",
   "title": "Last Arc: Tactics Analogue (Fan System)",
   "description": "Community-built Foundry VTT system framework for Last Arc: Tactics Analogue.",
-  "version": "0.2.31",
+  "version": "0.2.32",
   "compatibility": {
     "minimum": 12,
     "verified": 13
@@ -56,6 +56,90 @@
       "name": "aeons",
       "label": "Aeons",
       "path": "packs/aeons.db",
+      "type": "Actor",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "allies-adversaries",
+      "label": "Allies and Adversaries",
+      "path": "packs/allies-adversaries.db",
+      "type": "Actor",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "adversary-guides",
+      "label": "NPC Rules and Afflictions",
+      "path": "packs/adversary-guides.db",
+      "type": "Item",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "bestiary-beasts",
+      "label": "Bestiary - Beasts",
+      "path": "packs/bestiary-beasts.db",
+      "type": "Actor",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "bestiary-beastkin",
+      "label": "Bestiary - Beastkin",
+      "path": "packs/bestiary-beastkin.db",
+      "type": "Actor",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "bestiary-celestials",
+      "label": "Bestiary - Celestials",
+      "path": "packs/bestiary-celestials.db",
+      "type": "Actor",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "bestiary-constructs",
+      "label": "Bestiary - Constructs",
+      "path": "packs/bestiary-constructs.db",
+      "type": "Actor",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "bestiary-dragons",
+      "label": "Bestiary - Dragons",
+      "path": "packs/bestiary-dragons.db",
+      "type": "Actor",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "bestiary-elementals",
+      "label": "Bestiary - Elementals",
+      "path": "packs/bestiary-elementals.db",
+      "type": "Actor",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "bestiary-fae",
+      "label": "Bestiary - Fae",
+      "path": "packs/bestiary-fae.db",
+      "type": "Actor",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "bestiary-giants",
+      "label": "Bestiary - Giants",
+      "path": "packs/bestiary-giants.db",
+      "type": "Actor",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "bestiary-infernals",
+      "label": "Bestiary - Infernals",
+      "path": "packs/bestiary-infernals.db",
+      "type": "Actor",
+      "system": "last-arc-analogue"
+    },
+    {
+      "name": "bestiary-undead",
+      "label": "Bestiary - Undead",
+      "path": "packs/bestiary-undead.db",
       "type": "Actor",
       "system": "last-arc-analogue"
     },
@@ -321,6 +405,31 @@
       "folders": []
     },
     {
+      "name": "Allies and Adversaries",
+      "sorting": "a",
+      "color": "#86513b",
+      "packs": ["allies-adversaries", "adversary-guides"],
+      "folders": []
+    },
+    {
+      "name": "Bestiary",
+      "sorting": "a",
+      "color": "#526548",
+      "packs": [
+        "bestiary-beasts",
+        "bestiary-beastkin",
+        "bestiary-celestials",
+        "bestiary-constructs",
+        "bestiary-dragons",
+        "bestiary-elementals",
+        "bestiary-fae",
+        "bestiary-giants",
+        "bestiary-infernals",
+        "bestiary-undead"
+      ],
+      "folders": []
+    },
+    {
       "name": "Magick",
       "sorting": "a",
       "color": "#7a3f78",
@@ -408,5 +517,5 @@
   "secondaryTokenAttribute": "resources.mp",
   "url": "https://github.com/Caio-Santiago257/last-arc-Foundry-Fan",
   "manifest": "https://raw.githubusercontent.com/Caio-Santiago257/last-arc-Foundry-Fan/main/system.json",
-  "download": "https://raw.githubusercontent.com/Caio-Santiago257/last-arc-Foundry-Fan/main/releases/last-arc-analogue-v0.2.31.zip"
+  "download": "https://raw.githubusercontent.com/Caio-Santiago257/last-arc-Foundry-Fan/main/releases/last-arc-analogue-v0.2.32.zip"
 }

@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Nonheroic Characters",
+    "type": "feature",
+    "img": "icons/svg/book.svg",
+    "system": {
+      "category": "NPC Rules",
+      "description": "Quick reference for building a nonheroic NPC. They do not gain talents, heroic defense progression, or hero points. They receive one attribute increase every four levels and gain technicks as normal. At each level they gain 3 + Vitality modifier HP and no MP; their initiative die is 1d10. At 1st level choose three starting technicks. Class skills are trained from the nonheroic list, with 4 + Intelligence modifier selections.",
+      "automation": { "kind": "adversaryTemplate", "profile": "nonheroic", "hpPerLevel": 3, "initiativeDie": "1d10", "mana": false, "talents": false, "attributeIncreasesPerFourLevels": 1, "startingTechnicks": 3 }
+    }
+  },
+  {
+    "name": "Beast Progression",
+    "type": "feature",
+    "img": "icons/svg/book.svg",
+    "system": {
+      "category": "NPC Rules",
+      "description": "Quick reference for creating a beast stat block. Beasts have Intelligence 1 or 2, gain one attribute increase every four levels, do not gain talents, starting technicks, or hero points, and still gain technicks through advancement. They gain 5 + Vitality modifier HP per level and use initiative 1d8. Beasts train 6 + Intelligence modifier class skills; Unarmed is always trained. Natural armour grants DR 5 at beast level 4, DR 10 at level 8, and DR 15 at level 12. Adjust size, defence, threshold, Stealth, and natural attack dice using the size charts in the rulebook.",
+      "automation": { "kind": "adversaryTemplate", "profile": "beast", "hpPerLevel": 5, "initiativeDie": "1d8", "talents": false, "startingTechnicks": false, "attributeIncreasesPerFourLevels": 1 }
+    }
+  },
+  {
+    "name": "Affliction: Lichdom",
+    "type": "feature",
+    "img": "icons/svg/skull.svg",
+    "system": {
+      "category": "Affliction",
+      "description": "Lichdom is an acquired undead state rather than a contagious curse. Its core profile grants +2 Strength, Vitality, and Mind; undead traits; natural DR based on character level as beast level; immunity to cold, dark, disease, fear, petrify, poison, sleep, zombify, lycanthropy, and vampyrism; and weakness to holy damage. Liches select manifestations in place of class talents. Archlich is the culmination of the lich manifestations.",
+      "automation": { "kind": "adversaryAffliction", "id": "lichdom", "attributeBonuses": { "str": 2, "vit": 2, "mnd": 2 }, "immunities": ["cold", "dark", "disease", "fear effects", "petrify", "poison", "sleep", "zombify", "lycanthropy", "vampyrism"], "weaknesses": ["holy"] }
+    }
+  },
+  {
+    "name": "Affliction: Lycanthropy",
+    "type": "feature",
+    "img": "icons/svg/claw.svg",
+    "system": {
+      "category": "Affliction",
+      "description": "Lycanthropy is an infectious curse that can mature into a permanent affliction. Its core profile grants +2 Strength, Vitality, and Mind, low-light vision and scent (or dark vision when low-light vision already exists), natural DR by character level as beast level, and a werewolf form with natural attacks and pounce. The character cannot take Intelligence-based checks in werewolf form. Werewolf aspects are selected in place of class talents.",
+      "automation": { "kind": "adversaryAffliction", "id": "lycanthropy", "attributeBonuses": { "str": 2, "vit": 2, "mnd": 2 }, "senses": ["low-light vision", "scent"] }
+    }
+  },
+  {
+    "name": "Affliction: Vampyrism",
+    "type": "feature",
+    "img": "icons/svg/blood.svg",
+    "system": {
+      "category": "Affliction",
+      "description": "Vampyrism is an infectious blood curse. The affliction grants +2 to all attributes, dark vision, undead traits and natural DR by character level as beast level. Vampyres are immune to cold, confusion, dark, death effects, disease, fear, paralysis, poison, stun, toad, and zombify. They are weak to holy and fire; direct sunlight prevents HP/MP recovery, while holy damage or an anti-undead weapon can destroy them at 0 HP or the Break Gauge bottom. Vampyric gifts are selected in place of class talents.",
+      "automation": { "kind": "adversaryAffliction", "id": "vampyrism", "allAttributeBonuses": 2, "immunities": ["cold", "confusion", "dark", "death effects", "disease", "fear effects", "paralysis", "poison", "stun", "toad", "zombify"], "weaknesses": ["holy", "fire"] }
+    }
+  },
+  {
+    "name": "Swarms, Packs, and Hordes",
+    "type": "feature",
+    "img": "icons/svg/book.svg",
+    "system": {
+      "category": "NPC Rules",
+      "description": "Quick reference for scaling a creature into a group. Each step adds +2 CR, increases size by one category without changing stats or reach, doubles HP, lets melee attacks target squares in reach and ranged attacks target an area of equivalent size, and grants +5 to skill checks. A swarm, pack, or horde takes +2 damage dice from area attacks. These groups cannot exceed Huge; Large creatures can only become a pack, and creatures larger than Large cannot use this adjustment.",
+      "automation": { "kind": "adversaryScale", "crPerStep": 2, "hpMultiplierPerStep": 2, "sizeStepsPerStep": 1, "skillBonusPerStep": 5, "areaDamageDiceTaken": 2, "maximumSize": "huge" }
+    }
+  },
+  {
+    "name": "Companions and Summons",
+    "type": "feature",
+    "img": "icons/svg/book.svg",
+    "system": {
+      "category": "NPC Rules",
+      "description": "Companions share their controller's initiative and normally take only one primary action; the controller can spend a primary action to command a full turn. A character ordinarily controls only one pet, summon, mount, or similar companion at a time. The master's death dismisses a summon, and summons cannot summon other creatures.",
+      "automation": { "kind": "companionReference", "creatureLevelByCharacterLevel": [2, 3, 3, 4, 5, 6, 6, 7, 8, 9, 9, 10, 11, 12, 12, 13, 14, 15, 15, 16] }
+    }
+  }
+]

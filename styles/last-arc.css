@@ -208,5 +208,44 @@
 .la-injury-row b { font:700 12px Georgia,serif; }
 .la-injury-row small { color:#5f5548; font:11px/1.4 Arial,sans-serif; }
 .la-injury-delete { width:28px; min-width:28px; height:26px; padding:2px; color:#922f29; }
+.la-npc-sheet { min-height:100%; }
+.la-npc-header { display:grid; grid-template-columns:76px minmax(0,1fr) 86px; gap:14px; align-items:center; padding:13px 16px; border-bottom:3px double var(--la-gold); background:linear-gradient(110deg,rgba(133,54,39,.07),transparent 60%); }
+.la-npc-portrait { width:76px; height:76px; padding:4px; border:1px solid var(--la-gold); background:#f8f0df; }
+.la-npc-portrait img { width:100%; height:100%; object-fit:contain; cursor:pointer; }
+.la-npc-identity { min-width:0; }
+.la-npc-identity .la-name { width:100%; margin:0 0 5px; border:0; border-bottom:1px solid var(--la-gold); background:transparent; color:var(--la-ink); font:700 25px Georgia,serif; }
+.la-npc-identity p { margin:5px 0 0; color:var(--la-muted); font:11px/1.4 Arial,sans-serif; }
+.la-npc-tags { display:flex; flex-wrap:wrap; gap:5px; }
+.la-npc-tags>span { padding:3px 7px; border:1px solid var(--la-line); background:rgba(255,255,255,.45); color:#665849; font:700 9px Arial,sans-serif; text-transform:uppercase; letter-spacing:.04em; }
+.la-npc-xp { display:grid; justify-items:center; gap:3px; padding:7px; border:1px solid var(--la-line); background:rgba(255,255,255,.4); }
+.la-npc-xp small { color:var(--la-muted); font:700 9px Arial,sans-serif; text-transform:uppercase; }
+.la-npc-xp strong { color:var(--la-accent); font:700 21px Georgia,serif; }
+.la-npc-body { display:grid; gap:10px; padding:12px; }
+.la-npc-resource-grid { display:grid; grid-template-columns:minmax(230px,1fr) minmax(230px,1fr) minmax(90px,.4fr) minmax(110px,.5fr); gap:9px; align-items:stretch; }
+.la-npc-resource-grid .la-resource-card,.la-npc-stat { min-width:0; padding:8px; border:1px solid var(--la-line); background:rgba(255,255,255,.36); }
+.la-npc-stat { display:grid; align-content:center; gap:5px; }
+.la-npc-stat small,.la-npc-defences small,.la-npc-attributes small { color:var(--la-muted); font:700 9px Arial,sans-serif; text-transform:uppercase; letter-spacing:.05em; }
+.la-npc-stat b { font:700 17px Georgia,serif; }
+.la-npc-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(250px,.8fr); gap:10px; }
+.la-npc-defences { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+.la-npc-defences>div,.la-npc-attributes>div { display:grid; gap:4px; padding:7px 8px; border-bottom:1px solid var(--la-line); }
+.la-npc-defences b { color:var(--la-accent); font:700 20px Georgia,serif; }
+.la-npc-defences em { color:var(--la-muted); font:10px Arial,sans-serif; }
+.la-npc-attributes { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:2px 8px; }
+.la-npc-attributes>div { grid-template-columns:1fr auto; align-items:center; }
+.la-npc-attributes small { align-self:end; }
+.la-npc-attributes b { grid-column:2; grid-row:1/3; font:700 15px Georgia,serif; }
+.la-npc-protections>div { display:grid; grid-template-columns:100px minmax(0,1fr); gap:8px; padding:4px 0; border-bottom:1px solid var(--la-line); font:11px/1.4 Arial,sans-serif; }
+.la-npc-protections>div:last-child { border-bottom:0; }
+.la-npc-protections>div>b { color:var(--la-muted); font:700 9px Arial,sans-serif; text-transform:uppercase; }
+.la-npc-muted { margin:8px 0 0; color:var(--la-muted); font:10px/1.4 Arial,sans-serif; }
+.la-npc-skills { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:4px 12px; }
+.la-npc-skills>div { display:flex; justify-content:space-between; gap:8px; padding:4px; border-bottom:1px solid var(--la-line); font:11px Arial,sans-serif; }
+.la-npc-skills b { color:var(--la-accent); }
+.la-npc-inventory p,.la-npc-description { margin:5px 0; font:12px/1.5 Georgia,serif; }
+.la-npc-damage { padding:6px 10px; }
+.la-npc-damage .la-primary-button { min-height:30px; }
+.la-npc-sheet .la-item-list .item.la-item-row { grid-template-columns:30px minmax(120px,1fr) minmax(70px,auto) minmax(60px,auto) 28px; }
+@media (max-width:700px) { .la-npc-header { grid-template-columns:56px minmax(0,1fr) 65px; gap:8px; padding:8px; }.la-npc-portrait { width:56px; height:56px; }.la-npc-identity .la-name { font-size:19px; }.la-npc-resource-grid { grid-template-columns:1fr 1fr; }.la-npc-grid { grid-template-columns:1fr; }.la-npc-body { padding:8px; } }
 @media (max-width: 760px) { .la-break-track { grid-template-columns:repeat(3,minmax(0,1fr)); }.la-break-heading { align-items:flex-start; } }
 @media (max-width: 760px) { .la-header { grid-template-columns: 65px minmax(0,1fr) 156px; gap: 8px; padding: 10px; }.la-level-card { padding: 5px; }.la-portrait { width: 65px; height: 82px; }.la-identity-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }.la-overview-grid { grid-template-columns: 1fr; }.la-body { padding: 8px; }.la-skill-table { overflow-x: auto; }.la-skill-header,.la-skill-row { min-width: 590px; }.la-tabs { overflow-x: auto; }.la-tabs .item { white-space: nowrap; padding: 7px; } }

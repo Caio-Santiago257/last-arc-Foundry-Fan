@@ -1,0 +1,919 @@
+[
+  {
+    "name": "Jack-O’-Lantern",
+    "category": "Constructs",
+    "profile": "construct",
+    "cr": 4,
+    "level": 4,
+    "xp": 800,
+    "size": "small",
+    "alignment": "Neutral",
+    "temperament": "Helpful/Defensive",
+    "hp": 28,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "4",
+    "senses": "",
+    "passivePerception": 19,
+    "ref": 18,
+    "flatFootedRef": 15,
+    "fort": 16,
+    "will": 16,
+    "dr": 5,
+    "breakThreshold": 16,
+    "immunities": [
+      "Blind",
+      "Confusion",
+      "Fear Effects",
+      "Sleep"
+    ],
+    "resistances": [
+      "Fire"
+    ],
+    "weaknesses": [
+      "Cold"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 12,
+      "agi": 17,
+      "vit": 14,
+      "int": 7,
+      "mnd": 14,
+      "cha": 7
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 15,
+        "damage": "1d4+3",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 10,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Athletics",
+        "bonus": 8,
+        "key": "athletics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 9,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 15,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 15,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Created to ward off evil spirits, their mischievous antics can make them as troublesome as any monster.",
+    "abilities": [
+      {
+        "name": "Explode",
+        "description": "When a jack-o’-lantern is reduced to 0 Hp or the bottom of the Break Gauge, it is not destroyed, but may not take any actions. However, at the start of its next turn, the jack-o’-lantern makes an attack roll (d20+15), at no penalty, against the Ref Defence of all creatures within 4 squares. If successful, creatures suffer 4d6+5 fire damage. Otherwise, creatures take half damage. The jack-o’-lantern is then destroyed. This is an area effect."
+      },
+      {
+        "name": "Firebolt",
+        "description": "As a primary action, a jack-o’-lantern may make an attack (d20+15) against the Ref Defence of a single creature within 6 squares and line of sight. If successful, the target suffers 4d6+5 fire damage. Otherwise, the target takes half damage. Additionally, if the attack roll beat the Ref Defence of any creatures adjacent to the target, they take half that damage. The jack-o’-lantern may not use this ability again for 1d4+1 turns."
+      },
+      {
+        "name": "Imitate",
+        "description": "A jack-o’-lantern may take 20 on Stealth checks when remaining still and can hide in plain sight."
+      },
+      {
+        "name": "Unction",
+        "description": "Whenever the jack-o’-lantern’s bite attack beats both a target's Ref and Fort Defence, the target becomes oiled."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Agile Manoeuvres",
+      "Skill Focus (unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Health Potion (5%), Mythril (20%), Silk Thread (50%)",
+    "steal": "Antidote (5%), 1gp (20%), Earth Crystal (95%)",
+    "sourcePage": 313,
+    "profileLine": "Neutral Good Small Construct 4; Helpful/Defensive",
+    "species": "Constructs",
+    "classLevels": ""
+  },
+  {
+    "name": "Bag O’ Tricks",
+    "category": "Constructs",
+    "profile": "construct",
+    "cr": 5,
+    "level": 5,
+    "xp": 1000,
+    "size": "tiny",
+    "alignment": "Neutral",
+    "temperament": "Territorial",
+    "hp": 30,
+    "mp": 0,
+    "initiativeDie": "1d6",
+    "speed": "2",
+    "senses": "Dark Vision; Passive Perception 19",
+    "passivePerception": 19,
+    "ref": 19,
+    "flatFootedRef": 18,
+    "fort": 17,
+    "will": 18,
+    "dr": 5,
+    "breakThreshold": 17,
+    "immunities": [
+      "Fear Effects",
+      "Petrify",
+      "Sleep"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Slashing"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 15,
+      "agi": 13,
+      "vit": 12,
+      "int": 6,
+      "mnd": 14,
+      "cha": 13
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 14,
+        "damage": "1d3+4",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Deception",
+        "bonus": 8,
+        "key": "deception"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 5,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 9,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 18,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 14,
+        "key": "unarmed"
+      }
+    ],
+    "description": "“Never look a gift bag in the mouth”—for if it has one, you’re already in grave danger.",
+    "abilities": [
+      {
+        "name": "Imitate",
+        "description": "A Bag o’ Tricks may take 20 on Stealth checks when remaining still and can hide in plain sight."
+      },
+      {
+        "name": "Lockjaw",
+        "description": "Whenever a bag o’ tricks successfully hits a creature with its bite attack, the bag o’ tricks may attach itself to the creature if they are larger than the bag o’ tricks. While doing so, the bag o’ tricks shares the creature’s space and there is a 50% chance (50 or less on d%) that any attack, spell, or ability that targets the bag o’ tricks hits the affected creature instead. The bag o’tricks may end this effect as a free action."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "Improved Initiative",
+      "Skill Focus (unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Health Potion (20%), Silk Thread (50%)",
+    "steal": "Antidote (5%), 1gp (20%), Earth Crystal (95%)",
+    "sourcePage": 314,
+    "profileLine": "Neutral Evil Tiny Construct 5; Territorial",
+    "species": "Constructs",
+    "classLevels": ""
+  },
+  {
+    "name": "Phantom Armour",
+    "category": "Constructs",
+    "profile": "construct",
+    "cr": 6,
+    "level": 6,
+    "xp": 1200,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "Defensive",
+    "hp": 54,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "Dark Vision; Passive Perception 21",
+    "passivePerception": 21,
+    "ref": 21,
+    "flatFootedRef": 19,
+    "fort": 20,
+    "will": 19,
+    "dr": 5,
+    "breakThreshold": 20,
+    "immunities": [
+      "Petrify",
+      "Poison",
+      "Stuns",
+      "Toad",
+      "Zombify"
+    ],
+    "resistances": [
+      "Piercing",
+      "Slashing"
+    ],
+    "weaknesses": [
+      "Fire Block Heater Shield +17"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 18,
+      "agi": 15,
+      "vit": 19,
+      "int": 5,
+      "mnd": 17,
+      "cha": 11
+    },
+    "attacks": [
+      {
+        "name": "Mythril Blade",
+        "attack": 18,
+        "damage": "2d6+9",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Handed",
+        "bonus": 17,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 11,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 10,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 12,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Once enchanted sentries for mages, they fell out of use as common folk, fearing necromancy, often hunted them down.",
+    "abilities": [
+      {
+        "name": "Imitate",
+        "description": "A phantom armour may take 20 on Stealth checks when remaining still and can hide in plain sight."
+      },
+      {
+        "name": "Armoured Form",
+        "description": "The phantom armour is treated as proficient in any armour it wears. Additionally, the phantom armour is never treated as encumbered by heavy armour."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Skill Focus (1-handed)",
+      "Shield Proficiency",
+      "Weapon Proficiency (swords)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Mythril Blade (5%), Iron Cuirass (20%), Heater Shield (50%)",
+    "steal": "Moondust (5%), Mythril (20%), Ectoplasm (50%)",
+    "sourcePage": 314,
+    "profileLine": "Neutral Medium Construct 6; Defensive",
+    "species": "Constructs",
+    "classLevels": ""
+  },
+  {
+    "name": "Mimic",
+    "category": "Constructs",
+    "profile": "construct",
+    "cr": 7,
+    "level": 7,
+    "xp": 1400,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "Territorial",
+    "hp": 56,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "2",
+    "senses": "Low-light Vision; Passive Perception 24",
+    "passivePerception": 24,
+    "ref": 18,
+    "flatFootedRef": 17,
+    "fort": 20,
+    "will": 18,
+    "dr": 5,
+    "breakThreshold": 20,
+    "immunities": [
+      "Fear Effects",
+      "Sleep",
+      "Stuns",
+      "Petrify"
+    ],
+    "resistances": [
+      "Blunt*",
+      "Piercing*",
+      "Slashing*"
+    ],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 19,
+      "agi": 12,
+      "vit": 17,
+      "int": 6,
+      "mnd": 13,
+      "cha": 10
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 17,
+        "damage": "1d6+7",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Deception",
+        "bonus": 8,
+        "key": "deception"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 6,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 14,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 9,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 17,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Thieves and treasure hunters beware—a hungry mimic waits to turn you into an early retirement.",
+    "abilities": [
+      {
+        "name": "Gnaw",
+        "description": "Whenever a mimic pins a target, it may make a free bite attack that ignores non-magickal DR."
+      },
+      {
+        "name": "Imitate",
+        "description": "A mimic may take 20 on Stealth checks when remaining still and can hide in plain sight."
+      },
+      {
+        "name": "Mighty Guard",
+        "description": "As a secondary action, the mimic can close the lid on its chest-like body for 1d4+1 turns. While closed, the mimic clears itself of all status effects (except curses) and gains immunity to all status effects (except curses). Additionally, if damaged by melee attacks, half the damage the mimic would suffer is instead dealt to the attacker as unaspected damage. Once this effect ends, the mimic may not use this ability again for 1d4+1 turns."
+      },
+      {
+        "name": "Tongue",
+        "description": "The mimic may attempt to grab a creature within 6 squares and line of sight. If successful, the target is immediately moved adjacent to the mimic."
+      },
+      {
+        "name": "Voracious",
+        "description": "When a mimic’s bite attack beats both a target’s Ref and Will Defence, the target loses all positive effects and buffs provided by spells and the mimic gains them. This effect is resolved before damage is rolled."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Improved Initiative",
+      "Pin",
+      "Skill Focus (perception, unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Hi-Ether (5%), Hi-potion (20%), Ether (50%), Magicite (95%)",
+    "steal": "Antidote (25%), Hi-potion (95%)",
+    "sourcePage": 315,
+    "profileLine": "Neutral Evil Medium Construct 7; Territorial",
+    "species": "Constructs",
+    "classLevels": ""
+  },
+  {
+    "name": "Greedy Grimoire",
+    "category": "Constructs",
+    "profile": "construct",
+    "cr": 9,
+    "level": 9,
+    "xp": 1800,
+    "size": "tiny",
+    "alignment": "Neutral",
+    "temperament": "Territorial",
+    "hp": 63,
+    "mp": 81,
+    "initiativeDie": "1d6",
+    "speed": "2 (hover)",
+    "senses": "Dark Vision; Passive Perception 25",
+    "passivePerception": 25,
+    "ref": 25,
+    "flatFootedRef": 21,
+    "fort": 21,
+    "will": 25,
+    "dr": 10,
+    "breakThreshold": 21,
+    "immunities": [
+      "Blind",
+      "Death Effects",
+      "Disease",
+      "Fear Effects",
+      "Paralysis",
+      "Poison",
+      "Silence",
+      "Sleep"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Slashing"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 12,
+      "agi": 18,
+      "vit": 15,
+      "int": 12,
+      "mnd": 22,
+      "cha": 8
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 18,
+        "damage": "1d3+5",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 13,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Athletics",
+        "bonus": 10,
+        "key": "athletics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 8,
+        "key": "deception"
+      },
+      {
+        "name": "Perception",
+        "bonus": 15,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 23,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 15,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 18,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Born from the mad scrawlings of a wizard, this ravenous creature devours all things magical.",
+    "abilities": [
+      {
+        "name": "Absorb Magick",
+        "description": "When a greedy grimoire is affected by a non-blue magick spell, it suffers no effect and instead regains an amount of temporary MP equal to the cost of the spell used. If this temporary MP is not used by the end of the encounter, it is lost."
+      },
+      {
+        "name": "Imitate",
+        "description": "A greedy grimoire may take 20 on Stealth checks when remaining still and can hide in plain sight."
+      },
+      {
+        "name": "Magickal",
+        "description": "Greedy Grimiores gain an amount of MP equal to 3+Mnd each level, and always treat Spellcraft as a class skill."
+      },
+      {
+        "name": "Spell Thief",
+        "description": "Any spell cast within 12 squares and line of sight of the greedy grimoire is then treated as a known spell by the greedy grimoire until the end of the encounter."
+      },
+      {
+        "name": "Syphon Mana",
+        "description": "As a primary action, the greedy grimoire can make a Spellcraft check (d20+20) against the Will Defence of a single creature within 12 squares and line of sight. If successful, the target loses 3d6 MP and the greedy grimoire gains an equal amount of MP . These dice may explode. The greedy grimoire may not use this ability again for 1d4+1 turns."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Agile Manoeuvres",
+      "Combat Casting",
+      "Improved Initiative",
+      "Skill Focus (spellcraft, unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Evil Eye (20%), Hi-Ether (50%), Magicite (95%)",
+    "steal": "Hi-Ether (50%)",
+    "sourcePage": 316,
+    "profileLine": "Neutral Evil Tiny Construct 9; Territorial",
+    "species": "Constructs",
+    "classLevels": ""
+  },
+  {
+    "name": "Golem, Stone",
+    "category": "Constructs",
+    "profile": "construct",
+    "cr": 11,
+    "level": 11,
+    "xp": 2200,
+    "size": "large",
+    "alignment": "Neutral",
+    "temperament": "Defensive",
+    "hp": 121,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "4",
+    "senses": "; Passive Perception 20",
+    "passivePerception": 20,
+    "ref": 20,
+    "flatFootedRef": 20,
+    "fort": 27,
+    "will": 22,
+    "dr": 10,
+    "breakThreshold": 37,
+    "immunities": [
+      "Confusion",
+      "Death Effects",
+      "Disease",
+      "Fear Effects",
+      "Mind Effects",
+      "Paralysis",
+      "Petrify",
+      "Poison",
+      "Stuns"
+    ],
+    "resistances": [
+      "Electric",
+      "Piercing",
+      "Slashing"
+    ],
+    "weaknesses": [
+      "Blunt"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 28,
+      "agi": 9,
+      "vit": 20,
+      "int": 2,
+      "mnd": 11,
+      "cha": 1
+    },
+    "attacks": [
+      {
+        "name": "Slam",
+        "attack": 24,
+        "damage": "1d6+14",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 19,
+        "key": "athletics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 10,
+        "key": "perception"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 24,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Forged by ancient dwarves with lost rune magic, these stone sentinels guard the Highlands.",
+    "abilities": [
+      {
+        "name": "Granite Punch",
+        "description": "Whenever the stone golem’s slam attack beats both a target’s Ref and Fort Defence, the target becomes flat-footed and may take no actions until the start of the stone golem’s next turn. This is a stun."
+      },
+      {
+        "name": "Immovable",
+        "description": "The stone golem cannot be moved by any means of forced movement, including teleportation."
+      },
+      {
+        "name": "Steadfast",
+        "description": "Once per encounter, when the stone golem would be moved down the Break Gauge, the stone golem can choose to not move down the Break Gauge."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "Disruptive",
+      "HP Up",
+      "Pin",
+      "Skill Focus (unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Hi-Potion (5%), Adamantite (20%), Orichalcum (50%), Earth Crystal (95%)",
+    "steal": "Moonwort (5%), Pistoja Powder (20%), Magicite (95%)",
+    "sourcePage": 317,
+    "profileLine": "Neutral Large Construct 11; Defensive",
+    "species": "Constructs",
+    "classLevels": ""
+  },
+  {
+    "name": "Golem, Iron",
+    "category": "Constructs",
+    "profile": "construct",
+    "cr": 13,
+    "level": 13,
+    "xp": 2600,
+    "size": "huge",
+    "alignment": "Neutral",
+    "temperament": "Territorial",
+    "hp": 143,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "4",
+    "senses": "; Passive Perception 22",
+    "passivePerception": 22,
+    "ref": 21,
+    "flatFootedRef": 21,
+    "fort": 29,
+    "will": 25,
+    "dr": 15,
+    "breakThreshold": 44,
+    "immunities": [
+      "Confusion",
+      "Death Effects",
+      "Disease",
+      "Fear Effects",
+      "Mind Effects",
+      "Paralysis",
+      "Petrify",
+      "Poison",
+      "Stuns"
+    ],
+    "resistances": [
+      "Fire",
+      "Piercing",
+      "Slashing"
+    ],
+    "weaknesses": [
+      "Electric"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 32,
+      "agi": 9,
+      "vit": 20,
+      "int": 2,
+      "mnd": 12,
+      "cha": 1
+    },
+    "attacks": [
+      {
+        "name": "Slam",
+        "attack": 27,
+        "damage": "1d8+17",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 22,
+        "key": "athletics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 12,
+        "key": "perception"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 27,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Ancient dwarven war machines, abandoned after a lost war, now roaming on long-forgotten orders.",
+    "abilities": [
+      {
+        "name": "Granite Punch",
+        "description": "Whenever the iron golem’s slam attack beats both a target’s Ref and Fort Defence, the target becomes flat-footed and may take no actions the start of the iron golem’s next turn. This is a stun."
+      },
+      {
+        "name": "Immovable",
+        "description": "The iron golem cannot be moved by any means of forced movement, including teleportation."
+      },
+      {
+        "name": "Steadfast",
+        "description": "Once per encounter, when the iron golem would be moved down the Break Gauge, the iron golem can choose to not move down the Break Gauge."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Crush",
+      "Defence Up",
+      "Disruptive",
+      "HP Up",
+      "Pin",
+      "Skill Focus (unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Adamantite (20%), Mythril (50%), Storm Crystal (95%)",
+    "steal": "Ore Amour (20%), Mega-Potion (50%)",
+    "sourcePage": 317,
+    "profileLine": "Neutral Huge Construct 13; Territorial",
+    "species": "Constructs",
+    "classLevels": ""
+  },
+  {
+    "name": "Gorgon",
+    "category": "Constructs",
+    "profile": "construct",
+    "cr": 14,
+    "level": 14,
+    "xp": 2800,
+    "size": "large",
+    "alignment": "Corrupt",
+    "temperament": "Territorial",
+    "hp": 145,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "8",
+    "senses": "Low-light Vision; Passive Perception 25",
+    "passivePerception": 25,
+    "ref": 23,
+    "flatFootedRef": 23,
+    "fort": 28,
+    "will": 27,
+    "dr": 15,
+    "breakThreshold": 38,
+    "immunities": [
+      "Cold",
+      "Confusion",
+      "Curses",
+      "Death Effects",
+      "Disease",
+      "Fear Effects",
+      "Mind Effects",
+      "Paralysis",
+      "Petrify",
+      "Poison",
+      "Slashing",
+      "Stuns"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Fire"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 24,
+      "agi": 10,
+      "vit": 18,
+      "int": 2,
+      "mnd": 16,
+      "cha": 9
+    },
+    "attacks": [
+      {
+        "name": "Ore Hammer",
+        "attack": 27,
+        "damage": "2d10+23",
+        "mode": "melee",
+        "type": "blunt"
+      },
+      {
+        "name": "Gore",
+        "attack": 28,
+        "damage": "1d8+21",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "handed",
+        "bonus": 24,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 15,
+        "key": "perception"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 24,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Malevolent guardians commissioned by Lilith’s daughters to protect her tomb and bloodline.",
+    "abilities": [
+      {
+        "name": "Bulldoze",
+        "description": "The gorgon is treated as having the Trample technick and is treated as both mount and rider while charging. Additionally, any creature the gorgon tramples is knocked prone, even if they took half damage."
+      },
+      {
+        "name": "Butcher’s Grip",
+        "description": "Gorgons may treat large weapons as 2-handed weapons, despite their size."
+      },
+      {
+        "name": "Fire Breath",
+        "description": "As a primary action, a gorgon can make an attack (d20+21) against the Ref Defence of all creatures within a 6 square cone. If successful, targets take 8d6+11 fire damage."
+      },
+      {
+        "name": "Unction",
+        "description": "Whenever the gorgon’s gore attack beats both a creature’s Ref and Fort Defence, the creature becomes oiled."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Bull Rush",
+      "HP Up",
+      "Powerful Charge",
+      "Skill Focus (2-handed, unarmed)",
+      "Threshold Up",
+      "Weapon Proficiency (bludgeon)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Ore Hammer",
+    "loot": "Stardust (5%), Ore Hammer (20%), Adamantite (50%)",
+    "steal": "Stardust (5%), Nothing (20%), Obsidian (50%)",
+    "sourcePage": 318,
+    "profileLine": "Corrupt Evil Large Construct 14; Territorial",
+    "species": "Constructs",
+    "classLevels": ""
+  }
+]

@@ -1,0 +1,3997 @@
+[
+  {
+    "name": "Glade Guardian",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 10,
+    "level": 10,
+    "xp": 2000,
+    "size": "medium",
+    "alignment": "Pure",
+    "temperament": "",
+    "hp": 83,
+    "mp": 24,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "Low-light Vision; Passive Perception 20",
+    "passivePerception": 20,
+    "ref": 32,
+    "flatFootedRef": 28,
+    "fort": 23,
+    "will": 21,
+    "dr": 9,
+    "breakThreshold": 23,
+    "immunities": [
+      "Sleep",
+      "Stuns"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Common, Elven, Sylvan These elite warriors weave the dance of the fae into battle, each step a blur of grace and death entwined.",
+    "attributes": {
+      "str": 10,
+      "agi": 19,
+      "vit": 12,
+      "int": 13,
+      "mnd": 10,
+      "cha": 14
+    },
+    "attacks": [
+      {
+        "name": "Mythril Blades",
+        "attack": 18,
+        "damage": "2d6+11",
+        "mode": "melee",
+        "type": "slashing"
+      },
+      {
+        "name": "Mythril Blades",
+        "attack": 18,
+        "damage": "2d6+13",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 19,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Athletics",
+        "bonus": 10,
+        "key": "athletics"
+      },
+      {
+        "name": "Light Weapon",
+        "bonus": 19,
+        "key": "light-weapon"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 11,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 10,
+        "key": "perception"
+      },
+      {
+        "name": "Perform (Dance)",
+        "bonus": 17,
+        "key": "perform"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 12,
+        "key": "persuasion"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 14,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 10,
+        "key": "survival"
+      }
+    ],
+    "description": "These elite warriors weave the dance of the fae into battle, each step a blur of grace and death entwined.",
+    "abilities": [],
+    "classFeatures": [
+      "War Dance",
+      "Dosado +1"
+    ],
+    "talents": [
+      "Anticipation I",
+      "Anticipation II",
+      "Dual Weapon Flourish I",
+      "Dual Weapon Flourish II",
+      "Presto",
+      "Samba",
+      "Weapon Specialization (swords)"
+    ],
+    "technicks": [
+      "Armour Proficiency (light)",
+      "Bardic Study",
+      "Dodge",
+      "Dual Wield I",
+      "Dual Wield II",
+      "Improved Initiative",
+      "Skill Focus (acrobatics, light weapon, perform dance)",
+      "Weapon Finesse",
+      "Weapon Proficiency (axes, bludgeons, crossbows, knives, swords)"
+    ],
+    "spells": [],
+    "performances": [
+      "Mourning Elegy",
+      "Vagrant's Threnody"
+    ],
+    "equipped": "Agate Ring, Amethyst Armlet, Mythril Shirt, 2 Mythril Blades",
+    "loot": "Mythril Shirt (5%), Mythril Blade (20%), Agate Ring (50%), Amethyst Armlet (95%), and 3,700gp",
+    "steal": "Mega-Potion (20%), Hi-Potion (95%)",
+    "sourcePage": 258,
+    "profileLine": "Pure Neutral Medium Wood Elf Rogue 3/ Bard 3/Warrior 1/Blade Dancer 3",
+    "species": "Wood Elf",
+    "classLevels": "Rogue 3/ Bard 3/Warrior 1/Blade Dancer 3"
+  },
+  {
+    "name": "Shapeshifter",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 12,
+    "level": 12,
+    "xp": 2400,
+    "size": "medium",
+    "alignment": "Pure",
+    "temperament": "",
+    "hp": 122,
+    "mp": 103,
+    "initiativeDie": "1d12",
+    "speed": "6",
+    "senses": "Dark Vision, Keen Scent; Passive Perception 25",
+    "passivePerception": 25,
+    "ref": 27,
+    "flatFootedRef": 26,
+    "fort": 27,
+    "will": 31,
+    "dr": 10,
+    "breakThreshold": 27,
+    "immunities": [
+      "Stuns",
+      "Toad",
+      "Zombify"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Beastongue, Common, Primordial, Sylvan Many among the beast races believe that by mastering the wild forms of the creatures they resemble, they may find mastery over the beasts within themselves.",
+    "attributes": {
+      "str": 16,
+      "agi": 12,
+      "vit": 15,
+      "int": 14,
+      "mnd": 18,
+      "cha": 8
+    },
+    "attacks": [
+      {
+        "name": "Unarmed",
+        "attack": 19,
+        "damage": "1d6+9",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 12,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Alchemy",
+        "bonus": 13,
+        "key": "alchemy"
+      },
+      {
+        "name": "Athletics",
+        "bonus": 19,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 13,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Medicine",
+        "bonus": 15,
+        "key": "medicine"
+      },
+      {
+        "name": "Perception",
+        "bonus": 15,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 15,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 19,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Many among the beast races believe that by mastering the wild forms of the creatures they resemble, they may find mastery over the beasts within themselves.",
+    "abilities": [],
+    "classFeatures": [
+      "Advolution 1",
+      "Life Cycle 2",
+      "Wild Magick"
+    ],
+    "talents": [
+      "Beast Shape",
+      "Divine Preservation",
+      "Geoburst",
+      "Nature's Wrath",
+      "Savage Bite",
+      "Toughness",
+      "Verdant Force 1"
+    ],
+    "technicks": [
+      "Arcane Study",
+      "Armour Proficiency (light, heavy)",
+      "Channel",
+      "Combat Casting",
+      "Defence Up",
+      "HP Up",
+      "MP",
+      "Up",
+      "Shield Proficiency",
+      "Skill Focus (athletics, spellcraft, unarmed)",
+      "Skill Training (spellcraft)",
+      "Weapon Proficiency (axes, bludgeons, knives, polearms, swords)"
+    ],
+    "spells": [
+      "Boulder",
+      "Cataclysm",
+      "Shockwave"
+    ],
+    "performances": [],
+    "equipped": "Gigas Chestplate, Jet Necklace, Tourmaline Ring",
+    "loot": "Gigas Chestplate (5%), Jet Necklace (20%), Tourmaline Ring (50%), Panacea (95%), and 5,700gp",
+    "steal": "Mega-Ether (5%), Hi-Potion (95%) & Adversaries",
+    "sourcePage": 258,
+    "profileLine": "Pure Neutral Medium Nasha Warrior 2/Initiate 5/Druid 5",
+    "species": "Nasha",
+    "classLevels": "Warrior 2/Initiate 5/Druid 5"
+  },
+  {
+    "name": "Fae Mother",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 15,
+    "level": 7,
+    "xp": 3000,
+    "size": "medium",
+    "alignment": "Pure",
+    "temperament": "",
+    "hp": 132,
+    "mp": 134,
+    "initiativeDie": "1d12",
+    "speed": "6",
+    "senses": "Low-light Vision; Passive Perception 26",
+    "passivePerception": 26,
+    "ref": 31,
+    "flatFootedRef": 28,
+    "fort": 30,
+    "will": 34,
+    "dr": 7,
+    "breakThreshold": 30,
+    "immunities": [
+      "Slow",
+      "Toad",
+      "Zombify"
+    ],
+    "resistances": [
+      "Cold",
+      "Electric",
+      "Fire"
+    ],
+    "weaknesses": [],
+    "languages": "Beastongue, Common, Elven, Sylvan, Primordial Revered as the wisest druid of the Faewood, she guides the secret village of Myrth with a calm hand and ancient wisdom.",
+    "attributes": {
+      "str": 14,
+      "agi": 16,
+      "vit": 14,
+      "int": 16,
+      "mnd": 18,
+      "cha": 10
+    },
+    "attacks": [
+      {
+        "name": "Sage’s Staff",
+        "attack": 23,
+        "damage": "3d8+7",
+        "mode": "ranged",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 14,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (mystic)",
+        "bonus": 15,
+        "key": "lore-mystic"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 15,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Medicine",
+        "bonus": 21,
+        "key": "medicine"
+      },
+      {
+        "name": "Perception",
+        "bonus": 16,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 16,
+        "key": "survival"
+      }
+    ],
+    "description": "Revered as the wisest druid of the Faewood, she guides the secret village of Myrth with a calm hand and ancient wisdom.",
+    "abilities": [],
+    "classFeatures": [
+      "Advolution 2",
+      "Life Cycle 4",
+      "Wild Magick"
+    ],
+    "talents": [
+      "Beast Shape",
+      "Call of the Wild",
+      "Fae Touched",
+      "Force of Nature",
+      "Galeforce",
+      "Run Wild",
+      "Summon Wild",
+      "Tanglevine"
+    ],
+    "technicks": [
+      "Arcane Study (3)",
+      "Armour Proficiency (mystic)",
+      "Channel",
+      "Combat Casting",
+      "Defence Up",
+      "HP Up",
+      "MP Up",
+      "Precise Shot",
+      "Shake it Off",
+      "Shield Proficiency",
+      "Skill Focus (medicine, spellcraft)",
+      "Weapon Proficiency (knives, staves)"
+    ],
+    "spells": [
+      "Barrier",
+      "Cleanse",
+      "Curatio",
+      "Dispel",
+      "Entangle",
+      "Faith",
+      "Overgrowth",
+      "Shell",
+      "Succession",
+      "Tempest",
+      "Windburst",
+      "Whirlwind"
+    ],
+    "performances": [],
+    "equipped": "Jet Necklace, Sage’s Staff, Sage’s Surplice, Tourmaline Ring",
+    "loot": "Sage’s Surplice (5%), Jet Necklace (20%), Tourmaline Ring (50%), Sage’s Staff (95%), and 8,700gp",
+    "steal": "Unicorn Horn (20%), Hi-Ether (95%)",
+    "sourcePage": 259,
+    "profileLine": "Pure Neutral Medium Wood Elf Initiate 7/Druid 8",
+    "species": "Wood Elf",
+    "classLevels": "Initiate 7/Druid 8"
+  },
+  {
+    "name": "Acolyte",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 6,
+    "level": 6,
+    "xp": 1200,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "",
+    "hp": 49,
+    "mp": 50,
+    "initiativeDie": "1d12",
+    "speed": "6",
+    "senses": "; Passive Perception 20",
+    "passivePerception": 20,
+    "ref": 18,
+    "flatFootedRef": 16,
+    "fort": 17,
+    "will": 20,
+    "dr": 6,
+    "breakThreshold": 17,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Common, Infernal Many reach for the dark powers, lured by whispers of wealth, influence, and eternal life—yet few ever receive what was promised.",
+    "attributes": {
+      "str": 8,
+      "agi": 14,
+      "vit": 10,
+      "int": 13,
+      "mnd": 14,
+      "cha": 12
+    },
+    "attacks": [
+      {
+        "name": "Poisoner’s Stiletto",
+        "attack": 11,
+        "damage": "2d4+3",
+        "mode": "melee",
+        "type": "blunt"
+      },
+      {
+        "name": "Bone Wand",
+        "attack": 17,
+        "damage": "3d4+5",
+        "mode": "ranged",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Alchemy",
+        "bonus": 9,
+        "key": "alchemy"
+      },
+      {
+        "name": "Light Weapon",
+        "bonus": 10,
+        "key": "light-weapon"
+      },
+      {
+        "name": "Lore (occult)",
+        "bonus": 9,
+        "key": "lore-occult"
+      },
+      {
+        "name": "Perception",
+        "bonus": 10,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 14,
+        "key": "persuasion"
+      }
+    ],
+    "description": "Many reach for the dark powers, lured by whispers of wealth, influence, and eternal life—yet few ever receive what was promised.",
+    "abilities": [],
+    "classFeatures": [],
+    "talents": [
+      "Enfeeble",
+      "Dark Renewal",
+      "Summon Darkness"
+    ],
+    "technicks": [
+      "Arcane Study (2)",
+      "Armour Proficiency (mystic)",
+      "Channel",
+      "Combat Casting",
+      "HP Up",
+      "MP Up",
+      "Shield Proficiency",
+      "Skill Focus (persuasion, spellcraft)",
+      "Weapon Proficiency (knives, staves)"
+    ],
+    "spells": [
+      "Darkness",
+      "Dispel",
+      "Maim",
+      "Muddle"
+    ],
+    "performances": [],
+    "equipped": "Bone Wand, Poisoner’s Stilletto, Sorcerer’s Kaftan",
+    "loot": "Sorcerer’s Kaftan (5%), Bone Wand (20%), Poisoner’s Stiletto (50%), Hi-Ether (95%), and 600gp",
+    "steal": "Hi-Ether (20%), Medical Kit (50%)",
+    "sourcePage": 260,
+    "profileLine": "Neutral Evil Medium Human Initiate 6",
+    "species": "Human",
+    "classLevels": "Initiate 6"
+  },
+  {
+    "name": "Vampyre",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 7,
+    "level": 7,
+    "xp": 0,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "",
+    "hp": 84,
+    "mp": 35,
+    "initiativeDie": "1d10",
+    "speed": "6",
+    "senses": "Dark Vision; Passive Perception 20",
+    "passivePerception": 20,
+    "ref": 24,
+    "flatFootedRef": 20,
+    "fort": 21,
+    "will": 21,
+    "dr": 8,
+    "breakThreshold": 21,
+    "immunities": [
+      "Cold",
+      "Confusion",
+      "Dark",
+      "Death Effects",
+      "Disease",
+      "Fear Effects",
+      "Paralysis",
+      "Poison",
+      "Stuns Toad",
+      "Zombify"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Holy",
+      "Fire"
+    ],
+    "languages": "Common, Infernal The most devout acolytes may even receive the Blood Kiss. Little do they realize it binds them further to their master’s will… as an obedient spawn.",
+    "attributes": {
+      "str": 16,
+      "agi": 18,
+      "vit": 17,
+      "int": 12,
+      "mnd": 14,
+      "cha": 18
+    },
+    "attacks": [
+      {
+        "name": "Mythril Blade",
+        "attack": 18,
+        "damage": "3d6+9",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 12,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 12,
+        "key": "deception"
+      },
+      {
+        "name": "Light Weapon",
+        "bonus": 17,
+        "key": "light-weapon"
+      },
+      {
+        "name": "Lore (occult)",
+        "bonus": 9,
+        "key": "lore-occult"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 9,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 10,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 17,
+        "key": "persuasion"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 14,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 16,
+        "key": "unarmed"
+      }
+    ],
+    "description": "The most devout acolytes may even receive the Blood Kiss. Little do they realize it binds them further to their master’s will… as an obedient spawn.",
+    "abilities": [],
+    "classFeatures": [],
+    "talents": [
+      "Dark Renewal",
+      "Enfeeble",
+      "Evasive",
+      "Vampyric Seduction"
+    ],
+    "technicks": [
+      "Arcane Study",
+      "Armour Proficiency (light)",
+      "HP Up",
+      "Improved Initiative",
+      "Rapid Counter",
+      "Rapid Strike",
+      "Skill Focus (light weapon, persuasion, spellcraft, unarmed)",
+      "Weapon Finesse",
+      "Weapon Proficiency (bludgeons, crossbows, knives, swords)"
+    ],
+    "spells": [
+      "Maim",
+      "Torpor"
+    ],
+    "performances": [],
+    "equipped": "Black Garb, Mythril Blade",
+    "loot": "Black Garb (20%), Mythril Blade (50%), Vampyre Fang (95%), and 700gp",
+    "steal": "300gp (50%), Moonwort (95%) & Adversaries",
+    "sourcePage": 260,
+    "profileLine": "Corrupt Evil Medium Human Vampyre Rogue 4/Initiate 3 XPXP 1,400 Languages Common, Infernal The most devout acolytes may even receive the Blood Kiss. Little do they realize it binds them further to their master’s will… as an obedient spawn. HP 84 MP 35 Init d10 Speed 6 Senses Dark Vision; Passive Perception 20 Defence Ref 24 (flat-footed 20), Fort 21, Will 21 DR 8; Threshold 21 Immunity Cold, Confusion, Dark, Death Effects, Disease, Fear Effects, Paralysis, Poison, Stuns Toad, Zombify Weakness Holy, Fire Offence Melee Mythril Blade +18 (3d6+9) with rapid strike Spells (Spellcraft +15) Maim, Torpor Statistics Attributes Str 16, Agi 18, Vit 17, Int 12, Mnd 14, Chr 18 Talents Dark Renewal, Enfeeble, Evasive, Vampyric Seduction Technicks Arcane Study, Armour Proficiency (light), HP Up, Improved Initiative, Rapid Counter, Rapid Strike, Skill Focus (light weapon, persuasion, spellcraft, unarmed), Weapon Finesse, Weapon Proficiency (bludgeons, crossbows, knives, swords) Skills Acrobatics +12, Deception +12, Light Weapon +17, Lore (occult) +9, Lore (social) +9, Perception +10, Persuasion +17, Spellcraft +15, Stealth +14, Unarmed +16 Items Equipped Black Garb, Mythril Blade Loot Black Garb (20%), Mythril Blade (50%), Vampyre Fang (95%), and 700gp Steal 300gp (50%), Moonwort (95%) 259 Ch 15: Allies & Adversaries v.03 10/27/2026",
+    "species": "Human",
+    "classLevels": "Vampyre Rogue 4/Initiate 3 XPXP 1,400 Languages Common, Infernal The most devout acolytes may even receive the Blood Kiss. Little do they realize it binds them further to their master’s will… as an obedient spawn. HP 84 MP 35 Init d10 Speed 6 Senses Dark Vision; Passive Perception 20 Defence Ref 24 (flat-footed 20), Fort 21, Will 21 DR 8; Threshold 21 Immunity Cold, Confusion, Dark, Death Effects, Disease, Fear Effects, Paralysis, Poison, Stuns Toad, Zombify Weakness Holy, Fire Offence Melee Mythril Blade +18 (3d6+9) with rapid strike Spells (Spellcraft +15) Maim, Torpor Statistics Attributes Str 16, Agi 18, Vit 17, Int 12, Mnd 14, Chr 18 Talents Dark Renewal, Enfeeble, Evasive, Vampyric Seduction Technicks Arcane Study, Armour Proficiency (light), HP Up, Improved Initiative, Rapid Counter, Rapid Strike, Skill Focus (light weapon, persuasion, spellcraft, unarmed), Weapon Finesse, Weapon Proficiency (bludgeons, crossbows, knives, swords) Skills Acrobatics +12, Deception +12, Light Weapon +17, Lore (occult) +9, Lore (social) +9, Perception +10, Persuasion +17, Spellcraft +15, Stealth +14, Unarmed +16 Items Equipped Black Garb, Mythril Blade Loot Black Garb (20%), Mythril Blade (50%), Vampyre Fang (95%), and 700gp Steal 300gp (50%), Moonwort (95%) 259 Ch 15: Allies & Adversaries v.03 10/27/2026"
+  },
+  {
+    "name": "Strigoi (Vampyre Lord Form)",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 17,
+    "level": 3,
+    "xp": 3400,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "",
+    "hp": 225,
+    "mp": 142,
+    "initiativeDie": "1d10",
+    "speed": "6, Fly 6 (hover)",
+    "senses": "Dark Vision; Passive Perception 32",
+    "passivePerception": 32,
+    "ref": 34,
+    "flatFootedRef": 34,
+    "fort": 36,
+    "will": 35,
+    "dr": 15,
+    "breakThreshold": 41,
+    "immunities": [
+      "Cold",
+      "Confusion",
+      "Dark",
+      "Death Effects",
+      "Disease",
+      "Fear Effects",
+      "Paralysis",
+      "Poison",
+      "Stuns",
+      "Toad",
+      "Zombify"
+    ],
+    "resistances": [
+      "Blunt",
+      "Holy",
+      "Piercing",
+      "Slashing"
+    ],
+    "weaknesses": [
+      "Fire",
+      "Holy"
+    ],
+    "languages": "Common, Infernal Time has stripped these ancient vampyres of reason, leaving only madness and an insatiable bloodlust. Now, they roam as feral monsters, ruled by instinct alone.",
+    "attributes": {
+      "str": 22,
+      "agi": 20,
+      "vit": 20,
+      "int": 13,
+      "mnd": 18,
+      "cha": 22
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 24,
+        "damage": "1d8+23",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 24,
+        "damage": "1d6+23",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 18,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Athletics",
+        "bonus": 19,
+        "key": "athletics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 19,
+        "key": "deception"
+      },
+      {
+        "name": "Perception",
+        "bonus": 22,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 24,
+        "key": "persuasion"
+      },
+      {
+        "name": "Survival",
+        "bonus": 17,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 24,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Time has stripped these ancient vampyres of reason, leaving only madness and an insatiable bloodlust. Now, they roam as feral monsters, ruled by instinct alone.",
+    "abilities": [],
+    "classFeatures": [
+      "Curse Bearer 5",
+      "Oblivion",
+      "Unholy Sacrifice"
+    ],
+    "talents": [
+      "Abyssal Drain I",
+      "Abyssal Drain II",
+      "Armour Training",
+      "Dark Harvest",
+      "Dark Renewal",
+      "Enfeeble",
+      "Supernatural Horror",
+      "Undying Revenant",
+      "Vampyric Seduction"
+    ],
+    "technicks": [
+      "Arcane Study (2)",
+      "Armour Proficiency (light, heavy)",
+      "Channel",
+      "Combat Casting",
+      "Defence Up",
+      "HP Up",
+      "Improved Initiative",
+      "MP Up",
+      "Pin",
+      "Skill Focus (perception, persuasion, spellcraft, unarmed)",
+      "Shield Proficiency",
+      "Threshold Up",
+      "Weapon Proficiency (axes, bludgeons, knives, polearms, swords)"
+    ],
+    "spells": [
+      "Dispel",
+      "Expiry",
+      "Maim",
+      "Sap"
+    ],
+    "performances": [],
+    "equipped": "Obsidian Brooch, Pentacle, Zombie Mail",
+    "loot": "Moondust (5%), Zombie Mail (20%), Vampyre Fang (95%), and 10,700gp",
+    "steal": "Moondust (5%), Obsidian Brooch (20%), Pentacle (50%), Vampyre Fang (95%) * With unholy sacrifice. ** Situational. See Undying Revenant.",
+    "sourcePage": 261,
+    "profileLine": "Corrupt Evil Medium Human Vampyre Lord Warrior 3/Initiate 4/Fell Knight 10",
+    "species": "Human",
+    "classLevels": "Vampyre Lord Warrior 3/Initiate 4/Fell Knight 10"
+  },
+  {
+    "name": "Corse",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 19,
+    "level": 9,
+    "xp": 3800,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "",
+    "hp": 219,
+    "mp": 204,
+    "initiativeDie": "1d10",
+    "speed": "6, Fly 6 (hover)",
+    "senses": "Lifesense; Passive Perception 35",
+    "passivePerception": 35,
+    "ref": 31,
+    "flatFootedRef": 30,
+    "fort": 37,
+    "will": 40,
+    "dr": 15,
+    "breakThreshold": 42,
+    "immunities": [
+      "Cold",
+      "Dark",
+      "Death Effects",
+      "Disease",
+      "Fear Effects",
+      "Petrify",
+      "Poison",
+      "Sleep",
+      "Toad",
+      "Zombify"
+    ],
+    "resistances": [
+      "Blunt*",
+      "Holy",
+      "Piercing*",
+      "Slashing*"
+    ],
+    "weaknesses": [
+      "Holy"
+    ],
+    "languages": "Celestial, Common, Dwarven, Elven, Infernal Hidden from the eyes of the living, these powerful undead dwell in shadow, guiding death-worshipping cults with a silent, malevolent will.",
+    "attributes": {
+      "str": 10,
+      "agi": 13,
+      "vit": 20,
+      "int": 18,
+      "mnd": 22,
+      "cha": 14
+    },
+    "attacks": [
+      {
+        "name": "Heretic’s Rod",
+        "attack": 28,
+        "damage": "3d6+12",
+        "mode": "ranged",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Alchemy",
+        "bonus": 23,
+        "key": "alchemy"
+      },
+      {
+        "name": "Light Weapon",
+        "bonus": 20,
+        "key": "light-weapon"
+      },
+      {
+        "name": "Lore (arcane)",
+        "bonus": 18,
+        "key": ""
+      },
+      {
+        "name": "Lore (occult)",
+        "bonus": 18,
+        "key": "lore-occult"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 18,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 25,
+        "key": "perception"
+      },
+      {
+        "name": "Smithing",
+        "bonus": 23,
+        "key": "smithing"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 14,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Hidden from the eyes of the living, these powerful undead dwell in shadow, guiding death-worshipping cults with a silent, malevolent will.",
+    "abilities": [],
+    "classFeatures": [
+      "Army of Darkness 5",
+      "Living Dead",
+      "Soul Hunter"
+    ],
+    "talents": [
+      "Condemn",
+      "Dark Renewal",
+      "Deathless Countenance",
+      "Death March",
+      "Death Sentence",
+      "Enfeeble",
+      "Massacre",
+      "Summon Darkness",
+      "Triumph of Death",
+      "Vengeful Spirit"
+    ],
+    "technicks": [
+      "Arcane Study (3)",
+      "Armour Proficiency (mystic)",
+      "Channel",
+      "Combat Casting",
+      "Defence Up",
+      "HP Up",
+      "Improved Initiative",
+      "MP Up",
+      "Shake it Off",
+      "Shield Proficiency",
+      "Skill Focus (alchemy, light weapon, perception, smithing, spellcraft)",
+      "Threshold Up",
+      "Weapon Proficiency (knives, staves)"
+    ],
+    "spells": [
+      "Ark Blast",
+      "Banish",
+      "Black Hole",
+      "Blizzard",
+      "Darkness",
+      "Dispel",
+      "Fireball",
+      "Firestorm",
+      "Infest",
+      "Lightning Bolt",
+      "Maim",
+      "Torpor",
+      "Void",
+      "Whiteout"
+    ],
+    "performances": [],
+    "equipped": "Death Mantle, Heretic’s Rod, Necromancer’s Athame, Obsidian Brooch, Tourmaline Ring",
+    "loot": "Moondust (5%), Necromancer’s Athame (20%), Heretic’s Rod (50%), Death Mantle (95%), and 10,900gp",
+    "steal": "Moondust (5%), Tourmaline Ring (20%), Obsidian Brooch (50%), Cursed Bone (95%)",
+    "sourcePage": 262,
+    "profileLine": "Corrupt Evil Medium Human Archlich Initiate 9/Necromancer 10",
+    "species": "Human",
+    "classLevels": "Archlich Initiate 9/Necromancer 10"
+  },
+  {
+    "name": "Cleric",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 5,
+    "level": 5,
+    "xp": 1000,
+    "size": "medium",
+    "alignment": "Pure",
+    "temperament": "",
+    "hp": 39,
+    "mp": 49,
+    "initiativeDie": "1d12",
+    "speed": "6",
+    "senses": "; Passive Perception 20",
+    "passivePerception": 20,
+    "ref": 14,
+    "flatFootedRef": 14,
+    "fort": 17,
+    "will": 20,
+    "dr": 5,
+    "breakThreshold": 17,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Celestial, Common, Infernal In the name of the goddess, these humble healers labor day and night, mending the sick and offering solace to all in need.",
+    "attributes": {
+      "str": 11,
+      "agi": 8,
+      "vit": 13,
+      "int": 15,
+      "mnd": 17,
+      "cha": 14
+    },
+    "attacks": [
+      {
+        "name": "Faerie Wand",
+        "attack": 15,
+        "damage": "3d4+2",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Alchemy",
+        "bonus": 9,
+        "key": "alchemy"
+      },
+      {
+        "name": "Athletics",
+        "bonus": 7,
+        "key": "athletics"
+      },
+      {
+        "name": "Light Weapon",
+        "bonus": 11,
+        "key": "light-weapon"
+      },
+      {
+        "name": "Lore (mystic)",
+        "bonus": 9,
+        "key": "lore-mystic"
+      },
+      {
+        "name": "Perception",
+        "bonus": 10,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 10,
+        "key": "survival"
+      }
+    ],
+    "description": "In the name of the goddess, these humble healers labor day and night, mending the sick and offering solace to all in need.",
+    "abilities": [],
+    "classFeatures": [],
+    "talents": [
+      "Divine Caress",
+      "Healer’s Blessing I",
+      "Lay on Hands"
+    ],
+    "technicks": [
+      "Arcane Study",
+      "Armour Proficiency (mystic)",
+      "Channel",
+      "Combat Casting",
+      "MP Up",
+      "Precise Shot",
+      "Shield Proficiency",
+      "Skill Focus (light weapon, spellcraft)",
+      "Weapon Proficiency (knives, staves)"
+    ],
+    "spells": [
+      "Cleanse",
+      "Cure",
+      "Dispel"
+    ],
+    "performances": [],
+    "equipped": "Cleric’s Chimere, Faerie Wand, Targe",
+    "loot": "Cleric’s Chimere (20%), Faerie Wand (50%), Targe (95%), and 500gp",
+    "steal": "Holy Water (5%), Alchemy Kit (20%), Ether (50%)",
+    "sourcePage": 263,
+    "profileLine": "Pure Good Medium Human Initiate 5",
+    "species": "Human",
+    "classLevels": "Initiate 5"
+  },
+  {
+    "name": "Templar Knight",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 12,
+    "level": 6,
+    "xp": 2400,
+    "size": "medium",
+    "alignment": "Pure",
+    "temperament": "",
+    "hp": 135,
+    "mp": 75,
+    "initiativeDie": "1d12",
+    "speed": "6",
+    "senses": "; Passive Perception 23",
+    "passivePerception": 23,
+    "ref": 27,
+    "flatFootedRef": 27,
+    "fort": 28,
+    "will": 28,
+    "dr": 8,
+    "breakThreshold": 33,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Celestial, Common The holy knights of Lagryss stand as the kingdom’s unwavering shield—defenders of crown and its people.",
+    "attributes": {
+      "str": 18,
+      "agi": 10,
+      "vit": 14,
+      "int": 12,
+      "mnd": 14,
+      "cha": 15
+    },
+    "attacks": [
+      {
+        "name": "Flametongue",
+        "attack": 22,
+        "damage": "2d8+12",
+        "mode": "melee",
+        "type": "blunt"
+      },
+      {
+        "name": "War-Door",
+        "attack": 22,
+        "damage": "1d10+10",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "handed",
+        "bonus": 20,
+        "key": ""
+      },
+      {
+        "name": "Athletics",
+        "bonus": 15,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (mystic)",
+        "bonus": 12,
+        "key": "lore-mystic"
+      },
+      {
+        "name": "Perception",
+        "bonus": 13,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 18,
+        "key": "persuasion"
+      },
+      {
+        "name": "Ride",
+        "bonus": 11,
+        "key": "ride"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 15,
+        "key": "unarmed"
+      }
+    ],
+    "description": "The holy knights of Lagryss stand as the kingdom’s unwavering shield—defenders of crown and its people.",
+    "abilities": [],
+    "classFeatures": [
+      "Avenger",
+      "Faith’s Armour +2",
+      "Sacred Shield"
+    ],
+    "talents": [
+      "Armour Training",
+      "Deflect",
+      "Palisade",
+      "Rampart",
+      "Shield Ally",
+      "Shield Expert",
+      "Trial of Faith"
+    ],
+    "technicks": [
+      "Arcane Study",
+      "Armour Proficiency (light, heavy)",
+      "Defence Up",
+      "HP Up",
+      "Improved Shield Bash",
+      "MP Up",
+      "Shake it Off",
+      "Shield Bash",
+      "Shield Proficiency",
+      "Skill Focus (1-handed, persuasion, spellcraft)",
+      "Threshold Up",
+      "Weapon Proficiency (axes, bludgeons, knives, polearms, swords)"
+    ],
+    "spells": [
+      "Cleanse",
+      "Smite"
+    ],
+    "performances": [],
+    "equipped": "Flametongue, War-Door, Shielded Armour, Steel Gorget",
+    "loot": "Shielded Armour (5%), Flametongue (20%), War-Door (50%), Steel Gorget (95%), and 5,700gp",
+    "steal": "Holy Water (5%), 150gp (20%), Hi-Potion (95%)",
+    "sourcePage": 263,
+    "profileLine": "Pure Good Medium Human Warrior 6/ Initiate 1/Paladin 5",
+    "species": "Human",
+    "classLevels": "Warrior 6/ Initiate 1/Paladin 5"
+  },
+  {
+    "name": "High Priest",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 15,
+    "level": 6,
+    "xp": 3000,
+    "size": "medium",
+    "alignment": "Pure",
+    "temperament": "",
+    "hp": 118,
+    "mp": 133,
+    "initiativeDie": "1d12",
+    "speed": "6",
+    "senses": "; Passive Perception 26",
+    "passivePerception": 26,
+    "ref": 32,
+    "flatFootedRef": 28,
+    "fort": 29,
+    "will": 34,
+    "dr": 8,
+    "breakThreshold": 34,
+    "immunities": [
+      "Blind",
+      "Confusion",
+      "Disease",
+      "Drench",
+      "Oil",
+      "Paralysis",
+      "Petrify",
+      "Poison",
+      "Silence",
+      "Sleep",
+      "Slow",
+      "Toad",
+      "Zombify"
+    ],
+    "resistances": [
+      "Dark"
+    ],
+    "weaknesses": [],
+    "languages": "Celestial, Common, Elven, Infernal High-ranking clerics of the Hieratium Order, they serve beneath the Supreme Patriarch himself, entrusted with the governance and spiritual guidance of their diocese. Only the most devout and righteous are chosen to bear such sacred responsibility.",
+    "attributes": {
+      "str": 10,
+      "agi": 10,
+      "vit": 13,
+      "int": 16,
+      "mnd": 18,
+      "cha": 16
+    },
+    "attacks": [
+      {
+        "name": "Bishop’s Crosier",
+        "attack": 25,
+        "damage": "3d8+10",
+        "mode": "ranged",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Alchemy",
+        "bonus": 15,
+        "key": "alchemy"
+      },
+      {
+        "name": "Lore (mystic)",
+        "bonus": 20,
+        "key": "lore-mystic"
+      },
+      {
+        "name": "Medicine",
+        "bonus": 16,
+        "key": "medicine"
+      },
+      {
+        "name": "Perception",
+        "bonus": 16,
+        "key": "perception"
+      },
+      {
+        "name": "Perform (oratory)",
+        "bonus": 20,
+        "key": "perform"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 15,
+        "key": "persuasion"
+      },
+      {
+        "name": "Survival",
+        "bonus": 16,
+        "key": "survival"
+      }
+    ],
+    "description": "High-ranking clerics of the Hieratium Order, they serve beneath the Supreme Patriarch himself, entrusted with the governance and spiritual guidance of their diocese. Only the most devout and righteous are chosen to bear such sacred responsibility.",
+    "abilities": [],
+    "classFeatures": [
+      "Divine Benison",
+      "Martyr 4"
+    ],
+    "talents": [
+      "Asylum",
+      "Benediction",
+      "Divine Preservation",
+      "Healer’s Blessing I",
+      "Healer’s Blessing II",
+      "Monologue",
+      "Prayer",
+      "Sanctuary"
+    ],
+    "technicks": [
+      "Arcane Study 3",
+      "Armour Proficiency (mystic)",
+      "Bardic Study",
+      "Channel",
+      "Combat Casting",
+      "Defence Up",
+      "HP Up",
+      "MP Up",
+      "Precise Shot",
+      "Shield Proficiency",
+      "Skill Focus (lore mystic, perform oration, spellcraft)",
+      "Threshold Up",
+      "Weapon Proficiency (knives, staves)"
+    ],
+    "spells": [
+      "Barrier",
+      "Cleanse",
+      "Cure",
+      "Curatio",
+      "Dispel",
+      "Faith",
+      "Holy",
+      "Luminescence",
+      "Regen",
+      "Revive",
+      "Smite",
+      "Shell"
+    ],
+    "performances": [
+      "Beau Capriccio",
+      "Knight's Paeon",
+      "Scamp's Nocturne",
+      "Vigil's Overture"
+    ],
+    "equipped": "Bishop’s Crosier, Catholicon Ring, Crucifix, Radiant Raiment",
+    "loot": "Bishop’s Crosier (5%), Radiant Raiment (20%), Crucifix (50%), Catholicon Ring (95%), and 8,700gp",
+    "steal": "Elixir (5%), Mega Ether (20%), Holy Water (50%)",
+    "sourcePage": 264,
+    "profileLine": "Pure Good Medium Human Initiate 6/Bard 1/Bishop 8",
+    "species": "Human",
+    "classLevels": "Initiate 6/Bard 1/Bishop 8"
+  },
+  {
+    "name": "Enforcer",
+    "category": "Allies",
+    "profile": "nonheroic",
+    "cr": 1,
+    "level": 1,
+    "xp": 200,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "",
+    "hp": 20,
+    "mp": 0,
+    "initiativeDie": "1d10",
+    "speed": "6",
+    "senses": "; Passive Perception 10",
+    "passivePerception": 10,
+    "ref": 13,
+    "flatFootedRef": 13,
+    "fort": 12,
+    "will": 9,
+    "dr": 3,
+    "breakThreshold": 12,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Beastongue, Common Hardened by the streets, these thugs thrive in the cutthroat world of the slums, where strength and cunning mean survival.",
+    "attributes": {
+      "str": 13,
+      "agi": 11,
+      "vit": 12,
+      "int": 10,
+      "mnd": 9,
+      "cha": 8
+    },
+    "attacks": [
+      {
+        "name": "Bronze Mace",
+        "attack": 12,
+        "damage": "2d6+2",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Handed",
+        "bonus": 12,
+        "key": ""
+      },
+      {
+        "name": "Athletics",
+        "bonus": 7,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 6,
+        "key": ""
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 5,
+        "key": "persuasion"
+      }
+    ],
+    "description": "Hardened by the streets, these thugs thrive in the cutthroat world of the slums, where strength and cunning mean survival.",
+    "abilities": [],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Armour Proficiency (light)",
+      "HP Up",
+      "Shield Proficiency",
+      "Skill Focus (1-Handed)",
+      "Weapon Proficiency (Bludgeons)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Bronze Mace, Targe, Leather Breastplate",
+    "loot": "Leather Breastplate (5%), Targe (20%), Bronze Mace (50%), Health Potion (95%), and 150gp",
+    "steal": "Health Potion (50%), 20gp (95%)",
+    "sourcePage": 265,
+    "profileLine": "Corrupt Neutral Medium Gawro Nonheroic 3",
+    "species": "Gawro",
+    "classLevels": "Nonheroic 3"
+  },
+  {
+    "name": "Thief",
+    "category": "Allies",
+    "profile": "nonheroic",
+    "cr": 6,
+    "level": 6,
+    "xp": 1200,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "",
+    "hp": 48,
+    "mp": 4,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "Dark Vision, Keen Scent; Passive Perception 19",
+    "passivePerception": 19,
+    "ref": 23,
+    "flatFootedRef": 19,
+    "fort": 17,
+    "will": 13,
+    "dr": 6,
+    "breakThreshold": 17,
+    "immunities": [
+      "Blind"
+    ],
+    "resistances": [
+      "Electric"
+    ],
+    "weaknesses": [],
+    "languages": "Beastongue, Common, Goblin Quick of hand and quicker of wit, these criminals take whatever they can. A few steal to survive—but most, simply because they want more.",
+    "attributes": {
+      "str": 10,
+      "agi": 18,
+      "vit": 12,
+      "int": 13,
+      "mnd": 8,
+      "cha": 14
+    },
+    "attacks": [
+      {
+        "name": "Thieves' Jambiya",
+        "attack": 20,
+        "damage": "2d4+11",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 19,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 12,
+        "key": "deception"
+      },
+      {
+        "name": "Light Weapon",
+        "bonus": 19,
+        "key": "light-weapon"
+      },
+      {
+        "name": "Perception",
+        "bonus": 9,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 19,
+        "key": "stealth"
+      }
+    ],
+    "description": "Quick of hand and quicker of wit, these criminals take whatever they can. A few steal to survive—but most, simply because they want more.",
+    "abilities": [],
+    "classFeatures": [
+      "Score"
+    ],
+    "talents": [
+      "Accomplice",
+      "Cat Burglar",
+      "Cutpurse"
+    ],
+    "technicks": [
+      "Agile Manoeuvres",
+      "Armour Proficiency (light)",
+      "Dodge",
+      "Improved Initiative",
+      "Skill Focus (acrobatics, light weapon, stealth)",
+      "Tactical Withdrawal",
+      "Weapon Finesse",
+      "Weapon Proficiency (knives)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Malachite Ring, Thieves' Jambiya, Wind Garb",
+    "loot": "Thieves' Jambiya (5%), Wind Garb (20%), Malachite Ring (50%), and 1,600gp",
+    "steal": "to survive—but most, simply because they want more. HP 48 MP 4 Init d8 Speed 6 Senses Dark Vision, Keen Scent; Passive Perception 19 Defence Ref 23 (flat-footed 19), Fort 17, Will 13 DR 6; Threshold 17 Immunity Blind Resistance Electric Offence Melee Thieves' Jambiya +20 (2d4+11) Statistics Attributes Str 10, Agi 18, Vit 12, Int 13, Mnd 8, Chr 14 Class Features Score Talents Accomplice, Cat Burglar, Cutpurse Technicks Agile Manoeuvres, Armour Proficiency (light), Dodge, Improved Initiative, Skill Focus (acrobatics, light weapon, stealth), Tactical Withdrawal, Weapon Finesse, Weapon Proficiency (knives) Skills Acrobatics +19, Deception +12, Light Weapon +19, Perception +9, Stealth +19 Items Equipped Malachite Ring, Thieves' Jambiya, Wind Garb Loot Thieves' Jambiya (5%), Wind Garb (20%), Malachite Ring (50%), and 1,600gp Steal Thieves’ Tools (20%), Hi-Potion (50%), Elfwort (95%)",
+    "sourcePage": 265,
+    "profileLine": "Corrupt Neutral Medium Nasha Nonheroic 6/Rogue 3/ Purloiner 1",
+    "species": "Nasha",
+    "classLevels": "Nonheroic 6/Rogue 3/ Purloiner 1"
+  },
+  {
+    "name": "Highwayman",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 9,
+    "level": 5,
+    "xp": 1800,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "",
+    "hp": 91,
+    "mp": 13,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "; Passive Perception 18",
+    "passivePerception": 18,
+    "ref": 30,
+    "flatFootedRef": 27,
+    "fort": 23,
+    "will": 21,
+    "dr": 6,
+    "breakThreshold": 23,
+    "immunities": [],
+    "resistances": [
+      "Electric Parry Main-Gauche +22/20*"
+    ],
+    "weaknesses": [],
+    "languages": "Beastongue, Common These violent outlaws prey on unsuspecting travelers.",
+    "attributes": {
+      "str": 12,
+      "agi": 18,
+      "vit": 13,
+      "int": 13,
+      "mnd": 8,
+      "cha": 14
+    },
+    "attacks": [
+      {
+        "name": "Estoc",
+        "attack": 21,
+        "damage": "2d6+11",
+        "mode": "melee",
+        "type": "blunt"
+      },
+      {
+        "name": "Main-Gauche",
+        "attack": 20,
+        "damage": "2d4+11",
+        "mode": "melee",
+        "type": "blunt"
+      },
+      {
+        "name": "Estoc",
+        "attack": 19,
+        "damage": "2d6+11",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 18,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Athletics",
+        "bonus": 10,
+        "key": "athletics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 11,
+        "key": "deception"
+      },
+      {
+        "name": "Disable",
+        "bonus": 13,
+        "key": "disable"
+      },
+      {
+        "name": "Light Weapon",
+        "bonus": 18,
+        "key": "light-weapon"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 10,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 8,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 11,
+        "key": "persuasion"
+      },
+      {
+        "name": "Ride",
+        "bonus": 13,
+        "key": "ride"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 13,
+        "key": "stealth"
+      }
+    ],
+    "description": "These violent outlaws prey on unsuspecting travelers.",
+    "abilities": [],
+    "classFeatures": [
+      "En Garde",
+      "Panache 1",
+      "Parry",
+      "Swordplay 1"
+    ],
+    "talents": [
+      "Evasive",
+      "Improved Stealth",
+      "Riposte",
+      "Swift Stealth",
+      "Weapon Specialisation (swords)"
+    ],
+    "technicks": [
+      "Armour Proficiency (light)",
+      "Defence Up",
+      "Dodge",
+      "Dual Wield I",
+      "Dual Wield II",
+      "HP Up",
+      "Improved Initiative",
+      "Rapid Counter",
+      "Shield Proficiency",
+      "Skill Focus (acrobatics, light weapon)",
+      "Weapon Finesse",
+      "Weapon Proficiency (bludgeons, crossbows, knives, swords)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Bolt Pendant, Brigandine, Estoc, Main-Gauche",
+    "loot": "Estoc (5%), Bolt Pendant (20%), Main-Gauche (50%), Brigandine (95%), and 2,700gp",
+    "steal": "Thieves’ Tools (20%), 800gp (50%)",
+    "sourcePage": 266,
+    "profileLine": "Corrupt Evil Medium Human Rogue 5/ Warrior 2/Sabreur 2",
+    "species": "Human",
+    "classLevels": "Rogue 5/ Warrior 2/Sabreur 2"
+  },
+  {
+    "name": "Assassin",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 10,
+    "level": 5,
+    "xp": 2000,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "",
+    "hp": 94,
+    "mp": 24,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "Dark Vision; Passive Perception 20",
+    "passivePerception": 20,
+    "ref": 29,
+    "flatFootedRef": 25,
+    "fort": 26,
+    "will": 20,
+    "dr": 8,
+    "breakThreshold": 26,
+    "immunities": [
+      "Poison"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Common, Elven, Goblin, Infernal Silent as shadows and deadly as a whisper, these blades in the dark are among the world’s most elite killers.",
+    "attributes": {
+      "str": 14,
+      "agi": 19,
+      "vit": 14,
+      "int": 14,
+      "mnd": 10,
+      "cha": 10
+    },
+    "attacks": [
+      {
+        "name": "Assassin’s Kard",
+        "attack": 21,
+        "damage": "2d4+12",
+        "mode": "melee",
+        "type": "slashing"
+      },
+      {
+        "name": "Twin-Shot",
+        "attack": 22,
+        "damage": "2d6+11",
+        "mode": "ranged",
+        "type": "piercing"
+      },
+      {
+        "name": "Twin-Shot",
+        "attack": 22,
+        "damage": "3d6+11",
+        "mode": "ranged",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 14,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Alchemy",
+        "bonus": 12,
+        "key": "alchemy"
+      },
+      {
+        "name": "Deception",
+        "bonus": 10,
+        "key": "deception"
+      },
+      {
+        "name": "Disable",
+        "bonus": 14,
+        "key": "disable"
+      },
+      {
+        "name": "Light Weapon",
+        "bonus": 19,
+        "key": "light-weapon"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 12,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 10,
+        "key": "perception"
+      },
+      {
+        "name": "Ranged",
+        "bonus": 19,
+        "key": "ranged"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 21,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 12,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Silent as shadows and deadly as a whisper, these blades in the dark are among the world’s most elite killers.",
+    "abilities": [],
+    "classFeatures": [
+      "Blindside",
+      "Cloak and Dagger 1"
+    ],
+    "talents": [
+      "Ambuscade",
+      "Backstab",
+      "Debilitating Injury",
+      "Dead Shot",
+      "Improved Stealth",
+      "Vanish"
+    ],
+    "technicks": [
+      "Armour Proficiency (light)",
+      "Deadly Aim",
+      "Dodge",
+      "Dual Wield I",
+      "Dual Wield II",
+      "Precise Shot",
+      "Skill Focus (light weapon, ranged, stealth)",
+      "Triple Crit",
+      "Weapon Finesse",
+      "Weapon Proficiency (bludgeons, crossbows, knives, swords)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "2 Assassin’s Kard, Black Garb, Bloodstone Pendant, Twin Shot, Long Bolts",
+    "loot": "Black Garb (5%), Twin Shot (20%), Assassin’s Kard (50%), Bloodstone Pendant (95%), and 3,700gp",
+    "steal": "Black Adder Venom (20%), 10 Long Bolts (50%), Hi-Potion (95%) & Adversaries",
+    "sourcePage": 266,
+    "profileLine": "Neutral Evil Medium Dark Elf Rogue 5/ Ranger 2/Assassin 3",
+    "species": "Dark Elf",
+    "classLevels": "Rogue 5/ Ranger 2/Assassin 3"
+  },
+  {
+    "name": "Goblin Fodder",
+    "category": "Allies",
+    "profile": "nonheroic",
+    "cr": 1,
+    "level": 4,
+    "xp": 200,
+    "size": "small",
+    "alignment": "Corrupt",
+    "temperament": "",
+    "hp": 16,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "Dark Vision; Passive Perception 16",
+    "passivePerception": 16,
+    "ref": 15,
+    "flatFootedRef": 13,
+    "fort": 11,
+    "will": 9,
+    "dr": 2,
+    "breakThreshold": 11,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Goblin, Orcish* The lowest ranking minions in the Badlands’ armies—if soldiers they can be called. Their orcish masters discard them like broken tools, caring more for their rusted weapons than for the lives they waste.",
+    "attributes": {
+      "str": 11,
+      "agi": 15,
+      "vit": 12,
+      "int": 10,
+      "mnd": 9,
+      "cha": 6
+    },
+    "attacks": [
+      {
+        "name": "Goblin Club",
+        "attack": 7,
+        "damage": "2d6+1",
+        "mode": "melee",
+        "type": "blunt"
+      },
+      {
+        "name": "Goblin Bow",
+        "attack": 9,
+        "damage": "2d6+1",
+        "mode": "ranged",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Handed",
+        "bonus": 7,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 6,
+        "key": "perception"
+      },
+      {
+        "name": "Ranged",
+        "bonus": 9,
+        "key": "ranged"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 14,
+        "key": "stealth"
+      }
+    ],
+    "description": "The lowest ranking minions in the Badlands’ armies—if soldiers they can be called. Their orcish masters discard them like broken tools, caring more for their rusted weapons than for the lives they waste.",
+    "abilities": [],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Armour Proficiency (light)",
+      "Improved Initiative",
+      "Precise Shot",
+      "Weapon Proficiency (bludgeons, bows)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Chromed Leather, Goblin Bow, Goblin Club, Wooden Arrows",
+    "loot": "Chromed Leather (5%), Goblin Bow (20%), Goblin Club (50%), 2d4 Wooden Arrows (95%), and 200gp",
+    "steal": "Health Potion (5%), Moonwort (20%), Antidote (95%)",
+    "sourcePage": 267,
+    "profileLine": "Corrupt Evil Small Goblin Nonheroic 4",
+    "species": "Goblin",
+    "classLevels": "Nonheroic 4"
+  },
+  {
+    "name": "Orc Grunt",
+    "category": "Allies",
+    "profile": "nonheroic",
+    "cr": 2,
+    "level": 6,
+    "xp": 400,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "",
+    "hp": 30,
+    "mp": 0,
+    "initiativeDie": "1d10",
+    "speed": "4 (encumbered)",
+    "senses": "Low-light Vision; Passive Perception 12",
+    "passivePerception": 12,
+    "ref": 14,
+    "flatFootedRef": 13,
+    "fort": 12,
+    "will": 9,
+    "dr": 3,
+    "breakThreshold": 12,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Goblin* , Orcish The fierce heart of the orcish hordes, these warriors clash with brutal fury, fueled by bloodlust and an insatiable hunger for plunder.",
+    "attributes": {
+      "str": 17,
+      "agi": 13,
+      "vit": 15,
+      "int": 7,
+      "mnd": 8,
+      "cha": 6
+    },
+    "attacks": [
+      {
+        "name": "Orcish Tabar",
+        "attack": 11,
+        "damage": "2d8+9",
+        "mode": "melee",
+        "type": "slashing"
+      },
+      {
+        "name": "Shield Bash: Orcish Madu",
+        "attack": 11,
+        "damage": "2d4+7",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Handed",
+        "bonus": 11,
+        "key": ""
+      },
+      {
+        "name": "Athletics",
+        "bonus": 11,
+        "key": "athletics"
+      }
+    ],
+    "description": "The fierce heart of the orcish hordes, these warriors clash with brutal fury, fueled by bloodlust and an insatiable hunger for plunder.",
+    "abilities": [],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Armour Proficiency (light, heavy)",
+      "Mighty Strikes",
+      "Shield Bash",
+      "Shield Proficiency",
+      "Weapon Proficiency (axes)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Hide Armour, Orcish Madu, Orcish Tabar",
+    "loot": "Orcish Tabar (5%), Orcish Madu (20%), Hide Armour (50%), Health Potion (95%), and 300gp",
+    "steal": "Hi-Potion (5%), 160gp (20%), Golden Sap (95%)",
+    "sourcePage": 267,
+    "profileLine": "Corrupt Evil Medium Orc Nonheroic 6",
+    "species": "Orc",
+    "classLevels": "Nonheroic 6"
+  },
+  {
+    "name": "Orc Zerker",
+    "category": "Allies",
+    "profile": "nonheroic",
+    "cr": 6,
+    "level": 6,
+    "xp": 1200,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "",
+    "hp": 98,
+    "mp": 4,
+    "initiativeDie": "1d10",
+    "speed": "6",
+    "senses": "Low-light Vision; Passive Perception 14",
+    "passivePerception": 14,
+    "ref": 19,
+    "flatFootedRef": 17,
+    "fort": 23,
+    "will": 16,
+    "dr": 5,
+    "breakThreshold": 28,
+    "immunities": [
+      "Blind",
+      "Paralysis"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Goblin* , Orcish Driven mad by bloodlust, these orcs tear through enemy lines with savage, reckless fury.",
+    "attributes": {
+      "str": 20,
+      "agi": 15,
+      "vit": 18,
+      "int": 8,
+      "mnd": 8,
+      "cha": 10
+    },
+    "attacks": [
+      {
+        "name": "Broadaxe",
+        "attack": 18,
+        "damage": "2d10+19",
+        "mode": "melee",
+        "type": "slashing"
+      },
+      {
+        "name": "Broadaxe",
+        "attack": 18,
+        "damage": "3d10+19",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "handed",
+        "bonus": 20,
+        "key": ""
+      },
+      {
+        "name": "Athletics",
+        "bonus": 15,
+        "key": "athletics"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 15,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Driven mad by bloodlust, these orcs tear through enemy lines with savage, reckless fury.",
+    "abilities": [],
+    "classFeatures": [
+      "Berserkergang",
+      "Furore"
+    ],
+    "talents": [
+      "Frenzy I",
+      "Rage",
+      "Toughness"
+    ],
+    "technicks": [
+      "Armour Proficiency (light)",
+      "Cleave",
+      "Defence Up",
+      "HP Up",
+      "Mighty Strikes",
+      "Power Attack",
+      "Skill Focus (2-handed)",
+      "Threshold Up",
+      "Weapon Proficiency (axes, swords)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Broadaxe, Garnet Ring, Malachite Ring, Ringmail",
+    "loot": "Garnet Ring (5%), Malachite Ring (20%), Ringmail (50%), Broadaxe (95%), and 1,600gp",
+    "steal": "Hi-Potion (20%), 200gp (95%)",
+    "sourcePage": 268,
+    "profileLine": "Corrupt Evil Medium Orc Nonheroic 6/ Warrior 3/Berserker 1",
+    "species": "Orc",
+    "classLevels": "Nonheroic 6/ Warrior 3/Berserker 1"
+  },
+  {
+    "name": "Goblin Bloodmage",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 10,
+    "level": 2,
+    "xp": 2000,
+    "size": "small",
+    "alignment": "Corrupt",
+    "temperament": "",
+    "hp": 102,
+    "mp": 94,
+    "initiativeDie": "1d12",
+    "speed": "6",
+    "senses": "Dark Vision; Passive Perception 24",
+    "passivePerception": 24,
+    "ref": 27,
+    "flatFootedRef": 23,
+    "fort": 26,
+    "will": 29,
+    "dr": 6,
+    "breakThreshold": 26,
+    "immunities": [
+      "Disease"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Common, Goblin, Infernal, Orc Among the mages of the Badlands, infernal pacts are a common, desperate currency—where souls are cheap, and the price paid all too often regretted.",
+    "attributes": {
+      "str": 6,
+      "agi": 15,
+      "vit": 16,
+      "int": 15,
+      "mnd": 18,
+      "cha": 10
+    },
+    "attacks": [
+      {
+        "name": "Imp Knife",
+        "attack": 19,
+        "damage": "2d4+6",
+        "mode": "melee",
+        "type": "slashing"
+      },
+      {
+        "name": "Heretic's Rod",
+        "attack": 22,
+        "damage": "3d6+8",
+        "mode": "ranged",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Alchemy",
+        "bonus": 12,
+        "key": "alchemy"
+      },
+      {
+        "name": "Light Weapon",
+        "bonus": 17,
+        "key": "light-weapon"
+      },
+      {
+        "name": "Lore (occult)",
+        "bonus": 12,
+        "key": "lore-occult"
+      },
+      {
+        "name": "Perception",
+        "bonus": 14,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 17,
+        "key": "stealth"
+      }
+    ],
+    "description": "Among the mages of the Badlands, infernal pacts are a common, desperate currency—where souls are cheap, and the price paid all too often regretted.",
+    "abilities": [],
+    "classFeatures": [
+      "Dark Pact",
+      "Soul Eater 1"
+    ],
+    "talents": [
+      "Blood Magick",
+      "Blood Pact",
+      "Divine Preservation",
+      "Goety",
+      "Manafont",
+      "Summon Darkness"
+    ],
+    "technicks": [
+      "Arcane Study 2",
+      "Armour Proficiency (mystic)",
+      "Channel",
+      "Combat Casting",
+      "Defence Up",
+      "HP Up",
+      "MP Up",
+      "Precise Shot",
+      "Skill Focus (light weapon, spellcraft)",
+      "Weapon Proficiency (knives, staves, swords)"
+    ],
+    "spells": [
+      "Aphasia",
+      "Darkness",
+      "Dispel",
+      "Fear",
+      "Fireball",
+      "Maim"
+    ],
+    "performances": [],
+    "equipped": "Heretic’s Rod, Imp Knife, Magick Ring, Sorcerer’s Kaftan, Vedic Amulet",
+    "loot": "Heretic's Rod (5%), Imp Knife (20%), Sorcerer’s Kaftan (50%), and 3,700gp",
+    "steal": "Vedic Amulet (5%), Magick Ring (20%), Hi-Ether (50%)",
+    "sourcePage": 268,
+    "profileLine": "Corrupt Evil Small Goblin Mage 2/Initiate 5/Warlock 3",
+    "species": "Goblin",
+    "classLevels": "Mage 2/Initiate 5/Warlock 3"
+  },
+  {
+    "name": "Orc Dragonbrander",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 11,
+    "level": 4,
+    "xp": 2200,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "",
+    "hp": 150,
+    "mp": 15,
+    "initiativeDie": "1d10",
+    "speed": "4 (encumbered)",
+    "senses": "Low-light Vision; Passive Perception 19",
+    "passivePerception": 19,
+    "ref": 29,
+    "flatFootedRef": 28,
+    "fort": 30,
+    "will": 22,
+    "dr": 10,
+    "breakThreshold": 35,
+    "immunities": [
+      "Paralysis",
+      "Sleep"
+    ],
+    "resistances": [
+      "Fire"
+    ],
+    "weaknesses": [
+      "Cold"
+    ],
+    "languages": "Draconic, Goblin* , Orcish With brutal strength, these orcs tame the savage dragons of the Badlands, bending the beasts to their will as unstoppable war mounts.",
+    "attributes": {
+      "str": 20,
+      "agi": 12,
+      "vit": 18,
+      "int": 12,
+      "mnd": 8,
+      "cha": 16
+    },
+    "attacks": [
+      {
+        "name": "Flame Partisan",
+        "attack": 23,
+        "damage": "2d8+17",
+        "mode": "melee",
+        "type": "blunt"
+      },
+      {
+        "name": "Flame Partisan",
+        "attack": 27,
+        "damage": "3d8+22",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "handed",
+        "bonus": 20,
+        "key": ""
+      },
+      {
+        "name": "Athletics",
+        "bonus": 15,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (arcane)",
+        "bonus": 11,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 9,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 18,
+        "key": "persuasion"
+      },
+      {
+        "name": "Ride",
+        "bonus": 16,
+        "key": "ride"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 15,
+        "key": "unarmed"
+      }
+    ],
+    "description": "With brutal strength, these orcs tame the savage dragons of the Badlands, bending the beasts to their will as unstoppable war mounts.",
+    "abilities": [],
+    "classFeatures": [
+      "Dragon Dive 1",
+      "Hyper Jump 1",
+      "Leaping Lance"
+    ],
+    "talents": [
+      "Guardian Beast",
+      "Expert Rider",
+      "Mounted Charge",
+      "Steady Wing",
+      "Tame",
+      "Wyrmtamer"
+    ],
+    "technicks": [
+      "Armour Proficiency (light, heavy)",
+      "Defence Up",
+      "HP Up",
+      "Lunge",
+      "Mounted Combat",
+      "Powerful Charge",
+      "Shield Proficiency",
+      "Skill Focus (2-handed, Persuasion, Ride)",
+      "Threshold Up",
+      "Weapon Proficiency (axes, bludgeons, crossbows, knives, polearms, swords)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Amethyst Armlet, Flame Partisan, Garnet Ring, Ore Armour",
+    "loot": "Ore Armour (5%), Flame Partisan (20%), Amethyst Armlet (50%), Garnet Ring (95%), and 4,700gp",
+    "steal": "Dragon Scale (5%), Hi-Potion (20%), Bait (50%)",
+    "sourcePage": 269,
+    "profileLine": "Corrupt Evil Medium Orc Warrior 4/ Ranger 3/Dragoon 4",
+    "species": "Orc",
+    "classLevels": "Warrior 4/ Ranger 3/Dragoon 4"
+  },
+  {
+    "name": "Apprentice",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 4,
+    "level": 4,
+    "xp": 800,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "",
+    "hp": 34,
+    "mp": 42,
+    "initiativeDie": "1d10",
+    "speed": "6",
+    "senses": "; Passive Perception 20",
+    "passivePerception": 20,
+    "ref": 16,
+    "flatFootedRef": 15,
+    "fort": 15,
+    "will": 19,
+    "dr": 2,
+    "breakThreshold": 15,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Common, Dwarven, Elven, Gnomish Apprentices of the arcane, they begin their journey into the secrets of magick, guided by the hands of seasoned mages.",
+    "attributes": {
+      "str": 10,
+      "agi": 13,
+      "vit": 12,
+      "int": 16,
+      "mnd": 16,
+      "cha": 8
+    },
+    "attacks": [
+      {
+        "name": "Fire Wand",
+        "attack": 15,
+        "damage": "3d4+2",
+        "mode": "ranged",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Alchemy",
+        "bonus": 10,
+        "key": "alchemy"
+      },
+      {
+        "name": "Light Weapon",
+        "bonus": 8,
+        "key": "light-weapon"
+      },
+      {
+        "name": "Lore (arcane)",
+        "bonus": 10,
+        "key": ""
+      },
+      {
+        "name": "Lore (occult)",
+        "bonus": 10,
+        "key": "lore-occult"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 10,
+        "key": ""
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 10,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 10,
+        "key": "perception"
+      }
+    ],
+    "description": "Apprentices of the arcane, they begin their journey into the secrets of magick, guided by the hands of seasoned mages.",
+    "abilities": [],
+    "classFeatures": [],
+    "talents": [
+      "Focused Spell",
+      "Manafont"
+    ],
+    "technicks": [
+      "Arcane Study",
+      "Armour Proficiency (mystic)",
+      "Channel",
+      "Combat Casting",
+      "Improved Initiative",
+      "MP Up",
+      "Skill Focus (spellcraft)",
+      "Weapon Proficiency (knives, staves, swords)"
+    ],
+    "spells": [
+      "Dispel",
+      "Ember",
+      "Icicle",
+      "Shock"
+    ],
+    "performances": [],
+    "equipped": "Field Khukuri, Fire Wand, Wizard’s Robes",
+    "loot": "Wizard’s Robes (5%), Fire Wand (20%), Field Khukuri (50%), Ether (95%), and 400gp",
+    "steal": "Ether (50%), 80gp (95%)",
+    "sourcePage": 269,
+    "profileLine": "Neutral Good Human Mage 4",
+    "species": "Human",
+    "classLevels": "Neutral Good Human Mage 4"
+  },
+  {
+    "name": "Spellbreaker",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 10,
+    "level": 5,
+    "xp": 2000,
+    "size": "medium",
+    "alignment": "Pure",
+    "temperament": "",
+    "hp": 110,
+    "mp": 89,
+    "initiativeDie": "1d12",
+    "speed": "4",
+    "senses": "Dark Vision; Passive Perception 23",
+    "passivePerception": 23,
+    "ref": 26,
+    "flatFootedRef": 26,
+    "fort": 28,
+    "will": 28,
+    "dr": 11,
+    "breakThreshold": 33,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Common, Dwarven, Elven, Gnomish From childhood, these arcane warriors are forged to oppose magick in every guise, guardians sworn to uphold peace and order within the hallowed halls of the Silvered Tower.",
+    "attributes": {
+      "str": 16,
+      "agi": 10,
+      "vit": 16,
+      "int": 15,
+      "mnd": 16,
+      "cha": 8
+    },
+    "attacks": [
+      {
+        "name": "Crystal Parashu",
+        "attack": 21,
+        "damage": "2d8+11",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "handed",
+        "bonus": 18,
+        "key": ""
+      },
+      {
+        "name": "Alchemy",
+        "bonus": 12,
+        "key": "alchemy"
+      },
+      {
+        "name": "Athletics",
+        "bonus": 13,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (arcane)",
+        "bonus": 12,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 13,
+        "key": "perception"
+      },
+      {
+        "name": "Smithing",
+        "bonus": 12,
+        "key": "smithing"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 13,
+        "key": "unarmed"
+      }
+    ],
+    "description": "From childhood, these arcane warriors are forged to oppose magick in every guise, guardians sworn to uphold peace and order within the hallowed halls of the Silvered Tower.",
+    "abilities": [],
+    "classFeatures": [
+      "Arcane Armour",
+      "Warmage 1"
+    ],
+    "talents": [
+      "Deflect",
+      "Negate Spell",
+      "Shield Ally",
+      "Shield Expert",
+      "Spell Steal",
+      "Swift Spell"
+    ],
+    "technicks": [
+      "Arcane Study",
+      "Armour Proficiency (light, heavy)",
+      "Channel",
+      "Combat Casting",
+      "Defence Up",
+      "Disruptive",
+      "MP Up",
+      "Shield Proficiency",
+      "Skill Focus (1-handed, spellcraft)",
+      "Threshold Up",
+      "Weapon Proficiency (axes, bludgeons, knives, polearms, swords)"
+    ],
+    "spells": [
+      "Barrier",
+      "Cleanse",
+      "Dispel"
+    ],
+    "performances": [],
+    "equipped": "Crystal Parashu, Ice Shield, Magick Armour, Talisman of Wisdom",
+    "loot": "Crystal Parashu (5%), Magick Armour (20%), Ice Shield (50%), Hi-Ether (95%), and 3,700gp",
+    "steal": "Talisman of Wisdom (5%), Nothing (20%), Hi-Ether (50%)",
+    "sourcePage": 270,
+    "profileLine": "Pure Neutral Medium Dwarf Warrior 5/ Mage 2/Battlemage 3",
+    "species": "Dwarf",
+    "classLevels": "Warrior 5/ Mage 2/Battlemage 3"
+  },
+  {
+    "name": "High Summoner",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 12,
+    "level": 5,
+    "xp": 2400,
+    "size": "small",
+    "alignment": "Pure",
+    "temperament": "",
+    "hp": 79,
+    "mp": 122,
+    "initiativeDie": "1d12",
+    "speed": "4",
+    "senses": "Low-light Vision; Passive Perception 26",
+    "passivePerception": 26,
+    "ref": 28,
+    "flatFootedRef": 26,
+    "fort": 25,
+    "will": 32,
+    "dr": 9,
+    "breakThreshold": 25,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Common, Dwarven, Elven, Gnomish, Primordial As spiritual guides, they safeguard the fading rites and traditions of the old gods, striving to keep their ancient faiths alive.",
+    "attributes": {
+      "str": 7,
+      "agi": 14,
+      "vit": 12,
+      "int": 17,
+      "mnd": 20,
+      "cha": 14
+    },
+    "attacks": [
+      {
+        "name": "Summoner’s Lathi",
+        "attack": 25,
+        "damage": "3d6+10",
+        "mode": "ranged",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Alchemy",
+        "bonus": 19,
+        "key": "alchemy"
+      },
+      {
+        "name": "Lore (arcane)",
+        "bonus": 19,
+        "key": ""
+      },
+      {
+        "name": "Lore (mystic)",
+        "bonus": 14,
+        "key": "lore-mystic"
+      },
+      {
+        "name": "Lore (occult)",
+        "bonus": 14,
+        "key": "lore-occult"
+      },
+      {
+        "name": "Perception",
+        "bonus": 16,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 13,
+        "key": "persuasion"
+      }
+    ],
+    "description": "Primordial As spiritual guides, they safeguard the fading rites and traditions of the old gods, striving to keep their ancient faiths alive.",
+    "abilities": [],
+    "classFeatures": [
+      "Astral Conduit 2",
+      "Summon Aeon"
+    ],
+    "talents": [
+      "Astral Flow",
+      "Astral Rush I",
+      "Astral Rush II",
+      "Guardian Force",
+      "Healer’s Blessing I",
+      "Life Link",
+      "Summon Elemental"
+    ],
+    "technicks": [
+      "Arcane Study 3",
+      "Armour Proficiency (mystic)",
+      "Channel",
+      "Combat Casting",
+      "Defence Up",
+      "MP Up",
+      "Precise Shot",
+      "Skill Focus (alchemy, lore arcane, spellcraft)",
+      "Weapon Proficiency (knives, staves, swords)"
+    ],
+    "spells": [
+      "Banish",
+      "Barrier",
+      "Cleanse",
+      "Curatio",
+      "Cure",
+      "Dispel",
+      "Faith",
+      "Haste",
+      "Levitation",
+      "Revive",
+      "Shell",
+      "Teleport"
+    ],
+    "performances": [],
+    "equipped": "High Summoner’s Vestments, Idol of Flames* , Sage’s Ring, Summoner’s Lathi",
+    "loot": "Summoner's Lathi (5%), High Summoner's Vestments (20%), Hi-Ether (50%), Magicite (95%), and 5,700gp",
+    "steal": "Idol of Flames* (5%), Sage’s Ring (20%), Golden Sap (50%)",
+    "sourcePage": 270,
+    "profileLine": "Pure Neutral Small Gnome Mage 5/ Initiate 2/Summoner 5",
+    "species": "Gnome",
+    "classLevels": "Mage 5/ Initiate 2/Summoner 5"
+  },
+  {
+    "name": "High Magister",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 15,
+    "level": 7,
+    "xp": 3000,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "",
+    "hp": 117,
+    "mp": 172,
+    "initiativeDie": "1d12",
+    "speed": "6",
+    "senses": "Low-light Vision, Blindsense; Passive Perception 28",
+    "passivePerception": 28,
+    "ref": 30,
+    "flatFootedRef": 28,
+    "fort": 27,
+    "will": 38,
+    "dr": 9,
+    "breakThreshold": 32,
+    "immunities": [
+      "Toad"
+    ],
+    "resistances": [
+      "Cold",
+      "Dark",
+      "Electric",
+      "Fire",
+      "Holy"
+    ],
+    "weaknesses": [],
+    "languages": "Beastongue, Celestial, Common, Draconic, Dwarven, Elven, Giant, Gnomish, Infernal, Primordial, Sylvan Counted among the Arcanum’s highest-ranking magi, they command respect for their profound knowledge and arcane mastery. Rarely seen beyond their sanctum, their pursuits overshadow the mundane affairs of the world.",
+    "attributes": {
+      "str": 7,
+      "agi": 14,
+      "vit": 12,
+      "int": 18,
+      "mnd": 22,
+      "cha": 10
+    },
+    "attacks": [
+      {
+        "name": "Staff of the Magi",
+        "attack": 27,
+        "damage": "3d8+11",
+        "mode": "ranged",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Alchemy",
+        "bonus": 16,
+        "key": "alchemy"
+      },
+      {
+        "name": "Lore (arcane)",
+        "bonus": 21,
+        "key": ""
+      },
+      {
+        "name": "Lore (mystic)",
+        "bonus": 16,
+        "key": "lore-mystic"
+      },
+      {
+        "name": "Lore (occult)",
+        "bonus": 16,
+        "key": "lore-occult"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 16,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 18,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 12,
+        "key": "persuasion"
+      }
+    ],
+    "description": "Sylvan Counted among the Arcanum’s highest-ranking magi, they command respect for their profound knowledge and arcane mastery. Rarely seen beyond their sanctum, their pursuits overshadow the mundane affairs of the world.",
+    "abilities": [],
+    "classFeatures": [
+      "Arcane Acumen 4",
+      "Surecast"
+    ],
+    "talents": [
+      "Amplification",
+      "Dual Casting I",
+      "Dual Casting II",
+      "Focused Spell",
+      "Manafont",
+      "Penetrating Spell",
+      "Spell Mastery",
+      "Swift Spell"
+    ],
+    "technicks": [
+      "Arcane Study 3",
+      "Armour Proficiency (mystic)",
+      "Channel",
+      "Combat Casting",
+      "Defence Up",
+      "HP Up",
+      "Linguist",
+      "MP Up",
+      "Skill Focus (lore arcane, spellcraft)",
+      "Threshold Up",
+      "Weapon Proficiency (knives, staves, swords)"
+    ],
+    "spells": [
+      "Ark Blast",
+      "Barrier",
+      "Blizzard",
+      "Cleanse",
+      "Dispel",
+      "Firestorm",
+      "Gravity",
+      "Inferno",
+      "Invisibility",
+      "Muddle",
+      "Shell",
+      "Teleport",
+      "Thunderstorm",
+      "Whiteout"
+    ],
+    "performances": [],
+    "equipped": "Lens of Truth, Magister’s Houppelande, Staff of the Magi, Tourmaline Ring",
+    "loot": "Staff of the Magi (5%), Magister’s Houppelande (20%), Tourmaline Ring (50%), Mega-Ether (95%), and 8,700gp",
+    "steal": "Lens of Truth (5%), Ambrosia (20%), Mega-Potion (50%) * Against spells.",
+    "sourcePage": 271,
+    "profileLine": "Neutral Good Medium High Elf Mage 7/Archmage 8",
+    "species": "High Elf",
+    "classLevels": "Mage 7/Archmage 8"
+  },
+  {
+    "name": "Guard",
+    "category": "Allies",
+    "profile": "nonheroic",
+    "cr": 2,
+    "level": 6,
+    "xp": 400,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "",
+    "hp": 35,
+    "mp": 0,
+    "initiativeDie": "1d10",
+    "speed": "6",
+    "senses": "; Passive Perception 23",
+    "passivePerception": 23,
+    "ref": 13,
+    "flatFootedRef": 13,
+    "fort": 11,
+    "will": 10,
+    "dr": 6,
+    "breakThreshold": 11,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Common Serving as the vigilant eyes of Val’Daera, these men make up the city watch—protecting the streets and gates of towns and settlements throughout the many human kingdoms.",
+    "attributes": {
+      "str": 14,
+      "agi": 11,
+      "vit": 13,
+      "int": 9,
+      "mnd": 10,
+      "cha": 8
+    },
+    "attacks": [
+      {
+        "name": "Spear",
+        "attack": 15,
+        "damage": "2d8+7",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Steel Broadsword",
+        "attack": 10,
+        "damage": "2d6+5",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "handed",
+        "bonus": 10,
+        "key": ""
+      },
+      {
+        "name": "handed",
+        "bonus": 15,
+        "key": ""
+      },
+      {
+        "name": "Athletics",
+        "bonus": 10,
+        "key": "athletics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 13,
+        "key": "perception"
+      }
+    ],
+    "description": "Serving as the vigilant eyes of Val’Daera, these men make up the city watch—protecting the streets and gates of towns and settlements throughout the many human kingdoms.",
+    "abilities": [],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Armour Proficiency (light)",
+      "HP Up",
+      "Pole Fighter",
+      "Skill Focus (2-handed, perception)",
+      "Weapon Proficiency (polearms, swords)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Brigandine, Spear, Steel Broadsword",
+    "loot": "Brigandine (20%), Spear (50%), Steel Broadsword (95%), and 300gp",
+    "steal": "50gp (50%), Health Potion (95%) The T ownsfolk The denizens of Val’ daera’s many cities.",
+    "sourcePage": 272,
+    "profileLine": "Neutral Good Medium Human Nonheroic 6",
+    "species": "Human",
+    "classLevels": "Nonheroic 6"
+  },
+  {
+    "name": "Merchant",
+    "category": "Allies",
+    "profile": "nonheroic",
+    "cr": 1,
+    "level": 1,
+    "xp": 200,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "",
+    "hp": 11,
+    "mp": 3,
+    "initiativeDie": "1d10",
+    "speed": "4",
+    "senses": "; Passive Perception 22",
+    "passivePerception": 22,
+    "ref": 14,
+    "flatFootedRef": 14,
+    "fort": 12,
+    "will": 14,
+    "dr": 2,
+    "breakThreshold": 12,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Common, Dwarven, Beastongue, Elven, Gnomish, Goblin, Sylvan From bustling street stalls to sturdy storefronts, these common folk keep the wheels of commerce turning.",
+    "attributes": {
+      "str": 8,
+      "agi": 9,
+      "vit": 10,
+      "int": 15,
+      "mnd": 12,
+      "cha": 12
+    },
+    "attacks": [
+      {
+        "name": "Bronze Knife",
+        "attack": 5,
+        "damage": "2d4-1",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Deception",
+        "bonus": 7,
+        "key": "deception"
+      },
+      {
+        "name": "Light Weapon",
+        "bonus": 5,
+        "key": "light-weapon"
+      },
+      {
+        "name": "Lore (arcane)",
+        "bonus": 8,
+        "key": ""
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 8,
+        "key": ""
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 8,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 12,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 12,
+        "key": "persuasion"
+      }
+    ],
+    "description": "Gnomish, Goblin, Sylvan From bustling street stalls to sturdy storefronts, these common folk keep the wheels of commerce turning.",
+    "abilities": [],
+    "classFeatures": [],
+    "talents": [
+      "Skilled Negotiator"
+    ],
+    "technicks": [
+      "Armour Proficiency (light)",
+      "Skill Training (deception)",
+      "Skill Focus (perception, persuasion)",
+      "Linguist",
+      "Weapon Proficiency (knives)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Bronze Knife, Quilted Doublet",
+    "loot": "Quilted Doublet (50%), Bronze Knife (95%), and 200gp",
+    "steal": "100gp (50%), Antidote (95%) & Adversaries",
+    "sourcePage": 272,
+    "profileLine": "Neutral Medium Highland Dwarf Nonheroic 2/Bard 1",
+    "species": "Dwarf",
+    "classLevels": "Highland Dwarf Nonheroic 2/Bard 1"
+  },
+  {
+    "name": "Sentry",
+    "category": "Allies",
+    "profile": "nonheroic",
+    "cr": 3,
+    "level": 3,
+    "xp": 600,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "",
+    "hp": 35,
+    "mp": 6,
+    "initiativeDie": "1d10",
+    "speed": "6",
+    "senses": "; Passive Perception 24",
+    "passivePerception": 24,
+    "ref": 18,
+    "flatFootedRef": 16,
+    "fort": 14,
+    "will": 13,
+    "dr": 6,
+    "breakThreshold": 14,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Common Perched atop the walls and in the soaring towers above the city, these vigilant crossbowmen stand watch, ever alert for threats on the horizon.",
+    "attributes": {
+      "str": 11,
+      "agi": 14,
+      "vit": 10,
+      "int": 10,
+      "mnd": 13,
+      "cha": 8
+    },
+    "attacks": [
+      {
+        "name": "Steel Broadsword",
+        "attack": 15,
+        "damage": "2d6+3",
+        "mode": "melee",
+        "type": "slashing"
+      },
+      {
+        "name": "Crossbow",
+        "attack": 15,
+        "damage": "2d8+3",
+        "mode": "ranged",
+        "type": "blunt"
+      },
+      {
+        "name": "Crossbow",
+        "attack": 15,
+        "damage": "3d8+3",
+        "mode": "ranged",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 8,
+        "key": "athletics"
+      },
+      {
+        "name": "Light Weapon",
+        "bonus": 15,
+        "key": "light-weapon"
+      },
+      {
+        "name": "Perception",
+        "bonus": 14,
+        "key": "perception"
+      },
+      {
+        "name": "Ranged",
+        "bonus": 15,
+        "key": "ranged"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 10,
+        "key": "stealth"
+      }
+    ],
+    "description": "Perched atop the walls and in the soaring towers above the city, these vigilant crossbowmen stand watch, ever alert for threats on the horizon.",
+    "abilities": [],
+    "classFeatures": [],
+    "talents": [
+      "Wide Scan"
+    ],
+    "technicks": [
+      "Armour Proficiency (light)",
+      "Deadly Aim",
+      "HP Up",
+      "Precise Shot",
+      "Skill Focus (light weapon, ranged, perception)",
+      "Weapon Proficiency (crossbows, swords)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Brigandine, Crossbow, Crossbow Bolts, Steel Broadsword",
+    "loot": "Crossbow (5%), Brigandine (20%), Steel Broadsword (50%), 2d4 Crossbow Bolts (95%), and 400gp",
+    "steal": "50gp (50%), Elfwort (95%)",
+    "sourcePage": 273,
+    "profileLine": "Neutral Good Medium Human Nonheroic 4/ Ranger 2",
+    "species": "Human",
+    "classLevels": "Nonheroic 4/ Ranger 2"
+  },
+  {
+    "name": "Minstrel",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 4,
+    "level": 4,
+    "xp": 800,
+    "size": "small",
+    "alignment": "Pure",
+    "temperament": "",
+    "hp": 39,
+    "mp": 8,
+    "initiativeDie": "1d4",
+    "speed": "4",
+    "senses": "Senses; Passive Perception 16",
+    "passivePerception": 16,
+    "ref": 22,
+    "flatFootedRef": 20,
+    "fort": 15,
+    "will": 15,
+    "dr": 2,
+    "breakThreshold": 15,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Common, Elven, Sylvan No tavern is complete without a minstrel, weaving songs and tales of love, tragedy, and heroism to ease the weary hearts of its patrons.",
+    "attributes": {
+      "str": 12,
+      "agi": 14,
+      "vit": 10,
+      "int": 13,
+      "mnd": 8,
+      "cha": 18
+    },
+    "attacks": [
+      {
+        "name": "Field Khukuri",
+        "attack": 14,
+        "damage": "2d4+4",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 9,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 11,
+        "key": "deception"
+      },
+      {
+        "name": "Light Weapon",
+        "bonus": 14,
+        "key": "light-weapon"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 8,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 6,
+        "key": "perception"
+      },
+      {
+        "name": "Perform (instrument)",
+        "bonus": 16,
+        "key": "perform"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 11,
+        "key": "persuasion"
+      }
+    ],
+    "description": "No tavern is complete without a minstrel, weaving songs and tales of love, tragedy, and heroism to ease the weary hearts of its patrons.",
+    "abilities": [],
+    "classFeatures": [],
+    "talents": [
+      "Marcato",
+      "Medley"
+    ],
+    "technicks": [
+      "Armour Proficiency (light)",
+      "Bardic Study",
+      "Defence Up",
+      "Improved Initiative",
+      "Skill Focus (light weapon, perform instrument)",
+      "Weapon Proficiency (bows, knives, swords)"
+    ],
+    "spells": [],
+    "performances": [
+      "Knight's Paeon",
+      "Chanter's Etude"
+    ],
+    "equipped": "Chromed Leather, Field Khukuri, Piper’s Cornette",
+    "loot": "Piper’s Cornette (5%), Field Khukuri (20%), Chromed Leather (50%), Antidote (95%), and 400gp",
+    "steal": "Hi-Potion (50%), Golden Sap (95%)",
+    "sourcePage": 273,
+    "profileLine": "Pure Neutral Small Halfling Bard 4",
+    "species": "",
+    "classLevels": "Halfling Bard 4"
+  },
+  {
+    "name": "Guard Captain",
+    "category": "Allies",
+    "profile": "nonheroic",
+    "cr": 5,
+    "level": 5,
+    "xp": 1000,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "",
+    "hp": 59,
+    "mp": 6,
+    "initiativeDie": "1d10",
+    "speed": "6",
+    "senses": "; Passive Perception 24",
+    "passivePerception": 24,
+    "ref": 19,
+    "flatFootedRef": 18,
+    "fort": 17,
+    "will": 15,
+    "dr": 6,
+    "breakThreshold": 22,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Common, Dwarven As leader of the local guard, this battle-hardened veteran navigates both criminals and politicians with equal resolve. Always flanked by guards and sentries, he commands respect and caution.",
+    "attributes": {
+      "str": 15,
+      "agi": 15,
+      "vit": 12,
+      "int": 13,
+      "mnd": 10,
+      "cha": 10
+    },
+    "attacks": [
+      {
+        "name": "Longsword",
+        "attack": 16,
+        "damage": "2d8+6",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Handed",
+        "bonus": 16,
+        "key": ""
+      },
+      {
+        "name": "Athletics",
+        "bonus": 11,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 10,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 14,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 14,
+        "key": "persuasion"
+      },
+      {
+        "name": "Ride",
+        "bonus": 11,
+        "key": "ride"
+      }
+    ],
+    "description": "As leader of the local guard, this battle-hardened veteran navigates both criminals and politicians with equal resolve. Always flanked by guards and sentries, he commands respect and caution.",
+    "abilities": [],
+    "classFeatures": [],
+    "talents": [
+      "Armour Training",
+      "Shield Expert"
+    ],
+    "technicks": [
+      "Armour Proficiency (light, heavy)",
+      "Defence Up",
+      "HP Up",
+      "Shield Proficiency",
+      "Skill Focus (1-handed, perception, persuasion)",
+      "Threshold Up",
+      "Weapon Proficiency (polearms, swords)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Chainmail, Heater Shield, Longsword",
+    "loot": "Chainmail (5%), Heater Shield (20%), Longsword (50%), Hi-Potion (95%), and 600gp",
+    "steal": "350gp (20%), Hi-Potion (50%)",
+    "sourcePage": 274,
+    "profileLine": "Neutral Good Medium Human Nonheroic 6/Warrior 3",
+    "species": "Human",
+    "classLevels": "Nonheroic 6/Warrior 3"
+  },
+  {
+    "name": "Knight",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 7,
+    "level": 7,
+    "xp": 1400,
+    "size": "medium",
+    "alignment": "Pure",
+    "temperament": "",
+    "hp": 80,
+    "mp": 25,
+    "initiativeDie": "1d10",
+    "speed": "4 (encumbered)",
+    "senses": "; Passive Perception 19",
+    "passivePerception": 19,
+    "ref": 24,
+    "flatFootedRef": 23,
+    "fort": 22,
+    "will": 20,
+    "dr": 7,
+    "breakThreshold": 27,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Common Bound by chivalry and honor, these noble warriors are nonetheless impetuous, fearlessly plunging headfirst into the heart of battle.",
+    "attributes": {
+      "str": 16,
+      "agi": 12,
+      "vit": 14,
+      "int": 10,
+      "mnd": 12,
+      "cha": 14
+    },
+    "attacks": [
+      {
+        "name": "Knight’s Lance",
+        "attack": 17,
+        "damage": "2d8+7",
+        "mode": "melee",
+        "type": "blunt"
+      },
+      {
+        "name": "Knight’s Lance",
+        "attack": 21,
+        "damage": "3d10+10",
+        "mode": "melee",
+        "type": "blunt"
+      },
+      {
+        "name": "Longsword",
+        "attack": 16,
+        "damage": "2d8+6",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Handed",
+        "bonus": 16,
+        "key": ""
+      },
+      {
+        "name": "Handed",
+        "bonus": 16,
+        "key": ""
+      },
+      {
+        "name": "Athletics",
+        "bonus": 11,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 8,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 9,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 10,
+        "key": "persuasion"
+      },
+      {
+        "name": "Ride",
+        "bonus": 14,
+        "key": "ride"
+      }
+    ],
+    "description": "Bound by chivalry and honor, these noble warriors are nonetheless impetuous, fearlessly plunging headfirst into the heart of battle.",
+    "abilities": [],
+    "classFeatures": [],
+    "talents": [
+      "Expert Rider",
+      "Mighty Charge",
+      "Mounted Charge",
+      "Weapon Specialization (polearms)"
+    ],
+    "technicks": [
+      "Armour Proficiency (light, heavy)",
+      "Defence Up",
+      "Mounted Combat",
+      "Powerful Charge",
+      "Shield Proficiency",
+      "Skill Focus (1-handed, 2-handed, ride)",
+      "Threshold Up",
+      "Trample",
+      "Weapon Proficiency (axes, bludgeons, knives, polearms, swords)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Ecranche, Knight’s Lance, Longsword, Plate Armour",
+    "loot": "Plate Armour (5%), Ecranche (20%), Knight’s Lance (50%), Longsword (95%), and 700gp",
+    "steal": "400gp (50%), Hi-Potion (95%) & Adversaries",
+    "sourcePage": 274,
+    "profileLine": "Pure Neutral Medium Human Warrior 7",
+    "species": "Human",
+    "classLevels": "Warrior 7"
+  },
+  {
+    "name": "Aristocrat",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 9,
+    "level": 9,
+    "xp": 1800,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "",
+    "hp": 73,
+    "mp": 31,
+    "initiativeDie": "1d4",
+    "speed": "6",
+    "senses": "; Passive Perception 20",
+    "passivePerception": 20,
+    "ref": 26,
+    "flatFootedRef": 24,
+    "fort": 21,
+    "will": 22,
+    "dr": 9,
+    "breakThreshold": 21,
+    "immunities": [
+      "Confusion",
+      "Silence"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Beastongue, Celestial, Common, Dwarven, Elven, Gnomish Though they prefer the game of politics, these individuals are formidable with bow and blade, able to silence even the most daring brigand.",
+    "attributes": {
+      "str": 11,
+      "agi": 15,
+      "vit": 12,
+      "int": 14,
+      "mnd": 13,
+      "cha": 16
+    },
+    "attacks": [
+      {
+        "name": "Mythril Blade",
+        "attack": 17,
+        "damage": "2d6+8",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 11,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Athletics",
+        "bonus": 9,
+        "key": "athletics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 17,
+        "key": "deception"
+      },
+      {
+        "name": "Light Weapon",
+        "bonus": 16,
+        "key": "light-weapon"
+      },
+      {
+        "name": "Lore (all)",
+        "bonus": 11,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 10,
+        "key": "perception"
+      },
+      {
+        "name": "Perform (oratory)",
+        "bonus": 17,
+        "key": "perform"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 17,
+        "key": "persuasion"
+      },
+      {
+        "name": "Ranged",
+        "bonus": 16,
+        "key": "ranged"
+      },
+      {
+        "name": "Ride",
+        "bonus": 11,
+        "key": "ride"
+      }
+    ],
+    "description": "Dwarven, Elven, Gnomish Though they prefer the game of politics, these individuals are formidable with bow and blade, able to silence even the most daring brigand.",
+    "abilities": [],
+    "classFeatures": [],
+    "talents": [
+      "Appeal",
+      "Educated",
+      "Master Negotiator",
+      "Monologue",
+      "Skilled Negotiator"
+    ],
+    "technicks": [
+      "Armour Proficiency (light)",
+      "Bardic Study",
+      "Defence Up",
+      "Improved Initiative",
+      "Linguist",
+      "Precise Shot",
+      "Skill Focus (deception, light weapon, perform oratory, persuasion, ranged)",
+      "Weapon Finesse",
+      "Weapon Proficiency (bows, knives, swords)"
+    ],
+    "spells": [],
+    "performances": [
+      "Beau Capriccio",
+      "Champion's Virelai",
+      "Knight's Paeon"
+    ],
+    "equipped": "Aevis Striker, Citrine Charm, Mythril Blade, Mythril Shirt, Opal Armlet, Shock Arrows",
+    "loot": "Mythril Shirt (5%), Mythril Blade (20%), Aevis Striker (50%), Opal Armlet (95%), and 900gp",
+    "steal": "Hi-Potion (5%), Citrine Charm (20%), 300gp (50%), 2d4 Shock Arrows (95%)",
+    "sourcePage": 275,
+    "profileLine": "Corrupt Good Medium Human Bard 9",
+    "species": "Human",
+    "classLevels": "Bard 9"
+  },
+  {
+    "name": "Arena Champion",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 18,
+    "level": 18,
+    "xp": 2000,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "",
+    "hp": 129,
+    "mp": 24,
+    "initiativeDie": "1d10",
+    "speed": "6",
+    "senses": "; Passive Perception 20",
+    "passivePerception": 20,
+    "ref": 27,
+    "flatFootedRef": 25,
+    "fort": 29,
+    "will": 23,
+    "dr": 10,
+    "breakThreshold": 36,
+    "immunities": [
+      "Stuns Block War-Door +22"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Beastongue, Common Shaped by violence and cheered by bloodthirsty crowds, this underhanded brawler fights with relentless fury to secure victory—no matter the price.",
+    "attributes": {
+      "str": 20,
+      "agi": 16,
+      "vit": 17,
+      "int": 8,
+      "mnd": 10,
+      "cha": 12
+    },
+    "attacks": [
+      {
+        "name": "Falchion",
+        "attack": 21,
+        "damage": "2d8+11",
+        "mode": "melee",
+        "type": "blunt"
+      },
+      {
+        "name": "War-Door",
+        "attack": 22,
+        "damage": "1d10+10",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "handed",
+        "bonus": 20,
+        "key": ""
+      },
+      {
+        "name": "Athletics",
+        "bonus": 15,
+        "key": "athletics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 10,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 16,
+        "key": "persuasion"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 15,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Shaped by violence and cheered by bloodthirsty crowds, this underhanded brawler fights with relentless fury to secure victory—no matter the price.",
+    "abilities": [],
+    "classFeatures": [
+      "Break Blade",
+      "Poor Equipment 1"
+    ],
+    "talents": [
+      "Adrenaline Rush",
+      "Counterstrike",
+      "Provoke",
+      "Shield Expert",
+      "Strikeback",
+      "Weapon Specialization (swords)"
+    ],
+    "technicks": [
+      "Armour Proficiency (light, heavy)",
+      "Defence Up",
+      "HP Up",
+      "Improved Shield Bash",
+      "Shake it Off",
+      "Shield Bash",
+      "Shield Proficiency",
+      "Skill Focus (1-handed, persuasion)",
+      "Threshold Up",
+      "Weapon Proficiency (axes, bludgeons, knives, polearms, swords)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Battle Harness, Falchion, Gigas Chestplate, War-Door",
+    "loot": "War-Door (5%), Gigas Chestplate (20%), Falchion (50%), Battle Harness (95%), and 3,700gp",
+    "steal": "500gp (5%), Hi-Potion (20%), Health Potion (95%)",
+    "sourcePage": 275,
+    "profileLine": "Corrupt Neutral Medium Gawro Warrior 7/Gladiator 3",
+    "species": "Gawro",
+    "classLevels": "Warrior 7/Gladiator 3"
+  },
+  {
+    "name": "Werewolf (werewolf form)",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 5,
+    "level": 5,
+    "xp": 1000,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "",
+    "hp": 69,
+    "mp": 29,
+    "initiativeDie": "1d6",
+    "speed": "6",
+    "senses": "Low-light Vision, Scent; Passive Perception 20",
+    "passivePerception": 20,
+    "ref": 17,
+    "flatFootedRef": 16,
+    "fort": 20,
+    "will": 18,
+    "dr": 5,
+    "breakThreshold": 20,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Common (cannot speak in werewolf form) Under the moon’s pale light, the curse of lycanthropy stirs the beast within, calling its victims to forsake reason and embrace their primal nature.",
+    "attributes": {
+      "str": 19,
+      "agi": 13,
+      "vit": 16,
+      "int": 6,
+      "mnd": 16,
+      "cha": 8
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 16,
+        "damage": "1d8+9",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 16,
+        "damage": "1d6+9",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 13,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Athletics",
+        "bonus": 11,
+        "key": "athletics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 10,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 15,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 16,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Under the moon’s pale light, the curse of lycanthropy stirs the beast within, calling its victims to forsake reason and embrace their primal nature.",
+    "abilities": [],
+    "classFeatures": [],
+    "talents": [
+      "Forester",
+      "Quarry",
+      "Shadowclaw"
+    ],
+    "technicks": [
+      "Armour Proficiency (light)",
+      "Dodge",
+      "Improved Initiative",
+      "Precise Shot",
+      "Skill Focus (acrobatics, survival, unarmed)",
+      "Tactical Withdrawal",
+      "Weapon Proficiency (axes, bows, crossbows, knives, swords)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Cursed Bone (5%), Earth Crystal (20%), Beast Mane (50%), and 500gp",
+    "steal": "Moondust (5%)",
+    "sourcePage": 276,
+    "profileLine": "Corrupt Neutral Medium Human Lycan Ranger 5",
+    "species": "Human",
+    "classLevels": "Lycan Ranger 5"
+  },
+  {
+    "name": "Pack Alpha (werewolf form)",
+    "category": "Allies",
+    "profile": "npc",
+    "cr": 11,
+    "level": 11,
+    "xp": 2200,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "",
+    "hp": 161,
+    "mp": 37,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "Low-light Vision, Scent; Passive Perception 26",
+    "passivePerception": 26,
+    "ref": 30,
+    "flatFootedRef": 30,
+    "fort": 31,
+    "will": 23,
+    "dr": 10,
+    "breakThreshold": 38,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Common (cannot speak in werewolf form) Some lycans lose themselves entirely to the beast within, their human forms lost forever to the wild.",
+    "attributes": {
+      "str": 17,
+      "agi": 16,
+      "vit": 21,
+      "int": 10,
+      "mnd": 12,
+      "cha": 10
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 18,
+        "damage": "1d8+14",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 18,
+        "damage": "1d6+14",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 18,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Athletics",
+        "bonus": 13,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 10,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 16,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 13,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 16,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 18,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Some lycans lose themselves entirely to the beast within, their human forms lost forever to the wild.",
+    "abilities": [],
+    "classFeatures": [
+      "Alertness",
+      "Hunter’s Mark 2"
+    ],
+    "talents": [
+      "Carnophage",
+      "Controlled Shift",
+      "Forester",
+      "Quarry",
+      "Sure Footed",
+      "Shadowclaw"
+    ],
+    "technicks": [
+      "Armour Proficiency (light)",
+      "Defence Up",
+      "Dodge",
+      "HP Up",
+      "Improved Charge",
+      "Precise Shot",
+      "Skill Focus (acrobatics, perception, survival, unarmed)",
+      "Tactical Withdrawal",
+      "Threshold Up",
+      "Weapon Proficiency (axes, bows, crossbows, knives, swords)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Moondust (5%), Metal Jerkin (20%), Wolfssegen (50%), Cursed Bone (95%), and 4,700gp",
+    "steal": "Moondust (5%), Steel Bracers (20%), Steel Gorget (50%), Beast Fang (95%)",
+    "sourcePage": 276,
+    "profileLine": "Corrupt Neutral Medium Human Pack Alpha Ranger 7/Shikari 4",
+    "species": "Human",
+    "classLevels": "Pack Alpha Ranger 7/Shikari 4"
+  }
+]

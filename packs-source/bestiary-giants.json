@@ -1,0 +1,802 @@
+[
+  {
+    "name": "Troll, Swamp",
+    "category": "Giants",
+    "profile": "giant",
+    "cr": 4,
+    "level": 4,
+    "xp": 800,
+    "size": "large",
+    "alignment": "Corrupt",
+    "temperament": "Territorial",
+    "hp": 40,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "Dark Vision; Passive Perception 16",
+    "passivePerception": 16,
+    "ref": 16,
+    "flatFootedRef": 14,
+    "fort": 20,
+    "will": 14,
+    "dr": 5,
+    "breakThreshold": 25,
+    "immunities": [
+      "Disease",
+      "Poison"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Fire"
+    ],
+    "languages": "Giant Foul-smelling lurkers of bogs and swamps, ambushing prey from the mire.",
+    "attributes": {
+      "str": 18,
+      "agi": 14,
+      "vit": 20,
+      "int": 5,
+      "mnd": 9,
+      "cha": 6
+    },
+    "attacks": [
+      {
+        "name": "slams",
+        "attack": 16,
+        "damage": "1d6+6",
+        "mode": "melee",
+        "type": "blunt"
+      },
+      {
+        "name": "lob",
+        "attack": 11,
+        "damage": "1d6+6",
+        "mode": "ranged",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 6,
+        "key": "perception"
+      },
+      {
+        "name": "Ranged",
+        "bonus": 11,
+        "key": "ranged"
+      },
+      {
+        "name": "Survival",
+        "bonus": 6,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 16,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Foul-smelling lurkers of bogs and swamps, ambushing prey from the mire.",
+    "abilities": [
+      {
+        "name": "Lob",
+        "description": "Swamp Trolls may make a slam attack as if using a thrown weapon. Additionally, they may use their Str modifier in place of their Agi modifier when doing so."
+      },
+      {
+        "name": "Lurk",
+        "description": "Swamp Troll’s are better at naturally blending into their surroundings. When in a freshwater environment, swamp trolls treat Stealth as a trained skill and ignore any size penalties to their Stealth checks."
+      },
+      {
+        "name": "Regrow",
+        "description": "When a swamp troll loses a limb, they can grow it back in 1d10+1 days, at which point any penalties are removed."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "Skill Focus (unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Stardust (5%), Fae Wood (20%), Earth Crystal (50%), Magicite (95%)",
+    "steal": "Ether (5%), Philter (20%), Golden Sap (50%)",
+    "sourcePage": 339,
+    "profileLine": "Corrupt Evil Large Giant 4; Territorial",
+    "species": "Giants",
+    "classLevels": ""
+  },
+  {
+    "name": "Ogre",
+    "category": "Giants",
+    "profile": "giant",
+    "cr": 6,
+    "level": 6,
+    "xp": 1200,
+    "size": "large",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 66,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "8",
+    "senses": "Low-light Vision; Passive Perception 17",
+    "passivePerception": 17,
+    "ref": 16,
+    "flatFootedRef": 16,
+    "fort": 22,
+    "will": 15,
+    "dr": 5,
+    "breakThreshold": 27,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Giant Savage and violent, these hulking brutes often join orcs and goblins in inland raids.",
+    "attributes": {
+      "str": 21,
+      "agi": 8,
+      "vit": 23,
+      "int": 6,
+      "mnd": 9,
+      "cha": 7
+    },
+    "attacks": [
+      {
+        "name": "Oaken Club",
+        "attack": 19,
+        "damage": "2d10+9",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Handed",
+        "bonus": 18,
+        "key": ""
+      },
+      {
+        "name": "Athletics",
+        "bonus": 13,
+        "key": "athletics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 7,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 6,
+        "key": "persuasion"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 13,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Savage and violent, these hulking brutes often join orcs and goblins in inland raids.",
+    "abilities": [
+      {
+        "name": "Overthrow",
+        "description": "Whenever an ogre successfully deals damage to a target at the end of a charge, they may choose to move the target 3 squares away from them in any direction. This is a stun."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Armour Proficiency (light)",
+      "Skill Focus (1-handed)",
+      "Weapon Proficiency (bludgeons)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Bronze Chestplate, Oaken Club",
+    "loot": "Gigas Heart (5%), Bronze Chestplate (20%), Oaken Club (50%), Giant Hide (95%), and 300gp",
+    "steal": "Ether (5%), Hi-Potion (95%) Giants Remnants of a more primitive age before civilizations flourished, giants once held dominion over the lesser tribes, contested only by the great dragons. While still widely feared, most see the giants as little more than oversized brutes that even the lowly Goblins can bring under their meager command. Giants progress as beasts. However, they have the class skills of a nonheroic character and gain 2 attribute points every 4th level, as normal.",
+    "sourcePage": 339,
+    "profileLine": "Corrupt Evil Large Giant 6; Aggressive",
+    "species": "Giants",
+    "classLevels": ""
+  },
+  {
+    "name": "Troll, Rock",
+    "category": "Giants",
+    "profile": "giant",
+    "cr": 7,
+    "level": 7,
+    "xp": 1400,
+    "size": "large",
+    "alignment": "Corrupt",
+    "temperament": "Territorial",
+    "hp": 84,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "8",
+    "senses": "Dark Vision; Passive Perception 17",
+    "passivePerception": 17,
+    "ref": 18,
+    "flatFootedRef": 17,
+    "fort": 25,
+    "will": 17,
+    "dr": 5,
+    "breakThreshold": 30,
+    "immunities": [
+      "Electric",
+      "Petrify"
+    ],
+    "resistances": [
+      "Piercing",
+      "Slashing"
+    ],
+    "weaknesses": [],
+    "languages": "Giant Mountain-dwelling brutes that skulk along cliffside paths, waiting to strike unwary prey.",
+    "attributes": {
+      "str": 25,
+      "agi": 12,
+      "vit": 24,
+      "int": 5,
+      "mnd": 9,
+      "cha": 6
+    },
+    "attacks": [
+      {
+        "name": "Lob",
+        "attack": 20,
+        "damage": "1d6+10",
+        "mode": "ranged",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 7,
+        "key": "perception"
+      },
+      {
+        "name": "Ranged",
+        "bonus": 20,
+        "key": "ranged"
+      },
+      {
+        "name": "Survival",
+        "bonus": 7,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 20,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Mountain-dwelling brutes that skulk along cliffside paths, waiting to strike unwary prey.",
+    "abilities": [
+      {
+        "name": "Lob",
+        "description": "Rock Trolls may make a slam attack as if using a thrown weapon. Additionally, they may use their Str modifier in place of their Agi modifier when doing so."
+      },
+      {
+        "name": "Lurk",
+        "description": "Rock Trolls are better at naturally blending into their surroundings. When in caves or mountains, rock trolls treat Stealth as a trained skill and ignore any size penalties to their Stealth checks."
+      },
+      {
+        "name": "Regrow",
+        "description": "When a rock troll loses a limb, they can grow it back in 1d10+1 days, at which point any penalties are removed."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "Mighty Strikes",
+      "Skill Focus (ranged, unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Obsidian (20%), Giant Hide (50%), Earth Crystal (95%), and 200gp",
+    "steal": "Magick Root (50%)",
+    "sourcePage": 340,
+    "profileLine": "Corrupt Evil Large Giant 7; Territorial",
+    "species": "Giants",
+    "classLevels": ""
+  },
+  {
+    "name": "Cyclops",
+    "category": "Giants",
+    "profile": "giant",
+    "cr": 8,
+    "level": 8,
+    "xp": 1600,
+    "size": "huge",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 125,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "Dark Vision; Passive Perception 22",
+    "passivePerception": 22,
+    "ref": 19,
+    "flatFootedRef": 17,
+    "fort": 28,
+    "will": 22,
+    "dr": 10,
+    "breakThreshold": 43,
+    "immunities": [
+      "Confusion",
+      "Poison",
+      "Stuns"
+    ],
+    "resistances": [
+      "Cold",
+      "Dark",
+      "Electric",
+      "Fire",
+      "Holy"
+    ],
+    "weaknesses": [],
+    "languages": "Giant To meet a cyclops’s gaze is to invite ruin—a curse whispered through ancient tales.",
+    "attributes": {
+      "str": 30,
+      "agi": 14,
+      "vit": 28,
+      "int": 9,
+      "mnd": 16,
+      "cha": 8
+    },
+    "attacks": [
+      {
+        "name": "Slams",
+        "attack": 24,
+        "damage": "1d8+14",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 19,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 8,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 12,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 8,
+        "key": "persuasion"
+      },
+      {
+        "name": "Survival",
+        "bonus": 12,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 24,
+        "key": "unarmed"
+      }
+    ],
+    "description": "To meet a cyclops’s gaze is to invite ruin—a curse whispered through ancient tales.",
+    "abilities": [
+      {
+        "name": "Eye Beam",
+        "description": "As a primary action, the cyclops can make a single attack roll (d20+23) against a target within 12 squares and line of sight and all creatures between it and the target. If successful, the target takes 6d6+13 electric damage. Should the attack beat both a target's Ref and Fort Defence, the target becomes paralysed. The cyclops may not use this ability again for 1d4+1 turns."
+      },
+      {
+        "name": "Imposing",
+        "description": "A cyclops may add its Str modifier to all Persuasion checks made to intimidate."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Skill Focus (unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Evil Eye (5%), Giant Hide (50%)",
+    "steal": "Stardust (5%), Hi-potion (50%) * When using Persuasion to intimidate.",
+    "sourcePage": 340,
+    "profileLine": "Corrupt Evil Huge Giant 8; Aggressive",
+    "species": "Giants",
+    "classLevels": ""
+  },
+  {
+    "name": "Troll, Ice",
+    "category": "Giants",
+    "profile": "giant",
+    "cr": 9,
+    "level": 9,
+    "xp": 1800,
+    "size": "large",
+    "alignment": "Corrupt",
+    "temperament": "Territorial",
+    "hp": 131,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "Low-light Vision; Passive Perception 18",
+    "passivePerception": 18,
+    "ref": 21,
+    "flatFootedRef": 19,
+    "fort": 28,
+    "will": 19,
+    "dr": 10,
+    "breakThreshold": 33,
+    "immunities": [
+      "Cold"
+    ],
+    "resistances": [
+      "Slashing"
+    ],
+    "weaknesses": [
+      "Fire"
+    ],
+    "languages": "Giant Dubbed abominable snowmen, these towering brutes may seem jolly—until it’s far too late.",
+    "attributes": {
+      "str": 28,
+      "agi": 14,
+      "vit": 26,
+      "int": 5,
+      "mnd": 9,
+      "cha": 7
+    },
+    "attacks": [
+      {
+        "name": "Lob",
+        "attack": 23,
+        "damage": "1d6+13",
+        "mode": "ranged",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 8,
+        "key": "perception"
+      },
+      {
+        "name": "Ranged",
+        "bonus": 23,
+        "key": "ranged"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 1,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 8,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 23,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Dubbed abominable snowmen, these towering brutes may seem jolly—until it’s far too late.",
+    "abilities": [
+      {
+        "name": "Frostbite",
+        "description": "An ice troll’s slam attack deals cold damage. Additionally, if the attack roll beats both the target's Ref and Fort Defence, the target’s movement is reduced to 2 squares until the start of the ice troll's next turn."
+      },
+      {
+        "name": "Lob",
+        "description": "Ice Trolls may make a slam attack as if using a thrown weapon. Additionally, they may use their Str modifier in place of their Agi modifier when doing so."
+      },
+      {
+        "name": "Lurk",
+        "description": "Trolls are naturally better blending into their surroundings. When in tundra, taiga, or glacial environment, Ice Trolls treat Stealth as a trained skill and ignore any size penalties to their Stealth checks."
+      },
+      {
+        "name": "Regrow",
+        "description": "When a ice troll loses a limb, they can grow it back in 1d10+1 days, at which point any penalties are removed."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Mighty Strikes",
+      "Skill Focus (ranged, unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Ancient Bone (5%), Giant Hide (50%), Ice Crystal (95%), and 400gp",
+    "steal": "Magick Root (50%) * Includes 3 points of mighty strikes. **With Lurk.",
+    "sourcePage": 341,
+    "profileLine": "Corrupt Evil Large Giant 9; Territorial",
+    "species": "Giants",
+    "classLevels": ""
+  },
+  {
+    "name": "Gigas",
+    "category": "Giants",
+    "profile": "giant",
+    "cr": 11,
+    "level": 11,
+    "xp": 2200,
+    "size": "huge",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 137,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "Low-light Vision; Passive Perception 23",
+    "passivePerception": 23,
+    "ref": 22,
+    "flatFootedRef": 20,
+    "fort": 28,
+    "will": 25,
+    "dr": 10,
+    "breakThreshold": 43,
+    "immunities": [
+      "Poison",
+      "Stuns"
+    ],
+    "resistances": [
+      "Cold",
+      "Electric",
+      "Fire"
+    ],
+    "weaknesses": [],
+    "languages": "Giant Enormous and blood-rune-covered, this powerful giant resists magick’s touch.",
+    "attributes": {
+      "str": 39,
+      "agi": 14,
+      "vit": 23,
+      "int": 9,
+      "mnd": 16,
+      "cha": 11
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 26,
+        "damage": "2d6+22",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Slams",
+        "attack": 26,
+        "damage": "1d8+22",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 24,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 9,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 13,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 10,
+        "key": "persuasion"
+      },
+      {
+        "name": "Survival",
+        "bonus": 13,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 29,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Enormous and blood-rune-covered, this powerful giant resists magick’s touch.",
+    "abilities": [
+      {
+        "name": "Devour",
+        "description": "Whenever a gigas reduces a creature to 0 HP or the bottom of the Break Gauge with its bite attack, the creature is immediately swallowed, killed (regardless of hero points), and removed from play. The gigas then immediately heals an amount of HP equal to the swallowed creature’s (level + Vit modifier) x2. Additionally, as a primary action, the gigas may perform a coup de grace on an unconscious creature, devouring the creature."
+      },
+      {
+        "name": "Imposing",
+        "description": "A Gigas may add its Str modifier to any Persuasion checks made to intimidate."
+      },
+      {
+        "name": "Runic",
+        "description": "The gigas gains a +5 bonus to both its Fort and Will Defence against spells."
+      },
+      {
+        "name": "Tremor",
+        "description": "As a primary action, the gigas can make an attack roll (d20+21) against the Ref Defence of all creatures within a 6 square cone. If successful, creatures take 6d6+11 blunt damage and are knocked prone. Otherwise, creatures take half damage and are not knocked prone. The gigas may not use this ability again for 1d4+1 turns. This does not affect creatures with hover. This is an area affect and the secondary effect is a stun."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Mighty Strikes",
+      "Shake it Off",
+      "Skill Focus (unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Stardust (5%), Gigas Heart (20%), Giant Hide (50%)",
+    "steal": "Stardust (5%), Giant Hide (95%) * Against spells. ** Includes 3 points of mighty strikes. † When using Persuasion to intimidate.",
+    "sourcePage": 342,
+    "profileLine": "Corrupt Evil Huge Giant 11; Aggressive",
+    "species": "Giants",
+    "classLevels": ""
+  },
+  {
+    "name": "Jotun",
+    "category": "Giants",
+    "profile": "giant",
+    "cr": 15,
+    "level": 15,
+    "xp": 3000,
+    "size": "huge",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 215,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "Low-light Vision; Passive Perception 23",
+    "passivePerception": 23,
+    "ref": 23,
+    "flatFootedRef": 23,
+    "fort": 34,
+    "will": 28,
+    "dr": 15,
+    "breakThreshold": 49,
+    "immunities": [
+      "Cold",
+      "Curse",
+      "Paralysis",
+      "Poison",
+      "Stuns",
+      "Toad"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Fire"
+    ],
+    "languages": "Giant Ancient giants of Jorunheim’s northern wastes, a looming threat to dwarves. Some say they’re kin to the mythic Nephilim.",
+    "attributes": {
+      "str": 40,
+      "agi": 9,
+      "vit": 26,
+      "int": 9,
+      "mnd": 14,
+      "cha": 13
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 29,
+        "damage": "2d6+25",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Bite",
+        "attack": 29,
+        "damage": "3d6+25",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Slams",
+        "attack": 29,
+        "damage": "1d8+25",
+        "mode": "melee",
+        "type": "blunt"
+      },
+      {
+        "name": "Slams",
+        "attack": 29,
+        "damage": "2d8+25",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 27,
+        "key": "athletics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 19,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 8,
+        "key": "persuasion"
+      },
+      {
+        "name": "Survival",
+        "bonus": 14,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 32,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Ancient giants of Jorunheim’s northern wastes, a looming threat to dwarves. Some say they’re kin to the mythic Nephilim.",
+    "abilities": [
+      {
+        "name": "Devour",
+        "description": "Whenever a jotun reduces a creature to 0 HP or the bottom of the Break Gauge with its bite attack, the creature is immediately swallowed, killed (regardless of hero points), and removed from play. The jotun then immediately heals an amount of HP equal to the swallowed creature’s (level + Vit modifier) x2. Additionally, as a primary action, the jotun may perform a coup de grace on an unconscious creature, devouring the creature."
+      },
+      {
+        "name": "Frostbite",
+        "description": "A jotun’s natural attacks deal cold damage. Additionally, if the attack roll beats both the target's Ref and Fort Defence, the target’s movement is reduced to 2 squares until the start of the jotun's next turn."
+      },
+      {
+        "name": "Ice Beam",
+        "description": "As a primary action, the jotun can make a single attack roll (d20+25) against a target within 12 squares and line of sight and all creatures between it and the target. If successful, the target takes 8d6+15 cold damage. Should the attack beat both a target's Ref and Fort Defence, the target loses its secondary action on its next turn. The jotun may not use this ability again for 1d4+1 turns."
+      },
+      {
+        "name": "Imposing",
+        "description": "A jotun may add its Str modifier to any Persuasion checks made to intimidate."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Mighty Strikes",
+      "Power Attack",
+      "Shake it Off",
+      "Skill Focus (perception, unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Stardust (5%), Gigas Heart (20%), Giant Hide (50%), Ice Crystal (95%)",
+    "steal": "Moondust (5%), 1,500gp (20%), 900gp (50%) * Includes 3 points of mighty strikes. ** When using Persuasion to intimidate.",
+    "sourcePage": 343,
+    "profileLine": "Corrupt Evil Huge Giant 15; Aggressive",
+    "species": "Giants",
+    "classLevels": ""
+  }
+]

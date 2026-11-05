@@ -90,6 +90,8 @@ Version 0.2.30 fixes area Magick placement for Foundry VTT 12/13 by drawing an i
 
 Version 0.2.31 rolls area Magick damage once per damage effect and posts one chat roll for all affected tokens. The chat damage payload carries per-target amounts so successful defences, half-damage effects, and area riders still resolve separately for each target.
 
+Version 0.2.32 adds a dedicated one-page NPC/adversary sheet, preserves printed stat-block values for NPC attacks, defences, resources, Break Threshold, and skills, and adds the Allies and Adversaries actor pack plus ten Bestiary actor packs. The packs contain 33 NPC Codex entries and 127 creatures, including their attacks, listed skills, protections, special-ability references, spell/performance links, equipment and loot notes. NPC Rules and Afflictions contains quick references for nonheroic characters, beasts, lichdom, lycanthropy, vampyrism, group scaling, and companions. Foundry v13 compatibility remains declared.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork. The system code is provided without an added license until the repository owner chooses one.

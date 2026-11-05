@@ -1,0 +1,572 @@
+[
+  {
+    "name": "Angel, Guardian",
+    "category": "Celestials",
+    "profile": "celestial",
+    "cr": 9,
+    "level": 9,
+    "xp": 1800,
+    "size": "medium",
+    "alignment": "Pure",
+    "temperament": "Helpful/Defensive",
+    "hp": 95,
+    "mp": 54,
+    "initiativeDie": "1d8",
+    "speed": "8, Fly 12 (hover)",
+    "senses": "Dark Vision; Passive Perception 22",
+    "passivePerception": 22,
+    "ref": 25,
+    "flatFootedRef": 22,
+    "fort": 24,
+    "will": 23,
+    "dr": 10,
+    "breakThreshold": 24,
+    "immunities": [
+      "Curse",
+      "Death Effects",
+      "Holy",
+      "Petrify",
+      "Sleep",
+      "Toad"
+    ],
+    "resistances": [
+      "Cold"
+    ],
+    "weaknesses": [
+      "Dark"
+    ],
+    "languages": "Celestial, Draconic, Infernal; Truespeech Ever vigilant, these silent protectors are sent from above to shield the faithful.",
+    "attributes": {
+      "str": 16,
+      "agi": 17,
+      "vit": 18,
+      "int": 17,
+      "mnd": 17,
+      "cha": 19
+    },
+    "attacks": [
+      {
+        "name": "Flametongue",
+        "attack": 19,
+        "damage": "2d8+9",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Handed",
+        "bonus": 17,
+        "key": ""
+      },
+      {
+        "name": "Acrobatics",
+        "bonus": 12,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Athletics",
+        "bonus": 12,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (arcane)",
+        "bonus": 12,
+        "key": ""
+      },
+      {
+        "name": "Lore (mystic)",
+        "bonus": 12,
+        "key": "lore-mystic"
+      },
+      {
+        "name": "Lore (occult)",
+        "bonus": 12,
+        "key": "lore-occult"
+      },
+      {
+        "name": "Perception",
+        "bonus": 12,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 13,
+        "key": "persuasion"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 12,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Ever vigilant, these silent protectors are sent from above to shield the faithful.",
+    "abilities": [
+      {
+        "name": "Angelfire",
+        "description": "Fire damage dealt by the guardian angel is treated as holy against creatures that are immune, resistant, or weak to holy damage."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Arcane Study",
+      "Defence Up",
+      "HP Up",
+      "Skill Focus (1-Handed, Spellcraft)"
+    ],
+    "spells": [
+      "Cleanse",
+      "Faith",
+      "Smite",
+      "Ward"
+    ],
+    "performances": [],
+    "equipped": "Flametongue, Mythril Shirt",
+    "loot": "Angel Feather (5%), Flametongue (20%), Mythril Shirt (50%), Holy Water (95%)",
+    "steal": "Stardust (5%), Ambrosia (20%) Celestials Servants of the Goddess, the celestials are both benevolent and terrifying; for while they are righteous, they are extremely dogmatic and uncompromising. Celestials progress as beasts. However, they gain an amount of MP equal to 3+ Mnd (minimum 1) at each level and always treat all skills as class skills. Additionally, celestials are always proficient with equipment they have equipped. When reduced to 0 HP or moved to the bottom of the Break Gauge, celestials are destroyed, leaving no corpse behind.",
+    "sourcePage": 309,
+    "profileLine": "Pure Good Medium Celestial 9; Helpful/Defensive",
+    "species": "Celestials",
+    "classLevels": ""
+  },
+  {
+    "name": "Valkyrie",
+    "category": "Celestials",
+    "profile": "celestial",
+    "cr": 14,
+    "level": 14,
+    "xp": 2800,
+    "size": "medium",
+    "alignment": "Pure",
+    "temperament": "Helpful/Aggressive",
+    "hp": 126,
+    "mp": 131,
+    "initiativeDie": "1d6",
+    "speed": "8, Fly 12 (hover)",
+    "senses": "Dark Vision; Passive Perception 27",
+    "passivePerception": 27,
+    "ref": 32,
+    "flatFootedRef": 26,
+    "fort": 29,
+    "will": 30,
+    "dr": 15,
+    "breakThreshold": 34,
+    "immunities": [
+      "Blind",
+      "Curse",
+      "Death Effects",
+      "Holy",
+      "Petrify",
+      "Sleep",
+      "Toad"
+    ],
+    "resistances": [
+      "Dark"
+    ],
+    "weaknesses": [
+      "Dark Block Duelling Buckler +25"
+    ],
+    "languages": "Celestial, Draconic, Infernal; Truespeech Known as weeping angels, they veil their faces to prevent souls from mistaking them for goddesses—lest they commit sacrilege.",
+    "attributes": {
+      "str": 20,
+      "agi": 22,
+      "vit": 19,
+      "int": 19,
+      "mnd": 21,
+      "cha": 16
+    },
+    "attacks": [
+      {
+        "name": "Phantom Edge",
+        "attack": 25,
+        "damage": "2d6+14",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 18,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Athletics",
+        "bonus": 17,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (mystic)",
+        "bonus": 16,
+        "key": "lore-mystic"
+      },
+      {
+        "name": "Lore (occult)",
+        "bonus": 16,
+        "key": "lore-occult"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 16,
+        "key": ""
+      },
+      {
+        "name": "Light Weapon",
+        "bonus": 23,
+        "key": "light-weapon"
+      },
+      {
+        "name": "Perception",
+        "bonus": 17,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 15,
+        "key": "persuasion"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 20,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 17,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Known as weeping angels, they veil their faces to prevent souls from mistaking them for goddesses—lest they commit sacrilege.",
+    "abilities": [
+      {
+        "name": "Dark Angel",
+        "description": "A valkyrie may double the MP cost of any black or white magick spell to either double the range of the spell, double the spell’s area of effect, double the spell’s damage dice, or target up to 5 creatures with a single target spell (though no single target spell with an area of effect may overlap.)"
+      },
+      {
+        "name": "Grave Ward",
+        "description": "Any undead creature that begins its turn within 2 squares of a valkyrie is subject to an attack roll (d20+17) against their Will Defence. If successful, the target becomes flat-footed and may take no actions until the start of its next turn. However, any creature that resisted this effect cannot be targeted by this ability again for the duration of the encounter. Higher-level targets gain a +5 to their defence against this ability."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Arcane Study",
+      "Defence Up",
+      "Improved Initiative",
+      "MP Up",
+      "Skill Focus (light weapon, spellcraft)",
+      "Threshold Up"
+    ],
+    "spells": [
+      "Darkness",
+      "Expiry",
+      "Luminescence",
+      "Sap",
+      "Smite"
+    ],
+    "performances": [],
+    "equipped": "Black Garb, Duelling Buckler, Phantom Edge",
+    "loot": "Phantom Edge (5%), Black Garb (20%), Duelling Buckler (50%), Angel Feather (95%)",
+    "steal": "Moondust (5%), Angel Feather (20%), Holy Water (50%)",
+    "sourcePage": 310,
+    "species": "Celestials",
+    "classLevels": ""
+  },
+  {
+    "name": "Cherubim",
+    "category": "Celestials",
+    "profile": "celestial",
+    "cr": 16,
+    "level": 16,
+    "xp": 3200,
+    "size": "medium",
+    "alignment": "Pure",
+    "temperament": "Helpful/Territorial",
+    "hp": 213,
+    "mp": 128,
+    "initiativeDie": "1d8",
+    "speed": "8, Fly 12 (hover)",
+    "senses": "Dark Vision; Passive Perception 28",
+    "passivePerception": 28,
+    "ref": 32,
+    "flatFootedRef": 29,
+    "fort": 34,
+    "will": 32,
+    "dr": 15,
+    "breakThreshold": 34,
+    "immunities": [
+      "Curse",
+      "Death Effects",
+      "Holy",
+      "Petrify",
+      "Sleep",
+      "Toad"
+    ],
+    "resistances": [
+      "Dark"
+    ],
+    "weaknesses": [
+      "Dark"
+    ],
+    "languages": "Celestial, Draconic, Infernal; Truespeech Mighty celestial beings who descend from the skies with resounding trumpets and proclamations, heralding fate and divine judgment.",
+    "attributes": {
+      "str": 19,
+      "agi": 17,
+      "vit": 25,
+      "int": 16,
+      "mnd": 20,
+      "cha": 20
+    },
+    "attacks": [
+      {
+        "name": "Daemonsbane",
+        "attack": 26,
+        "damage": "2d8+16",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "handed",
+        "bonus": 22,
+        "key": ""
+      },
+      {
+        "name": "Acrobatics",
+        "bonus": 16,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Lore (mystic)",
+        "bonus": 16,
+        "key": "lore-mystic"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 16,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 18,
+        "key": "perception"
+      },
+      {
+        "name": "Perform (instrument)",
+        "bonus": 23,
+        "key": "perform"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 18,
+        "key": "persuasion"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 16,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 17,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Mighty celestial beings who descend from the skies with resounding trumpets and proclamations, heralding fate and divine judgment.",
+    "abilities": [
+      {
+        "name": "Angel Song",
+        "description": "As an all-out action, a cherubim may make a DC 20 Perform Instrument check (d20+27). If successful, all allies within 6 squares gain 10 temporary HP , as well as a +1 bonus to all defences. This bonus increases by +1 for every 5 points by which the check exceeds the base DC (maximum +5). This effect lasts until the start of the cherubim’s next turn."
+      },
+      {
+        "name": "Angel Wing",
+        "description": "A cherubim may double the MP cost of any white magick spell to either double the range of the spell, double the spell’s area of effect, double the spell’s damage dice, or target up to 5 creatures with a single target spell (though no single target spell with an area of effect may overlap)."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Arcane Study",
+      "Combat Casting",
+      "Defence Up",
+      "HP Up",
+      "Improved Initiative",
+      "Skill Focus (1-handed, [perform instrument], spellcraft)"
+    ],
+    "spells": [
+      "Cleanse",
+      "Curatio",
+      "Dispel",
+      "Revive"
+    ],
+    "performances": [],
+    "equipped": "Daemonsbane, Divine Coat, Empyrean Flute",
+    "loot": "Daemonsbane (5%), Divine Coat (20%), Empyrean Flute (50%), Angel Feather (95%)",
+    "steal": "Stardust (5%), Angel Feather (20%), Holy Water (50%)",
+    "sourcePage": 311,
+    "profileLine": "Pure Good Medium Celestial 16; Helpful/Territorial",
+    "species": "Celestials",
+    "classLevels": ""
+  },
+  {
+    "name": "Seraphim",
+    "category": "Celestials",
+    "profile": "celestial",
+    "cr": 18,
+    "level": 18,
+    "xp": 3600,
+    "size": "large",
+    "alignment": "Pure",
+    "temperament": "Helpful/Aggressive",
+    "hp": 311,
+    "mp": 257,
+    "initiativeDie": "1d6",
+    "speed": "8, Fly 12 (hover)",
+    "senses": "Dark Vision; Passive Perception 34",
+    "passivePerception": 34,
+    "ref": 33,
+    "flatFootedRef": 32,
+    "fort": 40,
+    "will": 39,
+    "dr": 15,
+    "breakThreshold": 50,
+    "immunities": [
+      "Confusion",
+      "Curse",
+      "Death Effects",
+      "Holy",
+      "Mind Effects",
+      "Petrify",
+      "Sleep",
+      "Stuns",
+      "Toad"
+    ],
+    "resistances": [
+      "Dark",
+      "Fire"
+    ],
+    "weaknesses": [
+      "Dark Block Flame Shield +32"
+    ],
+    "languages": "Celestial, Draconic, Infernal; Truespeech Eyes ablaze with flame and wings stained by the blood of the wicked—meeting their gaze means your fate is sealed.",
+    "attributes": {
+      "str": 30,
+      "agi": 27,
+      "vit": 32,
+      "int": 25,
+      "mnd": 30,
+      "cha": 23
+    },
+    "attacks": [
+      {
+        "name": "Rune Blade",
+        "attack": 33,
+        "damage": "2d10+22",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "handed",
+        "bonus": 24,
+        "key": ""
+      },
+      {
+        "name": "Athletics",
+        "bonus": 24,
+        "key": "athletics"
+      },
+      {
+        "name": "Acrobatics",
+        "bonus": 22,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Disable",
+        "bonus": 22,
+        "key": "disable"
+      },
+      {
+        "name": "Lore (all)",
+        "bonus": 21,
+        "key": ""
+      },
+      {
+        "name": "Medicine",
+        "bonus": 24,
+        "key": "medicine"
+      },
+      {
+        "name": "Perception",
+        "bonus": 24,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 20,
+        "key": "persuasion"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 24,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Eyes ablaze with flame and wings stained by the blood of the wicked—meeting their gaze means your fate is sealed.",
+    "abilities": [
+      {
+        "name": "Angelfire",
+        "description": "Fire damage dealt by the seraphim is treated as holy against creatures that are immune, resistant, or weak to holy damage."
+      },
+      {
+        "name": "Blood Angel",
+        "description": "A seraphim may double the MP cost of any red or white magick spell to either double the range of the spell, double the spell’s area of effect, double the spell’s damage dice, or target up to 5 creatures with a single target spell (though no single target spell with an area of effect may overlap)."
+      },
+      {
+        "name": "Purge",
+        "description": "As an all-out action, the seraphim can make a Spellcraft check (d20+29) against the Will Defence of all enemies within 6 squares. If successful, targets take 10d6+19 fire damage. Otherwise, they take half damage. The seraphim may not use this ability again for 1d4+1 turns. This is an area effect."
+      },
+      {
+        "name": "Righteous Fury",
+        "description": "Whenever the seraphim casts the Scorching Strike spell, its combo range increases to 17-20 until the start of its next turn."
+      },
+      {
+        "name": "Second Skin",
+        "description": "Seraphim are never treated as encumbered by heavy armour."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Arcane Study",
+      "Channel",
+      "Combat Casting",
+      "Defence Up",
+      "HP Up",
+      "MP Up",
+      "Skill Focus (1-handed, spellcraft)",
+      "Threshold Up"
+    ],
+    "spells": [
+      "Barrier",
+      "Dispel",
+      "Firestorm",
+      "Inferno",
+      "Mend",
+      "Scorching Strike",
+      "Shell",
+      "Smite"
+    ],
+    "performances": [],
+    "equipped": "Flame Shield, Rune Blade, Valiant Mail",
+    "loot": "Valiant Mail (5%), Rune Blade (20%), Flame Shield (50%), Angel Feather (95%)",
+    "steal": "Stardust (5%), Elixir (20%), Ammonia Salt (50%), Angel Feather (95%)",
+    "sourcePage": 312,
+    "profileLine": "Pure Good Large Celestial 18; Helpful/Aggressive",
+    "species": "Celestials",
+    "classLevels": ""
+  }
+]

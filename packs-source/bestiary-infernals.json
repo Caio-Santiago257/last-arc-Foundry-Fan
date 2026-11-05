@@ -1,0 +1,1195 @@
+[
+  {
+    "name": "Imp",
+    "category": "Infernals",
+    "profile": "infernal",
+    "cr": 3,
+    "level": 3,
+    "xp": 600,
+    "size": "small",
+    "alignment": "Neutral",
+    "temperament": "Aggressive*/Timid",
+    "hp": 15,
+    "mp": 15,
+    "initiativeDie": "1d8",
+    "speed": "4, Fly 8 (hover)",
+    "senses": "Dark Vision; Passive Perception 18",
+    "passivePerception": 18,
+    "ref": 17,
+    "flatFootedRef": 14,
+    "fort": 13,
+    "will": 15,
+    "dr": 0,
+    "breakThreshold": 13,
+    "immunities": [
+      "Confusion",
+      "Dark",
+      "Fire",
+      "Poison",
+      "Sleep"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Holy"
+    ],
+    "languages": "Common, Infernal Cowardly daemons that feed on others’ magical essence.",
+    "attributes": {
+      "str": 10,
+      "agi": 17,
+      "vit": 10,
+      "int": 14,
+      "mnd": 14,
+      "cha": 12
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 6,
+        "damage": "1d4+1",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 9,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 7,
+        "key": "deception"
+      },
+      {
+        "name": "Disable",
+        "bonus": 9,
+        "key": "disable"
+      },
+      {
+        "name": "Lore (arcane)",
+        "bonus": 8,
+        "key": ""
+      },
+      {
+        "name": "Lore (occult)",
+        "bonus": 8,
+        "key": "lore-occult"
+      },
+      {
+        "name": "Perception",
+        "bonus": 8,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 9,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 6,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Cowardly daemons that feed on others’ magical essence.",
+    "abilities": [
+      {
+        "name": "Syphon Mana",
+        "description": "As a primary action, imps can make a Spellcraft check against the Will defence of a target within 12 squares and line of sight. If successful, the target loses 1d6 MP and the imp gains an equal amount of MP . This die may explode. The imp may not use this ability again for 1d4+1 turns."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Arcane Study",
+      "Skill Focus (spellcraft)"
+    ],
+    "spells": [
+      "Dispel",
+      "Ember",
+      "Invisibility"
+    ],
+    "performances": [],
+    "equipped": "",
+    "loot": "Stardust (5%), Daemon Horn (20%), Ether (50%), Fire Crystal (95%)",
+    "steal": "130gp (20%), Ether (50%) * Only when in the presence of other creatures.",
+    "sourcePage": 344,
+    "profileLine": "Neutral Evil Small Infernal 3; Aggressive*/Timid",
+    "species": "Infernals",
+    "classLevels": ""
+  },
+  {
+    "name": "Hellhound",
+    "category": "Infernals",
+    "profile": "infernal",
+    "cr": 4,
+    "level": 4,
+    "xp": 800,
+    "size": "medium",
+    "alignment": "Pure",
+    "temperament": "Aggressive",
+    "hp": 28,
+    "mp": 12,
+    "initiativeDie": "1d6",
+    "speed": "10",
+    "senses": "Dark Vision, Scent; Passive Perception 17",
+    "passivePerception": 17,
+    "ref": 15,
+    "flatFootedRef": 14,
+    "fort": 16,
+    "will": 14,
+    "dr": 5,
+    "breakThreshold": 16,
+    "immunities": [
+      "Dark",
+      "Fire"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Holy"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 13,
+      "agi": 13,
+      "vit": 15,
+      "int": 6,
+      "mnd": 10,
+      "cha": 6
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 13,
+        "damage": "1d6+3",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 8,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 7,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 8,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 7,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 13,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Relentless abyssal hunters, known to feast on the flesh of the dead.",
+    "abilities": [
+      {
+        "name": "Abyssal Breath",
+        "description": "As a primary action, a hellhound can make an attack (d20+14) against the Ref Defence of all creatures within a 6 square cone. If successful, targets take 4d6+4 fire damage. Otherwise, targets take half damage. The damage is instead treated as dark against any creature immune, resistant, or weak to dark damage. The hellhound may not use this ability again for 1d4+1 turns. This is an area effect."
+      },
+      {
+        "name": "Abyssal Fang",
+        "description": "The hellhound's bite attack deals dark damage to targets either immune, resistant, or weak to dark damage."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Improved Initiative",
+      "Skill Focus (unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Obsidian (20%), Magicite (20%), Daemon Flesh (50%)",
+    "steal": "Remedy (5%), Obsidian (50%), Philter (95%) Infernals From fallen angels to the corrupted souls of mortals, these daemonic creatures are the sworn enemies of the celestials, seeking the destruction of all that is holy. Infernals progress as beasts. However, they gain an amount of MP equal to 3 + Mnd (minimum 1), at each level and always treat Spellcraft as a class skill. Additionally, when reduced to 0 HP or moved to the bottom of the Break Gauge, infernals are destroyed, leaving no corpse behind.",
+    "sourcePage": 344,
+    "profileLine": "Pure Evil Medium Infernal 4; Aggressive",
+    "species": "Infernals",
+    "classLevels": ""
+  },
+  {
+    "name": "Gargouille",
+    "category": "Infernals",
+    "profile": "infernal",
+    "cr": 5,
+    "level": 5,
+    "xp": 1000,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 50,
+    "mp": 15,
+    "initiativeDie": "1d6",
+    "speed": "8, Fly 12 (hover)",
+    "senses": "Dark Vision; Passive Perception 17",
+    "passivePerception": 17,
+    "ref": 17,
+    "flatFootedRef": 15,
+    "fort": 18,
+    "will": 15,
+    "dr": 5,
+    "breakThreshold": 18,
+    "immunities": [
+      "Dark"
+    ],
+    "resistances": [
+      "Piercing",
+      "Slashing"
+    ],
+    "weaknesses": [
+      "Holy"
+    ],
+    "languages": "Common, Infernal Wicked daemons that mimic the statues guarding Val’ daera’s castles and cathedrals.",
+    "attributes": {
+      "str": 15,
+      "agi": 14,
+      "vit": 16,
+      "int": 6,
+      "mnd": 11,
+      "cha": 7
+    },
+    "attacks": [
+      {
+        "name": "Claws",
+        "attack": 14,
+        "damage": "1d4+4",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 9,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 5,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 7,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 9,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 14,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Wicked daemons that mimic the statues guarding Val’ daera’s castles and cathedrals.",
+    "abilities": [
+      {
+        "name": "Imitate",
+        "description": "A gargouille can take 20 on Stealth checks when remaining still and can hide in plain sight."
+      },
+      {
+        "name": "Obsidian Tablet",
+        "description": "Once per turn, as a reaction to being targeted by a spell, a gargouille can make an opposing attack roll (d20+14). Should the attack beat the Spellcraft check, the spell is treated as if it failed to beat the gargouille’s defence."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "HP Up",
+      "Improved Initiative",
+      "Skill Focus (unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Hi-Potion (5%), Obsidian (20%), Daemon Flesh (50%)",
+    "steal": "Obsidian (20%)",
+    "sourcePage": 345,
+    "profileLine": "Corrupt Evil Medium Infernal 5; Aggressive",
+    "species": "Infernals",
+    "classLevels": ""
+  },
+  {
+    "name": "Gallu",
+    "category": "Infernals",
+    "profile": "infernal",
+    "cr": 8,
+    "level": 8,
+    "xp": 1600,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "Aggressive",
+    "hp": 96,
+    "mp": 48,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "Dark Vision; Passive Perception 22",
+    "passivePerception": 22,
+    "ref": 19,
+    "flatFootedRef": 18,
+    "fort": 25,
+    "will": 21,
+    "dr": 10,
+    "breakThreshold": 25,
+    "immunities": [
+      "Dark",
+      "Electric",
+      "Fire",
+      "Poison"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Holy"
+    ],
+    "languages": "Celestial, Common, Draconic, Infernal Accursed daemons that feast on living souls.",
+    "attributes": {
+      "str": 22,
+      "agi": 13,
+      "vit": 24,
+      "int": 15,
+      "mnd": 17,
+      "cha": 16
+    },
+    "attacks": [
+      {
+        "name": "Claws",
+        "attack": 20,
+        "damage": "1d4+10",
+        "mode": "melee",
+        "type": "slashing"
+      },
+      {
+        "name": "Gore",
+        "attack": 24,
+        "damage": "1d6+14",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 15,
+        "key": "athletics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 12,
+        "key": "deception"
+      },
+      {
+        "name": "Lore (arcane)",
+        "bonus": 11,
+        "key": ""
+      },
+      {
+        "name": "Lore (occult)",
+        "bonus": 11,
+        "key": "lore-occult"
+      },
+      {
+        "name": "Perception",
+        "bonus": 12,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 12,
+        "key": "persuasion"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 10,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 20,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Accursed daemons that feast on living souls.",
+    "abilities": [
+      {
+        "name": "Soul Snare",
+        "description": "As a primary action, a gallu may make a Spellcraft check against the Will Defence of a living creature within 12 squares and line of sight. If successful, the target is cursed with misfortune. If the cursed creature is killed, the gallu is immediately healed an amount of HP equal to the creature's Mnd score. The gallu cannot use this ability again while a creature is cursed with this ability. As a minor action, the gallu can remove the curse. Higher-level targets gain a +5 bonus to their defence against this effect."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Arcane Study",
+      "Powerful Charge",
+      "Skill Focus (Spellcraft, Unarmed)"
+    ],
+    "spells": [
+      "Inertia",
+      "Muddle"
+    ],
+    "performances": [],
+    "equipped": "",
+    "loot": "Daemon Heart (5%), Daemon Horn (20%), Daemon Flesh (50%)",
+    "steal": "Orichalcum (5%), Remedy (20%)",
+    "sourcePage": 345,
+    "profileLine": "Neutral Evil Medium Infernal 8; Aggressive",
+    "species": "Infernals",
+    "classLevels": ""
+  },
+  {
+    "name": "Succubus",
+    "category": "Infernals",
+    "profile": "infernal",
+    "cr": 10,
+    "level": 10,
+    "xp": 2000,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "Aggressive",
+    "hp": 100,
+    "mp": 70,
+    "initiativeDie": "1d8",
+    "speed": "6, Fly 10 (hover)",
+    "senses": "Dark Vision;",
+    "passivePerception": 24,
+    "ref": 25,
+    "flatFootedRef": 20,
+    "fort": 25,
+    "will": 24,
+    "dr": 10,
+    "breakThreshold": 25,
+    "immunities": [
+      "Dark",
+      "Electric",
+      "Fire",
+      "Poison",
+      "Toad"
+    ],
+    "resistances": [
+      "Cold"
+    ],
+    "weaknesses": [
+      "of men",
+      "feeding on their lust and lifeforce. HP 100 MP 70 Init d8 Speed 6",
+      "Fly 10 (hover) Senses Dark Vision",
+      "Passive Perception 24 Defence Ref 25 (flat-footed 20)",
+      "Fort 25",
+      "Will 24 DR 10",
+      "Threshold 25 Immunity Dark",
+      "Electric",
+      "Fire",
+      "Poison",
+      "Toad Resistance Cold Weakness Holy"
+    ],
+    "languages": "Celestial, Common, Draconic, Elven, Infernal Daemonic temptresses who prey on weakness of men, feeding on their lust and lifeforce.",
+    "attributes": {
+      "str": 13,
+      "agi": 21,
+      "vit": 20,
+      "int": 14,
+      "mnd": 18,
+      "cha": 27
+    },
+    "attacks": [
+      {
+        "name": "Claws",
+        "attack": 20,
+        "damage": "1d4+10",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 15,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 18,
+        "key": "deception"
+      },
+      {
+        "name": "Lore (occult)",
+        "bonus": 12,
+        "key": "lore-occult"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 12,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 14,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 23,
+        "key": "persuasion"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 15,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 14,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 20,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Daemonic temptresses who prey on weakness of men, feeding on their lust and lifeforce.",
+    "abilities": [
+      {
+        "name": "Delusional Vision",
+        "description": "Once per turn, a succubus may use the Persuasion skill to cast the Charm spell as a secondary action at no MP cost. However, any creature the succubus fails to charm this way cannot be targeted by this ability again for the duration of the encounter. The succubus does not need to know the charm spell to use this ability."
+      },
+      {
+        "name": "Kiss of the Daemon",
+        "description": "Whenever a succubus pins a living creature, it may immediately move the creature -1 persistent step on the Break Gauge and gains an amount of HP equal to the creature's Vit score, for each turn the pin is maintained. Creatures moved to the bottom of the Break Gauge this way die, regardless of hero points. Additionally, the succubus may use this ability against an adjacent creature they have charmed, without needing to pin the target. This does not end the effect of the Charm spell cast with the Delusional Vision ability."
+      },
+      {
+        "name": "Torturous Strike",
+        "description": "When a succubus' claw attack beats both the target's Ref and Fort Defence, it deals an additional 2d6 damage and moves the target -1 step down the Break Gauge."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Agile Manoeuvres",
+      "Pin",
+      "Skill Focus (persuasion, unarmed)",
+      "Weapon Finesse"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Moondust (5%), Vampyre Fang (20%), Daemon Heart (50%), Daemon Horn (95%)",
+    "steal": "Moondust (5%), Vampyre Fang (50%)",
+    "sourcePage": 346,
+    "profileLine": "Neutral Evil Medium Infernal 10; Aggressive",
+    "species": "Infernals",
+    "classLevels": ""
+  },
+  {
+    "name": "Nightmare",
+    "category": "Infernals",
+    "profile": "infernal",
+    "cr": 12,
+    "level": 12,
+    "xp": 2400,
+    "size": "large",
+    "alignment": "Pure",
+    "temperament": "Aggressive",
+    "hp": 137,
+    "mp": 48,
+    "initiativeDie": "1d6",
+    "speed": "10 (hover*)",
+    "senses": "Dark Vision; Passive Perception 22",
+    "passivePerception": 22,
+    "ref": 26,
+    "flatFootedRef": 22,
+    "fort": 28,
+    "will": 24,
+    "dr": 15,
+    "breakThreshold": 33,
+    "immunities": [
+      "Blind",
+      "Confusion",
+      "Dark",
+      "Fear",
+      "Fire",
+      "Poison",
+      "Sleep"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Holy"
+    ],
+    "languages": "Celestial, Infernal These fell steeds haunt the border between worlds, shifting in and out of their ghostly, incorporeal form.",
+    "attributes": {
+      "str": 31,
+      "agi": 18,
+      "vit": 21,
+      "int": 13,
+      "mnd": 12,
+      "cha": 12
+    },
+    "attacks": [
+      {
+        "name": "Gore",
+        "attack": 26,
+        "damage": "1d8+16",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Gore",
+        "attack": 30,
+        "damage": "1d8+22",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 21,
+        "key": "athletics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 12,
+        "key": "deception"
+      },
+      {
+        "name": "Lore (occult)",
+        "bonus": 12,
+        "key": "lore-occult"
+      },
+      {
+        "name": "Perception",
+        "bonus": 12,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 12,
+        "key": "persuasion"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 10,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 12,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 26,
+        "key": "unarmed"
+      }
+    ],
+    "description": "These fell steeds haunt the border between worlds, shifting in and out of their ghostly, incorporeal form.",
+    "abilities": [
+      {
+        "name": "Burn**",
+        "description": "A nightmare’s gore attack deals fire damage. Additionally, if the attack roll beats both the target's Ref Defence and Fort Defence, the target takes an additional 3d6 fire damage at the start of its next turn, before taking any other action. This damage ignores DR."
+      },
+      {
+        "name": "Incorporeal Touch*",
+        "description": "The nightmare's gore attack deals unaspected damage to living creatures. Additionally, when the nightmare successfully hits a living creature with its gore, the target moves -1 step on the Break Gauge. This secondary effect is a death effect."
+      },
+      {
+        "name": "Phantom Form",
+        "description": "As a minor action, the nightmare may become incorporeal. This effect may be dispelled, in which case, the nightmare may not use this ability again for 1d4+1 turns."
+      },
+      {
+        "name": "Terror Touch",
+        "description": "Whenever a nightmare’s gore attack beats both a target's Ref and Will Defence, the target loses their secondary action on their next turn. If the attack beat the target's Will Defence by 5 or more, the target also loses their primary action. If the attack beat the target’s Will Defence by 10 or more, the target becomes flat-footed and may take no actions until the start of the nightmare’s next turn. This is a fear effect."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Improved Charge",
+      "Improved Initiative",
+      "Powerful Charge",
+      "Skill Focus (unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Daemon Horn (20%), Philter (50%), Hi-Potion (95%)",
+    "steal": "Elfwort (20%), Snowdrop (50%) * Only when incorporeal. ** Only when not incorporeal.",
+    "sourcePage": 347,
+    "profileLine": "Pure Evil Large Infernal 12; Aggressive",
+    "species": "Infernals",
+    "classLevels": ""
+  },
+  {
+    "name": "Erinys",
+    "category": "Infernals",
+    "profile": "infernal",
+    "cr": 14,
+    "level": 14,
+    "xp": 2800,
+    "size": "medium",
+    "alignment": "Pure",
+    "temperament": "Aggressive",
+    "hp": 140,
+    "mp": 98,
+    "initiativeDie": "1d8",
+    "speed": "6, Fly 10 (hover)",
+    "senses": "Dark Vision; Passive Perception 26",
+    "passivePerception": 26,
+    "ref": 31,
+    "flatFootedRef": 25,
+    "fort": 30,
+    "will": 29,
+    "dr": 15,
+    "breakThreshold": 30,
+    "immunities": [
+      "Dark",
+      "Fire",
+      "Poison",
+      "Death Effects"
+    ],
+    "resistances": [
+      "Cold"
+    ],
+    "weaknesses": [
+      "Holy Block Daemon Shield +26"
+    ],
+    "languages": "Celestial, Common, Draconic, Elven, Infernal Fierce daemons who strangely retain traces of their angelic past. Some wonder if they are truly fallen—or still destined for redemption before the Goddess.",
+    "attributes": {
+      "str": 20,
+      "agi": 23,
+      "vit": 21,
+      "int": 14,
+      "mnd": 18,
+      "cha": 21
+    },
+    "attacks": [
+      {
+        "name": "Hell Sabre",
+        "attack": 26,
+        "damage": "2d6+16",
+        "mode": "melee",
+        "type": "blunt"
+      },
+      {
+        "name": "Hell Sabre",
+        "attack": 24,
+        "damage": "3d6+16",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "handed",
+        "bonus": 22,
+        "key": ""
+      },
+      {
+        "name": "Acrobatics",
+        "bonus": 18,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Athletics",
+        "bonus": 17,
+        "key": "athletics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 17,
+        "key": "deception"
+      },
+      {
+        "name": "Lore (occult)",
+        "bonus": 14,
+        "key": "lore-occult"
+      },
+      {
+        "name": "Perception",
+        "bonus": 16,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 17,
+        "key": "persuasion"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 18,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 22,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Fierce daemons who strangely retain traces of their angelic past. Some wonder if they are truly fallen—or still destined for redemption before the Goddess.",
+    "abilities": [
+      {
+        "name": "Onresen",
+        "description": "The erinys gains a +2 bonus to attack rolls, excluding blocks, for each erinys within 4 squares of the target (max +10)."
+      },
+      {
+        "name": "Swoop",
+        "description": "Whenever an erinys uses the Running Attack technick, it deals +1 die of damage."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "Rapid Strike",
+      "Running Attack",
+      "Skill Focus (unarmed, 1-handed)",
+      "Shield Proficiency",
+      "Weapon Proficiency (swords)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Hell Sabre (5%), Daemon Shield (20%), Daemon Heart (50%), Angel Feather (95%)",
+    "steal": "Moondust (5%), Daemon Horn (20%), Angel Feather (50%)",
+    "sourcePage": 348,
+    "profileLine": "Pure Evil Medium Infernal 14; Aggressive",
+    "species": "Infernals",
+    "classLevels": ""
+  },
+  {
+    "name": "Behemoth",
+    "category": "Infernals",
+    "profile": "infernal",
+    "cr": 16,
+    "level": 16,
+    "xp": 3200,
+    "size": "huge",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 309,
+    "mp": 144,
+    "initiativeDie": "1d8",
+    "speed": "10",
+    "senses": "Dark Vision; Passive Perception 29",
+    "passivePerception": 29,
+    "ref": 26,
+    "flatFootedRef": 25,
+    "fort": 40,
+    "will": 33,
+    "dr": 15,
+    "breakThreshold": 55,
+    "immunities": [
+      "Dark",
+      "Fire",
+      "Paralysis",
+      "Petrify",
+      "Poison",
+      "Toad"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Holy"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 40,
+      "agi": 13,
+      "vit": 37,
+      "int": 6,
+      "mnd": 22,
+      "cha": 10
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 31,
+        "damage": "2d6+25",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 31,
+        "damage": "1d8+25",
+        "mode": "melee",
+        "type": "slashing"
+      },
+      {
+        "name": "Gore",
+        "attack": 35,
+        "damage": "2d6+33",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 28,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (occult)",
+        "bonus": 11,
+        "key": "lore-occult"
+      },
+      {
+        "name": "Perception",
+        "bonus": 19,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 13,
+        "key": "persuasion"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 33,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Avatars of wrath and ruin, these gluttonous hulks crush and devour all, leaving only carnage behind.",
+    "abilities": [
+      {
+        "name": "Devour",
+        "description": "Whenever a behemoth reduces a creature to 0 HP or the bottom of the Break Gauge with its bite attack, the creature is immediately swallowed, killed (regardless of hero points), and removed from play. The behemoth then immediately heals an amount of HP equal to the swallowed creature’s (level + Vit modifier) x2. Additionally, as a primary action, the behemoth may perform a coup de grace on an unconscious creature, devouring the creature."
+      },
+      {
+        "name": "Hellfire Breath",
+        "description": "As a primary action, the behemoth can make an attack roll (d20+31) against the Ref Defence of all creatures within a 12 square cone. If successful, creatures take 10d6+21 fire damage. Otherwise, creatures take half damage. The damage is instead treated as dark against any creature immune, resistant, or weak to dark damage. The behemoth may not use this ability again for 1d4+1 turns. This is an area effect."
+      },
+      {
+        "name": "Overrun",
+        "description": "The behemoth is treated as having the Trample technick and is treated as both mount and rider while charging."
+      },
+      {
+        "name": "Overthrow",
+        "description": "Whenever a behemoth successfully deals damage to a target at the end of a charge with its gore, they may choose to move the target 3 squares away from them in any direction. This is a stun."
+      },
+      {
+        "name": "Tail Slam",
+        "description": "Whenever the behemoth uses a primary action to attack while flanked, it may make a free slam attack (d20+31) against another target within reach that is providing the initial target the flanking bonus. This attack deals 1d8+25 damage."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Improved Charge",
+      "Mighty Strikes",
+      "Powerful Charge",
+      "Shake it Off",
+      "Skill Focus (unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Stardust (5%), Daemon Heart (20%), Daemon Tail (50%), Daemon Horn (95%)",
+    "steal": "Stardust (20%), Daemon Flesh (50%) * Includes 2 points of mighty strikes.",
+    "sourcePage": 349,
+    "profileLine": "Corrupt Evil Huge Infernal 16; Aggressive",
+    "species": "Infernals",
+    "classLevels": ""
+  },
+  {
+    "name": "Pit Fiend",
+    "category": "Infernals",
+    "profile": "infernal",
+    "cr": 18,
+    "level": 18,
+    "xp": 3600,
+    "size": "large",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 347,
+    "mp": 234,
+    "initiativeDie": "1d8",
+    "speed": "6, Fly 8 (hover)",
+    "senses": "Dark Vision; Passive Perception 34",
+    "passivePerception": 34,
+    "ref": 37,
+    "flatFootedRef": 28,
+    "fort": 42,
+    "will": 39,
+    "dr": 15,
+    "breakThreshold": 52,
+    "immunities": [
+      "Confusion",
+      "Curse",
+      "Dark",
+      "Death Effects",
+      "Disease",
+      "Fear",
+      "Fire",
+      "Blind",
+      "Sleep",
+      "Toad"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Holy"
+    ],
+    "languages": "Celestial, Common, Draconic, Dwarven, Elven, Orcish, Infernal Fearsome infernal lieutenants commanding abyssal armies, driving dark minions with ruthless authority.",
+    "attributes": {
+      "str": 37,
+      "agi": 29,
+      "vit": 36,
+      "int": 24,
+      "mnd": 30,
+      "cha": 26
+    },
+    "attacks": [
+      {
+        "name": "Double Edge",
+        "attack": 35,
+        "damage": "2d12+24",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "handed",
+        "bonus": 32,
+        "key": ""
+      },
+      {
+        "name": "Acrobatics",
+        "bonus": 23,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Alchemy",
+        "bonus": 21,
+        "key": "alchemy"
+      },
+      {
+        "name": "Athletics",
+        "bonus": 27,
+        "key": "athletics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 22,
+        "key": "deception"
+      },
+      {
+        "name": "Lore (arcane)",
+        "bonus": 21,
+        "key": ""
+      },
+      {
+        "name": "Lore (mystic)",
+        "bonus": 21,
+        "key": "lore-mystic"
+      },
+      {
+        "name": "Lore (occult)",
+        "bonus": 21,
+        "key": "lore-occult"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 21,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 24,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 22,
+        "key": "persuasion"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 18,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 27,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Fearsome infernal lieutenants commanding abyssal armies, driving dark minions with ruthless authority.",
+    "abilities": [
+      {
+        "name": "Accursed",
+        "description": "Pit Fiends ignore the cursed effects of cursed items they wield."
+      },
+      {
+        "name": "Ensorcelled Weapon",
+        "description": "Pit Fiends may add the the attack bonus from their melee weapon to any Spellcraft checks."
+      },
+      {
+        "name": "Hellfire",
+        "description": "Fire damage dealt by the pit fiend is treated as dark against enemies immune, resistant, or weak to dark damage."
+      },
+      {
+        "name": "Leech",
+        "description": "As a primary action, the pit fiend can make a Spellcraft check (d20+32) against the Fort Defence of a living creature within 12 squares and line of sight. If successful, the target suffers 6d6+19 dark damage, and the pit fiend is healed an amount of HP equal to the damage dealt to the target. The pit fiend may not use this ability again for 1d4+1 turns."
+      },
+      {
+        "name": "Malediction",
+        "description": "A pit fiend may double the MP cost of any black or red magick spell to either double the range of the spell, double the area, double the spell’s damage dice, or target up to 5 creatures with a single target spell (though no single target spell with an area of effect may overlap)."
+      },
+      {
+        "name": "Tyrant",
+        "description": "As a reaction, the pit fiend can force an ally within line of sight to reroll an attack roll, keeping the higher result. That creature then moves -1 step on the Break Gauge."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Arcane Study",
+      "Channel",
+      "Combat Casting",
+      "Defence Up",
+      "HP Up",
+      "Skill Focus (1-handed, Spellcraft)",
+      "Threshold Up",
+      "Weapon Proficiency (swords)"
+    ],
+    "spells": [
+      "Banish",
+      "Dispel",
+      "Fear",
+      "Fireball",
+      "Firestorm",
+      "Invisibility",
+      "Maim",
+      "Teleport"
+    ],
+    "performances": [],
+    "equipped": "",
+    "loot": "Double Edge (5%), Daemon Heart (20%), Daemon Horn (50%), Daemon Flesh (95%)",
+    "steal": "Stardust (5%), Daemon Flesh (20%), Elfwort (95%)",
+    "sourcePage": 350,
+    "profileLine": "Corrupt Evil Large Infernal 18; Aggressive",
+    "species": "Infernals",
+    "classLevels": ""
+  }
+]

@@ -1,0 +1,962 @@
+[
+  {
+    "name": "Drake",
+    "category": "Dragons",
+    "profile": "dragon",
+    "cr": 6,
+    "level": 6,
+    "xp": 1200,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "Territorial",
+    "hp": 59,
+    "mp": 18,
+    "initiativeDie": "1d6",
+    "speed": "6",
+    "senses": "Dark Vision, Scent; Passive Perception 18",
+    "passivePerception": 18,
+    "ref": 19,
+    "flatFootedRef": 16,
+    "fort": 20,
+    "will": 16,
+    "dr": 5,
+    "breakThreshold": 25,
+    "immunities": [
+      "Fire",
+      "Paralysis",
+      "Sleep"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Cold"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 20,
+      "agi": 16,
+      "vit": 18,
+      "int": 7,
+      "mnd": 10,
+      "cha": 9
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 18,
+        "damage": "1d6+8",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 18,
+        "damage": "1d4+8",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 13,
+        "key": "athletics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 8,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 7,
+        "key": "persuasion"
+      },
+      {
+        "name": "Survival",
+        "bonus": 8,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 18,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Flightless and lowly among dragons, these volcanic dwellers are hunted by aspiring dragoons as a rite of passage.",
+    "abilities": [
+      {
+        "name": "Fire Breath",
+        "description": "As a primary action, drakes can make an attack (d20+17) against the Ref Defence of all creatures within a 4 square cone. If successful, targets take 4d6+7 fire damage. Otherwise, targets take half damage. The drake may not use this ability again for 1d4+1 turns. This is an area effect."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Improved Initiative",
+      "Skill Focus (unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Hi-Potion (5%), Dragon Scale (20%), Fire Crystal (50%)",
+    "steal": "Hi-Potion (20%), Fire Crystal (95%)",
+    "sourcePage": 319,
+    "profileLine": "Corrupt Neutral Medium Dragon 6; Territorial",
+    "species": "Dragons",
+    "classLevels": ""
+  },
+  {
+    "name": "Hydra",
+    "category": "Dragons",
+    "profile": "dragon",
+    "cr": 7,
+    "level": 7,
+    "xp": 1400,
+    "size": "huge",
+    "alignment": "Neutral",
+    "temperament": "Aggressive",
+    "hp": 84,
+    "mp": 21,
+    "initiativeDie": "1d6",
+    "speed": "4, Swim 4",
+    "senses": "Dark Vision, Scent; Passive Perception 18",
+    "passivePerception": 18,
+    "ref": 17,
+    "flatFootedRef": 16,
+    "fort": 25,
+    "will": 25,
+    "dr": 5,
+    "breakThreshold": 35,
+    "immunities": [],
+    "resistances": [
+      "Cold",
+      "Electric"
+    ],
+    "weaknesses": [
+      "Fire"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 25,
+      "agi": 12,
+      "vit": 24,
+      "int": 2,
+      "mnd": 11,
+      "cha": 9
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 20,
+        "damage": "2d6+10",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 15,
+        "key": "athletics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 8,
+        "key": "perception"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 20,
+        "key": "unarmed"
+      }
+    ],
+    "description": "A savage dragon with multiple vicious heads, each as deadly as the last.",
+    "abilities": [
+      {
+        "name": "Dual Mind",
+        "description": "Hydras add twice their level to their Will Defence."
+      },
+      {
+        "name": "Regrow",
+        "description": "When a hydra loses a limb, they can grow it back in 1d10+1 days, at which point any penalties are removed."
+      },
+      {
+        "name": "Triad",
+        "description": "When the hydra attacks a single creature with its bite, it combos on a natural 19-20."
+      },
+      {
+        "name": "Tribite",
+        "description": "When the hydra uses a primary action to attack with its bite, it may attack up to 3 targets, making a separate attack roll for each target."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "Improved Initiative",
+      "Rapid Counter",
+      "Skill Focus (unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Snowdrop (5%), Dragon Scale (20%), Storm Crystal (50%)",
+    "steal": "Coral Sword (5%), Dragon Scale (20%), Storm Crystal (95%) Dragons The mighty children of Fomalhaut, they once held the world by the throat, ruling through sheer terror. While they are a far cry from what they once were, they are still fiercely powerful and formidable creatures. Dragons progress as beasts, however, they gain 2 attribute increases at every 4th level, as normal, and gain an amount of MP equal to 3+Mnd at each level.",
+    "sourcePage": 319,
+    "profileLine": "Neutral Evil Huge Dragon 7; Aggressive",
+    "species": "Dragons",
+    "classLevels": ""
+  },
+  {
+    "name": "Wyvern",
+    "category": "Dragons",
+    "profile": "dragon",
+    "cr": 8,
+    "level": 8,
+    "xp": 1600,
+    "size": "large",
+    "alignment": "Corrupt",
+    "temperament": "Territorial",
+    "hp": 93,
+    "mp": 32,
+    "initiativeDie": "1d6",
+    "speed": "4, Fly 12 (hover)",
+    "senses": "Dark Vision, Scent; Passive Perception 20",
+    "passivePerception": 20,
+    "ref": 21,
+    "flatFootedRef": 18,
+    "fort": 24,
+    "will": 20,
+    "dr": 10,
+    "breakThreshold": 29,
+    "immunities": [
+      "Fire",
+      "Paralysis",
+      "Sleep"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Cold"
+    ],
+    "languages": "Draconic Iconic dragons of Val’daera’s skies, often used in heraldry to symbolize majesty.",
+    "attributes": {
+      "str": 25,
+      "agi": 16,
+      "vit": 20,
+      "int": 8,
+      "mnd": 12,
+      "cha": 9
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 21,
+        "damage": "1d8+11",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 21,
+        "damage": "1d6+11",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 16,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 8,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 10,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 7,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 10,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 21,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Iconic dragons of Val’daera’s skies, often used in heraldry to symbolize majesty.",
+    "abilities": [
+      {
+        "name": "Fire Breath",
+        "description": "As a primary action, wyverns can make an attack (d20+19) against the Ref Defence of all creatures within a 6 square cone. If successful, targets take 6d6+9 fire damage. Otherwise, targets take half damage. A wyvern may not use this ability again for 1d4+1 turns. This is an area effect."
+      },
+      {
+        "name": "Tail Slam",
+        "description": "Whenever the wyvern uses a primary action to attack while flanked, it may make a free slam attack (d20+21) against another target within its reach that is providing the initial target the flanking bonus. This attack deals 1d6+11 damage."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Improved Initiative",
+      "Skill Focus (Unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Dragon Heart (5%), Dragon Bone (20%), Dragon Scale (50%)",
+    "steal": "300gp (5%), Fire Crystal (95%)",
+    "sourcePage": 320,
+    "profileLine": "Corrupt Neutral Large Dragon 8; Territorial",
+    "species": "Dragons",
+    "classLevels": ""
+  },
+  {
+    "name": "Balaur",
+    "category": "Dragons",
+    "profile": "dragon",
+    "cr": 11,
+    "level": 11,
+    "xp": 2200,
+    "size": "huge",
+    "alignment": "Neutral",
+    "temperament": "Aggressive",
+    "hp": 159,
+    "mp": 33,
+    "initiativeDie": "1d6",
+    "speed": "4",
+    "senses": "Dark Vision, Scent; Passive Perception 20",
+    "passivePerception": 20,
+    "ref": 21,
+    "flatFootedRef": 20,
+    "fort": 30,
+    "will": 33,
+    "dr": 10,
+    "breakThreshold": 45,
+    "immunities": [
+      "Cold"
+    ],
+    "resistances": [
+      "Electric"
+    ],
+    "weaknesses": [
+      "Fire"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 26,
+      "agi": 12,
+      "vit": 26,
+      "int": 2,
+      "mnd": 11,
+      "cha": 9
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 23,
+        "damage": "2d6+13",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 23,
+        "damage": "1d8+13",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 18,
+        "key": "athletics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 10,
+        "key": "perception"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 23,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Fierce ice dragons that terrorize the northern highlands, often moving south in pursuit of fleeing prey.",
+    "abilities": [
+      {
+        "name": "Dual Mind",
+        "description": "Balaur add twice their level to their Will Defence."
+      },
+      {
+        "name": "Regrow",
+        "description": "When a balaur loses a limb, they can grow it back in 1d10+1 days, at which point any penalties are removed."
+      },
+      {
+        "name": "Triumvirate",
+        "description": "When the balaur attacks a single creature with its bite attack, it combos on the result of 18-20."
+      },
+      {
+        "name": "Tribite",
+        "description": "When the balaur uses a primary action to attack with its bite, it may target up to 3 targets, making a separate attack roll for each target."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Improved Initiative",
+      "Rapid Counter",
+      "Skill Focus (unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Dragon Heart (5%), Dragon Scale (20%), Dragon Bone (50%)",
+    "steal": "Moondust (5%), Viking Coat (20%), Ice Crystal (95%)",
+    "sourcePage": 320,
+    "profileLine": "Neutral Evil Huge Dragon 11; Aggressive",
+    "species": "Dragons",
+    "classLevels": ""
+  },
+  {
+    "name": "Wyrm",
+    "category": "Dragons",
+    "profile": "dragon",
+    "cr": 14,
+    "level": 14,
+    "xp": 2800,
+    "size": "huge",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 173,
+    "mp": 84,
+    "initiativeDie": "1d8",
+    "speed": "6, Fly 10",
+    "senses": "Dark Vision, Scent; Passive Perception 25",
+    "passivePerception": 25,
+    "ref": 23,
+    "flatFootedRef": 23,
+    "fort": 31,
+    "will": 28,
+    "dr": 15,
+    "breakThreshold": 46,
+    "immunities": [
+      "Confusion",
+      "Disease",
+      "Fire",
+      "Paralysis",
+      "Petrify"
+    ],
+    "resistances": [
+      "Blunt"
+    ],
+    "weaknesses": [],
+    "languages": "Draconic Dreaded dragons of the Badlands, awakening from long slumbers to lay waste to cities in hunger.",
+    "attributes": {
+      "str": 33,
+      "agi": 10,
+      "vit": 23,
+      "int": 6,
+      "mnd": 17,
+      "cha": 16
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 28,
+        "damage": "2d6+18",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 28,
+        "damage": "1d8+18",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 23,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 10,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 15,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 15,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 28,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Dreaded dragons of the Badlands, awakening from long slumbers to lay waste to cities in hunger.",
+    "abilities": [
+      {
+        "name": "Devour",
+        "description": "Whenever a wyrm reduces a creature to 0 HP or the bottom of the Break Gauge with its bite attack, the creature is immediately swallowed, killed (regardless of hero points), and removed from play. The wyrm then immediately heals an amount of HP equal to the swallowed creature’s (level + Vit modifier) x2. Additionally, as a primary action, the wyrm may perform a coup de grace on an unconscious creature, devouring the creature."
+      },
+      {
+        "name": "Fire Breath",
+        "description": "As a primary action, a wyrm can make an attack (d20+23) against the Ref Defence of all creatures within a 12 square cone. If successful, targets take 8d6+13 fire damage. Otherwise, targets take half damage. The wyrm may not use this ability again for 1d4+1 turns. This is an area effect."
+      },
+      {
+        "name": "Tail Slam",
+        "description": "Whenever the wyrm uses a primary action to attack while flanked, it may make a free slam attack (d20+28) against another target within reach that is providing the initial target the flanking bonus. This attack deals 1d8+18 damage."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Crush",
+      "Defence Up",
+      "Disruptive",
+      "HP Up",
+      "Pin",
+      "Skill Focus (unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Stardust (5%), Dragon Heart (20%), Dragon Scale (50%), Dragon Bone (95%)",
+    "steal": "Winged Boots (5%), Hi-Potion (20%), Dragon Scale (95%)",
+    "sourcePage": 321,
+    "profileLine": "Corrupt Neutral Huge Dragon 14; Aggressive",
+    "species": "Dragons",
+    "classLevels": ""
+  },
+  {
+    "name": "Zilant",
+    "category": "Dragons",
+    "profile": "dragon",
+    "cr": 16,
+    "level": 16,
+    "xp": 3200,
+    "size": "huge",
+    "alignment": "Pure",
+    "temperament": "Aggressive",
+    "hp": 213,
+    "mp": 96,
+    "initiativeDie": "1d6",
+    "speed": "6, Fly 10",
+    "senses": "Dark Vision, Scent; Passive Perception 26",
+    "passivePerception": 26,
+    "ref": 25,
+    "flatFootedRef": 25,
+    "fort": 34,
+    "will": 30,
+    "dr": 15,
+    "breakThreshold": 49,
+    "immunities": [
+      "Electric",
+      "Paralysis",
+      "Toad"
+    ],
+    "resistances": [
+      "Blunt"
+    ],
+    "weaknesses": [],
+    "languages": "Draconic Majestic and regal, these azure dragons are prized above all by the dragoneers of Akarta.",
+    "attributes": {
+      "str": 31,
+      "agi": 10,
+      "vit": 25,
+      "int": 8,
+      "mnd": 17,
+      "cha": 10
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 28,
+        "damage": "2d6+18",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 28,
+        "damage": "1d8+18",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 23,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 12,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 16,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 3,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 16,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 28,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Majestic and regal, these azure dragons are prized above all by the dragoneers of Akarta.",
+    "abilities": [
+      {
+        "name": "Forked Lightning",
+        "description": "As a primary action, the zilant can make an attack (d20+25) against the Ref Defence of up to 6 creatures within a 12 square cone. If successful, targets take 10d6+15 electric damage. Otherwise, targets take half damage. Additionally, if the attack roll beat both a target's Ref and Fort Defence, the target becomes paralysed. The zilant may not use this ability again for 1d4+1 turns."
+      },
+      {
+        "name": "Tail Slam",
+        "description": "Whenever the zilant uses a primary action to attack while flanked, it may make a free slam attack (d20+28) against another target within reach that is providing the initial target the flanking bonus. This attack deals 1d8+18 damage."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Crush",
+      "Defence Up",
+      "HP Up",
+      "Improved Initiative",
+      "Pin",
+      "Shake it Off",
+      "Skill Focus (unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Bolt Pendant (5%), Dragon Heart (20%), Dragon Scale (50%), Dragon Bone (95%)",
+    "steal": "Stardust (5%), Bolt Pendant (20%)",
+    "sourcePage": 322,
+    "profileLine": "Pure Neutral Huge Dragon 16; Aggressive",
+    "species": "Dragons",
+    "classLevels": ""
+  },
+  {
+    "name": "Lindwyrm",
+    "category": "Dragons",
+    "profile": "dragon",
+    "cr": 18,
+    "level": 18,
+    "xp": 3600,
+    "size": "gargantuan",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 293,
+    "mp": 144,
+    "initiativeDie": "1d6",
+    "speed": "6, Fly 12",
+    "senses": "Dark Vision, Scent; Passive Perception 29",
+    "passivePerception": 29,
+    "ref": 23,
+    "flatFootedRef": 23,
+    "fort": 39,
+    "will": 34,
+    "dr": 15,
+    "breakThreshold": 64,
+    "immunities": [
+      "Cold",
+      "Confusion",
+      "Curse",
+      "Death Effects",
+      "Disease",
+      "Mind Effects",
+      "Petrify",
+      "Sleep",
+      "Zombify"
+    ],
+    "resistances": [
+      "Dark",
+      "Electric",
+      "Holy"
+    ],
+    "weaknesses": [
+      "Fire"
+    ],
+    "languages": "Draconic Ancient dragons of the Jorunheim Tundra, where their immense hunger is matched only by the land’s savage bounty.",
+    "attributes": {
+      "str": 41,
+      "agi": 8,
+      "vit": 31,
+      "int": 8,
+      "mnd": 21,
+      "cha": 18
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 34,
+        "damage": "3d6+24",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 34,
+        "damage": "2d6+24",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 29,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 13,
+        "key": ""
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 13,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 19,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 19,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 34,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Ancient dragons of the Jorunheim Tundra, where their immense hunger is matched only by the land’s savage bounty.",
+    "abilities": [
+      {
+        "name": "Devour",
+        "description": "Whenever a lindwyrm reduces a creature to 0 HP or the bottom of the Break Gauge with its bite attack, the creature is immediately swallowed, killed (regardless of hero points), and removed from play. The lindwyrm then immediately heals an amount of HP equal to the swallowed creature’s (level + Vit modifier) x2. Additionally, as a primary action, the lindwyrm may perform a coup de grace on an unconscious creature, devouring the creature."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Any enemy that begins its turn within the lindwyrm’s reach is subject to an attack roll (d20+23) against their Will Defence. If successful, the target becomes flat-footed and may take no actions until the start of its next turn. However, any creature that resisted this effect cannot be targeted by this ability again, for the duration of the encounter. This is a fear effect."
+      },
+      {
+        "name": "Ice Breath",
+        "description": "As a primary action, lindwyrms can make an attack (d20+29) against the Ref Defence of all creatures within a 12 square cone. If successful, targets take 10d6+19 cold damage. Otherwise, targets take half damage. Additionally, if the attack roll beats both a target’s Ref and Fort Defence, their speed is reduced to 2 squares until the start of the lindwyrm's next turn. A lindwyrm may not use this ability again for 1d4+1 turns. This is an area effect."
+      },
+      {
+        "name": "Tail Slam",
+        "description": "Whenever the lindwyrm uses a primary action to attack while flanked, it may make a free slam attack (d20+34) against another target within reach that is providing the initial target the flanking bonus. This attack deals 2d6+24 damage."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Crush",
+      "Defence Up",
+      "Disruptive",
+      "HP Up",
+      "Improved Initiative",
+      "Pin",
+      "Shake it Off",
+      "Skill Focus (unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Dragon Heart (20%), Dragon Scale (50%), Dragon Bone (95%)",
+    "steal": "Moondust (5%), Hi-Potion (20%), Dragon Scale (95%)",
+    "sourcePage": 323,
+    "profileLine": "Corrupt Evil Gargantuan Dragon 18; Aggressive",
+    "species": "Dragons",
+    "classLevels": ""
+  },
+  {
+    "name": "Turtle, Dragon",
+    "category": "Dragons",
+    "profile": "dragon",
+    "cr": 19,
+    "level": 19,
+    "xp": 3800,
+    "size": "gargantuan",
+    "alignment": "Neutral",
+    "temperament": "Aggressive",
+    "hp": 271,
+    "mp": 114,
+    "initiativeDie": "1d8",
+    "speed": "4, Swim 6",
+    "senses": "Dark Vision, Scent; Passive Perception 32",
+    "passivePerception": 32,
+    "ref": 25,
+    "flatFootedRef": 25,
+    "fort": 38,
+    "will": 33,
+    "dr": 15,
+    "breakThreshold": 63,
+    "immunities": [
+      "Blunt",
+      "Charm",
+      "Confusion",
+      "Curse",
+      "Fear Effects",
+      "Paralysis",
+      "Petrify",
+      "Stuns",
+      "Toad"
+    ],
+    "resistances": [
+      "Piercing*",
+      "Slashing*"
+    ],
+    "weaknesses": [],
+    "languages": "Draconic Vast and ancient, their shells are often mistaken for sea stacks or islands—until the “land” begins to move. Pity those who anchor too close.",
+    "attributes": {
+      "str": 36,
+      "agi": 10,
+      "vit": 27,
+      "int": 7,
+      "mnd": 16,
+      "cha": 13
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 29,
+        "damage": "3d6+25",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 29,
+        "damage": "2d6+25",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 27,
+        "key": "athletics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 22,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 15,
+        "key": "persuasion"
+      },
+      {
+        "name": "Survival",
+        "bonus": 17,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 32,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Vast and ancient, their shells are often mistaken for sea stacks or islands—until the “land” begins to move. Pity those who anchor too close.",
+    "abilities": [
+      {
+        "name": "Devour",
+        "description": "Whenever a dragon turtle reduces a creature to 0 HP or the bottom of the Break Gauge with its bite attack, the creature is immediately swallowed, killed (regardless of hero points), and removed from play. The dragon turtle then immediately heals an amount of HP equal to the swallowed creature’s (level + Vit modifier) x2. Additionally, as a primary action, the dragon turtle may perform a coup de grace on an unconscious creature, devouring the creature."
+      },
+      {
+        "name": "Fire Breath",
+        "description": "As a primary action, the dragon turtle can make an attack (d20+27) against the Ref Defence of all creatures within a 12 square cone. If successful, targets take 10d6+17 fire damage. Otherwise, targets take half damage. The dragon turtle may not use this ability again for 1d4 +1 turns. This is an area effect."
+      },
+      {
+        "name": "Immovable",
+        "description": "The dragon turtle cannot be moved by any means of forced movement, including teleportation."
+      },
+      {
+        "name": "Impassable*",
+        "description": "Creatures may not move through squares occupied by the dragon turtle, regardless of size."
+      },
+      {
+        "name": "Lurk",
+        "description": "When in marine, freshwater, or beach environments, dragon turtles treat Stealth as a trained skill and ignore any size penalties to Stealth checks when in water."
+      },
+      {
+        "name": "Mighty Guard",
+        "description": "As a secondary action, the dragon turtle can retreat into its shell for 1d4+1 turns. While in its shell, the dragon turtle clears itself of all status effects (except curses) and gains immunity to all status effects (except curses). Additionally, if damaged by melee attacks, half the damage the dragon turtle would suffer is instead dealt to the attacker as unaspected damage. Once this effect ends, the dragon turtle may not use this ability again for 1d4+1 turns."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Crush",
+      "Defence Up",
+      "Disruptive",
+      "HP Up",
+      "Pin",
+      "Mighty Strikes",
+      "Shake It Off",
+      "Skill Focus (perception, unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Stardust (5%), Adamantite (20%), Dragon Heart (50%), Dragon Bone (95%)",
+    "steal": "Stardust (5%), Adamantite (20%), Dragon Scale (50%), 200gp (95%)",
+    "sourcePage": 324,
+    "profileLine": "Neutral Gargantuan Dragon 19; Aggressive",
+    "species": "Dragons",
+    "classLevels": ""
+  }
+]

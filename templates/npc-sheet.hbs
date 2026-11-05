@@ -1,0 +1,60 @@
+<form class="la-sheet la-npc-sheet" autocomplete="off">
+  <header class="la-npc-header">
+    <div class="la-npc-portrait"><img src="{{actor.img}}" data-edit="img" alt=""></div>
+    <div class="la-npc-identity">
+      <input class="la-name" name="name" type="text" value="{{actor.name}}">
+      <div class="la-npc-tags">
+        <span>{{system.adversary.category}}</span><span>CR {{system.adversary.cr}}</span>
+        <span>{{system.adversary.size}}</span>{{#if system.adversary.alignment}}<span>{{system.adversary.alignment}}</span>{{/if}}
+        {{#if system.adversary.temperament}}<span>{{system.adversary.temperament}}</span>{{/if}}
+      </div>
+      {{#if system.adversary.classLevels}}<p>{{system.adversary.classLevels}}</p>{{/if}}
+      <p>{{#if system.adversary.languages}}Languages: {{system.adversary.languages}}{{/if}}</p>
+    </div>
+    <div class="la-npc-xp"><small>XP</small><strong>{{system.adversary.xp}}</strong><small>Level {{system.adversary.level}}</small></div>
+  </header>
+
+  <div class="la-npc-body">
+    <section class="la-panel la-npc-resource-grid">
+      <div class="la-resource-card hp"><label>{{localize "LA.Health"}}</label><div><button type="button" class="resource-control" data-resource="resources.hp" data-delta="-1">−</button><input type="number" name="system.resources.hp.value" value="{{system.resources.hp.value}}"><span>/</span><input type="number" name="system.resources.hp.max" value="{{system.resources.hp.max}}"><button type="button" class="resource-control" data-resource="resources.hp" data-delta="1">+</button></div></div>
+      <div class="la-resource-card mp"><label>{{localize "LA.Mana"}}</label><div><button type="button" class="resource-control" data-resource="resources.mp" data-delta="-1">−</button><input type="number" name="system.resources.mp.value" value="{{system.resources.mp.value}}"><span>/</span><input type="number" name="system.resources.mp.max" value="{{system.resources.mp.max}}"><button type="button" class="resource-control" data-resource="resources.mp" data-delta="1">+</button></div></div>
+      <div class="la-npc-stat"><small>{{localize "LA.Initiative"}}</small><b>{{system.adversary.initiativeDie}}</b></div>
+      <div class="la-npc-stat"><small>{{localize "LA.Speed"}}</small><b>{{system.adversary.speedText}}</b></div>
+    </section>
+
+    <div class="la-npc-grid">
+      <section class="la-panel"><h2>{{localize "LA.Defenses"}}</h2>
+        <div class="la-npc-defences"><div><small>{{localize "LA.Reflex"}}</small><b>{{system.defences.ref.total}}</b><em>Flat-footed {{system.adversary.defences.flatFootedRef}}</em></div><div><small>{{localize "LA.Fortitude"}}</small><b>{{system.defences.fort.total}}</b></div><div><small>{{localize "LA.Will"}}</small><b>{{system.defences.will.total}}</b></div></div>
+        <div class="la-npc-tags"><span>DR {{system.adversary.damageReduction}}</span><span>{{localize "LA.BreakThreshold"}} {{system.combat.breakThreshold}}</span><span>Break Gauge {{system.combat.breakGauge}}/5</span></div>
+        {{#if system.adversary.senses}}<p class="la-npc-muted">{{system.adversary.senses}}</p>{{/if}}
+      </section>
+      <section class="la-panel"><h2>{{localize "LA.Attributes"}}</h2><div class="la-npc-attributes">{{#each npcAttributes as |attribute|}}<div><small>{{attribute.label}}</small><b>{{attribute.score}}</b></div>{{/each}}</div></section>
+    </div>
+
+    <section class="la-panel la-npc-protections"><h2>Protections</h2>
+      <div><b>{{localize "LA.Immunities"}}</b><span>{{#if system.adversary.immunities.length}}{{#each system.adversary.immunities as |entry|}}{{entry}}{{#unless @last}}, {{/unless}}{{/each}}{{else}}—{{/if}}</span></div>
+      <div><b>{{localize "LA.Resistances"}}</b><span>{{#if system.adversary.resistances.length}}{{#each system.adversary.resistances as |entry|}}{{entry}}{{#unless @last}}, {{/unless}}{{/each}}{{else}}—{{/if}}</span></div>
+      <div><b>{{localize "LA.Vulnerabilities"}}</b><span>{{#if system.adversary.weaknesses.length}}{{#each system.adversary.weaknesses as |entry|}}{{entry}}{{#unless @last}}, {{/unless}}{{/each}}{{else}}—{{/if}}</span></div>
+    </section>
+
+    <section class="la-panel la-npc-actions"><div class="la-section-heading"><h2>{{localize "LA.Attack"}}</h2></div>
+      {{#each itemGroups as |group|}}{{#if (eq group.type "weapon")}}{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}{{/if}}{{/each}}
+      {{#each itemGroups as |group|}}{{#if (eq group.type "spell")}}<h3 class="la-subheading">{{localize "LA.Spells"}}</h3>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}{{/if}}{{/each}}
+      {{#each itemGroups as |group|}}{{#if (eq group.type "performance")}}<h3 class="la-subheading">{{localize "LA.Performances"}}</h3>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}{{/if}}{{/each}}
+    </section>
+
+    {{#if npcSkills.length}}<section class="la-panel"><h2>{{localize "LA.Skills"}}</h2><div class="la-npc-skills">{{#each npcSkills as |skill|}}<div><span>{{skill.label}}</span><b>{{skill.value}}</b></div>{{/each}}</div></section>{{/if}}
+
+    {{#each itemGroups as |group|}}{{#if (or (eq group.type "feature") (eq group.type "talent") (eq group.type "technick"))}}<section class="la-panel la-npc-actions"><h2>{{group.label}}</h2>{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}</section>{{/if}}{{/each}}
+
+    <section class="la-panel la-npc-inventory"><h2>{{localize "LA.Inventory"}}</h2>
+      {{#if system.adversary.equipped}}<p><b>Equipped:</b> {{system.adversary.equipped}}</p>{{/if}}
+      {{#if system.adversary.loot}}<p><b>Loot:</b> {{system.adversary.loot}}</p>{{/if}}
+      {{#if system.adversary.steal}}<p><b>Steal:</b> {{system.adversary.steal}}</p>{{/if}}
+      <div class="la-npc-embedded-gear">{{#each itemGroups as |group|}}{{#if (or (eq group.type "equipment") (eq group.type "armor") (eq group.type "other"))}}{{> "systems/last-arc-analogue/templates/item-list.hbs" items=group.items}}{{/if}}{{/each}}</div>
+    </section>
+
+    {{#if system.adversary.description}}<section class="la-panel"><h2>{{localize "LA.Description"}}</h2><p class="la-npc-description">{{system.adversary.description}}</p></section>{{/if}}
+    <section class="la-panel la-npc-damage"><button type="button" class="apply-damage la-primary-button">{{localize "LA.ApplyDamage"}}</button></section>
+  </div>
+</form>

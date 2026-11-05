@@ -1,0 +1,1984 @@
+[
+  {
+    "name": "Zombie",
+    "category": "Undead",
+    "profile": "undead",
+    "cr": 1,
+    "level": 2,
+    "xp": 200,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 16,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "Dark Vision; Passive Perception 14",
+    "passivePerception": 14,
+    "ref": 12,
+    "flatFootedRef": 12,
+    "fort": 15,
+    "will": 10,
+    "dr": 0,
+    "breakThreshold": 17,
+    "immunities": [
+      "Dark",
+      "Disease",
+      "Fear Effects",
+      "Petrify",
+      "Sleep",
+      "Zombify"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Holy"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 17,
+      "agi": 10,
+      "vit": 16,
+      "int": 1,
+      "mnd": 7,
+      "cha": 5
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 9,
+        "damage": "1d6+4",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 4,
+        "key": "perception"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 9,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Risen from the dead by dark power, this shambling corpse now hungers for the flesh of the living.",
+    "abilities": [
+      {
+        "name": "Gnaw",
+        "description": "Whenever a zombie pins a target, it may make a free bite attack that ignores non-magickal DR."
+      },
+      {
+        "name": "Shamble",
+        "description": "Zombies require an all-out action to move. Additionally, the zombie may not charge."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Pin"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Battle Harness",
+    "loot": "Battle Harness (5%), Antidote (20%), Putrid Flesh (50%)",
+    "steal": "50gp (5%), Putrid Flesh (20%), 2gp (50%)",
+    "sourcePage": 351,
+    "profileLine": "Corrupt Evil Medium Undead 2; Aggressive",
+    "species": "Undead",
+    "classLevels": ""
+  },
+  {
+    "name": "Skeleton",
+    "category": "Undead",
+    "profile": "undead",
+    "cr": 2,
+    "level": 3,
+    "xp": 400,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 21,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "Dark Vision; Passive Perception 16",
+    "passivePerception": 16,
+    "ref": 18,
+    "flatFootedRef": 16,
+    "fort": 16,
+    "will": 14,
+    "dr": 4,
+    "breakThreshold": 15,
+    "immunities": [
+      "Dark",
+      "Disease",
+      "Fear Effects",
+      "Petrify",
+      "Sleep",
+      "Zombify"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Holy"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 15,
+      "agi": 14,
+      "vit": 15,
+      "int": 3,
+      "mnd": 10,
+      "cha": 10
+    },
+    "attacks": [
+      {
+        "name": "copper sword",
+        "attack": 13,
+        "damage": "2d6+2",
+        "mode": "melee",
+        "type": "slashing"
+      },
+      {
+        "name": "claws",
+        "attack": 8,
+        "damage": "1d4+3",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Handed",
+        "bonus": 13,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 6,
+        "key": "perception"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 8,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Anguished spirits bound to bone, roaming eternally and striking at the living they despise.",
+    "abilities": [],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "Skill Focus (1-Handed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Bronze Chestplate, Copper Sword",
+    "loot": "Golden Sap (5%), Bronze Chestplate (20%), Copper Sword (50%)",
+    "steal": "Bronze Chestplate (5%), 20gp (20%) Undead Reanimated corpses and disembodied spirits, undead are a dark, unnatural force. While most undead creatures are the product of necromancy, some are vengful spirits, stubbornly clinging to this world. Undead progress as beasts. However, they are not living creatures and therefore do not heal from potions. Undead are immediately destroyed when reduced to 0 HP or the bottom of the Break Gauge, leaving no corpse behind. Undead are treated as proficient in any gear they equip.",
+    "sourcePage": 351,
+    "profileLine": "Corrupt Evil Medium Undead 3; Aggressive",
+    "species": "Undead",
+    "classLevels": ""
+  },
+  {
+    "name": "Barghest",
+    "category": "Undead",
+    "profile": "undead",
+    "cr": 4,
+    "level": 4,
+    "xp": 800,
+    "size": "medium",
+    "alignment": "Pure",
+    "temperament": "Aggressive",
+    "hp": 24,
+    "mp": 0,
+    "initiativeDie": "1d6",
+    "speed": "10",
+    "senses": "Dark Vision, Scent; Passive Perception 19",
+    "passivePerception": 19,
+    "ref": 16,
+    "flatFootedRef": 14,
+    "fort": 15,
+    "will": 16,
+    "dr": 5,
+    "breakThreshold": 15,
+    "immunities": [
+      "Cold",
+      "Dark",
+      "Fear Effects",
+      "Paralysis",
+      "Sleep",
+      "Zombify"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Fire",
+      "Holy"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 19,
+      "agi": 15,
+      "vit": 12,
+      "int": 2,
+      "mnd": 14,
+      "cha": 15
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 16,
+        "damage": "1d6+6",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 9,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 9,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 16,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Once loyal hounds, their emaciated forms defy death, wandering in search of their long-lost masters.",
+    "abilities": [
+      {
+        "name": "Dusk Fang",
+        "description": "If a barghest’s bite attack beats both a living target's Ref and Fort Defence, the target moves -1 step on the Break Gauge, plus an additional step for every 10 points the attack roll beat the target’s Fort Defence."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Improved Initiative",
+      "Skill Focus (unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Cursed Bone (20%), Putrid Flesh (50%)",
+    "steal": "Hi-Potion (50%)",
+    "sourcePage": 352,
+    "profileLine": "Pure Evil Medium Undead 4; Aggressive",
+    "species": "Undead",
+    "classLevels": ""
+  },
+  {
+    "name": "Ghost",
+    "category": "Undead",
+    "profile": "undead",
+    "cr": 5,
+    "level": 5,
+    "xp": 1000,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 35,
+    "mp": 0,
+    "initiativeDie": "1d6",
+    "speed": "2, Fly 6 (hover)",
+    "senses": "Lifesense; Passive Perception 17",
+    "passivePerception": 17,
+    "ref": 19,
+    "flatFootedRef": 16,
+    "fort": 18,
+    "will": 16,
+    "dr": 5,
+    "breakThreshold": 18,
+    "immunities": [
+      "Dark",
+      "Disease",
+      "Fear Effects",
+      "Paralysis",
+      "Petrify",
+      "Zombify"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Holy"
+    ],
+    "languages": "Common The restless souls of the unfulfilled, lingering as impassioned and violent spectres in the mortal realm.",
+    "attributes": {
+      "str": 1,
+      "agi": 16,
+      "vit": 14,
+      "int": 10,
+      "mnd": 11,
+      "cha": 17
+    },
+    "attacks": [
+      {
+        "name": "Slam",
+        "attack": 15,
+        "damage": "1d4+5",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 10,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 10,
+        "key": "deception"
+      },
+      {
+        "name": "Lore (occult)",
+        "bonus": 7,
+        "key": "lore-occult"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 7,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 7,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 10,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 15,
+        "key": "unarmed"
+      }
+    ],
+    "description": "The restless souls of the unfulfilled, lingering as impassioned and violent spectres in the mortal realm.",
+    "abilities": [
+      {
+        "name": "Incorporeal Touch",
+        "description": "The ghost's slam attack deals unaspected damage to living creatures. Additionally, when the ghost successfully hits a living creature with its slam, the target moves -1 step on the Break Gauge. This secondary effect is a death effect."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "Improved Initiative",
+      "Skill Focus (unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Health Potion (5%), Ectoplasm (20%)",
+    "steal": "Silk Thread (5%), Golden Sap (20%)",
+    "sourcePage": 352,
+    "profileLine": "Corrupt Evil Medium Incorporeal Undead 5; Aggressive",
+    "species": "Undead",
+    "classLevels": ""
+  },
+  {
+    "name": "Ghoul",
+    "category": "Undead",
+    "profile": "undead",
+    "cr": 6,
+    "level": 6,
+    "xp": 1200,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 48,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "Dark Vision; Passive Perception 20",
+    "passivePerception": 20,
+    "ref": 18,
+    "flatFootedRef": 16,
+    "fort": 19,
+    "will": 17,
+    "dr": 5,
+    "breakThreshold": 19,
+    "immunities": [
+      "Dark",
+      "Disease",
+      "Fear Effects",
+      "Petrify",
+      "Zombify"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Holy"
+    ],
+    "languages": "Infernal These corpses, driven by unimaginable vanity, mindlessly gorge on the flesh of the living in a futile bid to reclaim the warmth of life.",
+    "attributes": {
+      "str": 13,
+      "agi": 15,
+      "vit": 16,
+      "int": 13,
+      "mnd": 13,
+      "cha": 14
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 14,
+        "damage": "1d6+4",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 10,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Athletics",
+        "bonus": 9,
+        "key": "athletics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 10,
+        "key": "deception"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 9,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 10,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 15,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 9,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 14,
+        "key": "unarmed"
+      }
+    ],
+    "description": "These corpses, driven by unimaginable vanity, mindlessly gorge on the flesh of the living in a futile bid to reclaim the warmth of life.",
+    "abilities": [
+      {
+        "name": "Foul Breath",
+        "description": "Once per encounter, as a primary action, ghouls can make an attack roll (d20+16) against the Fort Defence of all living creatures within a 4 square cone. If successful, targets become poisoned by death fog."
+      },
+      {
+        "name": "Gnaw",
+        "description": "Whenever a ghoul pins a target, it may make a free bite attack that ignores non-magickal DR."
+      },
+      {
+        "name": "Poison",
+        "description": "Whenever a ghoul’s bite deals damage to a living creature, there is a 50% chance (50 or less on d%) that the target becomes poisoned with death fog."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Pin",
+      "Skill Focus (stealth, unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Hi-Potion (20%), Putrid Flesh (50%)",
+    "steal": "Moondust (5%), Magicite (95%)",
+    "sourcePage": 353,
+    "profileLine": "Corrupt Evil Medium Undead 6; Aggressive",
+    "species": "Undead",
+    "classLevels": ""
+  },
+  {
+    "name": "Wiederganger",
+    "category": "Undead",
+    "profile": "undead",
+    "cr": 6,
+    "level": 6,
+    "xp": 1200,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 42,
+    "mp": 24,
+    "initiativeDie": "1d8",
+    "speed": "6 (hover)",
+    "senses": "Dark Vision; Passive Perception 19",
+    "passivePerception": 19,
+    "ref": 19,
+    "flatFootedRef": 17,
+    "fort": 19,
+    "will": 18,
+    "dr": 5,
+    "breakThreshold": 19,
+    "immunities": [
+      "Dark",
+      "Disease",
+      "Fear Effects",
+      "Petrify",
+      "Sleep",
+      "Zombify"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Holy"
+    ],
+    "languages": "Infernal Wizards obsessed with forbidden power succumb to madness, their bones now puppeted by a malevolent instinct.",
+    "attributes": {
+      "str": 12,
+      "agi": 15,
+      "vit": 14,
+      "int": 16,
+      "mnd": 12,
+      "cha": 15
+    },
+    "attacks": [
+      {
+        "name": "Claws",
+        "attack": 9,
+        "damage": "1d4+4",
+        "mode": "melee",
+        "type": "slashing"
+      },
+      {
+        "name": "Bone Wand",
+        "attack": 15,
+        "damage": "3d4+5",
+        "mode": "ranged",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 10,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 10,
+        "key": "deception"
+      },
+      {
+        "name": "Lore (arcane)",
+        "bonus": 10,
+        "key": ""
+      },
+      {
+        "name": "Lore (occult)",
+        "bonus": 10,
+        "key": "lore-occult"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 10,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 9,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 10,
+        "key": "persuasion"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 10,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 9,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Wizards obsessed with forbidden power succumb to madness, their bones now puppeted by a malevolent instinct.",
+    "abilities": [
+      {
+        "name": "Magickal",
+        "description": "Wiedergangers gain an amount of MP equal to 3+Mnd each level and always treat Spellcraft as a class skill."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Arcane Study",
+      "Combat Casting",
+      "Skill Focus (spellcraft)"
+    ],
+    "spells": [
+      "Aphasia",
+      "Darkness",
+      "Infest",
+      "Maim"
+    ],
+    "performances": [],
+    "equipped": "Bone Wand, Mage's Habit",
+    "loot": "Cursed Bone (5%), Bone Wand (20%), Mage's Habit (50%), Ether (95%)",
+    "steal": "Power Stone (5%), 60gp (20%), Magicite (95%)",
+    "sourcePage": 353,
+    "profileLine": "Corrupt Evil Medium Undead 6; Aggressive",
+    "species": "Undead",
+    "classLevels": ""
+  },
+  {
+    "name": "Banshee",
+    "category": "Undead",
+    "profile": "undead",
+    "cr": 8,
+    "level": 8,
+    "xp": 1600,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 56,
+    "mp": 0,
+    "initiativeDie": "1d6",
+    "speed": "2, Fly 8 (hover)",
+    "senses": "Lifesense; Passive Perception 24",
+    "passivePerception": 24,
+    "ref": 23,
+    "flatFootedRef": 19,
+    "fort": 21,
+    "will": 24,
+    "dr": 10,
+    "breakThreshold": 21,
+    "immunities": [
+      "Confusion",
+      "Curse",
+      "Dark",
+      "Disease",
+      "Fear Effects",
+      "Mind Effects",
+      "Petrify",
+      "Stuns",
+      "Zombify"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Holy"
+    ],
+    "languages": "Common Tormented spirits of maidens who lost loved ones to war, endlessly mourning with wails that shatter mortal minds.",
+    "attributes": {
+      "str": 1,
+      "agi": 18,
+      "vit": 15,
+      "int": 5,
+      "mnd": 20,
+      "cha": 23
+    },
+    "attacks": [
+      {
+        "name": "Slam",
+        "attack": 18,
+        "damage": "1d4+8",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 13,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 15,
+        "key": "deception"
+      },
+      {
+        "name": "Perception",
+        "bonus": 14,
+        "key": "perception"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 18,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Tormented spirits of maidens who lost loved ones to war, endlessly mourning with wails that shatter mortal minds.",
+    "abilities": [
+      {
+        "name": "Wail",
+        "description": "As an all-out action, a banshee may make an attack (d20+20) against the Will Defence of all living creatures within 6 squares. If successful, the target takes 2d6+10 unaspected damage and becomes flat-footed and unable to take any actions until the start of the banshee’s next turn. Otherwise, the target takes half damage, does not become flat-footed, and may act normally. The banshee may not use this ability again for 1d4+1 turns. This is a fear effect."
+      },
+      {
+        "name": "Incorporeal Touch",
+        "description": "The banshees slam attack deals unaspected damage to living creatures. Additionally, when the banshee successfully hits a living creature with its slam, the target moves -1 step on the Break Gauge. This secondary effect is a death effect."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "Disruptive",
+      "Improved Initiative",
+      "Skill Focus (unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Obsidian Brooch (5%), Mega-Potion (20%), Ectoplasm (50%), Obsidian (95%)",
+    "steal": "Obsidian (20%), Ectoplasm (95%)",
+    "sourcePage": 354,
+    "profileLine": "Corrupt Evil Medium Incorporeal Undead 8; Aggressive",
+    "species": "Undead",
+    "classLevels": ""
+  },
+  {
+    "name": "Draugr",
+    "category": "Undead",
+    "profile": "undead",
+    "cr": 9,
+    "level": 9,
+    "xp": 1800,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 86,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "Dark Vision; Passive Perception 20",
+    "passivePerception": 20,
+    "ref": 24,
+    "flatFootedRef": 22,
+    "fort": 23,
+    "will": 21,
+    "dr": 10,
+    "breakThreshold": 27,
+    "immunities": [],
+    "resistances": [
+      "Cold"
+    ],
+    "weaknesses": [
+      "Fire",
+      "Holy"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 21,
+      "agi": 14,
+      "vit": 16,
+      "int": 8,
+      "mnd": 12,
+      "cha": 6
+    },
+    "attacks": [
+      {
+        "name": "Greataxe",
+        "attack": 21,
+        "damage": "2d12+14",
+        "mode": "melee",
+        "type": "slashing"
+      },
+      {
+        "name": "Greataxe",
+        "attack": 21,
+        "damage": "3d12+14",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "handed",
+        "bonus": 19,
+        "key": ""
+      },
+      {
+        "name": "Athletics",
+        "bonus": 14,
+        "key": "athletics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 10,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 11,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 10,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 14,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Ancient warriors bound to undeath by their king’s dark pact, marked by runes that spread their terrible curse upon the living.",
+    "abilities": [
+      {
+        "name": "Gravebrand",
+        "description": "While using the Power Attack technick, melee attack that beat both a target’s Ref and Fort Defence zombify the target."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Power Attack",
+      "Skill Focus (2-handed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Greataxe, Viking Coat",
+    "loot": "Greataxe (5%), Cursed Bone (20%), Viking Coat (50%)",
+    "steal": "Cursed Bone (50%)",
+    "sourcePage": 355,
+    "profileLine": "Corrupt Evil Medium Undead 9; Aggressive",
+    "species": "Undead",
+    "classLevels": ""
+  },
+  {
+    "name": "Ghast",
+    "category": "Undead",
+    "profile": "undead",
+    "cr": 9,
+    "level": 9,
+    "xp": 1800,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 81,
+    "mp": 0,
+    "initiativeDie": "1d6",
+    "speed": "6",
+    "senses": "Dark Vision; Passive Perception 21",
+    "passivePerception": 21,
+    "ref": 24,
+    "flatFootedRef": 20,
+    "fort": 24,
+    "will": 22,
+    "dr": 10,
+    "breakThreshold": 24,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [
+      "Holy"
+    ],
+    "languages": "Infernal Vessels of tormented souls, they devour both flesh and spirit; only in death do the lost find peace.",
+    "attributes": {
+      "str": 17,
+      "agi": 18,
+      "vit": 18,
+      "int": 12,
+      "mnd": 14,
+      "cha": 7
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 17,
+        "damage": "1d6+7",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 17,
+        "damage": "1d4+7",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 13,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Athletics",
+        "bonus": 12,
+        "key": "athletics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 7,
+        "key": "deception"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 10,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 11,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 18,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 11,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 17,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Vessels of tormented souls, they devour both flesh and spirit; only in death do the lost find peace.",
+    "abilities": [
+      {
+        "name": "Festering Bite",
+        "description": "If a ghast’s bite attack beats both a target's Ref and Fort Defence, the target becomes diseased."
+      },
+      {
+        "name": "Gnaw",
+        "description": "Whenever a ghast pins a target, it may make a free bite attack that ignores non-magickal DR."
+      },
+      {
+        "name": "Putrid Breath",
+        "description": "Once per encounter, as a primary action, ghasts can make an attack roll (d20+18) against the Fort Defence of all living creatures in a 6 square cone. If successful, the creatures become diseased."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "Improved Initiative",
+      "Pin",
+      "Skill Focus (stealth, unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Moondust (5%), Cursed Bone (20%), Putrid Flesh (50%)",
+    "steal": "Pistoja Powder (5%), Snowdrop (20%), Putrid Flesh (95%)",
+    "sourcePage": 355,
+    "profileLine": "Corrupt Evil Medium Undead 9; Aggressive",
+    "species": "Undead",
+    "classLevels": ""
+  },
+  {
+    "name": "Dragon, Bone",
+    "category": "Undead",
+    "profile": "undead",
+    "cr": 10,
+    "level": 10,
+    "xp": 2000,
+    "size": "large",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 110,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "8",
+    "senses": "Dark Vision; Passive Perception 22",
+    "passivePerception": 22,
+    "ref": 20,
+    "flatFootedRef": 20,
+    "fort": 27,
+    "will": 23,
+    "dr": 10,
+    "breakThreshold": 37,
+    "immunities": [
+      "Blind",
+      "Curse",
+      "Dark",
+      "Death Effects",
+      "Disease",
+      "Fear Effects",
+      "Mind Effects",
+      "Paralysis",
+      "Petrify",
+      "Stuns",
+      "Zombify"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Holy"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 29,
+      "agi": 10,
+      "vit": 22,
+      "int": 3,
+      "mnd": 15,
+      "cha": 7
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 24,
+        "damage": "1d8+14",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 19,
+        "key": "athletics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 12,
+        "key": "perception"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 24,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Sustained by dark magic beyond natural life, these dragons’ decayed bodies and twisted minds spread ruin—one breath turns flesh to rot.",
+    "abilities": [
+      {
+        "name": "Accursed Fang",
+        "description": "Whenever the bone dragon’s bite attack beats both a target’s Ref and Will Defence, the target becomes cursed with withering. Higher-level targets gain a +5 to their defence against this ability."
+      },
+      {
+        "name": "Ancient Breath",
+        "description": "As a primary action, the bone dragon can make an attack (d20+21) against the Ref Defence of all living creatures within a 6 square cone, dealing 6d6+11 dark damage. Otherwise, creatures take half damage. Additionally, should the attack beat both a target’s Ref and Fort Defence, the target becomes zombified. The bone dragon may not use this ability again for 1d4+1 turns. This is an area effect."
+      },
+      {
+        "name": "Tail Slam",
+        "description": "Whenever the bone dragon uses a primary action to attack while flanked, it may make a free slam attack (d20+24) against another target within reach that is providing the initial target the flanking bonus. This attack deals 1d6+14 damage."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Crush",
+      "Defence Up",
+      "Pin",
+      "Skill Focus (unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Holy Water (5%), Bone Club (20%), Dragon Bone (95%)",
+    "steal": "Holy Water (20%), Bone Club (50%)",
+    "sourcePage": 356,
+    "profileLine": "Corrupt Evil Large Undead 10; Aggressive",
+    "species": "Undead",
+    "classLevels": ""
+  },
+  {
+    "name": "Deildegast",
+    "category": "Undead",
+    "profile": "undead",
+    "cr": 11,
+    "level": 11,
+    "xp": 2200,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 88,
+    "mp": 126,
+    "initiativeDie": "1d8",
+    "speed": "6 (hover)",
+    "senses": "Dark Vision; Passive Perception 27",
+    "passivePerception": 27,
+    "ref": 22,
+    "flatFootedRef": 21,
+    "fort": 24,
+    "will": 28,
+    "dr": 10,
+    "breakThreshold": 24,
+    "immunities": [],
+    "resistances": [
+      "Holy"
+    ],
+    "weaknesses": [
+      "Holy"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 9,
+      "agi": 12,
+      "vit": 16,
+      "int": 18,
+      "mnd": 25,
+      "cha": 18
+    },
+    "attacks": [
+      {
+        "name": "claws",
+        "attack": 9,
+        "damage": "1d4+4",
+        "mode": "melee",
+        "type": "slashing"
+      },
+      {
+        "name": "Heretic’s Rod",
+        "attack": 25,
+        "damage": "3d6+7",
+        "mode": "ranged",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 11,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Alchemy",
+        "bonus": 14,
+        "key": "alchemy"
+      },
+      {
+        "name": "Deception",
+        "bonus": 14,
+        "key": "deception"
+      },
+      {
+        "name": "Lore (arcane)",
+        "bonus": 14,
+        "key": ""
+      },
+      {
+        "name": "Lore (occult)",
+        "bonus": 14,
+        "key": "lore-occult"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 14,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 17,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 14,
+        "key": "persuasion"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 11,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 9,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Consumed by greed, these ancient mages forged dark pacts, dooming their blackened bones to eternal servitude.",
+    "abilities": [
+      {
+        "name": "Black-hearted",
+        "description": "A deildegast may double the MP cost of any black magick spell to either double the range of the spell, double the area, double the spell’s damage dice, or target up to 5 creatures with a single target spell (though no single target spell with an area of effect may overlap)."
+      },
+      {
+        "name": "Magickal",
+        "description": "Deildegasts gain an amount of MP equal to 3+Mnd each level and always treat Spellcraft as a class skill."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Arcane Study",
+      "Channel",
+      "Combat Casting",
+      "MP Up",
+      "Precise Shot",
+      "Skill Focus (spellcraft)"
+    ],
+    "spells": [
+      "Black Hole",
+      "Darkness",
+      "Expiry",
+      "Infest",
+      "Maim"
+    ],
+    "performances": [],
+    "equipped": "Dark Dalmatica, Heretic’s Rod",
+    "loot": "Heretic's Rod (5%), Dark Dalmatica (20%), Cursed Bone (50%)",
+    "steal": "Cursed Bone (5%)",
+    "sourcePage": 357,
+    "profileLine": "Corrupt Evil Medium Undead 11; Aggressive",
+    "species": "Undead",
+    "classLevels": ""
+  },
+  {
+    "name": "Wraith",
+    "category": "Undead",
+    "profile": "undead",
+    "cr": 11,
+    "level": 11,
+    "xp": 2200,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 115,
+    "mp": 0,
+    "initiativeDie": "1d6",
+    "speed": "10 (hover)",
+    "senses": "Lifesense; Passive Perception 23",
+    "passivePerception": 23,
+    "ref": 26,
+    "flatFootedRef": 22,
+    "fort": 26,
+    "will": 25,
+    "dr": 10,
+    "breakThreshold": 26,
+    "immunities": [
+      "Curse",
+      "Dark",
+      "Disease",
+      "Fear Effects",
+      "Petrify",
+      "Poison",
+      "Sleep"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Holy"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 1,
+      "agi": 19,
+      "vit": 18,
+      "int": 11,
+      "mnd": 16,
+      "cha": 21
+    },
+    "attacks": [
+      {
+        "name": "claws",
+        "attack": 19,
+        "damage": "1d4+9",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 14,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 15,
+        "key": "deception"
+      },
+      {
+        "name": "Lore (occult)",
+        "bonus": 10,
+        "key": "lore-occult"
+      },
+      {
+        "name": "Perception",
+        "bonus": 13,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 15,
+        "key": "persuasion"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 19,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 19,
+        "key": "unarmed"
+      }
+    ],
+    "description": "A spectre of death, said to appear at one’s final hour.",
+    "abilities": [
+      {
+        "name": "Incorporeal Touch",
+        "description": "The wraith's claw attacks deal unaspected damage to living creatures. Additionally, when the wraith successfully hits a living creature with its claws, the target moves -1 step on the Break Gauge. This secondary effect is a death effect."
+      },
+      {
+        "name": "Last Hour",
+        "description": "As primary action, the wraith can make an attack roll (d20+18) against the Will Defence of a living creature within 6 squares and line of sight. If successful, the target becomes doomed. The wraith may not use this ability again for 1d4+1 turns. Higher-level targets gain a +5 to their defence against this ability."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Improved Initiative",
+      "Rapid Counter",
+      "Skill Focus (stealth, unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Moondust (5%), Ammonia Salt (20%), Ectoplasm (50%)",
+    "steal": "Winged Boots (5%), Ambrosia (20%)",
+    "sourcePage": 358,
+    "profileLine": "Corrupt Evil Medium Incorporeal Undead 11; Aggressive",
+    "species": "Undead",
+    "classLevels": ""
+  },
+  {
+    "name": "Gigas, Death",
+    "category": "Undead",
+    "profile": "undead",
+    "cr": 12,
+    "level": 12,
+    "xp": 2400,
+    "size": "huge",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 120,
+    "mp": 0,
+    "initiativeDie": "1d6",
+    "speed": "8",
+    "senses": "Blindsense; Passive Perception 21",
+    "passivePerception": 21,
+    "ref": 22,
+    "flatFootedRef": 21,
+    "fort": 28,
+    "will": 23,
+    "dr": 15,
+    "breakThreshold": 43,
+    "immunities": [
+      "Curse",
+      "Dark",
+      "Fear Effects",
+      "Poison",
+      "Toad"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Holy"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 41,
+      "agi": 12,
+      "vit": 21,
+      "int": 1,
+      "mnd": 10,
+      "cha": 10
+    },
+    "attacks": [
+      {
+        "name": "Slams",
+        "attack": 27,
+        "damage": "1d8+25",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 11,
+        "key": "perception"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 31,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Headless horrors, risen through daemonic blood.",
+    "abilities": [
+      {
+        "name": "Shamble",
+        "description": "The death gigas requires an all-out action to move. Additionally, the death gigas may not charge."
+      },
+      {
+        "name": "Tremor",
+        "description": "As a primary action, the gigas can make an attack roll (d20+21) against the Ref Defence of all creatures within a 12 square cone. If successful, creatures take 8d6+11 blunt damage and are knocked prone. Otherwise, creatures take half damage and are not knocked prone. The death gigas may not use this ability again for 1d4+1 turns. This does not affect creatures with hover. This is an area effect and the secondary effect is a stun."
+      },
+      {
+        "name": "Necrotic Strike",
+        "description": "Whenever a death gigas’ slam beats both a target's Ref and Will Defence, the target becomes cursed with exhaustion. Higher-level targets gain a +5 to their defence against this ability."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "Improved Initiative",
+      "Mighty Strikes",
+      "Shake It Off",
+      "Skill Focus (unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Stardust (5%), Putrid Flesh (20%), Antidote (50%)",
+    "steal": "Stardust (5%), Ammonia Salt (20%), Putrid Flesh (95%)",
+    "sourcePage": 358,
+    "profileLine": "Corrupt Evil Huge Undead 12; Aggressive",
+    "species": "Undead",
+    "classLevels": ""
+  },
+  {
+    "name": "Dullahan",
+    "category": "Undead",
+    "profile": "undead",
+    "cr": 14,
+    "level": 14,
+    "xp": 2800,
+    "size": "medium",
+    "alignment": "Pure",
+    "temperament": "Aggressive",
+    "hp": 145,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "4 (encumbered)",
+    "senses": "Lifesense; Passive Perception 26",
+    "passivePerception": 26,
+    "ref": 31,
+    "flatFootedRef": 28,
+    "fort": 29,
+    "will": 29,
+    "dr": 15,
+    "breakThreshold": 34,
+    "immunities": [
+      "Curse",
+      "Dark",
+      "Death Effects",
+      "Disease",
+      "Fear Effects",
+      "Paralysis",
+      "Petrify",
+      "Poison",
+      "Stuns",
+      "Toad"
+    ],
+    "resistances": [
+      "Blunt",
+      "Fire",
+      "Piercing",
+      "Slashing"
+    ],
+    "weaknesses": [
+      "Holy Block Bone Shield (+26)"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 25,
+      "agi": 16,
+      "vit": 19,
+      "int": 11,
+      "mnd": 19,
+      "cha": 22
+    },
+    "attacks": [
+      {
+        "name": "Doom Flail",
+        "attack": 25,
+        "damage": "3d8+19",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Handed",
+        "bonus": 24,
+        "key": ""
+      },
+      {
+        "name": "Deception",
+        "bonus": 18,
+        "key": "deception"
+      },
+      {
+        "name": "Perception",
+        "bonus": 16,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 18,
+        "key": "persuasion"
+      },
+      {
+        "name": "Ride",
+        "bonus": 15,
+        "key": "ride"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 15,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 19,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Oathbound knights slain before their duty was done, they haunt the living—regret twisted into bitter rage. Forsaking chivalry, they strike without mercy.",
+    "abilities": [
+      {
+        "name": "Accursed",
+        "description": "Dullahans ignore the cursed effects of cursed items they wield."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Any enemy that begins its turn within the dullahan’s reach is subject to an attack roll (d20+18) against their Will Defence. If successful, the target becomes flat-footed and may take no actions until the start of its next turn. Otherwise, the creature suffers no effect and is immune to this ability for the duration of the encounter. This is a fear effect."
+      },
+      {
+        "name": "Necrotic Strike",
+        "description": "Whenever a dullahan’s melee attack beats both a target’s Ref and Will Defence, the target becomes cursed with exhaustion. Higher-level targets gain a +5 to their defence against this ability."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Mighty Strikes",
+      "Skill Focus (1-handed)",
+      "Threshold Up",
+      "Throw",
+      "Trip"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "Bone Shield, Doom Flail, Zombie Mail",
+    "loot": "Zombie Mail (20%), Doom Flail (50%), Bone Shield (95%)",
+    "steal": "Moondust (5%), Ectoplasm (20%), 540gp (50%) * Includes 2 points of mighty strikes.",
+    "sourcePage": 359,
+    "profileLine": "Pure Evil Medium Undead 14; Aggressive",
+    "species": "Undead",
+    "classLevels": ""
+  },
+  {
+    "name": "Dragon, Zombie",
+    "category": "Undead",
+    "profile": "undead",
+    "cr": 15,
+    "level": 15,
+    "xp": 3000,
+    "size": "huge",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 200,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6, Fly 10 squares",
+    "senses": "Dark Vision; Passive Perception 27",
+    "passivePerception": 27,
+    "ref": 23,
+    "flatFootedRef": 23,
+    "fort": 33,
+    "will": 31,
+    "dr": 15,
+    "breakThreshold": 48,
+    "immunities": [
+      "Blind",
+      "Curse",
+      "Dark",
+      "Disease",
+      "Fear Effects",
+      "Paralysis",
+      "Petrify",
+      "Poison",
+      "Silence",
+      "Sleep",
+      "Stuns",
+      "Toad"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Holy"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 39,
+      "agi": 8,
+      "vit": 25,
+      "int": 5,
+      "mnd": 21,
+      "cha": 10
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 31,
+        "damage": "2d6 +21",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 26,
+        "key": "athletics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 17,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 17,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 31,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Prideful beyond death, these ancient dragons will their broken bodies to fight on, driven by undying hatred and eternal strife.",
+    "abilities": [
+      {
+        "name": "Ancient Breath",
+        "description": "As a primary action, the zombie dragon can make an attack (d20+24) against the Ref Defence of all living creatures within a 12 square cone, dealing 8d6+14 dark damage. Otherwise, creatures take half damage. Additionally, should the attack beat both a target's Ref and Fort Defence, the target becomes zombified. The zombie dragon may not use this ability again for 1d4+1 turns. This is an area effect."
+      },
+      {
+        "name": "Cursed Body",
+        "description": "Whenever the zombie dragon is hit by a melee attack, the attacker suffers an attack (d20+22) against their Will Defence. If successful, the target becomes cursed with withering. Higher-level targets gain a +5 to their defence against this ability."
+      },
+      {
+        "name": "Tail Slam",
+        "description": "Whenever the zombie dragon uses a primary action to attack while flanked, it may make a free slam attack (d20+31) against another target within reach that is providing the initial target the flanking bonus. This attack deals 1d8+21 damage."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Crush",
+      "Defence Up",
+      "HP Up",
+      "Lunge",
+      "Pin",
+      "Shake it Off",
+      "Skill Focus (unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Zombie Mail (5%), Mega-Potion (20%), Dragon Bone (50%)",
+    "steal": "Dragon Bone (5%), Mega-Potion (50%), Putrid Flesh (95%)",
+    "sourcePage": 360,
+    "profileLine": "Corrupt Evil Huge Undead 15; Aggressive",
+    "species": "Undead",
+    "classLevels": ""
+  },
+  {
+    "name": "Reaper",
+    "category": "Undead",
+    "profile": "undead",
+    "cr": 16,
+    "level": 16,
+    "xp": 3200,
+    "size": "large",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 165,
+    "mp": 0,
+    "initiativeDie": "1d6",
+    "speed": "10 (hover)",
+    "senses": "Lifesense; Passive Perception 30",
+    "passivePerception": 30,
+    "ref": 35,
+    "flatFootedRef": 26,
+    "fort": 31,
+    "will": 34,
+    "dr": 15,
+    "breakThreshold": 41,
+    "immunities": [
+      "Blind",
+      "Confusion",
+      "Curse",
+      "Dark",
+      "Death Effects",
+      "Disease",
+      "Fear Effects",
+      "Paralysis",
+      "Petrify",
+      "Sleep",
+      "Stuns",
+      "Toad"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Holy"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 1,
+      "agi": 28,
+      "vit": 18,
+      "int": 14,
+      "mnd": 25,
+      "cha": 20
+    },
+    "attacks": [
+      {
+        "name": "Claws",
+        "attack": 27,
+        "damage": "1d6+17",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 22,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 18,
+        "key": "deception"
+      },
+      {
+        "name": "Lore (arcane)",
+        "bonus": 15,
+        "key": ""
+      },
+      {
+        "name": "Lore (occult)",
+        "bonus": 15,
+        "key": "lore-occult"
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 15,
+        "key": ""
+      },
+      {
+        "name": "Perception",
+        "bonus": 20,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 18,
+        "key": "persuasion"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 22,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 27,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Shrouded in shadow and silence, these spectral enforcers appear only when infernal pacts are broken. Relentless and unyielding, they hunt down oathbreakers to drag them into eternal torment, serving as the archfiends’ inescapable agents of doom.",
+    "abilities": [
+      {
+        "name": "Annul",
+        "description": "As primary action, a reaper can make an attack roll (d20+25) against the Will Defence of a single creature within 6 squares and line of sight. If successful, the target’s MP is reduced to 0. The reaper may not use this ability again for 1d4+1 turns. Higher-level targets gain a +5 to their defence against this ability."
+      },
+      {
+        "name": "Death Strike",
+        "description": "Whenever a reaper’s claw attack beats both a target’s Ref and Will Defence, the target becomes cursed with doom. This is a death effect. Higher-level targets gain a +5 to their defence against this ability."
+      },
+      {
+        "name": "Incorporeal Touch",
+        "description": "The reaper's claw attacks deal unaspected damage to living creatures. Additionally, when the reaper successfully hits a living creature with its claws, the target moves -1 step on the Break Gauge. This secondary effect is a death effect."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "Disruptive",
+      "HP Up",
+      "Improved Initiative",
+      "Rapid Counter",
+      "Skill Focus (stealth, unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Moondust (5%), Ambrosia (20%), Ectoplasm (50%)",
+    "steal": "Bloodstring Lyre (5%), Cursed Bone (20%), Ambrosia (50%), Ectoplasm (95%)",
+    "sourcePage": 361,
+    "profileLine": "Corrupt Evil Large Incorporeal Undead 16; Aggressive",
+    "species": "Undead",
+    "classLevels": ""
+  },
+  {
+    "name": "Wendigo",
+    "category": "Undead",
+    "profile": "undead",
+    "cr": 17,
+    "level": 17,
+    "xp": 3400,
+    "size": "medium",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 187,
+    "mp": 0,
+    "initiativeDie": "1d6",
+    "speed": "8, Climb 8",
+    "senses": "Lifesense; Passive Perception 33",
+    "passivePerception": 33,
+    "ref": 35,
+    "flatFootedRef": 28,
+    "fort": 33,
+    "will": 33,
+    "dr": 15,
+    "breakThreshold": 38,
+    "immunities": [
+      "Cold",
+      "Confusion",
+      "Curse",
+      "Dark",
+      "Death Effects",
+      "Disease",
+      "Fear Effects",
+      "Petrify",
+      "Poison",
+      "Toad"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Fire",
+      "Holy"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 30,
+      "agi": 24,
+      "vit": 20,
+      "int": 7,
+      "mnd": 20,
+      "cha": 18
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 28,
+        "damage": "1d6+18",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 28,
+        "damage": "1d4+18",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 23,
+        "key": "athletics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 23,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 25,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 23,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 28,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Tormented souls condemned to the frozen northern wastes, twisted by the horror of cannibalism. Their warped forms roam endlessly, hunting the living—each agonized scream a fleeting balm for their own eternal torment.",
+    "abilities": [
+      {
+        "name": "Agonizing Bite",
+        "description": "Whenever a wendigos bite attack beat both a target’s Ref and Will Defence, the creature becomes cursed with agony. Higher-level targets gain a +5 to their defence against this ability."
+      },
+      {
+        "name": "Blistering Scream",
+        "description": "As a primary action, a wendigo may make an attack roll (d20+22) against the Will Defence of all living creatures within 12 squares. If successful, the creatures become flat-footed and unable to take any actions until the start of the wendigo’s next turn. The wendigo may not use this ability again for 1d4+1 turns. This is a fear effect."
+      },
+      {
+        "name": "Icy Claw",
+        "description": "A wendigo’s natural attacks deal cold damage against creatures that are weak, resistant, or immune to cold damage."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Improved Initiative",
+      "Lunge",
+      "Skill Focus (perception, stealth, survival, unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Moondust (5%), Hi-Potion (20%), Ice Crystal (50%), Putrid Flesh (95%)",
+    "steal": "Bone Club (5%), Cursed Bone (20%), Ice Crystal (95%)",
+    "sourcePage": 362,
+    "profileLine": "Corrupt Evil Medium Undead 17; Aggressive",
+    "species": "Undead",
+    "classLevels": ""
+  }
+]

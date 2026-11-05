@@ -1,0 +1,3965 @@
+[
+  {
+    "name": "Horse",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 1,
+    "level": 2,
+    "xp": 200,
+    "size": "large",
+    "alignment": "Neutral",
+    "temperament": "Timid",
+    "hp": 27,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "8",
+    "senses": "Low-light Vision, Scent; Passive Perception 19",
+    "passivePerception": 19,
+    "ref": 15,
+    "flatFootedRef": 11,
+    "fort": 17,
+    "will": 15,
+    "dr": 0,
+    "breakThreshold": 22,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 20,
+      "agi": 18,
+      "vit": 21,
+      "int": 2,
+      "mnd": 17,
+      "cha": 11
+    },
+    "attacks": [
+      {
+        "name": "Slams",
+        "attack": 11,
+        "damage": "1d6+6",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 11,
+        "key": "athletics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 9,
+        "key": "perception"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 11,
+        "key": "unarmed"
+      }
+    ],
+    "description": "These proud steeds are native to the Rydian Lowlands, where they are bred and trained for the rigors of war.",
+    "abilities": [],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "HP Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Health Potion (5%), Earth Crystal (20%), Beast Mane (50%)",
+    "steal": "30gp (5%), Earth Crystal (20%)",
+    "sourcePage": 280,
+    "profileLine": "Neutral Large Beast 2; Timid",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Rat, Dire",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 1,
+    "level": 2,
+    "xp": 200,
+    "size": "small",
+    "alignment": "Neutral",
+    "temperament": "Territorial",
+    "hp": 12,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "8; Climb 4, Swim 4",
+    "senses": "Low-light Vision, Scent; Passive Perception 17",
+    "passivePerception": 17,
+    "ref": 17,
+    "flatFootedRef": 13,
+    "fort": 13,
+    "will": 13,
+    "dr": 0,
+    "breakThreshold": 13,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 10,
+      "agi": 19,
+      "vit": 12,
+      "int": 2,
+      "mnd": 12,
+      "cha": 9
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 6,
+        "damage": "1d4+1",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 12,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 7,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 6,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Filthy and relentless, these vermin overrun the Bel’reah sewerway. Though many have tried to wipe them out, their staggering reproduction rate has always kept them one step ahead of extinction.",
+    "abilities": [
+      {
+        "name": "Overwhelm",
+        "description": "Dire rats receive a +2 bonus to attack rolls for each adjacent dire rat (max +10)."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Skill Focus (Perception)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Beast Fang (5%), Beast Mane (20%)",
+    "steal": "Health Potion (5%)",
+    "sourcePage": 280,
+    "profileLine": "Neutral Small Beast 2; Territorial",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Adder, Black",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 2,
+    "level": 3,
+    "xp": 400,
+    "size": "small",
+    "alignment": "Neutral",
+    "temperament": "Defensive",
+    "hp": 21,
+    "mp": 0,
+    "initiativeDie": "1d6",
+    "speed": "4; Climb 4, Swim 4",
+    "senses": "Low-light Vision, Scent; Passive Perception 17",
+    "passivePerception": 17,
+    "ref": 15,
+    "flatFootedRef": 14,
+    "fort": 15,
+    "will": 14,
+    "dr": 0,
+    "breakThreshold": 15,
+    "immunities": [
+      "Paralysis",
+      "Poison"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 8,
+      "agi": 13,
+      "vit": 14,
+      "int": 2,
+      "mnd": 13,
+      "cha": 2
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 7,
+        "damage": "1d4",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 7,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 7,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 7,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 7,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Stealthy and venomous, these serpents conceal themselves in underbrush and rocky crevices, ambushing small prey. While not typically aggressive toward humans, accidental encounters can prove fatal.",
+    "abilities": [
+      {
+        "name": "Lurk",
+        "description": "Black Adders can more naturally blend into their surroundings. When in grassland, savannah, or freshwater biomes, black adders treat Stealth as a trained skill and ignore any size penalties to Stealth checks."
+      },
+      {
+        "name": "Poison",
+        "description": "When a black adder’s bite deals damage to a living target, there is a 25% chance (25 or less on d%) the target becomes poisoned by black adder venom."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Agile Manoeuvres",
+      "Improved Initiative"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Beast Scale (20%), Poison Fang (50%), Beast Scale (95%)",
+    "steal": "Stardust (5%), Philter (20%), Antidote (50%)",
+    "sourcePage": 281,
+    "profileLine": "Neutral Small Beast 3; Defensive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Wolf",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 1,
+    "level": 2,
+    "xp": 200,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "Territorial*",
+    "hp": 14,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "10",
+    "senses": "Low-light Vision, Scent; Passive Perception 17",
+    "passivePerception": 17,
+    "ref": 14,
+    "flatFootedRef": 12,
+    "fort": 12,
+    "will": 13,
+    "dr": 0,
+    "breakThreshold": 12,
+    "immunities": [],
+    "resistances": [
+      "Cold"
+    ],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 13,
+      "agi": 15,
+      "vit": 15,
+      "int": 2,
+      "mnd": 12,
+      "cha": 6
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 7,
+        "damage": "1d6+2",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 7,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 8,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 7,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 7,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Among the fiercest hunters of the Rydian Lowlands, these pack predators strike swiftly and without warning. Led by a dire wolf, they ravage farmsteads, devouring livestock—or any who dare stand in their way.",
+    "abilities": [
+      {
+        "name": "Cunning Beast",
+        "description": "When a wolf is hit by a melee attack, it may choose to move 2 squares as a reaction. This does not provoke counterattacks."
+      },
+      {
+        "name": "Pack Tactics",
+        "description": "When a wolf is adjacent to an enemy creature, the wolf ’s allies gain a +2 bonus on attack rolls against that creature (max +10)."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Skill Training (stealth)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Antidote (5%), Health Potion (20%), Beast Mane (50%)",
+    "steal": "Moondust (5%), Beast Mane (20%)",
+    "sourcePage": 281,
+    "profileLine": "Neutral Medium Beast 2; Territorial*",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Axebeak",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 2,
+    "level": 3,
+    "xp": 400,
+    "size": "large",
+    "alignment": "Neutral",
+    "temperament": "Timid",
+    "hp": 24,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "10",
+    "senses": "Low-light Vision; Passive Perception 21",
+    "passivePerception": 21,
+    "ref": 15,
+    "flatFootedRef": 12,
+    "fort": 16,
+    "will": 13,
+    "dr": 0,
+    "breakThreshold": 21,
+    "immunities": [
+      "Paralysis",
+      "Slow"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 18,
+      "agi": 17,
+      "vit": 16,
+      "int": 2,
+      "mnd": 11,
+      "cha": 10
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 15,
+        "damage": "1d8+5",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 11,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 6,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 15,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Broad-backed and ill-tempered, these flightless birds are raised across Lagryss for their meat and hide. While generally docile, a cornered axebeak can strike with deadly precision using its namesake beak.",
+    "abilities": [],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Skill Focus (perception, unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Great Feather (5%), Fire Crystal (50%)",
+    "steal": "Mandrake Root (20%), Fire Crystal (95%)",
+    "sourcePage": 282,
+    "profileLine": "Neutral Large Beast 3; Timid",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Bee, Killer",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 2,
+    "level": 3,
+    "xp": 400,
+    "size": "small",
+    "alignment": "Neutral",
+    "temperament": "Aggressive",
+    "hp": 18,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "4; Fly 12 (hover)",
+    "senses": "Dark Vision; Passive Perception 17",
+    "passivePerception": 17,
+    "ref": 16,
+    "flatFootedRef": 14,
+    "fort": 14,
+    "will": 14,
+    "dr": 0,
+    "breakThreshold": 14,
+    "immunities": [
+      "Poison"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Cold"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 11,
+      "agi": 14,
+      "vit": 13,
+      "int": 1,
+      "mnd": 12,
+      "cha": 9
+    },
+    "attacks": [
+      {
+        "name": "Sting",
+        "attack": 13,
+        "damage": "1d3+1",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 7,
+        "key": "perception"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 13,
+        "key": "unarmed"
+      }
+    ],
+    "description": "With a coat as soft as thistle-down and a temper twice as sharp, the killer bee delivers a venomous sting that few forget. They share an age-old rivalry with the bears of the Lowlands, whose raids on their hives often end in blood and buzzing fury.",
+    "abilities": [
+      {
+        "name": "Overwhelm",
+        "description": "Killer Bees receive a +2 bonus to attack rolls for each adjacent Killer Bee (max +10)."
+      },
+      {
+        "name": "Poison",
+        "description": "When a killer bee’s sting deals damage to a living target, there is a 25% chance (25 or less on d%) the target becomes poisoned by widow’s kiss."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Agile Manoeuvres",
+      "Skill Focus (unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Poison Fang (20%), Chitin (50%)",
+    "steal": "Poison Fang (20%), Antidote (50%)",
+    "sourcePage": 282,
+    "profileLine": "Neutral Small Beast 3; Aggressive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Hippogryph",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 2,
+    "level": 3,
+    "xp": 400,
+    "size": "large",
+    "alignment": "Neutral",
+    "temperament": "Defensive",
+    "hp": 24,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "10",
+    "senses": "Dark Vision, Scent; Passive Perception 22",
+    "passivePerception": 22,
+    "ref": 15,
+    "flatFootedRef": 12,
+    "fort": 16,
+    "will": 14,
+    "dr": 0,
+    "breakThreshold": 21,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 18,
+      "agi": 17,
+      "vit": 16,
+      "int": 2,
+      "mnd": 12,
+      "cha": 9
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 15,
+        "damage": "1d8+5",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 15,
+        "damage": "1d6+5",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 12,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 7,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 15,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Proud and perilous, these majestic beasts are notoriously difficult to tame, but in skilled hands, they become unmatched war mounts. Only the wealthy and well-connected can afford the cost of their upkeep and training.",
+    "abilities": [],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Skill Focus (perception, unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Stardust (5%), Great Feather (50%)",
+    "steal": "Stardust (5%), Snowdrop (20%)",
+    "sourcePage": 283,
+    "profileLine": "Neutral Large Beast 3; Defensive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Red Widow",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 2,
+    "level": 3,
+    "xp": 400,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "Territorial",
+    "hp": 18,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6, Climb 6",
+    "senses": "Dark Vision, Tremorsense; Passive Perception 16",
+    "passivePerception": 16,
+    "ref": 16,
+    "flatFootedRef": 13,
+    "fort": 13,
+    "will": 13,
+    "dr": 0,
+    "breakThreshold": 14,
+    "immunities": [
+      "Poison"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Fire"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 11,
+      "agi": 17,
+      "vit": 12,
+      "int": 2,
+      "mnd": 10,
+      "cha": 2
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 11,
+        "damage": "1d6+1",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 6,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 14,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 11,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Lurking in the shadowed depths of the sewers, these cruel arachnids weave intricate webs to trap the unwary. Their venom paralyzes the body while leaving the mind awake, condemning their victims to feel every bite.",
+    "abilities": [
+      {
+        "name": "Poison",
+        "description": "When a red widow’s bite deals damage to a living target, there is a 25% chance (25 or less on d%) the target becomes poisoned by widow’s kiss."
+      },
+      {
+        "name": "Web",
+        "description": "As a primary action, a red widow can make an attack (d20+12) against the Ref Defence of a single creature within 6 squares and line of sight. If successful, the target’s speed is reduced to 0 and they become flat-footed. A creature must make a DC 20 Str check as a primary action, or take fire damage, to end this effect. The red widow may not use this ability again for 1d4+1 turns."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Skill Focus (stealth, unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Poison Fang (5%), Silk Thread (20%), Chitin (50%)",
+    "steal": "Philter (20%), 1gp (50%)",
+    "sourcePage": 283,
+    "profileLine": "Neutral Medium Beast 3; Territorial",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Skink",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 2,
+    "level": 3,
+    "xp": 400,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "Defensive",
+    "hp": 24,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6, Swim 6",
+    "senses": "Dark Vision, Tremorsense; Passive Perception 17",
+    "passivePerception": 17,
+    "ref": 15,
+    "flatFootedRef": 13,
+    "fort": 16,
+    "will": 14,
+    "dr": 0,
+    "breakThreshold": 16,
+    "immunities": [
+      "Poison"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Cold"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 17,
+      "agi": 15,
+      "vit": 17,
+      "int": 2,
+      "mnd": 12,
+      "cha": 6
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 14,
+        "damage": "1d6+4",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 7,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 13,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 14,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Found deep within the Malloram Jungle, these vibrant lizards are easily recognized by the swollen pink venom sacs at their throats. With surprising accuracy, they can spit venom at threats from several paces away.",
+    "abilities": [
+      {
+        "name": "Poison",
+        "description": "When a skink’s bite deals damage to a living target, there is a 25% chance (25 or less on d%) the target becomes poisoned by widow’s kiss."
+      },
+      {
+        "name": "Venom Spit",
+        "description": "As a primary action, a skink may make an attack roll (d20+14) against the Ref Defence of a creature within 6 squares and line of sight. If successful, the target becomes poisoned with widow’s kiss. The skink may not use this ability again for 1d4+1 turns."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Skill Focus (stealth, unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Stardust (5%), Poison Fang (20%), Beast Scale (50%)",
+    "steal": "Scale Armour (5%), Beast Scales (20%), Antidote (50%)",
+    "sourcePage": 284,
+    "profileLine": "Neutral Medium Beast 3; Defensive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Vampyre Bat",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 3,
+    "level": 4,
+    "xp": 600,
+    "size": "small",
+    "alignment": "Neutral",
+    "temperament": "Territorial*",
+    "hp": 24,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "2, Fly 8 (hover)",
+    "senses": "Blindsense; Passive Perception 19",
+    "passivePerception": 19,
+    "ref": 19,
+    "flatFootedRef": 15,
+    "fort": 15,
+    "will": 16,
+    "dr": 5,
+    "breakThreshold": 15,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 12,
+      "agi": 19,
+      "vit": 13,
+      "int": 2,
+      "mnd": 14,
+      "cha": 6
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 11,
+        "damage": "1d4+3",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 9,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 21,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 11,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Native to the shadowed Darklands of Liure Mond, these winged predators have begun to spread into Lagryss, lured by the scent of fresh blood and unsuspecting prey.",
+    "abilities": [
+      {
+        "name": "Blood Drain",
+        "description": "Whenever a vampyre bat deals damage to a target with its bite, it gains an amount of HP equal to half the damage dealt (minimum 1)."
+      },
+      {
+        "name": "Subsonic Screech",
+        "description": "As a primary action, a vampyre bat may make an attack roll (d20+8) against the Fort Defence of all enemies within a 4 square cone. If successful, the target moves -1 step on the Break Gauge. The vampyre bat may not use this ability again for 1d4+1 turns."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Agile Manoeuvres",
+      "Skill Focus (stealth)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Vampyre Fang (5%), Snowdrop (20%), Elfwort (50%)",
+    "steal": "Stardust (5%), Health Potion (95%)",
+    "sourcePage": 284,
+    "profileLine": "Neutral Small Beast 4; Territorial*",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Bat, Dire",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 4,
+    "level": 5,
+    "xp": 800,
+    "size": "large",
+    "alignment": "Neutral",
+    "temperament": "Aggressive",
+    "hp": 40,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "4, Fly 8 (hover)",
+    "senses": "Blindsense; Passive Perception 18",
+    "passivePerception": 18,
+    "ref": 19,
+    "flatFootedRef": 14,
+    "fort": 18,
+    "will": 16,
+    "dr": 5,
+    "breakThreshold": 23,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 17,
+      "agi": 21,
+      "vit": 17,
+      "int": 2,
+      "mnd": 12,
+      "cha": 6
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 17,
+        "damage": "1d8+5",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 8,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 12,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 17,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Towering among their kind, these vampyric beasts consume vast quantities of blood, leaving them perpetually ravenous—and deadly to anything that crosses their flight.",
+    "abilities": [
+      {
+        "name": "Blood Drain",
+        "description": "Whenever a dire bat deals damage to a target with its bite, it gains an amount of HP equal to half the damage dealt (minimum 1)."
+      },
+      {
+        "name": "Overwhelm",
+        "description": "Dire bats receive a +2 bonus to attack rolls for each adjacent vampyre bat or dire bat (max +10)."
+      },
+      {
+        "name": "Supersonic Screech",
+        "description": "As a primary action, the dire bat may make an attack roll (d20+15) against the Fort Defences of all enemies within a 6 square cone. If successful, the target moves -1 step on the Break Gauge. The dire bat may not use this ability again for 1d4+1 turns."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Agile Manoeuvres",
+      "Skill Focus (stealth, unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Moondust (5%), Vampyre Fang (20%), 100gp (50%), Beast Mane (95%)",
+    "steal": "Stardust (5%), Rapier (20%), Health Potion (50%)",
+    "sourcePage": 285,
+    "profileLine": "Neutral Large Beast 5; Aggressive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Anaconda",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 4,
+    "level": 5,
+    "xp": 800,
+    "size": "large",
+    "alignment": "Neutral",
+    "temperament": "Territorial",
+    "hp": 50,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "4, Climb 4, Swim 4",
+    "senses": "Scent; Passive Perception 19",
+    "passivePerception": 19,
+    "ref": 16,
+    "flatFootedRef": 14,
+    "fort": 18,
+    "will": 17,
+    "dr": 5,
+    "breakThreshold": 28,
+    "immunities": [
+      "Paralysis"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 25,
+      "agi": 15,
+      "vit": 16,
+      "int": 2,
+      "mnd": 14,
+      "cha": 2
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 19,
+        "damage": "1d8+9",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 9,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 9,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 19,
+        "key": "unarmed"
+      }
+    ],
+    "description": "The giant, “man-eating” serpents of the Malloram Jungle are silent and patient predators. They wait for their prey to retrace their path, then strike swiftly— ambushing, constricting, and swallowing them whole.",
+    "abilities": [
+      {
+        "name": "Constrict",
+        "description": "An anaconda is treated as having the Pin and Crush technicks when making a grab and while grabbing a target. Additionally, whenever the anaconda uses the Crush technick, it deals +1 die of damage."
+      },
+      {
+        "name": "Lurk",
+        "description": "Anacondas can more naturally blend into their surroundings. When in jungles or savannahs, anacondas treat Stealth as a trained skill and ignore any size penalties to Stealth checks."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "HP Up",
+      "Skill Focus (unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Putrid Flesh (5%), Moonwort (20%), Beast Fang (50%), Beast Scale (95%)",
+    "steal": "Leather Breastplate (5%), 400gp (20%), Earth Crystal (50%)",
+    "sourcePage": 285,
+    "profileLine": "Neutral Large Beast 5; Territorial",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Bear",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 4,
+    "level": 5,
+    "xp": 800,
+    "size": "large",
+    "alignment": "Neutral",
+    "temperament": "Territorial",
+    "hp": 55,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "8",
+    "senses": "Low-light Vision, Scent;",
+    "passivePerception": 18,
+    "ref": 15,
+    "flatFootedRef": 14,
+    "fort": 19,
+    "will": 16,
+    "dr": 5,
+    "breakThreshold": 24,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 21,
+      "agi": 13,
+      "vit": 19,
+      "int": 2,
+      "mnd": 12,
+      "cha": 6
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 17,
+        "damage": "1d8+7",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 17,
+        "damage": "1d6+7",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 8,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 8,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 17,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Not naturally aggressive, bears fiercely defend their own. While mostly nocturnal, a hungry bear may roam boldly even under the midday sun.",
+    "abilities": [
+      {
+        "name": "Gnaw",
+        "description": "Whenever a bear pins a target, it may make a free bite attack that ignores non-magickal DR."
+      },
+      {
+        "name": "Protective",
+        "description": "Whenever a bear attacks an enemy that is threatening one of their allies, the bear may reroll the attack, keeping the higher result."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "HP Up",
+      "Pin",
+      "Skill Focus (unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Moondust (5%), Beast Fang (50%), Beast Mane (95%)",
+    "steal": "Panacea (5%)",
+    "sourcePage": 286,
+    "profileLine": "Neutral Large Beast 5; Territorial",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Griffon",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 4,
+    "level": 5,
+    "xp": 800,
+    "size": "large",
+    "alignment": "Pure",
+    "temperament": "Territorial",
+    "hp": 45,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6, Fly 16",
+    "senses": "Dark Vision, Scent; Passive Perception 23",
+    "passivePerception": 23,
+    "ref": 18,
+    "flatFootedRef": 15,
+    "fort": 20,
+    "will": 17,
+    "dr": 5,
+    "breakThreshold": 25,
+    "immunities": [
+      "Disease"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 20,
+      "agi": 17,
+      "vit": 18,
+      "int": 6,
+      "mnd": 13,
+      "cha": 10
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 17,
+        "damage": "1d8+7",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 17,
+        "damage": "1d6+7",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 10,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 5,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 13,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 8,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 17,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Majestic and proud, these beasts reign over Lagryss’s skies and symbolize nobility and strength.",
+    "abilities": [
+      {
+        "name": "Gust*",
+        "description": "As a primary action, a griffon may make an attack roll (d20+16) against the Fort Defence of all targets within a 6 square cone. If successful, targets take 4d6+6 slashing damage and are moved 2 squares directly away from the griffon. Otherwise, targets take half damage and are not moved. Creatures that are larger than the griffon ignore the forced movement, even upon success. The griffon may not use this ability again on the following turn. This is an area effect."
+      },
+      {
+        "name": "Soar",
+        "description": "As minor action, griffons can grant themselves hover until the end of their next turn. When this effect ends, the griffon may not use this ability again for 1d4+1 turns."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "Skill Focus (Perception, Unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Great Feather (20%), Storm Crystal (50%), Beast Mane (95%)",
+    "steal": "Philter (50%), Health Potion (95%)",
+    "sourcePage": 286,
+    "profileLine": "Pure Neutral Large Beast 5; Territorial",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Vulture, Giant",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 4,
+    "level": 5,
+    "xp": 800,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "Defensive",
+    "hp": 40,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "2, Fly 10 (hover)",
+    "senses": "Low-light Vision, Scent; Passive Perception 24",
+    "passivePerception": 24,
+    "ref": 19,
+    "flatFootedRef": 15,
+    "fort": 18,
+    "will": 17,
+    "dr": 5,
+    "breakThreshold": 18,
+    "immunities": [
+      "Confusion",
+      "Disease"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 16,
+      "agi": 19,
+      "vit": 16,
+      "int": 2,
+      "mnd": 15,
+      "cha": 7
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 15,
+        "damage": "1d6+5",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 14,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 10,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 15,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Towering carrion birds, these man-sized scavengers nest near the dragon pits of the Eshtala Uplands, patiently waiting to feast on the remnants left by dragons. Yet when carrion is scarce, their keen instincts turn them into capable hunters in their own right.",
+    "abilities": [
+      {
+        "name": "Swoop",
+        "description": "Whenever the vulture uses the Running Attack technick, it deals +1 damage die."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Running Attack",
+      "Skill Focus (perception, unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Great Feather (5%), Storm Crystal (50%)",
+    "steal": "Great Feather (5%)",
+    "sourcePage": 287,
+    "profileLine": "Neutral Medium Beast 5; Defensive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Scorpion, Giant",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 4,
+    "level": 5,
+    "xp": 800,
+    "size": "small",
+    "alignment": "Neutral",
+    "temperament": "Aggressive",
+    "hp": 50,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "10",
+    "senses": "Dark Vision, Tremorsense; Passive Perception 19",
+    "passivePerception": 19,
+    "ref": 18,
+    "flatFootedRef": 16,
+    "fort": 18,
+    "will": 17,
+    "dr": 5,
+    "breakThreshold": 18,
+    "immunities": [
+      "Poison"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 19,
+      "agi": 14,
+      "vit": 16,
+      "int": 1,
+      "mnd": 14,
+      "cha": 2
+    },
+    "attacks": [
+      {
+        "name": "Sting",
+        "attack": 16,
+        "damage": "1d3+6",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 16,
+        "damage": "1d3+6",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 9,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 14,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 16,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Venomous hunters of the Malloram Jungle, these immense arachnids prowl under cover of night, their every sense honed to the slightest movement. Feared and prized, they are captured and unleashed for brutal sport in Altaeria’s famed colosseum.",
+    "abilities": [
+      {
+        "name": "Poison",
+        "description": "When a giant scorpion’s sting deals damage to a living target, there is a 50% chance (50 or less on d%) the target becomes poisoned by black adder venom."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "HP Up",
+      "Skill Focus (unarmed)",
+      "Skill Training (Perception)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Poison Fang (20%), Chitin (50%)",
+    "steal": "Antidote (20%)",
+    "sourcePage": 287,
+    "profileLine": "Neutral Small Beast 5; Aggressive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Wolf, Dire",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 4,
+    "level": 5,
+    "xp": 800,
+    "size": "large",
+    "alignment": "Neutral",
+    "temperament": "Aggressive",
+    "hp": 40,
+    "mp": 0,
+    "initiativeDie": "1d6",
+    "speed": "10",
+    "senses": "Low-light Vision, Scent; Passive Perception 18",
+    "passivePerception": 18,
+    "ref": 16,
+    "flatFootedRef": 14,
+    "fort": 18,
+    "will": 16,
+    "dr": 5,
+    "breakThreshold": 23,
+    "immunities": [],
+    "resistances": [
+      "Cold"
+    ],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 19,
+      "agi": 15,
+      "vit": 17,
+      "int": 2,
+      "mnd": 12,
+      "cha": 10
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 16,
+        "damage": "1d8+6",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 8,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 4,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 8,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 16,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Towering apex predators of Rydia, these massive wolves lead ravenous packs across the lowlands. They strike fear into farmers and caravans alike, hunting relentlessly for livestock—and anything else unfortunate enough to cross their path.",
+    "abilities": [
+      {
+        "name": "Alpha Wolf",
+        "description": "On a successful attack, the alpha dire wolf deals +1 die of damage for every other wolf or dire wolf threatening the target. There may only be a single alpha wolf in a pack. Companions cannot be alphas."
+      },
+      {
+        "name": "Pack Tactics",
+        "description": "When a dire wolf is threatening an enemy, the dire wolf ’s allies gain a +2 bonus on attack rolls against that creature (max +10)."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Improved Initiative",
+      "Skill Focus (unarmed)",
+      "Skill Training (stealth)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Antidote (5%), Health Potion (20%), Beast Fang (50%), Beast Mane (95%)",
+    "steal": "Moondust (5%), Beast Mane (20%)",
+    "sourcePage": 288,
+    "profileLine": "Neutral Large Beast 5; Aggressive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Boar, Wild",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 5,
+    "level": 6,
+    "xp": 1000,
+    "size": "large",
+    "alignment": "Neutral",
+    "temperament": "Aggressive",
+    "hp": 59,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "8",
+    "senses": "Low-light Vision, Scent; Passive Perception 19",
+    "passivePerception": 19,
+    "ref": 15,
+    "flatFootedRef": 15,
+    "fort": 19,
+    "will": 17,
+    "dr": 5,
+    "breakThreshold": 24,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 23,
+      "agi": 10,
+      "vit": 17,
+      "int": 2,
+      "mnd": 13,
+      "cha": 8
+    },
+    "attacks": [
+      {
+        "name": "Gore",
+        "attack": 19,
+        "damage": "1d8+9",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Gore",
+        "attack": 23,
+        "damage": "1d8+12",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 9,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 9,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 19,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Fierce and relentless, these invasive beasts rampage across the Uplands, ravaging natural habitats and tearing through local infrastructure with reckless abandon.",
+    "abilities": [
+      {
+        "name": "Tough",
+        "description": "Whenever a wild boar is reduced to 0 HP , it is not moved to the bottom of the Break Gauge, remaining conscious. Until the end of its next turn, while it remains at 0 HP , it may only take a single primary action, after which it dies. However, it still dies if the damage beat its threshold."
+      },
+      {
+        "name": "Tusk",
+        "description": "Whenever the wild boar successfully hits a target with its gore attack at the end of a charge, the damage ignores non-magickal DR."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "HP Up",
+      "Powerful Charge",
+      "Skill Focus (unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Antidote (5%), Health Potion (20%), Beast Fang (50%), Beast Mane (95%)",
+    "steal": "Moondust (5%), Beast Mane (20%)",
+    "sourcePage": 288,
+    "profileLine": "Neutral Large Beast 6; Aggressive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Manticore",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 5,
+    "level": 6,
+    "xp": 1000,
+    "size": "large",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 65,
+    "mp": 0,
+    "initiativeDie": "1d6",
+    "speed": "8",
+    "senses": "Dark Vision, Scent;",
+    "passivePerception": 19,
+    "ref": 17,
+    "flatFootedRef": 15,
+    "fort": 20,
+    "will": 22,
+    "dr": 5,
+    "breakThreshold": 25,
+    "immunities": [
+      "Blind",
+      "Poison"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 20,
+      "agi": 15,
+      "vit": 18,
+      "int": 2,
+      "mnd": 12,
+      "cha": 9
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 18,
+        "damage": "1d8+8",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 18,
+        "damage": "1d6+8",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 13,
+        "key": "athletics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 9,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 5,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 18,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Hulking monsters that lurk in the shadowed chasms of the Uplands, manticores prey on those desperate enough to seek shelter from dragons—turning refuge into a deadly trap.",
+    "abilities": [
+      {
+        "name": "Poison",
+        "description": "When a manticore’s bite or tail slam deals damage to a living target, there is a 50% chance (50 or less on d%) the target becomes poisoned by manticore venom."
+      },
+      {
+        "name": "Chimera Brain",
+        "description": "Manticores gain a +5 bonus to their Will Defence."
+      },
+      {
+        "name": "Tail Slam",
+        "description": "Whenever the manticore uses a primary action to attack while flanked, it may make a free sting attack (d20+18) against another target within reach that is providing the initial target the flanking bonus. This attack deals 1d6+8 damage."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "HP Up",
+      "Improved Initiative",
+      "Skill Focus (unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Moondust (5%), Poison Fang (20%), Beast Horn (50%, Beast Mane (95%)",
+    "steal": "Moondust (5%), Elfwort (50%)",
+    "sourcePage": 289,
+    "profileLine": "Corrupt Evil Large Beast 6; Aggressive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Cockatrice",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 5,
+    "level": 6,
+    "xp": 1000,
+    "size": "large",
+    "alignment": "Corrupt",
+    "temperament": "Territorial",
+    "hp": 54,
+    "mp": 0,
+    "initiativeDie": "1d6",
+    "speed": "8, Fly 10",
+    "senses": "Dark Vision; Passive Perception 24",
+    "passivePerception": 24,
+    "ref": 17,
+    "flatFootedRef": 15,
+    "fort": 20,
+    "will": 17,
+    "dr": 5,
+    "breakThreshold": 25,
+    "immunities": [
+      "Curse",
+      "Petrify",
+      "Poison",
+      "Sleep"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 20,
+      "agi": 15,
+      "vit": 19,
+      "int": 2,
+      "mnd": 13,
+      "cha": 8
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 18,
+        "damage": "1d8+8",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 14,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 9,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 18,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Beware the statues that dot the Malloram Jungle—each may be the petrified form of a careless victim. Those who meet a cockatrice’s gaze risk more than paralysis; should you avoid stone-cold death, you may still be devoured alive as you lie helpless.",
+    "abilities": [
+      {
+        "name": "Grim Gaze",
+        "description": "As a primary action, a cockatrice may make an attack (d20+14) against the Fort D efence of a living creature within 6 squares and line of sight. If successful, the target becomes paralysed. If the attack beat the target’s defence by 10 or more, the target is instead petrified. The cockatrice may not use this ability again for 1d4+1 turns."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Improved Initiative",
+      "Skill Focus (perception, unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Evil Eye (5%), Ammonia Salt (20%), Pistoja Powder (50%)",
+    "steal": "Stardust (5%), Great Feather (20%), Storm Crystal (50%)",
+    "sourcePage": 289,
+    "profileLine": "Corrupt Neutral Large Beast 6; Territorial",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Wildcat",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 5,
+    "level": 6,
+    "xp": 1000,
+    "size": "large",
+    "alignment": "Neutral",
+    "temperament": "Aggressive",
+    "hp": 42,
+    "mp": 0,
+    "initiativeDie": "1d6",
+    "speed": "8",
+    "senses": "Low-light Vision, Scent; Passive Perception 19",
+    "passivePerception": 19,
+    "ref": 18,
+    "flatFootedRef": 15,
+    "fort": 18,
+    "will": 17,
+    "dr": 5,
+    "breakThreshold": 23,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 21,
+      "agi": 17,
+      "vit": 15,
+      "int": 2,
+      "mnd": 12,
+      "cha": 6
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 18,
+        "damage": "1d8+8",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 18,
+        "damage": "1d6+8",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 9,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 6,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 9,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 18,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Stealthy and deadly, these mighty cats prowl the thick underbrush of the Malloram Jungle, stalking prey with lethal patience before striking without warning.",
+    "abilities": [
+      {
+        "name": "Ambush",
+        "description": "Wildcats deal an additional 2d6 damage to creatures that are flanked, flat-footed, or otherwise denied their Agi to Ref Defence."
+      },
+      {
+        "name": "Pounce",
+        "description": "Wildcats may use all their natural attacks at the end of a charge."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Improved Initiative",
+      "Skill Focus (unarmed)",
+      "Skill Training (stealth)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Storm Crystal (20%), Beast Fang (50%), Beast Mane (95%)",
+    "steal": "Stardust (5%), Moonwort (50%)",
+    "sourcePage": 290,
+    "profileLine": "Neutral Large Beast 6; Aggressive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Wasp, Giant",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 6,
+    "level": 7,
+    "xp": 1200,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "Territorial*",
+    "hp": 61,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "4, Fly 12 (hover)",
+    "senses": "Dark Vision; Passive Perception 19",
+    "passivePerception": 19,
+    "ref": 19,
+    "flatFootedRef": 18,
+    "fort": 20,
+    "will": 19,
+    "dr": 5,
+    "breakThreshold": 20,
+    "immunities": [
+      "Poison"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 20,
+      "agi": 12,
+      "vit": 15,
+      "int": 1,
+      "mnd": 13,
+      "cha": 11
+    },
+    "attacks": [
+      {
+        "name": "Sting",
+        "attack": 18,
+        "damage": "1d4+8",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 18,
+        "damage": "1d4+8",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 9,
+        "key": "perception"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 18,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Fierce protectors of their queen, these vicious insects swarm intruders without mercy, tearing foes apart with razor-sharp claws and injecting deadly venom.",
+    "abilities": [
+      {
+        "name": "Poison",
+        "description": "When a giant wasp’s sting deals damage to a living target, there is a 50% chance (50 or less on d%) the target becomes poisoned by widow’s kiss."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Running Attack",
+      "Skill Focus (unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Remedy (5%), Poison Fang (20%), Chitin (50%)",
+    "steal": "Poison Fang (20%), Antidote (50%), Golden Sap (95%)",
+    "sourcePage": 290,
+    "profileLine": "Neutral Medium Beast 7; Territorial*",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Basilisk",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 7,
+    "level": 7,
+    "xp": 1400,
+    "size": "huge",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 82,
+    "mp": 0,
+    "initiativeDie": "1d6",
+    "speed": "4, Climb 4",
+    "senses": "Dark Vision; Passive Perception 19",
+    "passivePerception": 19,
+    "ref": 18,
+    "flatFootedRef": 16,
+    "fort": 23,
+    "will": 19,
+    "dr": 5,
+    "breakThreshold": 33,
+    "immunities": [
+      "Paralysis",
+      "Petrify",
+      "Poison"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 26,
+      "agi": 14,
+      "vit": 20,
+      "int": 2,
+      "mnd": 12,
+      "cha": 2
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 21,
+        "damage": "2d6+11",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 9,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 9,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 21,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Oft used as a grim object lesson, this sadistic creature embodies the phrase, “if looks could kill”—for in its case, they truly do.",
+    "abilities": [
+      {
+        "name": "Death Gaze",
+        "description": "As a primary action, a basilisk may make an attack (d20+14) against the Fort Defence of a living creature within 6 squares and line of sight. If successful, the target becomes petrified. Otherwise, the creature instead becomes paralysed. If the attack failed by 5 or more, the creature suffers no status effect. The basilisk may not use this ability again for 1d4+1 turns."
+      },
+      {
+        "name": "Lurk",
+        "description": "Basilisks are better at naturally blending into their surroundings. When in mountains or caves, basilisks treat Stealth as a trained skill and ignore any size penalties to their Stealth checks."
+      },
+      {
+        "name": "Poison",
+        "description": "When a basilisk’s bite deals damage to a living target, there is a 50% chance (50 or less on d%) the target becomes poisoned by basilisk venom."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Improved Initiative",
+      "Skill Focus (unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Evil Eye (5%), Poison Fang (20%), Moonwort (50%), Beast Scale (95%)",
+    "steal": "Stardust (5%), Bone Club (20%), Antidote (95%)",
+    "sourcePage": 291,
+    "profileLine": "Corrupt Evil Huge Beast 7; Aggressive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Wasp Queen",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 6,
+    "level": 7,
+    "xp": 1200,
+    "size": "large",
+    "alignment": "Neutral",
+    "temperament": "Aggressive",
+    "hp": 89,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "4, Fly 12 (hover)",
+    "senses": "Dark Vision; Passive Perception 19",
+    "passivePerception": 19,
+    "ref": 17,
+    "flatFootedRef": 17,
+    "fort": 24,
+    "will": 19,
+    "dr": 5,
+    "breakThreshold": 29,
+    "immunities": [
+      "Confusion",
+      "Curse",
+      "Death Effects",
+      "Paralysis",
+      "Petrify",
+      "Poison",
+      "Silence",
+      "Sleep",
+      "Slow",
+      "Stuns"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 23,
+      "agi": 11,
+      "vit": 22,
+      "int": 1,
+      "mnd": 12,
+      "cha": 13
+    },
+    "attacks": [
+      {
+        "name": "Sting",
+        "attack": 19,
+        "damage": "1d6+9",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 19,
+        "damage": "1d6+9",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 9,
+        "key": "perception"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 19,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Magnificent and deadly, the wasp queen commands fierce loyalty. In her presence, giant wasps grow hyperactive and aggressively defend their hive with ruthless precision.",
+    "abilities": [
+      {
+        "name": "Poison",
+        "description": "When a wasp queen’s sting deals damage to a living target, there is a 50% chance (50 or less on d%) the target becomes poisoned by basilisk venom."
+      },
+      {
+        "name": "Save the Queen",
+        "description": "Whenever a giant wasp attacks an enemy that is threatening the wasp queen, the giant wasp may reroll the attack, keeping the higher result."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Running Attack",
+      "Skill Focus (unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Poison Fang (50%), Chitin (95%)",
+    "steal": "Poison Fang (50%), Golden Sap (95%)",
+    "sourcePage": 291,
+    "profileLine": "Neutral Large Beast 7; Aggressive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Elephant",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 7,
+    "level": 8,
+    "xp": 1400,
+    "size": "huge",
+    "alignment": "Neutral",
+    "temperament": "Defensive",
+    "hp": 72,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "8",
+    "senses": "Scent; Passive Perception 20",
+    "passivePerception": 20,
+    "ref": 17,
+    "flatFootedRef": 17,
+    "fort": 23,
+    "will": 20,
+    "dr": 10,
+    "breakThreshold": 38,
+    "immunities": [
+      "Paralysis",
+      "Petrify",
+      "Poison"
+    ],
+    "resistances": [
+      "Cold",
+      "Piercing"
+    ],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 30,
+      "agi": 10,
+      "vit": 19,
+      "int": 2,
+      "mnd": 13,
+      "cha": 7
+    },
+    "attacks": [
+      {
+        "name": "Gore",
+        "attack": 24,
+        "damage": "2d6+14",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Gore",
+        "attack": 28,
+        "damage": "2d6+18",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 10,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 10,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 24,
+        "key": "unarmed"
+      }
+    ],
+    "description": "These imposing beasts serve as mounts for the wealthy merchant princes of the East, symbols of wealth and prestige that command respect wherever they tread.",
+    "abilities": [
+      {
+        "name": "Overrun",
+        "description": "The elephant is treated as having the Trample technick and is treated as both mount and rider while charging."
+      },
+      {
+        "name": "Tusk",
+        "description": "Whenever the elephant successfully hits a target with its gore attack at the end of a charge, the damage ignores non-magickal DR."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "Powerful Charge",
+      "Skill Focus (unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Stardust (5%), Beast Fang (50%)",
+    "steal": "Stardust (5%), Pistoja Powder (50%)",
+    "sourcePage": 292,
+    "profileLine": "Neutral Huge Beast 8; Defensive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Salamander",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 7,
+    "level": 8,
+    "xp": 1400,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "Aggressive",
+    "hp": 72,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6, Climb 6",
+    "senses": "Dark Vision; Passive Perception 26",
+    "passivePerception": 26,
+    "ref": 21,
+    "flatFootedRef": 19,
+    "fort": 23,
+    "will": 21,
+    "dr": 10,
+    "breakThreshold": 23,
+    "immunities": [
+      "Fire"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Cold"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 16,
+      "agi": 14,
+      "vit": 18,
+      "int": 2,
+      "mnd": 15,
+      "cha": 7
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 17,
+        "damage": "1d6+7",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 16,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 16,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 17,
+        "key": "unarmed"
+      }
+    ],
+    "description": "From the volcanic depths of Mt. Kragora, these fiery lizards are drawn to the radiant glow of open flames, their scales shimmering like molten embers.",
+    "abilities": [
+      {
+        "name": "Burn",
+        "description": "A salamander’s bite attack deals fire damage. Additionally, if the attack roll beats both the target’s Ref and Fort Defence, the target takes an additional 2d6 fire damage at the start of its next turn, before taking any other action. This damage ignores DR."
+      },
+      {
+        "name": "Firebolt",
+        "description": "As a primary action, a salamander may make an attack (d20+18) against the Ref Defence of a single creature within 6 squares and line of sight. If successful, the target suffers 6d6+8 fire damage. Otherwise, the target takes half damage. Additionally, if the attack roll beat the Ref Defence of any creatures adjacent to the target, they take half that damage. The salamander may not use this ability again for 1d4+1 turns."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "Skill Focus (perception, stealth, unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Stardust (5%), Fire Crystal (50%), Beast Scale (95%)",
+    "steal": "Hi-Potion (95%)",
+    "sourcePage": 292,
+    "profileLine": "Neutral Medium Beast 8; Aggressive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Chimera",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 8,
+    "level": 9,
+    "xp": 1600,
+    "size": "large",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 95,
+    "mp": 0,
+    "initiativeDie": "1d6",
+    "speed": "6, Fly 10",
+    "senses": "Dark Vision, Scent; Passive Perception 20",
+    "passivePerception": 20,
+    "ref": 20,
+    "flatFootedRef": 19,
+    "fort": 24,
+    "will": 26,
+    "dr": 10,
+    "breakThreshold": 34,
+    "immunities": [
+      "Disease",
+      "Paralysis",
+      "Poison",
+      "Sleep"
+    ],
+    "resistances": [
+      "Dark"
+    ],
+    "weaknesses": [
+      "Holy"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 24,
+      "agi": 12,
+      "vit": 18,
+      "int": 5,
+      "mnd": 12,
+      "cha": 10
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 21,
+        "damage": "1d8+11",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 21,
+        "damage": "1d6+11",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 6,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 10,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 10,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 21,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Abominable beasts rumored to be the twisted result of a mad wizard’s horrific experiments.",
+    "abilities": [
+      {
+        "name": "Chimera Brain",
+        "description": "Chimeras gain a +5 bonus to their Will Defence."
+      },
+      {
+        "name": "Fire Breath",
+        "description": "A chimera may make an attack (d20+18) against the Ref Defence of all creatures in a 6 square cone. If successful, targets take 6d6+8 fire damage. Otherwise, targets take only half damage. The chimera may not use this ability again for 1d4+1 turns. This is an area effect."
+      },
+      {
+        "name": "Poison",
+        "description": "When a chimera’s bite or tail slam deals damage to a living target, there is a 75% chance (75 or less on d%) the target becomes poisoned by hag’s grasp."
+      },
+      {
+        "name": "Tail Slam",
+        "description": "Whenever the chimera uses a primary action to attack while flanked, it may make a free sting attack (d20+21) against another target within reach that is providing the initial target the flanking bonus. This attack deals 1d6+11 damage."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Improved Initiative",
+      "Skill Focus (unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Stardust (5%), Antidote (20%), Hi-Potion (50%)",
+    "steal": "Remedy (5%), Stardust (20%), 60gp (95%)",
+    "sourcePage": 293,
+    "profileLine": "Corrupt Evil Large Beast 9; Aggressive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Coeurl",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 9,
+    "level": 10,
+    "xp": 1800,
+    "size": "large",
+    "alignment": "Neutral",
+    "temperament": "Aggressive",
+    "hp": 100,
+    "mp": 0,
+    "initiativeDie": "1d6",
+    "speed": "8",
+    "senses": "Dark Vision, Scent; Passive Perception 23",
+    "passivePerception": 23,
+    "ref": 24,
+    "flatFootedRef": 19,
+    "fort": 25,
+    "will": 23,
+    "dr": 10,
+    "breakThreshold": 30,
+    "immunities": [
+      "Mind Effects",
+      "Paralysis"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Cold"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 31,
+      "agi": 21,
+      "vit": 21,
+      "int": 6,
+      "mnd": 16,
+      "cha": 10
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 22,
+        "damage": "1d8+18",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 22,
+        "damage": "1d6+18",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 20,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 13,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 15,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 13,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 25,
+        "key": "unarmed"
+      }
+    ],
+    "description": "A creature whose very presence spreads madness.",
+    "abilities": [
+      {
+        "name": "Ambush",
+        "description": "Coeurls deal an additional 2d6 damage to creatures that are flanked, flat-footed, or otherwise denied their Agi to Ref Defence."
+      },
+      {
+        "name": "Mind Lash",
+        "description": "Any creature dealt damage by a coeurl’s bite loses an amount of MP equal to half the damage taken."
+      },
+      {
+        "name": "Pounce",
+        "description": "Coeurls may use all their natural attacks at the end of a charge."
+      },
+      {
+        "name": "Psi Blast",
+        "description": "As a primary action, the coeurl can make an attack (d20+18) against the Will Defence of a single creature within 6 squares and line of sight. If successful, the creature becomes confused. The coeurl may not use this ability again for 1d4+1 turns. This is a mind effect."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Improved Initiative",
+      "Mighty Strikes",
+      "Skill Focus (acrobatics, stealth, unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Moondust (5%), Beast Mane (20%), Storm Crystal (50%)",
+    "steal": "Moondust (5%), Ammonia Salt (20%), Storm Crystal (50%)",
+    "sourcePage": 294,
+    "profileLine": "Neutral Evil Large Beast 10; Aggressive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Rat, Plague",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 9,
+    "level": 10,
+    "xp": 1800,
+    "size": "small",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 90,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "8",
+    "senses": "Low-light Vision, Scent; Passive Perception 27",
+    "passivePerception": 27,
+    "ref": 25,
+    "flatFootedRef": 21,
+    "fort": 24,
+    "will": 22,
+    "dr": 10,
+    "breakThreshold": 24,
+    "immunities": [
+      "Confusion",
+      "Disease"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 12,
+      "agi": 19,
+      "vit": 18,
+      "int": 2,
+      "mnd": 14,
+      "cha": 4
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 19,
+        "damage": "1d4+9",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 17,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 24,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 19,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Infested dire rats, their bodies riddled with pustulous buboes and pox, driven mad by disease. Killed and burned on sight, they spread deadly plague wherever they roam.",
+    "abilities": [
+      {
+        "name": "Festering Bite",
+        "description": "If a plague rat's bite attack beats both a target's Ref and Fort Defence, the target becomes diseased."
+      },
+      {
+        "name": "Heart of the Swarm",
+        "description": "If a plague rat starts its turn adjacent to 2 or more plague rats, it gains 10 temporary HP . This HP is used first and any remaining at the start of their next turn is lost."
+      },
+      {
+        "name": "Overwhelm",
+        "description": "Plague Rats receive a +2 bonus to attack rolls for each adjacent plague rat (max +10)."
+      },
+      {
+        "name": "Poison",
+        "description": "When a plague rats bite deals damage to a living target, there is a 75% chance (75 or less on d%) the target becomes poisoned by death fog."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Agile Manoeuvres",
+      "Skill Focus (perception, stealth, unarmed)",
+      "Weapon Finesse"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Remedy (20%), Beast Mane (50%)",
+    "steal": "Stardust (5%), 1gp (20%), Beast Mane (50%)",
+    "sourcePage": 294,
+    "profileLine": "Corrupt Evil Small Beast 10; Aggressive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Tyrantula",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 9,
+    "level": 10,
+    "xp": 1800,
+    "size": "large",
+    "alignment": "Neutral",
+    "temperament": "Aggressive",
+    "hp": 115,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "6, Climb 6",
+    "senses": "Dark Vision, Tremorsense; Passive Perception 25",
+    "passivePerception": 25,
+    "ref": 22,
+    "flatFootedRef": 20,
+    "fort": 26,
+    "will": 21,
+    "dr": 10,
+    "breakThreshold": 36,
+    "immunities": [
+      "Mind Effects",
+      "Poison",
+      "Toad"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 24,
+      "agi": 15,
+      "vit": 20,
+      "int": 1,
+      "mnd": 10,
+      "cha": 2
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 22,
+        "damage": "1d8+12",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 15,
+        "key": "perception"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 22,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Nightmarish spiders that ensnare prey in webs laced with corrosive acid.",
+    "abilities": [
+      {
+        "name": "Corrosive Web",
+        "description": "As a primary action, a tyrantula can make an attack (d20+20) against the Ref Defence of a single creature within 6 squares and line of sight. If successful, the target’s speed is reduced to 0 and they become flat-footed. A creature must make a DC 20 Str check as a primary action, or take fire damage, to end this effect. Additionally, should the attack beat the target’s defence by 10 or more, the target's armour is moved -1 step on the Break Gauge. The tyrantula may not use this ability again for 1d4+1 turns."
+      },
+      {
+        "name": "Poison",
+        "description": "When a tyrantula’s bite deals damage to a living target, there is a 75% chance (75 or less on d%) the target becomes poisoned by black adder venom."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Skill Focus (perception, unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Moondust (5%), Poison Fang (20%), Silk Thread (50%), Chitin (95%)",
+    "steal": "Moondust (5%), Hi-Potion (95%)",
+    "sourcePage": 295,
+    "profileLine": "Neutral Large Beast 10; Aggressive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Scorpion, Rock",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 9,
+    "level": 10,
+    "xp": 1800,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "Aggressive",
+    "hp": 115,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "10",
+    "senses": "Dark Vision, Tremorsense; Passive Perception 22",
+    "passivePerception": 22,
+    "ref": 25,
+    "flatFootedRef": 21,
+    "fort": 26,
+    "will": 23,
+    "dr": 10,
+    "breakThreshold": 26,
+    "immunities": [
+      "Poison",
+      "Stuns"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 23,
+      "agi": 19,
+      "vit": 20,
+      "int": 1,
+      "mnd": 14,
+      "cha": 12
+    },
+    "attacks": [
+      {
+        "name": "Sting",
+        "attack": 21,
+        "damage": "1d4+11",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 21,
+        "damage": "1d4+11",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 12,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 14,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 21,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Lurking beneath rocky outcroppings in the Great Desert of Al-Sabrah, these menacing predators lie in wait to ambush those seeking refuge from the scorching sun.",
+    "abilities": [
+      {
+        "name": "Burrow",
+        "description": "Rock scorpions may move through threatened squares without provoking counterattacks. Additionally, rock scorpions may move through occupied squares, regardless of size."
+      },
+      {
+        "name": "Poison",
+        "description": "When a rock scorpion’s sting deals damage to a living target, there is a 75% chance (75 or less on d%) the target becomes poisoned by black adder venom."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Shake it Off",
+      "Skill Focus (unarmed)",
+      "Skill Training (Perception)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Poison Fang (20%), Chitin (50%)",
+    "steal": "Antidote (50%)",
+    "sourcePage": 295,
+    "profileLine": "Neutral Medium Beast 10; Aggressive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Tortoise, Great",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 9,
+    "level": 10,
+    "xp": 1800,
+    "size": "huge",
+    "alignment": "Neutral",
+    "temperament": "Defensive",
+    "hp": 135,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "4/0* , Swim 4/0*",
+    "senses": "Low-light Vision, Scent; Passive Perception 26",
+    "passivePerception": 26,
+    "ref": 17,
+    "flatFootedRef": 17,
+    "fort": 28,
+    "will": 22,
+    "dr": 10,
+    "breakThreshold": 43,
+    "immunities": [
+      "Confusion",
+      "Curse",
+      "Stuns"
+    ],
+    "resistances": [
+      "Blunt*",
+      "Cold",
+      "Electric",
+      "Piercing*",
+      "Slashing*"
+    ],
+    "weaknesses": [
+      "Fire"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 28,
+      "agi": 6,
+      "vit": 24,
+      "int": 2,
+      "mnd": 13,
+      "cha": 6
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 24,
+        "damage": "2d6+14",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 16,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 11,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 24,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Massive turtles armored with impenetrable shells of adamantite, moving slow but nearly unstoppable.",
+    "abilities": [
+      {
+        "name": "Immovable",
+        "description": "The great tortoise cannot be moved by any means of forced movement, including teleportation."
+      },
+      {
+        "name": "Impassable*",
+        "description": "Creatures may not move through squares occupied by the great tortoise, regardless of size."
+      },
+      {
+        "name": "Mighty Guard",
+        "description": "As a secondary action, the great tortoise can retreat into its shell for 1d4+1 turns, treating itself as blind. While in its shell, the great tortoise clears itself of all status effects (except curses) and gains immunity to all status effects (except curses). Additionally, if damaged by melee attacks, half the damage the great tortoise would suffer is instead dealt to the attacker as unaspected damage. Once this effect ends, the great tortoise may not use this ability again for 1d4+1 turns."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Skill Focus (perception, unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Stardust (5%), Adamantite (20%), Storm Crystal (50%)",
+    "steal": "Stardust (5%), Wind Garb (20%), Storm Crystal (95%)",
+    "sourcePage": 296,
+    "profileLine": "Neutral Huge Beast 10; Defensive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Beither",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 10,
+    "level": 11,
+    "xp": 2000,
+    "size": "large",
+    "alignment": "Neutral",
+    "temperament": "Aggressive",
+    "hp": 126,
+    "mp": 0,
+    "initiativeDie": "1d6",
+    "speed": "6, Climb 6",
+    "senses": "Low-light Vision, Scent; Passive Perception 26",
+    "passivePerception": 26,
+    "ref": 24,
+    "flatFootedRef": 21,
+    "fort": 27,
+    "will": 23,
+    "dr": 10,
+    "breakThreshold": 32,
+    "immunities": [
+      "Electric",
+      "Paralysis",
+      "Sleep"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 25,
+      "agi": 17,
+      "vit": 20,
+      "int": 2,
+      "mnd": 12,
+      "cha": 7
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 22,
+        "damage": "1d8+12",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 16,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 13,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 22,
+        "key": "unarmed"
+      }
+    ],
+    "description": "A fearsome beast crackling with electricity, lightning constantly arcs from its immense body.",
+    "abilities": [
+      {
+        "name": "Conductive",
+        "description": "A beither’s bite attack deals electric damage. Additionally, if the attack roll beats both a target’s Ref and Fort Defence, the target becomes flat-footed until the start of the beither's next turn."
+      },
+      {
+        "name": "Forked Lightning",
+        "description": "As a primary action, the beithir can make an attack (d20+20) against th e Ref Defence of up to 5 creatures within a 6 square cone. If successful, targets take 6d6+10 electric damage. Otherwise, targets take only half damage. Additionally, if the attack roll beat both a target's Ref and Fort Defence, the target becomes paralysed. The beithir may not use this ability again for 1d4+1 turns."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Improved Initiative",
+      "Skill Focus (perception, stealth, unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Electromancer’s Ring (5%), Storm Crystal (50%), Beast Scale (95%)",
+    "steal": "Moonwort (20%), Storm Crystal (95%)",
+    "sourcePage": 296,
+    "profileLine": "Neutral Large Beast 11; Aggressive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Mammoth",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 10,
+    "level": 11,
+    "xp": 2000,
+    "size": "huge",
+    "alignment": "Neutral",
+    "temperament": "Territorial",
+    "hp": 137,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "8",
+    "senses": "Scent; Passive Perception 21",
+    "passivePerception": 21,
+    "ref": 20,
+    "flatFootedRef": 20,
+    "fort": 28,
+    "will": 23,
+    "dr": 10,
+    "breakThreshold": 43,
+    "immunities": [
+      "Paralysis",
+      "Petrify",
+      "Sleep"
+    ],
+    "resistances": [
+      "Cold",
+      "Piercing"
+    ],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 30,
+      "agi": 10,
+      "vit": 23,
+      "int": 2,
+      "mnd": 13,
+      "cha": 6
+    },
+    "attacks": [
+      {
+        "name": "Gore",
+        "attack": 25,
+        "damage": "2d6+15",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Gore",
+        "attack": 29,
+        "damage": "2d6+20",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 11,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 11,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 25,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Favored by the dwarven lords of the Knorhing Highlands, these massive beasts serve as formidable battle mounts.",
+    "abilities": [
+      {
+        "name": "Overrun",
+        "description": "The mammoth is treated as having the Trample technick and is treated as both mount and rider while charging."
+      },
+      {
+        "name": "Tremor",
+        "description": "As a primary action, the mammoth can make an attack roll (d20+21) against the Ref Defence of all creatures within a 6 square cone. If successful, creatures take 6d6+11 blunt damage and are knocked prone. Otherwise, creatures take half damage and are not knocked prone. The mammoth may not use this ability again for 1d4+1 turns. This does not affect creatures with hover. This is an area effect and the secondary effect is a stun."
+      },
+      {
+        "name": "Tusk",
+        "description": "Whenever the mammoth successfully hits a target with its gore attack at the end of a charge, the damage ignores non-magickal DR."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Powerful Charge",
+      "Shake it Off",
+      "Skill Focus (unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Stardust (5%), Beast Fang (50%), Beast Mane (95%)",
+    "steal": "Stardust (5%), Pistoja Powder (50%)",
+    "sourcePage": 297,
+    "profileLine": "Neutral Huge Beast 11; Territorial",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Stirge",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 11,
+    "level": 12,
+    "xp": 2200,
+    "size": "huge",
+    "alignment": "Neutral",
+    "temperament": "Aggressive",
+    "hp": 161,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "4, Fly 10",
+    "senses": "Blindsense; Passive Perception 27",
+    "passivePerception": 27,
+    "ref": 24,
+    "flatFootedRef": 21,
+    "fort": 30,
+    "will": 24,
+    "dr": 15,
+    "breakThreshold": 45,
+    "immunities": [
+      "Poison"
+    ],
+    "resistances": [
+      "Blunt",
+      "Dark"
+    ],
+    "weaknesses": [
+      "Holy Fire"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 25,
+      "agi": 16,
+      "vit": 25,
+      "int": 2,
+      "mnd": 12,
+      "cha": 7
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 23,
+        "damage": "2d6+13",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Sting",
+        "attack": 23,
+        "damage": "1d8+13",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 17,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 9,
+        "key": "stealth"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 23,
+        "key": "unarmed"
+      }
+    ],
+    "description": "A blood-sucking nightmare, this monster haunts the dark corners of the world, preying on the living.",
+    "abilities": [
+      {
+        "name": "Blood Drain",
+        "description": "Whenever a stirge deals damage to a target with its bite, it heals an amount of HP equal to half the damage dealt (minimum 1)."
+      },
+      {
+        "name": "Bloodlust",
+        "description": "The stirge deals +1 damage die against any creature that took physical damage on the previous turn."
+      },
+      {
+        "name": "Poison",
+        "description": "When a stirge’s sting deals damage to a living target, the target becomes poisoned by hag’s grasp."
+      },
+      {
+        "name": "Ultrasonic Screech",
+        "description": "As a primary action, a stirge can make an attack (d20+23) against the Fort Defence of all enemies within a 12 square cone. If successful, the target moves -1 step on the Break Gauge. The stirge may not use this ability again for 1d4+1 turns."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Skill Focus (perception, stealth, unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Sacrificial Dagger (5%), Chitin (20%), Vampyre Fang (50%)",
+    "steal": "Moondust (5%), Antidote (20%)",
+    "sourcePage": 298,
+    "profileLine": "Neutral Evil Huge Beast 12; Aggressive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Sphinx",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 12,
+    "level": 13,
+    "xp": 2400,
+    "size": "huge",
+    "alignment": "Corrupt",
+    "temperament": "Territorial",
+    "hp": 187,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "8, Fly 10",
+    "senses": "Dark Vision; Passive Perception 27",
+    "passivePerception": 27,
+    "ref": 22,
+    "flatFootedRef": 22,
+    "fort": 32,
+    "will": 25,
+    "dr": 15,
+    "breakThreshold": 42,
+    "immunities": [
+      "Mind Effects",
+      "Paralysis",
+      "Petrify",
+      "Slow"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 35,
+      "agi": 10,
+      "vit": 26,
+      "int": 12,
+      "mnd": 13,
+      "cha": 17
+    },
+    "attacks": [
+      {
+        "name": "Claws",
+        "attack": 28,
+        "damage": "1d8+18",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Deception",
+        "bonus": 19,
+        "key": "deception"
+      },
+      {
+        "name": "Lore (arcane)",
+        "bonus": 12,
+        "key": ""
+      },
+      {
+        "name": "Lore (social)",
+        "bonus": 12,
+        "key": ""
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 12,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 17,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 19,
+        "key": "persuasion"
+      },
+      {
+        "name": "Survival",
+        "bonus": 12,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 28,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Fickle guardians of Al-Sabrah’s lost treasures— seemingly benevolent, but never to be fully trusted.",
+    "abilities": [
+      {
+        "name": "Death Gaze",
+        "description": "As a primary action, a sphinx may make an attack (d20+17) against the Fort Defence of a living creature within 6 squares and line of sight. If successful, the target becomes petrified. Otherwise, the creature instead becomes paralysed. If the attack failed by 5 or more, the creature suffers no status effect. The sphinx may not use this ability again for 1d4+1 turns."
+      },
+      {
+        "name": "Purify",
+        "description": "As a secondary action, a sphinx may clear itself of all status effects, except curses. The sphinx may not use this ability again for 1d4+1 turns."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Running Attack",
+      "Skill Focus (deception, perception, persuasion, unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Moondust (5%), Evil Eye (20%), Orichalcum (50%), Great Feather (95%)",
+    "steal": "Dwarven Warpick (5%), Moonwart (20%), Orichalcum (50%)",
+    "sourcePage": 298,
+    "profileLine": "Corrupt Good Huge Beast 13; Territorial",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Hell Pig",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 13,
+    "level": 14,
+    "xp": 2600,
+    "size": "huge",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 215,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "10",
+    "senses": "Scent; Passive Perception 28",
+    "passivePerception": 28,
+    "ref": 24,
+    "flatFootedRef": 23,
+    "fort": 34,
+    "will": 31,
+    "dr": 15,
+    "breakThreshold": 49,
+    "immunities": [
+      "Fire"
+    ],
+    "resistances": [
+      "Electric"
+    ],
+    "weaknesses": [
+      "Cold"
+    ],
+    "languages": "",
+    "attributes": {
+      "str": 32,
+      "agi": 13,
+      "vit": 29,
+      "int": 2,
+      "mnd": 22,
+      "cha": 10
+    },
+    "attacks": [
+      {
+        "name": "Gore",
+        "attack": 28,
+        "damage": "2d6+18",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Gore",
+        "attack": 32,
+        "damage": "2d6+25",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 18,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 23,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 28,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Blazing beasts that rampage through the Chitari Badlands, leaving nothing but smoldering ruins in their wake.",
+    "abilities": [
+      {
+        "name": "Burn",
+        "description": "A hell pig’s gore attack deals fire damage. Additionally, if the attack roll beats both the targe t's Ref and Fort Defence, the target takes an additional 3d6 fire damage at the start of its next turn, before taking any other action. This damage ignores DR."
+      },
+      {
+        "name": "Heatwave",
+        "description": "Any creature that begins their turn within the hell pig's reach is subject to an attack (d20+26) against their Ref Defence. If successful, the creature suffers 4d6 fire damage. Otherwise, the creature takes half damage. This is an area effect."
+      },
+      {
+        "name": "Overrun",
+        "description": "The hell pig is treated as having the Trample technick and is treated as both mount and rider while charging."
+      },
+      {
+        "name": "Tusk",
+        "description": "Whenever the hell pig successfully hits a target with its gore attack at the end of a charge, the damage ignores non-magickal DR."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Bull Rush",
+      "Defence Up",
+      "HP Up",
+      "Powerful Charge",
+      "Skill Focus (survival, unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Stardust (20%), Beast Fang (50%), Fire Crystal (95%)",
+    "steal": "Flame Pendant (20%)",
+    "sourcePage": 299,
+    "profileLine": "Corrupt Evil Huge Beast 14; Aggressive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Bear, Ogre",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 14,
+    "level": 15,
+    "xp": 2800,
+    "size": "huge",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 200,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "10",
+    "senses": "Low-light Vision, Scent; Passive Perception 28",
+    "passivePerception": 28,
+    "ref": 24,
+    "flatFootedRef": 24,
+    "fort": 33,
+    "will": 27,
+    "dr": 15,
+    "breakThreshold": 48,
+    "immunities": [
+      "Petrify"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 33,
+      "agi": 10,
+      "vit": 25,
+      "int": 2,
+      "mnd": 12,
+      "cha": 14
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 26,
+        "damage": "2d6+20",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 26,
+        "damage": "1d8+20",
+        "mode": "melee",
+        "type": "slashing"
+      },
+      {
+        "name": "Gore",
+        "attack": 30,
+        "damage": "2d6+27",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 18,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 13,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 28,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Fueled by impossible rage, this beast ignores lesser wounds, relentlessly pursuing its prey until one or the other falls.",
+    "abilities": [
+      {
+        "name": "Devour",
+        "description": "Whenever an ogre bear reduces a creature to 0 HP or the bottom of the Break Gauge with its bite attack, the creature is immediately swallowed, killed (regardless of hero points), and removed from play. The ogre bear then immediately heals an amount of HP equal to the swallowed creature’s (level + Vit modifier) x2. Additionally, as a primary action, the ogre bear may perform a coup de grace on an unconscious creature, devouring the creature."
+      },
+      {
+        "name": "Diehard",
+        "description": "The ogre bear cannot be moved to the bottom of the Break Gauge, including when it is reduced to 0 HP . However, while at 0 HP , it may only take a primary action each turn and it still dies if damage would beat its Threshold."
+      },
+      {
+        "name": "Overthrow",
+        "description": "Whenever an ogre bear successfully deals damage to a target with its gore attack at the end of a charge, they may choose to move the target 3 squares away from them in any direction. This is a stun."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Mighty Strikes",
+      "Powerful Charge",
+      "Skill Focus (perception, unarmed)",
+      "Shake it Off",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Moondust (5%), Obsidian (95%)",
+    "steal": "Catholicon Ring (5%)",
+    "sourcePage": 300,
+    "profileLine": "Corrupt Evil Huge Beast 15; Aggressive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Roc",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 15,
+    "level": 16,
+    "xp": 3000,
+    "size": "huge",
+    "alignment": "Neutral",
+    "temperament": "Aggressive",
+    "hp": 213,
+    "mp": 0,
+    "initiativeDie": "1d6",
+    "speed": "4, Fly 16 (hover)",
+    "senses": "Low-light Vision; Passive Perception 29",
+    "passivePerception": 29,
+    "ref": 27,
+    "flatFootedRef": 25,
+    "fort": 34,
+    "will": 28,
+    "dr": 15,
+    "breakThreshold": 44,
+    "immunities": [
+      "Toad"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 28,
+      "agi": 15,
+      "vit": 25,
+      "int": 2,
+      "mnd": 12,
+      "cha": 11
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 25,
+        "damage": "2d6+19",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 19,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 14,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 27,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Lords of the skies, these magnificent birds of prey nest in Jorunheim’s mountain crags, teaching their young to fly by pushing them from sheer cliffs.",
+    "abilities": [
+      {
+        "name": "Devour",
+        "description": "Whenever a roc reduces a creature to 0 HP or the bottom of the Break Gauge with its bite attack, the creature is immediately swallowed, killed (regardless of hero points), and removed from play. The roc then immediately heals an amount of HP equal to the swallowed creature’s (level + Vit modifier) x2. Additionally, as a primary action, the roc may perform a coup de grace on an unconscious creature, devouring the creature."
+      },
+      {
+        "name": "Swoop",
+        "description": "Whenever the roc uses the Running Attack technick, it deals +1 damage die."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Improved Initiative",
+      "Mighty Strikes",
+      "Running Attack",
+      "Shake it Off",
+      "Skill Focus (perception, unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Remedy (5%), Hi-Potion (20%), Great Feather (50%)",
+    "steal": "Great Feather (95%)",
+    "sourcePage": 301,
+    "profileLine": "Neutral Huge Beast 16; Aggressive",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Mastodon",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 16,
+    "level": 17,
+    "xp": 3200,
+    "size": "huge",
+    "alignment": "Neutral",
+    "temperament": "Territorial*",
+    "hp": 226,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "12",
+    "senses": "Low-light Vision, Scent; Passive Perception 25",
+    "passivePerception": 25,
+    "ref": 27,
+    "flatFootedRef": 26,
+    "fort": 35,
+    "will": 30,
+    "dr": 15,
+    "breakThreshold": 50,
+    "immunities": [
+      "Confusion",
+      "Curses",
+      "Paralysis",
+      "Petrify",
+      "Poison",
+      "Toad"
+    ],
+    "resistances": [
+      "Cold",
+      "Piercing"
+    ],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 34,
+      "agi": 12,
+      "vit": 24,
+      "int": 2,
+      "mnd": 14,
+      "cha": 6
+    },
+    "attacks": [
+      {
+        "name": "Gore",
+        "attack": 28,
+        "damage": "2d6+22",
+        "mode": "melee",
+        "type": "blunt"
+      },
+      {
+        "name": "Gore (Powerful Charge)",
+        "attack": 32,
+        "damage": "2d6+30",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 25,
+        "key": "athletics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 15,
+        "key": "perception"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 30,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Titanic monstrosities, these beasts of burden and war serve the jotun of the Northern Wastes with relentless strength.",
+    "abilities": [
+      {
+        "name": "Overrun",
+        "description": "The mastodon is treated as having the Trample technick and is treated as both mount and rider while charging."
+      },
+      {
+        "name": "Tremor",
+        "description": "As a primary action, the mastodon can make an attack (d20+25) against the Ref Defence of all creatures within a 12 square cone. If successful, creatures take 10d6+15 blunt damage and are knocked prone. Otherwise, creatures take half damage and are not knocked prone. The mastodon may not use this ability again for 1d4+1 turns. This does not affect creatures with hover. This is an area effect and the secondary effect is a stun."
+      },
+      {
+        "name": "Tusk",
+        "description": "Whenever the mastodon successfully hits a target with its gore attack, at the end of a charge, the damage ignores non-magickal DR."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Bull Rush",
+      "Disruptive",
+      "Defence Up",
+      "HP Up",
+      "Mighty Strikes",
+      "Powerful Charge",
+      "Shake it Off",
+      "Skill Focus (unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Moondust (5%), Ancient Bone (20%), Beast Fang (50%), Beast Hide (95%)",
+    "steal": "Moondust (5%), Mega-Potion (20%)",
+    "sourcePage": 302,
+    "profileLine": "Neutral Huge Beast 17; Territorial*",
+    "species": "Beasts",
+    "classLevels": ""
+  },
+  {
+    "name": "Hippogryph, Pygmy",
+    "category": "Beasts",
+    "profile": "beast",
+    "cr": 1,
+    "level": 2,
+    "xp": 200,
+    "size": "medium",
+    "alignment": "Neutral",
+    "temperament": "Timid*",
+    "hp": 12,
+    "mp": 0,
+    "initiativeDie": "1d8",
+    "speed": "10",
+    "senses": "Dark Vision, Scent; Passive Perception 22",
+    "passivePerception": 22,
+    "ref": 16,
+    "flatFootedRef": 12,
+    "fort": 13,
+    "will": 13,
+    "dr": 0,
+    "breakThreshold": 13,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 10,
+      "agi": 19,
+      "vit": 12,
+      "int": 2,
+      "mnd": 12,
+      "cha": 9
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 6,
+        "damage": "1d6+1",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 6,
+        "key": "athletics"
+      },
+      {
+        "name": "Perception",
+        "bonus": 12,
+        "key": "perception"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 6,
+        "key": "unarmed"
+      }
+    ],
+    "description": "These miniature hippogryphs are most often found accompanying their larger kin, staying close by for safety.",
+    "abilities": [],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Skill Focus (Perception)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Stardust (5%), Great Feather (20%), Fire Crystal (50%)",
+    "steal": "Stardust (5%), Great Feather (20%)",
+    "sourcePage": 279,
+    "profileLine": "Neutral Medium Beast 2; Timid*",
+    "species": "Beasts",
+    "classLevels": ""
+  }
+]

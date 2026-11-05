@@ -96,6 +96,61 @@ function prepareAeonDerivedData(actor, system) {
   return system;
 }
 
+function prepareAdversaryDerivedData(system) {
+  const adversary = system.adversary ??= {};
+  adversary.isAdversary = true;
+  system.details.level = Math.max(1, safeNumber(adversary.level, safeNumber(system.details.level, 1)));
+  system.details.nextLevel = 0;
+  system.details.xp = safeNumber(adversary.xp);
+  system.combat.initiativeDie = adversary.initiativeDie || system.combat.initiativeDie || "1d10";
+  system.combat.speed = safeNumber(adversary.speedText?.match(/\d+/)?.[0], safeNumber(system.combat.speed));
+  system.combat.baseSpeed = system.combat.speed;
+  system.combat.damageReduction = safeNumber(adversary.damageReduction, safeNumber(system.combat.damageReduction));
+  system.combat.baseDamageReduction = system.combat.damageReduction;
+  system.combat.breakThreshold = safeNumber(adversary.breakThreshold, safeNumber(system.defences?.fort?.total, 10));
+  system.combat.immunities = adversary.immunities ?? system.combat.immunities ?? [];
+  system.combat.resistances = adversary.resistances ?? system.combat.resistances ?? [];
+  system.combat.vulnerabilities = adversary.weaknesses ?? system.combat.vulnerabilities ?? [];
+  system.combat.breakGauge = Math.max(0, Math.min(5, Math.floor(safeNumber(system.combat.breakGauge))));
+  const gaugePenalty = [0, -1, -2, -5, -10, -10][system.combat.breakGauge];
+  system.combat.breakGaugePenalty = gaugePenalty;
+  for (const key of ATTRIBUTES) {
+    const attribute = system.attributes[key] ??= { score: 10 };
+    attribute.score = safeNumber(adversary.attributes?.[key], safeNumber(attribute.score, 10));
+    attribute.modifier = Math.floor((attribute.score - 10) / 2);
+    attribute.checkModifier = attribute.modifier + gaugePenalty;
+  }
+  system.defences ??= {};
+  const defenceKeys = { ref: "ref", fort: "fort", will: "will" };
+  for (const [key, sourceKey] of Object.entries(defenceKeys)) {
+    const record = system.defences[key] ??= {};
+    const printed = safeNumber(adversary.defences?.[sourceKey], safeNumber(record.total, 10));
+    record.base = printed;
+    record.attributeMod = 0;
+    record.classBonus = 0;
+    record.total = Math.max(0, printed + gaugePenalty);
+  }
+  const skillValues = new Map((adversary.skills ?? []).filter(skill => skill.key).map(skill => [skill.key, safeNumber(skill.bonus)]));
+  for (const [key, attribute] of Object.entries(SKILLS)) {
+    const skill = system.skills[key] ?? {};
+    const printed = skillValues.get(key);
+    system.skills[key] = {
+      ...skill, attribute, trained: printed !== undefined || Boolean(skill.trained), halfLevel: 0,
+      attributeMod: 0, classSkill: false, total: (printed ?? safeNumber(skill.total)) + gaugePenalty
+    };
+  }
+  const hp = system.resources.hp ?? {};
+  const maxHP = Math.max(1, safeNumber(adversary.hp, safeNumber(hp.max, 1)));
+  system.resources.hp = { ...hp, max: maxHP, baseMax: maxHP, value: Math.min(maxHP, Math.max(0, safeNumber(hp.value, maxHP))) };
+  const mp = system.resources.mp ?? {};
+  const maxMP = Math.max(0, safeNumber(adversary.mp, safeNumber(mp.max)));
+  system.resources.mp = { ...mp, max: maxMP, value: Math.min(maxMP, Math.max(0, safeNumber(mp.value, maxMP))) };
+  system.initiative = { total: 0 };
+  system.combat.passivePerception = safeNumber(adversary.passivePerception, 10);
+  system.combat.unconscious = system.combat.breakGauge >= 5 || (system.resources.hp.value <= 0 && !system.combat.dead);
+  system.inventory ??= {};
+}
+
 let aeonSpellDocuments;
 let aeonTechnickDocuments;
 
@@ -423,6 +478,10 @@ class LastArcActor extends Actor {
     system.resources.heroPoints = { value: 0, max: 0, ...(system.resources.heroPoints ?? {}) };
     system.details.racialEffects ??= {};
     system.inventory ??= {};
+    if (this.type === "npc") {
+      prepareAdversaryDerivedData(system);
+      return;
+    }
     system.combat.baseDamageReduction ??= safeNumber(system.combat.damageReduction);
     system.combat.baseSpeed ??= safeNumber(system.combat.speed);
     system.combat.basePhysicalDamageReduction ??= safeNumber(system.combat.physicalDamageReduction);
@@ -765,7 +824,8 @@ class LastArcItem extends Item {
         return null;
       }
       const weaponGroup = String(this.system.weaponGroup ?? "").toLowerCase();
-      const proficiencyPenalty = weaponGroup && !actor.system.combat.weaponProficiencies?.includes(weaponGroup) ? -5 : 0;
+      const staticAdversaryAttack = actor.type === "npc" && this.system.npcStaticAttack;
+      const proficiencyPenalty = !staticAdversaryAttack && weaponGroup && !actor.system.combat.weaponProficiencies?.includes(weaponGroup) ? -5 : 0;
       const performanceAttackBonus = safeNumber(actor.system.combat.performanceWeaponSkillBonus) + safeNumber(actor.system.combat.performanceAttackBonus);
       const skillKey = this.system.weaponSkill || (weaponGroup === "bows" || weaponGroup === "crossbows" ? "ranged" : weaponGroup === "staves" ? "spellcraft" : "one-handed");
       const skillBonus = safeNumber(actor.system.skills?.[skillKey]?.total);
@@ -776,9 +836,9 @@ class LastArcItem extends Item {
       const naturalTwenty = attack.dice.some(die => die.results?.some(result => result.result === 20));
       weaponMode = ["bows", "crossbows"].includes(weaponGroup) || /ranged|range|distance/i.test(String(this.system.range ?? "")) ? "ranged" : "melee";
       if (formula) {
-        const levelBonus = Math.floor(safeNumber(actor.system.details.level) / 2);
+        const levelBonus = staticAdversaryAttack ? 0 : Math.floor(safeNumber(actor.system.details.level) / 2);
         const strengthMultiplier = weaponGroup === "staves" || weaponGroup === "crossbows" || weaponMode === "ranged" && weaponGroup !== "bows" ? 0 : this.system.weaponSkill === "two-handed" ? 2 : 1;
-        const strengthBonus = safeNumber(actor.system.attributes.str?.modifier) * strengthMultiplier;
+        const strengthBonus = staticAdversaryAttack ? 0 : safeNumber(actor.system.attributes.str?.modifier) * strengthMultiplier;
         const flatBonus = levelBonus + strengthBonus;
         if (flatBonus) formula = `(${formula}) + (${flatBonus})`;
       }
@@ -860,12 +920,17 @@ class LastArcActorSheet extends ActorSheet {
     });
   }
 
-  get template() { return this.actor.system.aeon?.isAeon ? "systems/last-arc-analogue/templates/aeon-sheet.hbs" : "systems/last-arc-analogue/templates/actor-sheet.hbs"; }
+  get template() {
+    if (this.actor.system.aeon?.isAeon) return "systems/last-arc-analogue/templates/aeon-sheet.hbs";
+    if (this.actor.type === "npc") return "systems/last-arc-analogue/templates/npc-sheet.hbs";
+    return "systems/last-arc-analogue/templates/actor-sheet.hbs";
+  }
   async getData(options) {
     const context = await super.getData(options);
     context.system = this.actor.system;
     context.isCharacter = this.actor.type === "character";
     context.isAeon = Boolean(this.actor.system.aeon?.isAeon);
+    context.isAdversary = this.actor.type === "npc";
     if (context.isAeon) {
       const aeon = this.actor.system.aeon;
       context.aeon = aeon;
@@ -883,13 +948,16 @@ class LastArcActorSheet extends ActorSheet {
     context.skills = Object.entries(SKILLS).map(([key, attribute]) => ({ key, label: SKILL_LABELS[key], icon: SKILL_ICONS[key], attribute, attributeLabel: ATTRIBUTE_LABELS[attribute], ...this.actor.system.skills[key] }));
     context.defenceList = ["fort", "ref", "will"].map(key => ({ key, label: `LA.${key === "fort" ? "Fortitude" : key === "ref" ? "Reflex" : "Will"}`, ...this.actor.system.defences[key] }));
     context.itemGroups = ITEM_TYPES.map(type => ({ type, label: game.i18n.localize(`LA.ItemType.${type}`), items: this.actor.items.filter(item => item.type === type) }));
+    const npcGaugePenalty = safeNumber(this.actor.system.combat.breakGaugePenalty);
+    context.npcSkills = (this.actor.system.adversary?.skills ?? []).map(skill => ({ ...skill, label: skill.name, value: signed(safeNumber(skill.bonus) + npcGaugePenalty) }));
+    context.npcAttributes = ATTRIBUTES.map(key => ({ key, label: game.i18n.localize(ATTRIBUTE_LABELS[key]), score: safeNumber(this.actor.system.adversary?.attributes?.[key], this.actor.system.attributes[key]?.score) }));
     context.activeEffects = [...this.actor.effects].map(effect => {
       const performance = effect.getFlag("last-arc-analogue", "performanceEffect");
       const duration = performance?.expiresAfter ? game.i18n.localize("LA.UntilPerformersNextTurn")
         : effect.duration?.rounds ? `${effect.duration.rounds} ${game.i18n.localize("LA.Rounds")}` : game.i18n.localize("LA.UntilRemoved");
       return { id: effect.id, name: effect.name, img: effect.img, description: performance?.description ?? effect.description ?? "", duration };
     });
-    context.canLevelUp = this.actor.system.details.level < LEVEL_XP.length - 1
+    context.canLevelUp = this.actor.type === "character" && this.actor.system.details.level < LEVEL_XP.length - 1
       && this.actor.system.details.xp >= this.actor.system.details.nextLevel
       && this.actor.items.some(item => ["class", "advanced-class"].includes(item.type) && safeNumber(item.system.classLevel) > 0);
     context.gaugeSteps = [0, 1, 2, 3, 4, 5].map(step => ({ step, current: safeNumber(this.actor.system.combat.breakGauge) === step, bottom: step === 5, label: game.i18n.localize(["LA.BreakGaugeNormal", "LA.BreakGaugeMinusOne", "LA.BreakGaugeMinusTwo", "LA.BreakGaugeMinusFive", "LA.BreakGaugeMinusTen", "LA.BreakGaugeBottom"][step]) }));

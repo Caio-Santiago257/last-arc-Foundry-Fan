@@ -1,0 +1,961 @@
+[
+  {
+    "name": "Nymph",
+    "category": "Fae",
+    "profile": "fae",
+    "cr": 2,
+    "level": 2,
+    "xp": 400,
+    "size": "tiny",
+    "alignment": "Corrupt",
+    "temperament": "Aggressive",
+    "hp": 10,
+    "mp": 10,
+    "initiativeDie": "1d8",
+    "speed": "2, Fly 12 (hover)",
+    "senses": "Dark Vision; Passive Perception 18",
+    "passivePerception": 18,
+    "ref": 18,
+    "flatFootedRef": 14,
+    "fort": 12,
+    "will": 14,
+    "dr": 0,
+    "breakThreshold": 12,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [],
+    "languages": "Elven, Sylvan Once benevolent faeries, now marked by a menacing, eerie glow.",
+    "attributes": {
+      "str": 5,
+      "agi": 19,
+      "vit": 11,
+      "int": 14,
+      "mnd": 14,
+      "cha": 10
+    },
+    "attacks": [
+      {
+        "name": "Sting",
+        "attack": 3,
+        "damage": "1d2-2",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 10,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 6,
+        "key": "deception"
+      },
+      {
+        "name": "Lore (occult)",
+        "bonus": 8,
+        "key": "lore-occult"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 8,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 8,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 20,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 8,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 3,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Once benevolent faeries, now marked by a menacing, eerie glow.",
+    "abilities": [
+      {
+        "name": "Absorb Magick",
+        "description": "When a nymph is affected by a non-white magick spell, it suffers no effect and instead gains an amount of temporary MP equal to the cost of the spell used. If this temporary MP is not used by the end of the encounter, it is lost."
+      },
+      {
+        "name": "Syphon Mana",
+        "description": "As a primary action, nymphs can make a Spellcraft check against the Will Defence of a target within 12 squares and line of sight. If successful, the target loses 1d6 MP and the nymph gains an equal amount of MP . This die may explode. The nymph may not use this ability again for 1d4+1 turns."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Arcane Study"
+    ],
+    "spells": [
+      "Darkness",
+      "Infest",
+      "Wind Slash"
+    ],
+    "performances": [],
+    "equipped": "",
+    "loot": "Stardust (5%), Corrupted Fae Wood (50%)",
+    "steal": "Ether (5%), Golden Sap (20%)",
+    "sourcePage": 334,
+    "profileLine": "Corrupt Evil Tiny Fae 2; Aggressive",
+    "species": "Fae",
+    "classLevels": ""
+  },
+  {
+    "name": "Mandragora",
+    "category": "Fae",
+    "profile": "fae",
+    "cr": 4,
+    "level": 4,
+    "xp": 800,
+    "size": "small",
+    "alignment": "Pure",
+    "temperament": "Timid",
+    "hp": 24,
+    "mp": 16,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "; Passive Perception 18",
+    "passivePerception": 18,
+    "ref": 19,
+    "flatFootedRef": 15,
+    "fort": 15,
+    "will": 15,
+    "dr": 5,
+    "breakThreshold": 15,
+    "immunities": [
+      "Confusion",
+      "Paralysis",
+      "Sleep"
+    ],
+    "resistances": [
+      "Holy"
+    ],
+    "weaknesses": [
+      "Dark",
+      "Fire"
+    ],
+    "languages": "Sylvan Small, plant-like fae that emit ear-piercing shrieks before fleeing when spooked.",
+    "attributes": {
+      "str": 11,
+      "agi": 18,
+      "vit": 13,
+      "int": 8,
+      "mnd": 13,
+      "cha": 9
+    },
+    "attacks": [
+      {
+        "name": "Slam",
+        "attack": 16,
+        "damage": "1d3+2",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 7,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (mystic)",
+        "bonus": 6,
+        "key": "lore-mystic"
+      },
+      {
+        "name": "Perception",
+        "bonus": 8,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 16,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 8,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 16,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Small, plant-like fae that emit ear-piercing shrieks before fleeing when spooked.",
+    "abilities": [
+      {
+        "name": "Imitate",
+        "description": "Mandragora can take 20 on Stealth checks when remaning still and can hide in plain sight."
+      },
+      {
+        "name": "Shriek",
+        "description": "As a primary action, the mandragora can make an attack roll (d20+11) against the Will Defence of all enemies within a 4 square cone. If successful, the targets becomes confused. The mandragora may not use this ability again for 1d4+1 turns. This is a mind effect."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Agile Manoeuvres",
+      "Skill Focus (unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Stardust (5%), Mandrake Root (20%), Magick Root (50%)",
+    "steal": "380gp (5%), Magick Herb (50%) Fae While many of Val’ daera's creatures are magickal in nature, none exemplify this as much as the fae, creatures born of the wild magicks of the Faewood. They oft frolic where nature thrives. Fae progress as beasts. However, they gain an amount of MP equal to 3+Mnd at each level and always treat Spellcraft as a class skill.",
+    "sourcePage": 334,
+    "profileLine": "Pure Neutral Small Fae 4; Timid",
+    "species": "Fae",
+    "classLevels": ""
+  },
+  {
+    "name": "Pixie",
+    "category": "Fae",
+    "profile": "fae",
+    "cr": 4,
+    "level": 4,
+    "xp": 800,
+    "size": "tiny",
+    "alignment": "Pure",
+    "temperament": "Helpful/Timid",
+    "hp": 24,
+    "mp": 20,
+    "initiativeDie": "1d8",
+    "speed": "2, Fly 12 (hover)",
+    "senses": "Low-light Vision; Passive Perception 19",
+    "passivePerception": 19,
+    "ref": 21,
+    "flatFootedRef": 16,
+    "fort": 15,
+    "will": 16,
+    "dr": 5,
+    "breakThreshold": 15,
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [
+      "Fire"
+    ],
+    "languages": "Common, Elven, Sylvan Generous faeries of the Lowlands, known to aid those pure of heart.",
+    "attributes": {
+      "str": 3,
+      "agi": 21,
+      "vit": 12,
+      "int": 16,
+      "mnd": 15,
+      "cha": 16
+    },
+    "attacks": [
+      {
+        "name": "Sting",
+        "attack": 3,
+        "damage": "1d2-2",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 12,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Deception",
+        "bonus": 10,
+        "key": "deception"
+      },
+      {
+        "name": "Lore (arcane)",
+        "bonus": 10,
+        "key": ""
+      },
+      {
+        "name": "Lore (mystic)",
+        "bonus": 10,
+        "key": "lore-mystic"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 10,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 9,
+        "key": "perception"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 22,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 9,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 7,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Generous faeries of the Lowlands, known to aid those pure of heart.",
+    "abilities": [
+      {
+        "name": "Absorb Magick",
+        "description": "When a pixie is affected by a non-black magick spell, it suffers no effect and instead gains an amount of temporary MP equal to the cost of the spell used. If this temporary MP is not used by the end of the encounter, it is lost."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Arcane Study",
+      "Channel"
+    ],
+    "spells": [
+      "Entangle",
+      "Inertia",
+      "Muddle",
+      "Repose"
+    ],
+    "performances": [],
+    "equipped": "",
+    "loot": "Stardust (5%), Fae Wood (20%), Earth Crystal (50%), Magicite (95%)",
+    "steal": "Ether (5%), Philter (20%), Golden Sap (50%)",
+    "sourcePage": 335,
+    "profileLine": "Pure Neutral Tiny Fae 4; Helpful/Timid",
+    "species": "Fae",
+    "classLevels": ""
+  },
+  {
+    "name": "Dryad",
+    "category": "Fae",
+    "profile": "fae",
+    "cr": 6,
+    "level": 6,
+    "xp": 1200,
+    "size": "medium",
+    "alignment": "Pure",
+    "temperament": "Territorial",
+    "hp": 36,
+    "mp": 30,
+    "initiativeDie": "1d8",
+    "speed": "6, Climb 4",
+    "senses": "Low-light Vision; Passive Perception 20",
+    "passivePerception": 20,
+    "ref": 19,
+    "flatFootedRef": 16,
+    "fort": 20,
+    "will": 22,
+    "dr": 5,
+    "breakThreshold": 20,
+    "immunities": [
+      "Mind Effects",
+      "Paralysis",
+      "Poison",
+      "Sleep"
+    ],
+    "resistances": [
+      "Cold",
+      "Electric"
+    ],
+    "weaknesses": [
+      "Fire"
+    ],
+    "languages": "Sylvan Said to be fallen druids, they defend the Faewood even in death.",
+    "attributes": {
+      "str": 10,
+      "agi": 19,
+      "vit": 13,
+      "int": 14,
+      "mnd": 15,
+      "cha": 16
+    },
+    "attacks": [
+      {
+        "name": "Claws",
+        "attack": 13,
+        "damage": "1d4+3",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 12,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Lore (mystic)",
+        "bonus": 10,
+        "key": "lore-mystic"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 10,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 10,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 11,
+        "key": "persuasion"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 12,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 10,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 13,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Said to be fallen druids, they defend the Faewood even in death.",
+    "abilities": [
+      {
+        "name": "Swarmstrike",
+        "description": "As a primary action, the dryad can make an attack (d20+14) against the Ref Defence of all enemies in a 4 square cone. If successful, creatures suffer 4d6+4 points of piercing damage and there is a 50% chance (50 or less on d%) the creatures are poisoned by widow’s kiss. Otherwise, creatures suffer half damage and are not poisoned. The dryad may not use this ability again for 1d4+1 turns. This is an area effect."
+      },
+      {
+        "name": "Tree Meld",
+        "description": "When in jungles or forests, dryads may take 20 on Stealth checks and may hide in plain sight."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Arcane Study",
+      "Skill Focus (spellcraft, unarmed)"
+    ],
+    "spells": [
+      "Entangle",
+      "Overgrowth",
+      "Repose"
+    ],
+    "performances": [],
+    "equipped": "",
+    "loot": "Moondust (5%), Fae Wood (50%), Earth Crystal (95%)",
+    "steal": "Faerie Wand (5%), Pistoja Powder (20%), Golden Sap (50%)",
+    "sourcePage": 335,
+    "profileLine": "Pure Neutral Medium Fae 6; Territorial",
+    "species": "Fae",
+    "classLevels": ""
+  },
+  {
+    "name": "Unicorn",
+    "category": "Fae",
+    "profile": "fae",
+    "cr": 7,
+    "level": 7,
+    "xp": 1400,
+    "size": "large",
+    "alignment": "Pure",
+    "temperament": "Helpful/Aggressive",
+    "hp": 56,
+    "mp": 56,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "Dark Vision, Scent; Passive Perception 23",
+    "passivePerception": 23,
+    "ref": 20,
+    "flatFootedRef": 16,
+    "fort": 17,
+    "will": 18,
+    "dr": 5,
+    "breakThreshold": 17,
+    "immunities": [
+      "Charm",
+      "Poison"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Dark"
+    ],
+    "languages": "Sylvan Sacred fae of Val’ daera, revered as symbols of purity and grace.",
+    "attributes": {
+      "str": 18,
+      "agi": 16,
+      "vit": 16,
+      "int": 12,
+      "mnd": 21,
+      "cha": 24
+    },
+    "attacks": [
+      {
+        "name": "Gore",
+        "attack": 17,
+        "damage": "1d8+7",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Gore",
+        "attack": 21,
+        "damage": "1d8+10",
+        "mode": "melee",
+        "type": "piercing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 11,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Athletics",
+        "bonus": 12,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (mystic)",
+        "bonus": 9,
+        "key": "lore-mystic"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 9,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 13,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 13,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 17,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Sacred fae of Val’ daera, revered as symbols of purity and grace.",
+    "abilities": [
+      {
+        "name": "Sacred Protectors",
+        "description": "Fae creatures may reroll any attacks or Spellcraft checks against enemies threatening a unicorn, keeping the higher result."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Arcane Study",
+      "Powerful Charge",
+      "Skill Focus (spellcraft, unarmed)"
+    ],
+    "spells": [
+      "Cleanse",
+      "Cure"
+    ],
+    "performances": [],
+    "equipped": "",
+    "loot": "Moondust (5%), Unicorn Horn 20%, Magicite (95%)",
+    "steal": "Remedy (5%)",
+    "sourcePage": 336,
+    "profileLine": "Pure Good Large Fae 7; Helpful/Aggressive",
+    "species": "Fae",
+    "classLevels": ""
+  },
+  {
+    "name": "Sylph",
+    "category": "Fae",
+    "profile": "fae",
+    "cr": 8,
+    "level": 8,
+    "xp": 0,
+    "size": "small",
+    "alignment": "Pure",
+    "temperament": "",
+    "hp": 72,
+    "mp": 80,
+    "initiativeDie": "1d8",
+    "speed": "4, Fly 8 (hover)",
+    "senses": "Dark Vision; Passive Perception 26",
+    "passivePerception": 26,
+    "ref": 24,
+    "flatFootedRef": 19,
+    "fort": 22,
+    "will": 25,
+    "dr": 10,
+    "breakThreshold": 22,
+    "immunities": [
+      "Disease"
+    ],
+    "resistances": [
+      "Holy"
+    ],
+    "weaknesses": [
+      "Dark",
+      "Fire"
+    ],
+    "languages": "Sylvan Higher fae who guard and guide the Faewood with unseen grace.",
+    "attributes": {
+      "str": 10,
+      "agi": 21,
+      "vit": 18,
+      "int": 16,
+      "mnd": 25,
+      "cha": 17
+    },
+    "attacks": [
+      {
+        "name": "Slam",
+        "attack": 14,
+        "damage": "1d3+4",
+        "mode": "melee",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "bonus": 14,
+        "key": "acrobatics"
+      },
+      {
+        "name": "Lore (mystic)",
+        "bonus": 12,
+        "key": "lore-mystic"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 12,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Medicine",
+        "bonus": 16,
+        "key": "medicine"
+      },
+      {
+        "name": "Perception",
+        "bonus": 16,
+        "key": "perception"
+      },
+      {
+        "name": "Persuasion",
+        "bonus": 12,
+        "key": "persuasion"
+      },
+      {
+        "name": "Stealth",
+        "bonus": 19,
+        "key": "stealth"
+      },
+      {
+        "name": "Survival",
+        "bonus": 16,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 14,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Higher fae who guard and guide the Faewood with unseen grace.",
+    "abilities": [
+      {
+        "name": "Absorb Magick",
+        "description": "When a sylph is affected by a non-black magick spell, it suffers no effect and instead gains an amount of temporary MP equal to the cost of the spell used. If this temporary MP is not used by the end of the encounter, it is lost."
+      },
+      {
+        "name": "Kaleidoscope",
+        "description": "When casting a single target spell that targets Will Defence, a sylph may choose to target all enemies within a 6 square cone, rather than the normal range."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Arcane Study",
+      "Channel",
+      "Skill Focus (Spellcraft, Unarmed)"
+    ],
+    "spells": [
+      "Charm",
+      "Regen",
+      "Whirlwind",
+      "Wind Slash"
+    ],
+    "performances": [],
+    "equipped": "",
+    "loot": "Moondust (5%), Hi-potion (20%), Fae Wood (50%), Golden Sap (95%)",
+    "steal": "Moondust (5%), Hi-ether (20%)",
+    "sourcePage": 336,
+    "profileLine": "Pure Neutral Small Fae 8; Helpful/TerritorialXP 1,600 Language Sylvan Higher fae who guard and guide the Faewood with unseen grace. HP 72 MP 80 Init d8 Speed 4, Fly 8 (hover) Senses Dark Vision; Passive Perception 26 Defence Ref 24 (flat-footed 19), Fort 22, Will 25 DR 10; Threshold 22 Immunity Disease Resistance Holy Weakness Dark, Fire Offence Melee Slam +14 (1d3+4) Space 1 square; Reach 1 square Spells (spellcraft +21) Charm, Regen, Whirlwind, Wind Slash Statistics Attributes Str 10, Agi 21, Vit 18, Int 16, Mnd 25, Chr 17 Technicks Arcane Study, Channel, Skill Focus (Spellcraft, Unarmed) Skills Acrobatics +14, Lore (mystic) +12, Lore (terrestrial) +12, Medicine +16, Perception +16, Persuasion +12, Spellcraft +21, Stealth +19, Survival +16, Unarmed +14 Abilities Absorb Magick : When a sylph is affected by a non-black magick spell, it suffers no effect and instead gains an amount of temporary MP equal to the cost of the spell used. If this temporary MP is not used by the end of the encounter, it is lost. Kaleidoscope: When casting a single target spell that targets Will Defence, a sylph may choose to target all enemies within a 6 square cone, rather than the normal range. Items Loot Moondust (5%), Hi-potion (20%), Fae Wood (50%), Golden Sap (95%) Steal Moondust (5%), Hi-ether (20%) 335 Chapter 16: Bestiary v.03 10/27/2026",
+    "species": "Fae",
+    "classLevels": ""
+  },
+  {
+    "name": "Owlbear",
+    "category": "Fae",
+    "profile": "fae",
+    "cr": 10,
+    "level": 10,
+    "xp": 2000,
+    "size": "large",
+    "alignment": "Neutral",
+    "temperament": "Territorial",
+    "hp": 115,
+    "mp": 40,
+    "initiativeDie": "1d6",
+    "speed": "6",
+    "senses": "Dark Vision, Scent; Passive Perception 26",
+    "passivePerception": 26,
+    "ref": 21,
+    "flatFootedRef": 21,
+    "fort": 26,
+    "will": 22,
+    "dr": 10,
+    "breakThreshold": 31,
+    "immunities": [
+      "Curses",
+      "Stuns"
+    ],
+    "resistances": [
+      "Slashing"
+    ],
+    "weaknesses": [],
+    "languages": "",
+    "attributes": {
+      "str": 25,
+      "agi": 13,
+      "vit": 21,
+      "int": 2,
+      "mnd": 12,
+      "cha": 10
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "attack": 22,
+        "damage": "1d8+12",
+        "mode": "melee",
+        "type": "piercing"
+      },
+      {
+        "name": "Claws",
+        "attack": 22,
+        "damage": "1d6+12",
+        "mode": "melee",
+        "type": "slashing"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Perception",
+        "bonus": 16,
+        "key": "perception"
+      },
+      {
+        "name": "Survival",
+        "bonus": 11,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 22,
+        "key": "unarmed"
+      }
+    ],
+    "description": "Fierce fae beasts, fiercely protective and aggressive. Their enchanted feathers repel all magick.",
+    "abilities": [
+      {
+        "name": "Gust",
+        "description": "As a primary action, an owlbear may make an attack roll (d20+20) against the Fort Defence of all targets within a 6 square cone. If successful, targets take 6d6+10 slashing damage and are moved 2 squares directly away from the owlbear. Otherwise, targets take half damage and are not moved. Creatures that are 2 or more size categories larger than the owlbear ignore the forced movement, even upon success. The owlbear may not use this ability again for 1d4+1 turns. This is an area effect."
+      },
+      {
+        "name": "Magick Resistance",
+        "description": "The owlbear gains a +5 bonus to all defences against spells."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Improved Initiative",
+      "Skill Focus (perception, unarmed)"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Elfwort (20%), Great Feather (50%), Earth Crystal (95%)",
+    "steal": "Golden Sap (5%), Great Feather (20%), Earth Crystal (95%) * Against spells.",
+    "sourcePage": 337,
+    "profileLine": "Neutral Large Fae 10; Territorial",
+    "species": "Fae",
+    "classLevels": ""
+  },
+  {
+    "name": "Treant",
+    "category": "Fae",
+    "profile": "fae",
+    "cr": 11,
+    "level": 11,
+    "xp": 2200,
+    "size": "huge",
+    "alignment": "Pure",
+    "temperament": "Defensive*/Territorial**",
+    "hp": 126,
+    "mp": 66,
+    "initiativeDie": "1d8",
+    "speed": "6",
+    "senses": "Tremorsense; Passive Perception 22",
+    "passivePerception": 22,
+    "ref": 19,
+    "flatFootedRef": 19,
+    "fort": 27,
+    "will": 25,
+    "dr": 10,
+    "breakThreshold": 42,
+    "immunities": [
+      "Blind",
+      "Confusion",
+      "Disease",
+      "Fear Effects",
+      "Petrify",
+      "Sleep",
+      "Toad",
+      "Zombify"
+    ],
+    "resistances": [],
+    "weaknesses": [
+      "Slashing"
+    ],
+    "languages": "Elven, Sylvan In their final days, some druids enter a deep trance, allowing the Faewood to consume their bodies. What emerges is one of nature’s mightiest protectors.",
+    "attributes": {
+      "str": 29,
+      "agi": 8,
+      "vit": 21,
+      "int": 12,
+      "mnd": 16,
+      "cha": 13
+    },
+    "attacks": [
+      {
+        "name": "Lob",
+        "attack": 24,
+        "damage": "1d8+14",
+        "mode": "ranged",
+        "type": "blunt"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Athletics",
+        "bonus": 19,
+        "key": "athletics"
+      },
+      {
+        "name": "Lore (mystic)",
+        "bonus": 11,
+        "key": "lore-mystic"
+      },
+      {
+        "name": "Lore (terrestrial)",
+        "bonus": 11,
+        "key": "lore-terrestrial"
+      },
+      {
+        "name": "Perception",
+        "bonus": 13,
+        "key": "perception"
+      },
+      {
+        "name": "Ranged",
+        "bonus": 24,
+        "key": "ranged"
+      },
+      {
+        "name": "Survival",
+        "bonus": 13,
+        "key": "survival"
+      },
+      {
+        "name": "Unarmed",
+        "bonus": 24,
+        "key": "unarmed"
+      }
+    ],
+    "description": "In their final days, some druids enter a deep trance, allowing the Faewood to consume their bodies. What emerges is one of nature’s mightiest protectors.",
+    "abilities": [
+      {
+        "name": "Immovable*",
+        "description": "The treant cannot be moved by any means of forced movement, including teleportation."
+      },
+      {
+        "name": "Lurk*",
+        "description": "Treants blend into the canopy of trees around them. When in jungles or forests, treants treat Stealth as a trained skill and ignore any size penalties to Stealth checks."
+      },
+      {
+        "name": "Lob",
+        "description": "Treants may make a slam attack as if using a thrown weapon. Additionally, they may use their Str modifier in place of their Agi modifier when doing so."
+      },
+      {
+        "name": "Regrow",
+        "description": "When a treant loses a limb, they are able to grow it back in 1d10+1 days, at which point any penalties are removed."
+      },
+      {
+        "name": "Root",
+        "description": "As a secondary action, a treant may root itself into the ground. While rooted, the treant’s movement speed is reduced to 0. Alternatively, if rooted, the treant may uproot itself as a secondary action, regaining its movement speed. The treant may not activate this ability again on the following turn."
+      },
+      {
+        "name": "Wild Charge**",
+        "description": "As an all-out action, the treant may charge, doubling the damage it deals until the charge is resolved. While charging this way, the treant is treated as having the Trample technick and is treated as both mount and rider while charging. The treant may not use this ability again for 1d4+1 turns."
+      }
+    ],
+    "classFeatures": [],
+    "talents": [],
+    "technicks": [
+      "Defence Up",
+      "HP Up",
+      "Mighty Strikes",
+      "Skill Focus (ranged, unarmed)",
+      "Threshold Up"
+    ],
+    "spells": [],
+    "performances": [],
+    "equipped": "",
+    "loot": "Mega-Ether (5%), Ammonia Salt (20%), Fae Wood (50%), Magicite (95%)",
+    "steal": "Remedy (5%), Mandrake Root (25%), Earth Crystal (50%) * Only while rooted. ** Only while uprooted. † Includes 3 points of mighty strikes.",
+    "sourcePage": 338,
+    "profileLine": "Pure Neutral Huge Fae 11; Defensive*/Territorial**",
+    "species": "Fae",
+    "classLevels": ""
+  }
+]
