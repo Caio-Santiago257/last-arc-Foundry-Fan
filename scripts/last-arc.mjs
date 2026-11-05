@@ -458,6 +458,7 @@ Hooks.once("init", () => {
   CONFIG.Actor.documentClass = LastArcActor;
   CONFIG.Item.documentClass = LastArcItem;
   CONFIG.Combatant.documentClass = LastArcCombatant;
+  CONFIG.Combat.documentClass = LastArcCombat;
   CONFIG.Actor.trackableAttributes = {
     character: { bar: ["resources.hp", "resources.mp"], value: ["details.level"] },
     npc: { bar: ["resources.hp", "resources.mp"], value: ["details.level"] }
@@ -2428,6 +2429,32 @@ class LastArcCombatant extends Combatant {
   _getInitiativeFormula() {
     return this.actor?.system?.combat?.initiativeDie || super._getInitiativeFormula();
   }
+}
+
+// Last Arc resolves turns from the lowest initiative result to the highest.
+// Keep the tracker and the actual turn sequence on the same ordering rule.
+class LastArcCombat extends Combat {
+  _sortCombatants(a, b) {
+    return compareInitiativeAscending(a, b);
+  }
+
+  setupTurns() {
+    return super.setupTurns().sort(compareInitiativeAscending);
+  }
+}
+
+function compareInitiativeAscending(a, b) {
+  const aInitiative = a.initiative;
+  const bInitiative = b.initiative;
+  const aUnrolled = aInitiative === null || aInitiative === undefined;
+  const bUnrolled = bInitiative === null || bInitiative === undefined;
+  if (aUnrolled !== bUnrolled) return aUnrolled ? 1 : -1;
+  if (!aUnrolled) {
+    const difference = Number(aInitiative) - Number(bInitiative);
+    if (Number.isFinite(difference) && difference !== 0) return difference;
+  }
+  const nameOrder = String(a.name ?? "").localeCompare(String(b.name ?? ""));
+  return nameOrder || String(a.id ?? "").localeCompare(String(b.id ?? ""));
 }
 
 class LastArcItemSheet extends ItemSheet {

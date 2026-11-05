@@ -32,6 +32,10 @@ This checklist distinguishes source changes from validation in the live Foundry 
 - CSS brace balance check: passed.
 - `git diff --check`: passed.
 
+## Initiative ordering update (0.2.48)
+
+The system now supplies a Foundry V13 Combat document subclass whose tracker comparator and `setupTurns()` both sort initiative ascending. Combatants without a roll remain after rolled combatants; equal rolls are resolved by name and then ID. The roll formula and the values rolled are unchanged. This change has not yet been exercised in a live encounter.
+
 ## Live Foundry inspection
 
 Signed in to the user-provided Foundry 13 world as `Codex` and opened the existing Arquimago Teste player sheet without editing its data. The live `/systems/last-arc-analogue/system.json` manifest reports 0.2.46. The screenshot exposed two concrete issues: the outer `.window-content` retained the beige core surface because the CSS selector targeted it as a descendant of the same `.last-arc` app node, and the base `.last-arc.sheet.actor` selector had greater specificity than the Arcane Crimson variable override, leaving old dark text/muted colors inherited into inputs. The source correction is in 0.2.47. Since the running world still serves 0.2.46, post-fix visual and interaction validation, the remaining tabs, other actor types, and final screenshots remain pending installation of 0.2.47. No campaign data or world settings were changed.

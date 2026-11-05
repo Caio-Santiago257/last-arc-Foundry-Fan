@@ -114,6 +114,8 @@ Version 0.2.43 adds 51 Last Resort power entries and 45 relic items in dedicated
 
 Version 0.2.47 refines the Arcane Crimson contrast and surfaces. It fixes the outer Foundry sheet window retaining the legacy beige background, raises muted/auxiliary text contrast, and makes input, placeholder, select, disabled-control, modal, and item-sheet colors legible on the dark theme. No game rules or calculations change.
 
+Version 0.2.48 sorts initiative from lowest to highest, so the smallest result acts first. The combat tracker display and turn sequence use the same ascending order; tied initiatives are ordered by combatant name, and unrolled combatants remain at the end.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork. The system code is provided without an added license until the repository owner chooses one.
