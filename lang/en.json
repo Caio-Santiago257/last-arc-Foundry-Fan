@@ -315,6 +315,7 @@
     "SpellAreaRegionPlaceHint": "Move the area preview to its center and left-click to confirm. Right-click cancels.",
     "SpellAreaTargetPlaceHint": "Hover the selected target's token to center this area on it, then left-click to confirm. Right-click cancels.",
     "SpellAreaConePlaceHint": "Move the pointer over the caster's token to anchor the cone. Rotate it with the mouse wheel, then left-click to confirm; right-click cancels.",
+    "SpellAreaConeTemplatePlaceHint": "The cone is anchored to the caster. Rotate it with the mouse wheel and left-click to confirm; right-click cancels.",
     "SpellAreaCasterTokenRequired": "Place the caster's token on the scene before using this cone spell.",
     "SpellAreaConeMustAttachToCaster": "The cone must be anchored to the caster's token. Hover that token, rotate with the mouse wheel, then left-click.",
     "SpellAreaTargetMustAttach": "This area must be centered on the selected target. Hover that target's token and left-click to confirm.",

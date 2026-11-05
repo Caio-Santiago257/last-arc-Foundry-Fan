@@ -315,6 +315,7 @@
     "SpellAreaRegionPlaceHint": "Mova a prévia da área até o centro desejado e confirme com o botão esquerdo. O botão direito cancela.",
     "SpellAreaTargetPlaceHint": "Passe o cursor sobre o token do alvo selecionado para centralizar a área nele e confirme com o botão esquerdo. O botão direito cancela.",
     "SpellAreaConePlaceHint": "Mova o cursor sobre o token do conjurador para ancorar o cone. Gire-o com a roda do mouse e confirme com o botão esquerdo; o botão direito cancela.",
+    "SpellAreaConeTemplatePlaceHint": "O cone fica ancorado no conjurador. Gire-o com a roda do mouse e confirme com o botão esquerdo; o botão direito cancela.",
     "SpellAreaCasterTokenRequired": "Coloque o token do conjurador na cena antes de usar esta magia de cone.",
     "SpellAreaConeMustAttachToCaster": "O cone precisa ficar ancorado no token do conjurador. Passe o cursor sobre ele, gire com a roda do mouse e confirme com o botão esquerdo.",
     "SpellAreaTargetMustAttach": "Esta área precisa ser centralizada no alvo selecionado. Passe o cursor sobre o token desse alvo e confirme com o botão esquerdo.",

@@ -212,7 +212,9 @@ async function placeSpellAreaTemplate(item, actor, spec) {
   }
 
   const layer = canvas?.templates;
-  if (!canvas?.scene || !layer?._createPreview) {
+  const MeasuredTemplateDocument = CONFIG.MeasuredTemplate?.documentClass;
+  const MeasuredTemplateObject = CONFIG.MeasuredTemplate?.objectClass;
+  if (!canvas?.scene || !layer?.preview || !MeasuredTemplateDocument || !MeasuredTemplateObject) {
     ui.notifications.error(game.i18n.localize("LA.SpellTemplateUnavailable"));
     return null;
   }
@@ -229,45 +231,85 @@ async function placeSpellAreaTemplate(item, actor, spec) {
     distance: spec.distance, angle: 53, fillColor: game.user.color,
     flags: { [SYSTEM_ID]: { spellAreaCastId: id, spellName: item.name } }
   };
-  ui.notifications.info(game.i18n.localize("LA.SpellAreaPlaceHint"));
+  const moveCircle = spec.type === "circle" && !spec.centreOnTarget;
+  ui.notifications.info(game.i18n.localize(spec.type === "cone"
+    ? "LA.SpellAreaConeTemplatePlaceHint" : originToken && !moveCircle ? "LA.SpellAreaTargetPlaceHint" : "LA.SpellAreaRegionPlaceHint"));
   if (!wasMinimized && sheet?.minimize) await sheet.minimize();
-  layer.activate();
 
   let createdDocument;
-  let cancelPlacement;
   let preview;
-  let timer;
-  const placed = new Promise(resolve => {
-    const onCreate = document => {
-      if (document.getFlag(SYSTEM_ID, "spellAreaCastId") !== id) return;
-      Hooks.off("createMeasuredTemplate", onCreate);
-      resolve(document);
-    };
-    Hooks.on("createMeasuredTemplate", onCreate);
-    cancelPlacement = () => {
-      Hooks.off("createMeasuredTemplate", onCreate);
-      resolve(null);
-    };
-    timer = setTimeout(cancelPlacement, 180000);
-  });
+  const document = new MeasuredTemplateDocument(createData, { parent: canvas.scene });
   try {
-    preview = layer._createPreview(createData, { renderSheet: false });
-    if (preview && typeof layer._onDragLeftCancel === "function") {
-      const originalCancel = layer._onDragLeftCancel;
-      const wrappedCancel = function (...args) {
-        const result = originalCancel.apply(this, args);
-        cancelPlacement?.();
-        return result;
+    preview = new MeasuredTemplateObject(document);
+    await preview.draw();
+    layer.activate();
+    layer.preview.addChild(preview);
+
+    createdDocument = await new Promise((resolve, reject) => {
+      let finished = false;
+      const removePreview = () => {
+        if (finished) return false;
+        finished = true;
+        canvas.stage.off("mousemove", onMove);
+        canvas.stage.off("mouseup", onConfirm);
+        canvas.app.view.oncontextmenu = priorContextMenu;
+        canvas.app.view.onwheel = priorWheel;
+        preview.parent?.removeChild(preview);
+        preview.destroy({ children: true });
+        return true;
       };
-      layer._onDragLeftCancel = wrappedCancel;
-      try { createdDocument = await placed; }
-      finally { if (layer._onDragLeftCancel === wrappedCancel) layer._onDragLeftCancel = originalCancel; }
-    } else createdDocument = await placed;
+      const onMove = event => {
+        event.stopPropagation();
+        if (!moveCircle) return;
+        const point = event.data.getLocalPosition(layer);
+        const snapped = layer.getSnappedPoint?.(point) ?? point;
+        document.updateSource({ x: snapped.x, y: snapped.y });
+        preview.refresh();
+      };
+      const onRotate = event => {
+        event.preventDefault();
+        event.stopPropagation();
+        const step = event.shiftKey ? 15 : 5;
+        document.updateSource({ direction: (number(document.direction) + step * Math.sign(event.deltaY) + 360) % 360 });
+        preview.refresh();
+      };
+      const onConfirm = async event => {
+        const nativeEvent = event?.nativeEvent ?? event?.data?.originalEvent ?? event;
+        if (nativeEvent?.button !== 0) return;
+        event.preventDefault?.();
+        event.stopPropagation?.();
+        if (!removePreview()) return;
+        try {
+          if (moveCircle) {
+            const point = layer.getSnappedPoint?.({ x: document.x, y: document.y }) ?? { x: document.x, y: document.y };
+            document.updateSource(point);
+          }
+          const [placedDocument] = await canvas.scene.createEmbeddedDocuments("MeasuredTemplate", [document.toObject()]);
+          resolve(placedDocument ?? null);
+        } catch (error) {
+          reject(error);
+        }
+      };
+      const onCancel = event => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (removePreview()) resolve(null);
+      };
+      const priorContextMenu = canvas.app.view.oncontextmenu;
+      const priorWheel = canvas.app.view.onwheel;
+      canvas.stage.on("mousemove", onMove);
+      canvas.stage.on("mouseup", onConfirm);
+      canvas.app.view.oncontextmenu = onCancel;
+      canvas.app.view.onwheel = onRotate;
+    });
   } catch (error) {
     console.error("Last Arc | Could not place spell area template", error);
     createdDocument = null;
   } finally {
-    clearTimeout(timer);
+    if (preview?.parent) {
+      preview.parent.removeChild(preview);
+      preview.destroy({ children: true });
+    }
     if (priorLayer && canvas.activeLayer !== priorLayer) priorLayer.activate();
     if (!wasMinimized && sheet?.maximize && sheet._minimized) await sheet.maximize();
   }
