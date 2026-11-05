@@ -401,7 +401,7 @@ async function applyCondition(target, caster, spell, condition, rounds = 0, chan
   return true;
 }
 
-async function applySpellEffect(effect, target, caster, spell, checkTotal, results, damageBonus = 0, highArcana = "", targetToken = null, damageRider = null, { areaSecondary = false, damageRollCache = null } = {}) {
+async function applySpellEffect(effect, target, caster, spell, checkTotal, results, damageBonus = 0, highArcana = "", targetToken = null, damageRider = null, { areaSecondary = false, damageRollCache = null, damageApplications = null } = {}) {
   const cancelsSpell = { Inertia: "Haste", Gravity: "Levitation" }[spell.name];
   if (effect.type === "condition" && cancelsSpell) {
     const active = target.effects.filter(entry => entry.getFlag("last-arc-analogue", "spellName") === cancelsSpell);
@@ -444,15 +444,31 @@ async function applySpellEffect(effect, target, caster, spell, checkTotal, resul
     const fomalhautAreaHit = target.system.aeon?.aeonId === "fomalhaut" && areaSpell;
     const areaRiderMultiplier = adjacentRider ? 0.5 : 1;
     const amount = Math.max(0, Math.floor((fomalhautAreaHit ? (hasFailure ? 0 : damageRoll.total / 2) : hasFailure && effect.halfOnFailure ? damageRoll.total / 2 : damageRoll.total) * areaRiderMultiplier));
-    await postDamageRoll(damageRoll, {
-      speaker: ChatMessage.getSpeaker({ actor: caster }),
-      flavor: `${escapeHTML(spell.name)} — ${escapeHTML(target.name)} (${escapeHTML(formula)})`,
-      amount,
-      type: effect.damageType ?? "unaspected",
-      bypassDR: Boolean(effect.bypassDR),
-      targetTokens: [targetToken].filter(Boolean),
-      onApply: damageRider?.(effect) ?? null
-    });
+    if (damageApplications) {
+      let application = damageApplications.get(effect);
+      if (!application) {
+        application = {
+          roll: damageRoll,
+          formula,
+          type: effect.damageType ?? "unaspected",
+          bypassDR: Boolean(effect.bypassDR),
+          onApply: damageRider?.(effect) ?? null,
+          targets: []
+        };
+        damageApplications.set(effect, application);
+      }
+      application.targets.push({ token: targetToken, actor: target, amount });
+    } else {
+      await postDamageRoll(damageRoll, {
+        speaker: ChatMessage.getSpeaker({ actor: caster }),
+        flavor: `${escapeHTML(spell.name)} — ${escapeHTML(target.name)} (${escapeHTML(formula)})`,
+        amount,
+        type: effect.damageType ?? "unaspected",
+        bypassDR: Boolean(effect.bypassDR),
+        targetTokens: [targetToken].filter(Boolean),
+        onApply: damageRider?.(effect) ?? null
+      });
+    }
     results.push(`${target.name}: ${amount} ${effect.damageType ?? "damage"} (${game.i18n.localize("LA.DamageAwaitingApplication")})${hasFailure ? ` (${game.i18n.localize("LA.SpellDefenceMiss")})` : ""}`);
   } else if (effect.type === "heal") {
     const formula = String(effect.formula).replaceAll("@level", String(number(caster.system.details.level)));
@@ -614,14 +630,33 @@ async function showSpellCard(item, actor = null) {
     };
   };
   const damageRollCache = new Map();
+  const damageApplications = areaSpec ? new Map() : null;
 
   await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `${game.i18n.localize("LA.SpellcraftCheck")}: ${escapeHTML(item.name)} (${escapeHTML(system.school)})` });
   if (castSucceeded && effects.length) {
     if (targets.length) {
       for (const { actor: target, token, areaSecondary = false } of targets) {
         const addle = target.effects.find(active => active.getFlag("last-arc-analogue", "addleEffect")?.casterActorId === actor.id);
-        for (const effect of effects) await applySpellEffect(effect, target, actor, item, checkTotal + (addle ? 5 : 0), results, amplificationPenalty * 2, selectedHighArcana, token, getDamageRider, { areaSecondary, damageRollCache });
+        for (const effect of effects) await applySpellEffect(effect, target, actor, item, checkTotal + (addle ? 5 : 0), results, amplificationPenalty * 2, selectedHighArcana, token, getDamageRider, { areaSecondary, damageRollCache, damageApplications });
         if (addle && target.effects.has(addle.id)) await target.deleteEmbeddedDocuments("ActiveEffect", [addle.id]);
+      }
+      for (const application of damageApplications?.values() ?? []) {
+        const targetTokens = application.targets.map(entry => entry.token).filter(Boolean);
+        const targetAmounts = application.targets.map(({ token, actor: target, amount }) => ({
+          tokenUuid: token?.document?.uuid ?? token?.uuid ?? "",
+          actorUuid: target.uuid,
+          amount
+        }));
+        await postDamageRoll(application.roll, {
+          speaker: ChatMessage.getSpeaker({ actor }),
+          flavor: `${escapeHTML(item.name)} — ${targetTokens.length} target(s) (${escapeHTML(application.formula)})`,
+          amount: application.roll.total,
+          type: application.type,
+          bypassDR: application.bypassDR,
+          targetTokens,
+          targetAmounts,
+          onApply: application.onApply
+        });
       }
     } else {
       // A spell can be rolled before choosing a token. Damage is still rolled

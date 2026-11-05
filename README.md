@@ -88,6 +88,8 @@ Version 0.2.29 uses Foundry VTT 14's native Scene Region placement for area Magi
 
 Version 0.2.30 fixes area Magick placement for Foundry VTT 12/13 by drawing an interactive Measured Template preview with the Foundry template controls: cone origin remains on the caster, mouse-wheel rotation is handled during placement, left-click confirms, and right-click cancels. Circular areas follow the cursor until confirmed. Foundry 14 continues to use Scene Regions.
 
+Version 0.2.31 rolls area Magick damage once per damage effect and posts one chat roll for all affected tokens. The chat damage payload carries per-target amounts so successful defences, half-damage effects, and area riders still resolve separately for each target.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork. The system code is provided without an added license until the repository owner chooses one.

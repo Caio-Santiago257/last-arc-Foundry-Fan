@@ -20,6 +20,7 @@ export async function postDamageRoll(roll, {
   bypassDR = false,
   resource = "hp",
   targetTokens = [],
+  targetAmounts = [],
   onApply = null
 } = {}) {
   const targets = [...new Map(targetTokens.filter(Boolean).map(token => {
@@ -44,6 +45,11 @@ export async function postDamageRoll(roll, {
           bypassDR: Boolean(bypassDR),
           resource: resource === "mp" ? "mp" : "hp",
           targets,
+          targetAmounts: targetAmounts.map(entry => ({
+            tokenUuid: String(entry.tokenUuid ?? ""),
+            actorUuid: String(entry.actorUuid ?? ""),
+            amount: Math.max(0, Math.floor(Number(entry.amount) || 0))
+          })),
           onApply,
           applied: false
         }
@@ -58,13 +64,22 @@ function selectedTargets() {
   return [...new Map([...controlled, ...targets].filter(token => token.actor).map(token => [token.document.uuid, token])).values()];
 }
 
+function amountForTarget(payload, target, fallback) {
+  const token = target.token?.document ?? target.token;
+  const tokenUuid = token?.uuid ?? "";
+  const actorUuid = target.actor?.uuid ?? "";
+  const entry = payload.targetAmounts?.find(amount =>
+    (tokenUuid && amount.tokenUuid === tokenUuid) || (actorUuid && amount.actorUuid === actorUuid));
+  return entry ? Math.max(0, Math.floor(Number(entry.amount) || 0)) : fallback;
+}
+
 async function resolveRecordedTargets(records) {
   const resolved = [];
   for (const record of records ?? []) {
     let token = canvas?.scene?.id === record.sceneId ? canvas.tokens.get(record.tokenId) : null;
     if (!token && record.tokenUuid) token = await fromUuid(record.tokenUuid).catch(() => null);
     const actor = token?.actor ?? (record.actorUuid ? await fromUuid(record.actorUuid).catch(() => null) : null);
-    if (actor) resolved.push({ token, actor, key: record.tokenUuid || record.actorUuid || record.actorId });
+    if (actor) resolved.push({ token, actor, key: record.tokenUuid || record.actorUuid || record.actorId, amount: record.amount });
   }
   return resolved;
 }
@@ -143,11 +158,12 @@ async function onChatApply(message, button) {
       amount,
       type,
       resource: payload.resource,
-      targetRecords: targets.map(({ token, actor }) => ({
-        tokenUuid: token?.document?.uuid ?? "",
-        actorUuid: actor.uuid,
-        tokenId: token?.document?.id ?? "",
-        sceneId: token?.document?.parent?.id ?? canvas?.scene?.id ?? ""
+      targetRecords: targets.map(target => ({
+        tokenUuid: target.token?.document?.uuid ?? "",
+        actorUuid: target.actor.uuid,
+        tokenId: target.token?.document?.id ?? "",
+        sceneId: target.token?.document?.parent?.id ?? canvas?.scene?.id ?? "",
+        amount: amountForTarget(payload, target, amount)
       })),
       targetUuids: targets.map(target => target.actor.uuid),
       aeonEntities: targets.map(target => target.token?.document?.getFlag?.(SYSTEM_ID, "aeonEntity") ?? "")
@@ -160,7 +176,8 @@ async function onChatApply(message, button) {
   let totalApplied = 0;
   for (const target of targets) {
     const gaugeBefore = Number(target.actor.system.combat?.breakGauge) || 0;
-    const applied = await applyToActor(target.actor, payload, amount, type, target.token?.document?.getFlag?.(SYSTEM_ID, "aeonEntity") ?? "");
+    const targetAmount = amountForTarget(payload, target, amount);
+    const applied = await applyToActor(target.actor, payload, targetAmount, type, target.token?.document?.getFlag?.(SYSTEM_ID, "aeonEntity") ?? "");
     totalApplied += applied;
     const gaugeAfter = Number(target.actor.system.combat?.breakGauge) || 0;
     const gaugeNote = payload.resource === "mp" ? "" : ` · ${game.i18n.localize("LA.BreakGauge")}: ${gaugeBefore}→${gaugeAfter}/5`;
@@ -202,7 +219,10 @@ export function registerDamageChatControls() {
           if (!actor) continue;
           const gaugeBefore = Number(actor.system.combat?.breakGauge) || 0;
           const targetTokenDocument = target.token?.document ?? target.token;
-          const applied = await applyToActor(actor, payload, Math.min(payload.amount, Math.max(0, Number(data.amount) || 0)), data.type, target.aeonEntity ?? targetTokenDocument?.getFlag?.(SYSTEM_ID, "aeonEntity") ?? "");
+          const targetAmount = target.amount !== undefined
+            ? Math.max(0, Math.floor(Number(target.amount) || 0))
+            : amountForTarget(payload, target, Math.max(0, Math.floor(Number(data.amount ?? payload.amount) || 0)));
+          const applied = await applyToActor(actor, payload, targetAmount, data.type, target.aeonEntity ?? targetTokenDocument?.getFlag?.(SYSTEM_ID, "aeonEntity") ?? "");
           totalApplied += applied;
           const gaugeAfter = Number(actor.system.combat?.breakGauge) || 0;
           const gaugeNote = payload.resource === "mp" ? "" : ` · ${game.i18n.localize("LA.BreakGauge")}: ${gaugeBefore}→${gaugeAfter}/5`;
