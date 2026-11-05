@@ -112,6 +112,8 @@ Version 0.2.36 compares Spellcraft against each target's specific Fortitude, Ref
 
 Version 0.2.43 adds 51 Last Resort power entries and 45 relic items in dedicated compendiums. Studying a relic checks level milestones and the matching talent tree, calculates the required study hours, consumes the relic, and teaches the linked power (with replacement at capacity). The player sheet shows known Last Resorts and a glowing use control that unlocks at or below one-quarter HP, permits one use per long rest, and chooses among learned powers. Damage scales at levels 10 and 15, Aether Blast asks for its element, supported damage/effects resolve against targeted tokens, and a possessed Obsidian Skull grants its +5 Spellcraft bonus.
 
+Version 0.2.47 refines the Arcane Crimson contrast and surfaces. It fixes the outer Foundry sheet window retaining the legacy beige background, raises muted/auxiliary text contrast, and makes input, placeholder, select, disabled-control, modal, and item-sheet colors legible on the dark theme. No game rules or calculations change.
+
 ## Attribution and status
 
 Last Arc: Tactics Analogue is a game by its respective creators/publishers. This independent fan implementation is not affiliated with or endorsed by them. The repository contains no rulebook artwork. The system code is provided without an added license until the repository owner chooses one.

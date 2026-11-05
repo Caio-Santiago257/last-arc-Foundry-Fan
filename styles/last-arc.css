@@ -1,7 +1,8 @@
 .last-arc.sheet.actor, .last-arc.sheet.item {
-  --la-ink: #241c1a; --la-muted: #786b63; --la-paper: #f3ead6; --la-card: #fcf8ee;
-  --la-line: #c8b79d; --la-accent: #8d2f29; --la-gold: #b48b4f;
-  color: var(--la-ink); font-family: "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --la-ink: #f0eee9; --la-muted: #c0c3cd; --la-paper: #171923; --la-card: #222632;
+  --la-line: #414858; --la-accent: #a52e42; --la-gold: #d6ad68;
+  --la-surface: #343a49; --la-positive: #80c7a5; --la-negative: #e58a83;
+  color: var(--la-ink); font-family: Inter, Signika, "Segoe UI", sans-serif;
 }
 .last-arc .window-content { padding: 0; background: var(--la-paper); }
 .la-sheet { min-height: 100%; background-color: var(--la-paper); background-image: radial-gradient(ellipse at 50% 0,rgba(255,255,255,.42),transparent 68%); }
@@ -550,6 +551,197 @@
 .last-arc .la-protection-option { border-color:#414858; }
 .last-arc .la-protection-special { color:var(--la-gold); }
 .last-arc .la-protection-special small { color:var(--la-muted); }
+
+/* Arcane Crimson finishing pass: correct Foundry's outer window surface and
+   keep every inherited field/text color in the same high-contrast palette. */
+.last-arc.window-app,
+.last-arc.sheet.actor,
+.last-arc.sheet.item {
+  --la-ink:#f0eee9;
+  --la-muted:#c0c3cd;
+  --la-aux:#a2a8b6;
+  --la-paper:#171923;
+  --la-card:#222632;
+  --la-surface:#343a49;
+  --la-line:#50596b;
+  --la-accent:#a52e42;
+  --la-gold:#d6ad68;
+  --la-positive:#80c7a5;
+  --la-negative:#e58a83;
+  color:#f0eee9;
+  background:#171923;
+}
+.last-arc.window-app > .window-content,
+.last-arc.window-app > .window-content > form,
+.last-arc.window-app > .window-content .la-sheet {
+  color:#f0eee9;
+  background-color:#171923;
+  background-image:radial-gradient(ellipse at 50% -12%,rgba(214,173,104,.08),transparent 58%),linear-gradient(135deg,rgba(255,255,255,.018),transparent 46%);
+}
+.last-arc.window-app .la-header,
+.last-arc.window-app .la-npc-header,
+.last-arc.window-app .la-aeon-header {
+  color:#f0eee9;
+  background:linear-gradient(115deg,#272b37 0%,#1d222d 58%,#252632 100%);
+}
+.last-arc.window-app .la-panel,
+.last-arc.window-app .la-resource-card,
+.last-arc.window-app .la-level-card,
+.last-arc.window-app .la-npc-xp,
+.last-arc.window-app .la-npc-stat,
+.last-arc.window-app .la-npc-resource-grid .la-resource-card,
+.last-arc.window-app .la-stat-tiles label,
+.last-arc.window-app .la-status-controls,
+.last-arc.window-app .la-inventory-meta,
+.last-arc.window-app .la-item-row,
+.last-arc.window-app .la-feature-row,
+.last-arc.window-app .la-talent-row,
+.last-arc.window-app .la-last-resort-row,
+.last-arc.window-app .la-active-effect,
+.last-arc.window-app .la-protection-config-group,
+.last-arc.window-app .la-aeon-stat-grid>div,
+.last-arc.window-app .la-aeon-progression td {
+  color:#f0eee9;
+  border-color:#414858;
+  background-color:#222632;
+}
+.last-arc.window-app .la-panel h2,
+.last-arc.window-app .la-section-heading h2,
+.last-arc.window-app .la-subheading,
+.last-arc.window-app .la-skill-header,
+.last-arc.window-app .la-item-rule-block h3,
+.last-arc.window-app .la-protection-special,
+.last-arc.window-app .la-aeon-progression th {
+  color:#d6ad68;
+}
+.last-arc.window-app .la-identity-grid label,
+.last-arc.window-app .la-level-card,
+.last-arc.window-app .la-level-card small,
+.last-arc.window-app .la-stat-tiles label,
+.last-arc.window-app .la-wide-field,
+.last-arc.window-app .la-inventory-meta label,
+.last-arc.window-app .la-resource-card>label,
+.last-arc.window-app .la-npc-tags>span,
+.last-arc.window-app .la-npc-xp small,
+.last-arc.window-app .la-npc-stat small,
+.last-arc.window-app .la-npc-defences small,
+.last-arc.window-app .la-npc-attributes small,
+.last-arc.window-app .la-npc-muted,
+.last-arc.window-app .la-muted,
+.last-arc.window-app .la-feature-description,
+.last-arc.window-app .la-spell-description,
+.last-arc.window-app .la-performance-description,
+.last-arc.window-app .la-item-row small,
+.last-arc.window-app .la-active-effect small,
+.last-arc.window-app .la-protection-option,
+.last-arc.window-app .la-protection-special small {
+  color:#c0c3cd;
+  opacity:1;
+}
+.last-arc.window-app .la-description,
+.last-arc.window-app .la-item-description-text,
+.last-arc.window-app .la-item-rule-block p,
+.last-arc.window-app .la-npc-description,
+.last-arc.window-app .la-npc-protections>div>span,
+.last-arc.window-app .la-item-detail,
+.last-arc.window-app .la-weapon-row>span,
+.last-arc.window-app .la-empty,
+.last-arc.window-app .la-item-edit-description summary {
+  color:#c0c3cd;
+}
+.last-arc.window-app input:not([type=checkbox]):not([type=radio]),
+.last-arc.window-app textarea,
+.last-arc.window-app select {
+  color:#f0eee9;
+  border-color:#596173;
+  background-color:#191d27;
+  opacity:1;
+  text-shadow:none;
+}
+.last-arc.window-app input::placeholder,
+.last-arc.window-app textarea::placeholder {
+  color:#a2a8b6;
+  opacity:1;
+}
+.last-arc.window-app input:disabled,
+.last-arc.window-app textarea:disabled,
+.last-arc.window-app select:disabled {
+  color:#a2a8b6;
+  border-color:#414858;
+  background-color:#252a35;
+  opacity:1;
+}
+.last-arc.window-app select option {
+  color:#f0eee9;
+  background:#222632;
+}
+.last-arc.window-app input[type=checkbox],
+.last-arc.window-app input[type=radio] { accent-color:#80c7a5; }
+.last-arc.window-app .la-name,
+.last-arc.window-app .la-item-reading-heading h2,
+.last-arc.window-app .la-item-row .item-edit,
+.last-arc.window-app .la-feature-row .item-edit,
+.last-arc.window-app .la-talent-row .item-edit,
+.last-arc.window-app .la-link,
+.last-arc.window-app .la-active-effect strong,
+.last-arc.window-app .la-npc-identity .la-name { color:#f0eee9; }
+.last-arc.window-app .la-npc-tags>span,
+.last-arc.window-app .la-break-heading>strong,
+.last-arc.window-app .la-break-step,
+.last-arc.window-app .la-break-step:nth-child(2).current,
+.last-arc.window-app .la-break-step:nth-child(3).current,
+.last-arc.window-app .la-break-step:nth-child(4).current,
+.last-arc.window-app .la-break-step:nth-child(5).current,
+.last-arc.window-app .la-break-step.critical {
+  color:#f0eee9;
+  border-color:#596173;
+  background:#2b303d;
+}
+.last-arc.window-app .la-tabs {
+  border-color:#414858;
+  background:linear-gradient(180deg,#242833,#1a1d26 60%,#25222a);
+}
+.last-arc.window-app .la-item-reading,
+.last-arc.window-app .la-item-tier-list li,
+.last-arc.window-app .la-last-resort-panel,
+.last-arc.window-app .la-last-resort-card {
+  color:#f0eee9;
+  border-color:#50596b;
+  background:linear-gradient(145deg,#2b303d,#222632);
+}
+.last-arc.window-app .la-item-facts>div { background:#343a49; }
+.last-arc.window-app .la-portrait,
+.last-arc.window-app .la-npc-portrait,
+.last-arc.window-app .la-item-reading-icon,
+.last-arc.window-app .la-item-image,
+.last-arc.window-app .la-item-image-button { background:#343a49; }
+.last-arc.window-app button,
+.last-arc.window-app .la-add,
+.last-arc.window-app .la-primary-button {
+  color:#f0eee9;
+  border-color:#596173;
+  background:linear-gradient(180deg,#343a49,#292e3b);
+}
+.last-arc.window-app button:disabled,
+.last-arc.window-app button[disabled] {
+  color:#a2a8b6;
+  border-color:#414858;
+  background:#252a35;
+  opacity:1;
+}
+.last-arc-dialog.window-app > .window-content,
+.last-arc-dialog-content {
+  color:#f0eee9;
+  background:linear-gradient(145deg,#262b36,#1c2029);
+}
+.last-arc-dialog.window-app > .window-content input,
+.last-arc-dialog.window-app > .window-content select,
+.last-arc-dialog.window-app > .window-content textarea,
+.last-arc-dialog-content input,
+.last-arc-dialog-content select,
+.last-arc-dialog-content textarea { color:#f0eee9; background:#171923; }
+.last-arc-dialog.window-app > .window-content button,
+.last-arc-dialog-content button { color:#f0eee9; background:#343a49; }
 @media (max-width:900px) {
   .last-arc .la-character [data-tab="overview"] .la-overview-grid>.la-panel:first-child { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .last-arc .la-skill-header,.last-arc .la-skill-row { grid-template-columns:26px minmax(90px,1fr) 34px minmax(80px,.7fr) 36px 48px 48px; gap:4px; }
